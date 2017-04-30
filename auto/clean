@@ -1,0 +1,5 @@
+#! /usr/bin/env bash
+
+lb clean noauto --all --cache
+
+[ ! -d .build ] && sudo lb init -t 3 4

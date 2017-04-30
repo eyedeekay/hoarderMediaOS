@@ -1,0 +1,10 @@
+#! /usr/bin/env bash
+
+lb config noauto \
+    -b iso-hybrid \
+    --image-name tv \
+    -d jessie \
+    --parent-distribution jessie \
+    --backports true \
+    --debootstrap-options "" \
+    --initsystem sysvinit
