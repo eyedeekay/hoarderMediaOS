@@ -1,1 +1,9 @@
 *.iso
+*.contents
+*.hybrid.iso.zsync
+*.packages
+*.files
+*.packages.install
+*.packages.live
+cache/
+chroot/
