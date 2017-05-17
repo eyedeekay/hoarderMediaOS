@@ -1,15 +1,15 @@
 #! /usr/bin/env bash
 
 lb config noauto \
+    --apt-http-proxy http://192.168.2.203:3142 \
     -b iso-hybrid \
     --debian-installer live \
     --system live \
-    --apt-http-proxy http://192.168.2.203:3142 \
     --image-name tv \
     -d sid \
     --updates no \
     --parent-distribution sid \
-    --debootstrap-options "--variant=minbase --include=busybox-syslogd" \
+    --debootstrap-options "--merged-usr --variant=minbase --include=busybox-syslogd,gnupg2,gpgv-static,apt-transport-https,gnutls-bin" \
     --initsystem sysvinit \
     --parent-mirror-bootstrap http://ftp.us.debian.org/debian/ \
     "$@"

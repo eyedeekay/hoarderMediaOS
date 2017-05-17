@@ -1,0 +1,2 @@
+deb http://repo.lngserv.ru/debian jessie main
+deb-src http://repo.lngserv.ru/debian jessie main
