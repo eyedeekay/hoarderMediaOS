@@ -13,7 +13,8 @@ config:
 	lb config
 
 config-nonfree:
-	lb config --archive-areas "main contrib nonfree"
+	lb config --archive-areas "main contrib nonfree" \
+		--source false
 
 packages:
 	cd config/package-lists/ && \
@@ -48,7 +49,9 @@ packages:
 	echo "megatools" >> build.list.chroot && \
 	echo "youtube-dl" >> build.list.chroot && \
 	echo "wikipedia2text" >> build.list.chroot && \
-	echo "xserver-xorg-input-synaptics" >> build.list.chroot && \
+	echo "xserver" >> build.list.chroot && \
+	echo "xserver-common" >> build.list.chroot && \
+	echo "xserver-xorg-*" >> build.list.chroot && \
 	ln -s build.list.chroot build.list.binary
 
 build:
