@@ -10,7 +10,7 @@ LB_APT_FTP_PROXY=""
 
 # $LB_APT_HTTP_PROXY: set apt/aptitude http proxy
 # (Default: autodetected or empty)
-LB_APT_HTTP_PROXY=""
+LB_APT_HTTP_PROXY="http://192.168.2.203:3142"
 
 # $LB_APT_PIPELINE: set apt/aptitude pipeline depth
 # (Default: )
@@ -113,7 +113,7 @@ _QUIET="false"
 # Internal stuff (FIXME)
 APT_OPTIONS="--yes"
 APTITUDE_OPTIONS="--assume-yes"
-DEBOOTSTRAP_OPTIONS=""
+DEBOOTSTRAP_OPTIONS="--variant=minbase --include=busybox-syslogd"
 DEBOOTSTRAP_SCRIPT=""
 GZIP_OPTIONS="-6  --rsyncable"
 ISOHYBRID_OPTIONS=""

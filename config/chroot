@@ -25,13 +25,13 @@ LB_LINUX_FLAVOURS="amd64"
 LB_LINUX_PACKAGES="linux-image"
 
 # $LB_SECURITY: enable security updates
-# (Default: true)
-LB_SECURITY="true"
+# (Default: false)
+LB_SECURITY="false"
 
 # $LB_UPDATES: enable updates updates
-# (Default: true)
-LB_UPDATES="true"
+# (Default: no)
+LB_UPDATES="no"
 
 # $LB_BACKPORTS: enable backports updates
-# (Default: true)
-LB_BACKPORTS="true"
+# (Default: false)
+LB_BACKPORTS="false"

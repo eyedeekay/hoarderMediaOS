@@ -1,24 +1,24 @@
 # config/bootstrap - options for live-build(7), bootstrap stage
 
 # $LB_DISTRIBUTION: select distribution to use
-# (Default: jessie)
-LB_DISTRIBUTION="jessie"
+# (Default: sid)
+LB_DISTRIBUTION="sid"
 
 # $LB_PARENT_DISTRIBUTION: select parent distribution to use
-# (Default: jessie)
-LB_PARENT_DISTRIBUTION="jessie"
+# (Default: sid)
+LB_PARENT_DISTRIBUTION="sid"
 
 # $LB_PARENT_DEBIAN_INSTALLER_DISTRIBUTION: select parent distribution for debian-installer to use
-# (Default: jessie)
-LB_PARENT_DEBIAN_INSTALLER_DISTRIBUTION="jessie"
+# (Default: sid)
+LB_PARENT_DEBIAN_INSTALLER_DISTRIBUTION="sid"
 
 # $LB_PARENT_MIRROR_BOOTSTRAP: set parent mirror to bootstrap from
-# (Default: http://ftp.debian.org/debian/)
-LB_PARENT_MIRROR_BOOTSTRAP="http://ftp.debian.org/debian/"
+# (Default: http://ftp.us.debian.org/debian/)
+LB_PARENT_MIRROR_BOOTSTRAP="http://ftp.us.debian.org/debian/"
 
 # $LB_PARENT_MIRROR_CHROOT: set parent mirror to fetch packages from
-# (Default: http://ftp.debian.org/debian/)
-LB_PARENT_MIRROR_CHROOT="http://ftp.debian.org/debian/"
+# (Default: http://ftp.us.debian.org/debian/)
+LB_PARENT_MIRROR_CHROOT="http://ftp.us.debian.org/debian/"
 
 # $LB_PARENT_MIRROR_CHROOT_SECURITY: set security parent mirror to fetch packages from
 # (Default: http://security.debian.org/)
@@ -33,8 +33,8 @@ LB_PARENT_MIRROR_BINARY="http://httpredir.debian.org/debian/"
 LB_PARENT_MIRROR_BINARY_SECURITY="http://security.debian.org/"
 
 # $LB_PARENT_MIRROR_DEBIAN_INSTALLER: set debian-installer parent mirror
-# (Default: http://ftp.debian.org/debian/)
-LB_PARENT_MIRROR_DEBIAN_INSTALLER="http://ftp.debian.org/debian/"
+# (Default: http://ftp.us.debian.org/debian/)
+LB_PARENT_MIRROR_DEBIAN_INSTALLER="http://ftp.us.debian.org/debian/"
 
 # $LB_MIRROR_BOOTSTRAP: set mirror to bootstrap from
 # (Default: http://ftp.debian.org/debian/)

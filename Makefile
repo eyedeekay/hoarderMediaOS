@@ -12,6 +12,9 @@ clean:
 config:
 	lb config
 
+config-nonfree:
+	lb config --archive-areas "main contrib nonfree"
+
 packages:
 	cd config/package-lists/ && \
 	rm build.list.chroot build.list.binary 2> /dev/null ; \
@@ -19,15 +22,37 @@ packages:
 	echo "openbox-menu" >> build.list.chroot && \
 	echo "obmenu" >> build.list.chroot && \
 	echo "obconf" >> build.list.chroot && \
+	echo "openrc" >> build.list.chroot && \
+	echo "apparmor" >> build.list.chroot && \
+	echo "apparmor-easyprof" >> build.list.chroot && \
+	echo "apparmor-notify" >> build.list.chroot && \
+	echo "apparmor-profiles" >> build.list.chroot && \
+	echo "apparmor-profiles-extra" >> build.list.chroot && \
+	echo "minidlna" >> build.list.chroot && \
+	echo "openssh-server" >> build.list.chroot && \
 	echo "tint2" >> build.list.chroot && \
-	echo "xdm" >> build.list.chroot && \
+	echo "secure-delete" >> build.list.chroot && \
+	echo "suckless-tools" >> build.list.chroot && \
+	echo "git" >> build.list.chroot && \
+	echo "tig" >> build.list.chroot && \
+	echo "lightdm" >> build.list.chroot && \
 	echo "wicd-gtk" >> build.list.chroot && \
+	echo "docker.io" >> build.list.chroot && \
 	echo "vlc" >> build.list.chroot && \
+	echo "sakura" >> build.list.chroot && \
+	echo "uzbl" >> build.list.chroot && \
+	echo "surfraw" >> build.list.chroot && \
+	echo "surfraw-extra" >> build.list.chroot && \
+	echo "rclone" >> build.list.chroot && \
+	echo "sshfs" >> build.list.chroot && \
+	echo "megatools" >> build.list.chroot && \
 	echo "youtube-dl" >> build.list.chroot && \
 	echo "wikipedia2text" >> build.list.chroot && \
+	echo "xserver-xorg-input-synaptics" >> build.list.chroot && \
 	ln -s build.list.chroot build.list.binary
 
 build:
+	make packages
 	sudo lb build
 
 all:
@@ -36,3 +61,8 @@ all:
 	make packages ; \
 	make build
 
+all-nonfree:
+	make clean ; \
+	make config-nonfree ; \
+	make packages ; \
+	make build
