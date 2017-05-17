@@ -32,6 +32,14 @@ i2pd-repo:
 		&& ln -s i2pd.list.chroot i2pd.list.binary \
 		&& ln -s i2pd.list.key.chroot i2pd.list.key.binary
 
+tor-repo:
+	echo "deb http://deb.torproject.org/torproject.org stretch main" | tee config/archives/tor.list.chroot
+	echo "deb-src http://deb.torproject.org/torproject.org stretch main" | tee -a config/archives/tor.list.chroot
+	gpg --keyserver keys.gnupg.net --recv-keys A3C4F0F979CAA22CDBA8F512EE8CBC9E886DDD89; \
+	gpg -a --export A3C4F0F979CAA22CDBA8F512EE8CBC9E886DDD89 | tee config/archives/tor.list.key.chroot
+	cd config/archives/ \
+		&& ln -s tor.list.chroot tor.list.binary \
+		&& ln -s tor.list.key.chroot tor.list.key.binary
 
 skel:
 	mkdir -p config/includes.chroot/etc/skel/Documents/Books/; \
