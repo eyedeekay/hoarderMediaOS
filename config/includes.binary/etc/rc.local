@@ -1,0 +1,5 @@
+#!/bin/sh -e
+adduser \ grsec-tpe &
+adduser \ fuse &
+adduser \ docker &
+exit 0

@@ -9,12 +9,33 @@ expose:
 clean:
 	sudo lb clean; echo "cleaned"
 
+clean-cache:
+	sudo lb clean --cache
+
+clean-config:
+	rm -rf config; \
+	make clean-cache
+	make config
+	make packages
+
 config:
+	lb config
+
+config-hardened:
 	lb config -k grsec-amd64
 
-config-nonfree:
-	lb config --archive-areas "main contrib nonfree" \
-		--source false
+nonfree-repo:
+	echo "deb http://ftp.us.debian.org/debian/ sid contrib nonfree" | tee config/archives/nonfree.list.chroot
+	cd config/archives/ \
+		&& ln -s nonfree.list.chroot nonfree.list.binary \
+
+playdeb-repo:
+	echo "deb http://archive.getdeb.net/ubuntu xenial-getdeb games" | tee config/archives/playdeb.list.chroot
+	echo "deb-src http://archive.getdeb.net/ubuntu xenial-getdeb games" | tee -a config/archives/playdeb.list.chroot
+	wget -q -O- http://archive.getdeb.net/getdeb-archive.key > config/archives/playdeb.list.key.chroot
+	cd config/archives/ \
+		&& ln -s playdeb.list.chroot playdeb.list.binary \
+		&& ln -s playdeb.list.key.chroot playdeb.list.key.binary
 
 syncthing-repo:
 	echo "deb http://apt.syncthing.net/ syncthing release" | tee config/archives/syncthing.list.chroot
@@ -22,6 +43,13 @@ syncthing-repo:
 	cd config/archives/ \
 		&& ln -s syncthing.list.chroot syncthing.list.binary \
 		&& ln -s syncthing.list.key.chroot syncthing.list.key.binary
+
+plex-repo:
+	echo "deb http://downloads.plex.tv/repo/deb/ public main" | tee config/archives/plex.list.chroot
+	curl https://downloads.plex.tv/plex-keys/PlexSign.key > config/archives/plex.list.key.chroot
+	cd config/archives/ \
+		&& ln -s plex.list.chroot plex.list.binary \
+		&& ln -s plex.list.key.chroot plex.list.key.binary
 
 i2pd-repo:
 	echo "deb http://repo.lngserv.ru/debian jessie main" | tee config/archives/i2pd.list.chroot
@@ -93,6 +121,7 @@ packages:
 	echo "awesome-extra" >> build.list.chroot && \
 	echo "coreutils" >> build.list.chroot && \
 	echo "openrc" >> build.list.chroot && \
+	echo "adduser" >> build.list.chroot && \
 	echo "apparmor" >> build.list.chroot && \
 	echo "apparmor-easyprof" >> build.list.chroot && \
 	echo "apparmor-notify" >> build.list.chroot && \
@@ -114,6 +143,9 @@ packages:
 	echo "medit" >> build.list.chroot && \
 	echo "nano" >> build.list.chroot && \
 	echo "mc" >> build.list.chroot && \
+	echo "wget" >> build.list.chroot && \
+	echo "paxctl" >> build.list.chroot && \
+	echo "gradm2" >> build.list.chroot && \
 	echo "apt-build" >> build.list.chroot && \
 	echo "pandoc" >> build.list.chroot && \
 	echo "python-vte" >> build.list.chroot && \
@@ -122,6 +154,8 @@ packages:
 	echo "lftp" >> build.list.chroot && \
 	echo "rtl-sdr" >> build.list.chroot && \
 	echo "vlc" >> build.list.chroot && \
+	echo "tor" >> build.list.chroot && \
+	echo "tor-arm" >> build.list.chroot && \
 	echo "keychain" >> build.list.chroot && \
 	echo "sen" >> build.list.chroot && \
 	echo "sakura" >> build.list.chroot && \
@@ -137,6 +171,8 @@ packages:
 	echo "libgnutls30" >> build.list.chroot && \
 	echo "owncloud-client-cmd" >> build.list.chroot && \
 	echo "gnutls-bin" >> build.list.chroot && \
+	echo "firmware-ath9k-htc" >> build.list.chroot && \
+	echo "firmware-linux-free" >> nonfree.list.chroot && \
 	echo "xserver-xorg" >> build.list.chroot && \
 	echo "xserver-common" >> build.list.chroot && \
 	echo "xserver-xorg-core" >> build.list.chroot && \
@@ -145,24 +181,140 @@ packages:
 	echo "xserver-xorg-video-all" >> build.list.chroot && \
 	ln -s build.list.chroot build.list.binary
 
+nonfree-firmware:
+	echo "b43-fwcutter" >> nonfree.list.chroot && \
+	echo "firmware-b43-installer" >> nonfree.list.chroot && \
+	echo "firmware-b43legacy-installer" >> nonfree.list.chroot && \
+	echo "firmware-linux-nonfree" >> nonfree.list.chroot && \
+	ln -s nonfree.list.chroot nonfree.list.binary
+
+easy-user:
+	echo "#!/bin/sh -e" > config/includes.chroot/etc/rc.local
+	echo "adduser \$(whoami) fuse &" >> config/includes.chroot/etc/rc.local
+	echo "adduser \$(whoami) docker &" >> config/includes.chroot/etc/rc.local
+	echo "exit 0" >> config/includes.chroot/etc/rc.local
+	echo "#!/bin/sh -e" > config/includes.binary/etc/rc.local
+	echo "adduser \$(whoami) fuse &" >> config/includes.binary/etc/rc.local
+	echo "adduser \$(whoami) docker &" >> config/includes.binary/etc/rc.local
+	echo "exit 0" >> config/includes.binary/etc/rc.local
+	mkdir -p config/includes.chroot/etc/live/config/
+	echo "LIVE_USER_DEFAULT_GROUPS=\"audio cdrom dip floppy video plugdev netdev powerdev scanner bluetooth fuse docker\"" > config/includes.chroot/etc/live/config/user-setup.conf
+
+permissive-user:
+	echo "#!/bin/sh -e" > config/includes.chroot/etc/rc.local
+	echo "adduser \$(whoami) grsec-tpe &" >> config/includes.chroot/etc/rc.local
+	echo "adduser \$(whoami) fuse &" >> config/includes.chroot/etc/rc.local
+	echo "adduser \$(whoami) docker &" >> config/includes.chroot/etc/rc.local
+	echo "exit 0" >> config/includes.chroot/etc/rc.local
+	echo "#!/bin/sh -e" > config/includes.binary/etc/rc.local
+	echo "adduser \$(whoami) grsec-tpe &" >> config/includes.binary/etc/rc.local
+	echo "adduser \$(whoami) fuse &" >> config/includes.binary/etc/rc.local
+	echo "adduser \$(whoami) docker &" >> config/includes.binary/etc/rc.local
+	echo "exit 0" >> config/includes.binary/etc/rc.local
+	mkdir -p config/includes.chroot/etc/live/config/
+	echo "LIVE_USER_DEFAULT_GROUPS=\"audio cdrom dip floppy video plugdev netdev powerdev scanner bluetooth fuse docker grsec-tpe\"" > config/includes.chroot/etc/live/config/user-setup.conf
+
 build:
 	make packages
 	sudo lb build
 
-all:
+allclean:
 	make clean ; \
 	make config ; \
 	make syncthing-repo; \
 	make i2pd-repo; \
+	make tor-repo; \
 	make skel; \
 	make packages ; \
+	make easy-user ; \
+	make build
+
+allclean-hardened:
+	make clean ; \
+	make config-hardened ; \
+	make syncthing-repo; \
+	make i2pd-repo; \
+	make tor-repo; \
+	make skel; \
+	make packages ; \
+	make permissive-user; \
+	make build
+
+allclean-nonfree:
+	make clean ; \
+	make config ; \
+	make syncthing-repo; \
+	make i2pd-repo; \
+	make tor-repo; \
+	make nonfree-repo; \
+	make plex-repo; \
+	make playdeb-repo; \
+	make skel; \
+	make packages ; \
+	make easy-user ; \
+	make nonfree-firmware ; \
+	make build
+
+allclean-nonfree-hardened:
+	make clean ; \
+	make config-hardened ; \
+	make syncthing-repo; \
+	make i2pd-repo; \
+	make tor-repo; \
+	make nonfree-repo; \
+	make plex-repo; \
+	make playdeb-repo; \
+	make skel; \
+	make packages ; \
+	make permissive-user; \
+	make nonfree-firmware ; \
+	make build
+
+all:
+	make config ; \
+	make syncthing-repo; \
+	make i2pd-repo; \
+	make tor-repo; \
+	make skel; \
+	make packages ; \
+	make easy-user ; \
+	make build
+
+all-hardened:
+	make config-hardened ; \
+	make syncthing-repo; \
+	make i2pd-repo; \
+	make tor-repo; \
+	make skel; \
+	make packages ; \
+	make permissive-user; \
 	make build
 
 all-nonfree:
 	make clean ; \
-	make config-nonfree ; \
+	make config ; \
 	make syncthing-repo; \
 	make i2pd-repo; \
+	make tor-repo; \
+	make nonfree-repo; \
+	make plex-repo; \
+	make playdeb-repo; \
 	make skel; \
 	make packages ; \
+	make easy-user ; \
+	make nonfree-firmware ; \
+	make build
+
+all-nonfree-hardened:
+	make config-hardened ; \
+	make syncthing-repo; \
+	make i2pd-repo; \
+	make tor-repo; \
+	make nonfree-repo; \
+	make plex-repo; \
+	make playdeb-repo; \
+	make skel; \
+	make packages ; \
+	make permissive-user; \
+	make nonfree-firmware ; \
 	make build
