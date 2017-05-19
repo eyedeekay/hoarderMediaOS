@@ -6,5 +6,5 @@ Mirror-Bootstrap: http://ftp.debian.org/debian/
 
 [FIXME]
 Configuration-Version: 1:20170213
-Name: tv
+Name: tv-hardened
 Type: iso-hybrid

@@ -5,7 +5,6 @@ lb config noauto \
     -b iso-hybrid \
     --debian-installer live \
     --system live \
-    --image-name tv \
     -d sid \
     --updates no \
     --parent-distribution sid \

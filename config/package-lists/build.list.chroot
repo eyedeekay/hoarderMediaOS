@@ -2,6 +2,7 @@ awesome
 awesome-extra
 coreutils
 openrc
+adduser
 apparmor
 apparmor-easyprof
 apparmor-notify
@@ -22,9 +23,12 @@ wicd-curses
 docker.io
 medit
 nano
+tshark
 mc
 wget
-paxctl
+pax-utils
+paxtest
+paxctld
 gradm2
 apt-build
 pandoc
