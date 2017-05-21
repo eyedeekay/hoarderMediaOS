@@ -1,1 +1,9 @@
-d-i passwd/user-default-groups cdrom floppy audio dip video plugdev netdev scanner bluetooth wireshark docker grsec-tpe lpadmin
+d-i passwd/user-default-groups cdrom floppy audio dip video plugdev netdev scanner bluetooth wireshark docker lpadmin
+d-i partman-auto/choose_recipe select atomic
+d-i partman-basicfilesystems/no_swap boolean false
+d-i partman-auto/expert_recipe string boot-root : \
+5120 1 -1 btrfs \
+imary{ } \ootable{ } \
+method{ format } format{ } \
+use_filesystem{ } filesystem{ btrfs } \
+label { root } mountpoint{ / } .
