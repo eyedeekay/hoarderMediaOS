@@ -43,10 +43,10 @@ config-nonfree-hardened:
 		--image-name tv-nonfree-hardened
 
 nonfree-repo:
-	echo "deb http://ftp.us.debian.org/debian/ sid contrib nonfree" | tee config/archives/nonfree.list.chroot
+	echo "deb http://ftp.us.debian.org/debian/ sid main contrib nonfree" | tee config/archives/nonfree.list.chroot
 	cd config/archives/ \
 		&& ln -s nonfree.list.chroot nonfree.list.binary
-	echo "deb http://ftp.us.debian.org/debian/ jessie contrib nonfree" | tee config/archives/nonfree-jessie.list.chroot
+	echo "deb http://ftp.us.debian.org/debian/ jessie main contrib nonfree" | tee config/archives/nonfree-jessie.list.chroot
 	cd config/archives/ \
 		&& ln -s nonfree.list.chroot nonfree.list.binary
 
@@ -281,7 +281,6 @@ nonfree-firmware:
 	echo "b43-fwcutter" >> nonfree.list.chroot && \
 	echo "firmware-b43-installer" >> nonfree.list.chroot && \
 	echo "firmware-b43legacy-installer" >> nonfree.list.chroot && \
-	echo "firmware-linux-nonfree" >> nonfree.list.chroot && \
 	ln -s nonfree.list.chroot nonfree.list.binary
 
 easy-user:
@@ -347,7 +346,6 @@ allclean:
 	make config ; \
 	make libre; \
 	make skel; \
-	make packages ; \
 	make easy-user ; \
 	make build
 
@@ -356,7 +354,6 @@ allclean-hardened:
 	make config-hardened ; \
 	make libre; \
 	make skel; \
-	make packages ; \
 	make permissive-user; \
 	make build
 
@@ -366,7 +363,6 @@ allclean-nonfree:
 	make libre; \
 	make unfree; \
 	make skel; \
-	make packages ; \
 	make easy-user ; \
 	make nonfree-firmware ; \
 	make build
@@ -377,7 +373,6 @@ allclean-nonfree-hardened:
 	make libre; \
 	make unfree; \
 	make skel; \
-	make packages ; \
 	make permissive-user; \
 	make nonfree-firmware ; \
 	make build
@@ -386,7 +381,6 @@ all:
 	make config ; \
 	make libre; \
 	make skel; \
-	make packages ; \
 	make easy-user ; \
 	make build
 
@@ -394,27 +388,24 @@ all-hardened:
 	make config-hardened ; \
 	make libre; \
 	make skel; \
-	make packages ; \
 	make permissive-user; \
 	make build
 
 all-nonfree:
-	make clean ; \
+	make clean-nonfree; \
 	make config ; \
 	make libre; \
 	make unfree; \
 	make skel; \
-	make packages ; \
 	make easy-user ; \
 	make nonfree-firmware ; \
 	make build
 
 all-nonfree-hardened:
-	make config-hardened ; \
+	make config-nonfree-hardened ; \
 	make libre; \
 	make unfree; \
 	make skel; \
-	make packages ; \
 	make permissive-user; \
 	make nonfree-firmware ; \
 	make build
@@ -425,7 +416,6 @@ allclean-custom:
 	make libre; \
 	make custom; \
 	make skel; \
-	make packages ; \
 	make easy-user ; \
 	make build
 
@@ -435,30 +425,27 @@ allclean-hardened-custom:
 	make libre; \
 	make custom; \
 	make skel; \
-	make packages ; \
 	make permissive-user; \
 	make build
 
 allclean-nonfree-custom:
-	make clean ; \
+	make clean-nonfree; \
 	make config ; \
 	make libre; \
 	make custom; \
 	make unfree; \
 	make skel; \
-	make packages ; \
 	make easy-user ; \
 	make nonfree-firmware ; \
 	make build
 
 allclean-nonfree-hardened-custom:
-	make clean ; \
+	make clean-nonfree-hardened; \
 	make config-hardened ; \
 	make libre; \
 	make custom; \
 	make unfree; \
 	make skel; \
-	make packages ; \
 	make permissive-user; \
 	make nonfree-firmware ; \
 	make build
@@ -468,7 +455,6 @@ all-custom:
 	make libre; \
 	make custom; \
 	make skel; \
-	make packages ; \
 	make easy-user ; \
 	make build
 
@@ -477,29 +463,26 @@ all-hardened-custom:
 	make libre; \
 	make custom; \
 	make skel; \
-	make packages ; \
 	make permissive-user; \
 	make build
 
 all-nonfree-custom:
-	make clean ; \
+	make clean-nonfree; \
 	make config ; \
 	make libre; \
 	make custom; \
 	make unfree; \
 	make skel; \
-	make packages ; \
 	make easy-user ; \
 	make nonfree-firmware ; \
 	make build
 
 all-nonfree-hardened-custom:
-	make config-hardened ; \
+	make clean-nonfree-hardened; \
 	make libre; \
 	make custom; \
 	make unfree; \
 	make skel; \
-	make packages ; \
 	make permissive-user; \
 	make nonfree-firmware ; \
 	make build
