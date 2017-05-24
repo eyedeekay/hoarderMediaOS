@@ -1,5 +1,11 @@
 #! /usr/bin/env bash
 
+components=$( [ ! -z "$nonfree" ] && echo "--components=\"main,contrib,non-free\"" || echo "" )
+
+if [ ! -z "$components" ]; then
+        echo "WARNING: USING NON-FREE COMPONENTS! $components"
+        sleep 5
+fi
 lb config noauto \
     --apt-http-proxy http://192.168.2.203:3142 \
     -b iso-hybrid \
@@ -8,7 +14,7 @@ lb config noauto \
     -d sid \
     --updates no \
     --parent-distribution sid \
-    --debootstrap-options "--merged-usr --variant=minbase --include=busybox-syslogd,gnupg2,gpgv-static,apt-transport-https,gnutls-bin" \
+    --debootstrap-options "--merged-usr --variant=minbase --include=busybox-syslogd,gnupg2,gpgv-static,apt-transport-https,gnutls-bin $components" \
     --initsystem sysvinit \
     --parent-mirror-bootstrap http://ftp.us.debian.org/debian/ \
     "$@"
