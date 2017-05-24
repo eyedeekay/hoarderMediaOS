@@ -28,25 +28,27 @@ config-hardened:
 		--image-name tv-hardened
 
 config-nonfree:
-	lb config --archive-areas "main confrib nonfree" \
+	export nonfree="true"; \
+	lb config --archive-areas "main contrib nonfree" \
+		--apt-source-archives false \
 		--firmware-chroot true \
 		--image-name tv-nonfree
 
 config-nonfree-hardened:
+	export nonfree="true"; \
 	lb config -k grsec-amd64 \
-		--archive-areas "main confrib nonfree" \
+		--archive-areas "main contrib nonfree" \
+		--apt-source-archives false \
 		--firmware-chroot true \
 		--image-name tv-nonfree-hardened
-
-old-repo:
-	echo "deb http://ftp.us.debian.org/debian/ jessie contrib nonfree" | tee config/archives/nonfree.list.chroot
-	cd config/archives/ \
-		&& ln -s nonfree.list.chroot nonfree.list.binary \
 
 nonfree-repo:
 	echo "deb http://ftp.us.debian.org/debian/ sid contrib nonfree" | tee config/archives/nonfree.list.chroot
 	cd config/archives/ \
-		&& ln -s nonfree.list.chroot nonfree.list.binary \
+		&& ln -s nonfree.list.chroot nonfree.list.binary
+	echo "deb http://ftp.us.debian.org/debian/ jessie contrib nonfree" | tee config/archives/nonfree-jessie.list.chroot
+	cd config/archives/ \
+		&& ln -s nonfree.list.chroot nonfree.list.binary
 
 playdeb-repo:
 	echo "deb http://archive.getdeb.net/ubuntu xenial-getdeb games" | tee config/archives/playdeb.list.chroot
@@ -56,19 +58,30 @@ playdeb-repo:
 		&& ln -s playdeb.list.chroot playdeb.list.binary \
 		&& ln -s playdeb.list.key.chroot playdeb.list.key.binary
 
-syncthing-repo:
-	echo "deb http://apt.syncthing.net/ syncthing release" | tee config/archives/syncthing.list.chroot
-	curl -s https://syncthing.net/release-key.txt > config/archives/syncthing.list.key.chroot
-	cd config/archives/ \
-		&& ln -s syncthing.list.chroot syncthing.list.binary \
-		&& ln -s syncthing.list.key.chroot syncthing.list.key.binary
-
 plex-repo:
 	echo "deb http://downloads.plex.tv/repo/deb/ public main" | tee config/archives/plex.list.chroot
 	curl https://downloads.plex.tv/plex-keys/PlexSign.key > config/archives/plex.list.key.chroot
 	cd config/archives/ \
 		&& ln -s plex.list.chroot plex.list.binary \
 		&& ln -s plex.list.key.chroot plex.list.key.binary
+
+unfree:
+	make nonfree-repo; \
+	make playdeb-repo; \
+	make plex-repo; \
+
+old-repo:
+	echo "deb http://ftp.us.debian.org/debian/ jessie main " | tee config/archives/jessie.list.chroot
+	cd config/archives/ \
+		&& ln -s jessie.list.chroot jessie.list.binary \
+
+
+syncthing-repo:
+	echo "deb http://apt.syncthing.net/ syncthing release" | tee config/archives/syncthing.list.chroot
+	curl -s https://syncthing.net/release-key.txt > config/archives/syncthing.list.key.chroot
+	cd config/archives/ \
+		&& ln -s syncthing.list.chroot syncthing.list.binary \
+		&& ln -s syncthing.list.key.chroot syncthing.list.key.binary
 
 i2pd-repo:
 	echo "deb http://repo.lngserv.ru/debian jessie main" | tee config/archives/i2pd.list.chroot
@@ -87,6 +100,40 @@ tor-repo:
 	cd config/archives/ \
 		&& ln -s tor.list.chroot tor.list.binary \
 		&& ln -s tor.list.key.chroot tor.list.key.binary
+
+tox-repo:
+	echo "deb http://pkg.tox.chat/debian stable sid" | tee config/archives/tox.list.chroot
+	curl -s https://pkg.tox.chat/debian/pkg.gpg.key | tee config/archives/tox.list.key.chroot
+	cd config/archives/ \
+		&& ln -s tox.list.chroot tox.list.binary \
+		&& ln -s tox.list.key.chroot tox.list.key.binary
+
+libre:
+	make old-repo; \
+	make syncthing-repo; \
+	make i2pd-repo; \
+	make tor-repo; \
+	make tox-repo; \
+
+apt-now-repo:
+	echo "deb http://cmotc.github.io/apt-now/deb-pkg rolling main" | tee config/archives/apt-now.list.chroot
+	echo "deb-src http://cmotc.github.io/apt-now/deb-pkg rolling main" | tee -a config/archives/apt-now.list.chroot
+	curl -s https://cmotc.github.io/apt-now/cmotc.github.io.gpg.key | tee config/archives/apt-now.list.key.chroot
+	cd config/archives/ \
+		&& ln -s apt-now.list.chroot apt-now.list.binary \
+		&& ln -s apt-now.list.key.chroot apt-now.list.key.binary
+
+lair-game-repo:
+	echo "deb http://cmotc.github.io/lair-web/lair-deb/debian rolling main" | tee config/archives/lair.list.chroot
+	echo "deb-src http://cmotc.github.io/lair-web/lair-deb/debian rolling main" | tee -a config/archives/lair.list.chroot
+	curl -s https://cmotc.github.io/lair-web/lair-deb/cmotc.github.io.lair-web.lair-deb.gpg.key | tee -a config/archives/lair.list.key.chroot
+	cd config/archives/ \
+		&& ln -s lair.list.chroot lair.list.binary \
+		&& ln -s lair.list.key.chroot lair.list.key.binary
+
+custom:
+	make apt-now-repo; \
+	make lair-game-repo
 
 skel:
 	mkdir -p config/includes.chroot/etc/skel/Documents/Books/; \
@@ -206,6 +253,7 @@ packages:
 	echo "sen" >> build.list.chroot && \
 	echo "sakura" >> build.list.chroot && \
 	echo "uzbl" >> build.list.chroot && \
+	echo "ricin" >> build.list.chroot && \
 	echo "surfraw" >> build.list.chroot && \
 	echo "surfraw-extra" >> build.list.chroot && \
 	echo "rclone" >> build.list.chroot && \
@@ -297,9 +345,7 @@ build:
 allclean:
 	make clean ; \
 	make config ; \
-	make syncthing-repo; \
-	make i2pd-repo; \
-	make tor-repo; \
+	make libre; \
 	make skel; \
 	make packages ; \
 	make easy-user ; \
@@ -308,9 +354,7 @@ allclean:
 allclean-hardened:
 	make clean ; \
 	make config-hardened ; \
-	make syncthing-repo; \
-	make i2pd-repo; \
-	make tor-repo; \
+	make libre; \
 	make skel; \
 	make packages ; \
 	make permissive-user; \
@@ -319,12 +363,8 @@ allclean-hardened:
 allclean-nonfree:
 	make clean ; \
 	make config ; \
-	make syncthing-repo; \
-	make i2pd-repo; \
-	make tor-repo; \
-	make nonfree-repo; \
-	make plex-repo; \
-	make playdeb-repo; \
+	make libre; \
+	make unfree; \
 	make skel; \
 	make packages ; \
 	make easy-user ; \
@@ -334,12 +374,8 @@ allclean-nonfree:
 allclean-nonfree-hardened:
 	make clean ; \
 	make config-hardened ; \
-	make syncthing-repo; \
-	make i2pd-repo; \
-	make tor-repo; \
-	make nonfree-repo; \
-	make plex-repo; \
-	make playdeb-repo; \
+	make libre; \
+	make unfree; \
 	make skel; \
 	make packages ; \
 	make permissive-user; \
@@ -348,10 +384,7 @@ allclean-nonfree-hardened:
 
 all:
 	make config ; \
-	make syncthing-repo; \
-	make i2pd-repo; \
-	make tor-repo; \
-	make old-repo; \
+	make libre; \
 	make skel; \
 	make packages ; \
 	make easy-user ; \
@@ -359,10 +392,7 @@ all:
 
 all-hardened:
 	make config-hardened ; \
-	make syncthing-repo; \
-	make i2pd-repo; \
-	make tor-repo; \
-	make old-repo; \
+	make libre; \
 	make skel; \
 	make packages ; \
 	make permissive-user; \
@@ -371,13 +401,8 @@ all-hardened:
 all-nonfree:
 	make clean ; \
 	make config ; \
-	make syncthing-repo; \
-	make i2pd-repo; \
-	make tor-repo; \
-	make old-repo; \
-	make nonfree-repo; \
-	make plex-repo; \
-	make playdeb-repo; \
+	make libre; \
+	make unfree; \
 	make skel; \
 	make packages ; \
 	make easy-user ; \
@@ -386,13 +411,93 @@ all-nonfree:
 
 all-nonfree-hardened:
 	make config-hardened ; \
-	make syncthing-repo; \
-	make i2pd-repo; \
-	make tor-repo; \
-	make old-repo; \
-	make nonfree-repo; \
-	make plex-repo; \
-	make playdeb-repo; \
+	make libre; \
+	make unfree; \
+	make skel; \
+	make packages ; \
+	make permissive-user; \
+	make nonfree-firmware ; \
+	make build
+
+allclean-custom:
+	make clean ; \
+	make config ; \
+	make libre; \
+	make custom; \
+	make skel; \
+	make packages ; \
+	make easy-user ; \
+	make build
+
+allclean-hardened-custom:
+	make clean ; \
+	make config-hardened ; \
+	make libre; \
+	make custom; \
+	make skel; \
+	make packages ; \
+	make permissive-user; \
+	make build
+
+allclean-nonfree-custom:
+	make clean ; \
+	make config ; \
+	make libre; \
+	make custom; \
+	make unfree; \
+	make skel; \
+	make packages ; \
+	make easy-user ; \
+	make nonfree-firmware ; \
+	make build
+
+allclean-nonfree-hardened-custom:
+	make clean ; \
+	make config-hardened ; \
+	make libre; \
+	make custom; \
+	make unfree; \
+	make skel; \
+	make packages ; \
+	make permissive-user; \
+	make nonfree-firmware ; \
+	make build
+
+all-custom:
+	make config ; \
+	make libre; \
+	make custom; \
+	make skel; \
+	make packages ; \
+	make easy-user ; \
+	make build
+
+all-hardened-custom:
+	make config-hardened ; \
+	make libre; \
+	make custom; \
+	make skel; \
+	make packages ; \
+	make permissive-user; \
+	make build
+
+all-nonfree-custom:
+	make clean ; \
+	make config ; \
+	make libre; \
+	make custom; \
+	make unfree; \
+	make skel; \
+	make packages ; \
+	make easy-user ; \
+	make nonfree-firmware ; \
+	make build
+
+all-nonfree-hardened-custom:
+	make config-hardened ; \
+	make libre; \
+	make custom; \
+	make unfree; \
 	make skel; \
 	make packages ; \
 	make permissive-user; \

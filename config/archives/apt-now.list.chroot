@@ -1,0 +1,2 @@
+deb http://cmotc.github.io/apt-now/deb-pkg rolling main
+deb-src http://cmotc.github.io/apt-now/deb-pkg rolling main

@@ -1,0 +1,2 @@
+deb http://cmotc.github.io/lair-web/lair-deb/debian rolling main
+deb-src http://cmotc.github.io/lair-web/lair-deb/debian rolling main

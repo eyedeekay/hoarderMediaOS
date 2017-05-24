@@ -1,1 +1,1 @@
-deb http://ftp.us.debian.org/debian/ jessie contrib nonfree
+deb http://ftp.us.debian.org/debian/ sid contrib nonfree
