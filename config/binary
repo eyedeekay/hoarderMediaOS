@@ -86,8 +86,8 @@ LB_ISO_PREPARER="live-build 1:20170213; http://live-systems.org/devel/live-build
 LB_ISO_PUBLISHER="Live Systems project; http://live-systems.org/; debian-live@lists.debian.org"
 
 # $LB_ISO_VOLUME: set iso volume (max 32 chars)
-# (Default: Debian sid 20170517-16:37)
-LB_ISO_VOLUME="Debian sid 20170517-16:37"
+# (Default: Debian sid 20170527-02:00)
+LB_ISO_VOLUME="Debian sid 20170527-02:00"
 
 # $LB_JFFS2_ERASEBLOCK: set jffs2 eraseblock size
 # (Default: unset)

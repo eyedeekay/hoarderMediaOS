@@ -23,6 +23,10 @@ wicd-curses
 docker.io
 medit
 nano
+jackd2
+jack-mixer
+alsaplayer-jack
+pulseaudio-module-jack
 tshark
 mc
 wget

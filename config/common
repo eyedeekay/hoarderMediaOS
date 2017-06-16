@@ -113,7 +113,7 @@ _QUIET="false"
 # Internal stuff (FIXME)
 APT_OPTIONS="--yes"
 APTITUDE_OPTIONS="--assume-yes"
-DEBOOTSTRAP_OPTIONS="--merged-usr --variant=minbase --include=busybox-syslogd,gnupg2,gpgv-static,apt-transport-https,gnutls-bin "
+DEBOOTSTRAP_OPTIONS="--merged-usr --variant=minbase --include=busybox-syslogd,gnupg2,gpgv-static,gnutls-bin "
 DEBOOTSTRAP_SCRIPT=""
 GZIP_OPTIONS="-6  --rsyncable"
 ISOHYBRID_OPTIONS=""

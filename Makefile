@@ -43,10 +43,10 @@ config-nonfree-hardened:
 		--image-name tv-nonfree-hardened
 
 nonfree-repo:
-	echo "deb http://ftp.us.debian.org/debian/ sid main contrib nonfree" | tee config/archives/nonfree.list.chroot
+	echo "deb http://ftp.us.debian.org/debian/ sid contrib nonfree" | tee config/archives/nonfree.list.chroot
 	cd config/archives/ \
 		&& ln -s nonfree.list.chroot nonfree.list.binary
-	echo "deb http://ftp.us.debian.org/debian/ jessie main contrib nonfree" | tee config/archives/nonfree-jessie.list.chroot
+	echo "deb http://ftp.us.debian.org/debian/ jessie contrib nonfree" | tee config/archives/nonfree-jessie.list.chroot
 	cd config/archives/ \
 		&& ln -s nonfree.list.chroot nonfree.list.binary
 
@@ -78,10 +78,17 @@ old-repo:
 
 syncthing-repo:
 	echo "deb http://apt.syncthing.net/ syncthing release" | tee config/archives/syncthing.list.chroot
-	curl -s https://syncthing.net/release-key.txt > config/archives/syncthing.list.key.chroot
+	curl -s https://syncthing.net/release-key.txt | tee config/archives/syncthing.list.key.chroot
 	cd config/archives/ \
 		&& ln -s syncthing.list.chroot syncthing.list.binary \
 		&& ln -s syncthing.list.key.chroot syncthing.list.key.binary
+
+emby-repo:
+	echo "deb http://download.opensuse.org/repositories/home:/emby/Debian_Next/ /" | tee config/archives/emby.list.chroot
+	curl -s https://download.opensuse.org/repositories/home:/emby/Debian_Next/Release.key | tee config/archives/emby.list.key.chroot
+	cd config/archives/ \
+		&& ln -s emby.list.chroot emby.list.binary \
+		&& ln -s emby.list.key.chroot emby.list.key.binary
 
 i2pd-repo:
 	echo "deb http://repo.lngserv.ru/debian jessie main" | tee config/archives/i2pd.list.chroot
@@ -111,6 +118,7 @@ tox-repo:
 libre:
 	make old-repo; \
 	make syncthing-repo; \
+	make emby-repo; \
 	make i2pd-repo; \
 	make tor-repo; \
 	make tox-repo; \
@@ -232,6 +240,10 @@ packages:
 	echo "docker.io" >> build.list.chroot && \
 	echo "medit" >> build.list.chroot && \
 	echo "nano" >> build.list.chroot && \
+	echo "jackd2" >> build.list.chroot && \
+	echo "jack-mixer" >> build.list.chroot && \
+	echo "alsaplayer-jack" >> build.list.chroot && \
+	echo "pulseaudio-module-jack" >> build.list.chroot && \
 	echo "tshark" >> build.list.chroot && \
 	echo "mc" >> build.list.chroot && \
 	echo "wget" >> build.list.chroot && \
@@ -486,3 +498,6 @@ all-nonfree-hardened-custom:
 	make permissive-user; \
 	make nonfree-firmware ; \
 	make build
+
+backup:
+	bash -c 'for iso in $(*.iso); do scp $(iso) media@192.168.2.206:/os_backups/; done'
