@@ -8,6 +8,8 @@ expose:
 
 clean:
 	sudo lb clean; echo "cleaned"
+	make clean-cache
+	make clean-config
 
 clean-cache:
 	sudo lb clean --cache
@@ -27,6 +29,15 @@ config-hardened:
 		--firmware-chroot true \
 		--image-name tv-hardened
 
+config-custom:
+	lb config --firmware-chroot true \
+		--image-name tv-custom
+
+config-hardened-custom:
+	lb config -k grsec-amd64 \
+		--firmware-chroot true \
+		--image-name tv-hardened-custom
+
 config-nonfree:
 	export nonfree="true"; \
 	lb config --archive-areas "main contrib nonfree" \
@@ -42,28 +53,43 @@ config-nonfree-hardened:
 		--firmware-chroot true \
 		--image-name tv-nonfree-hardened
 
+config-nonfree:
+	export nonfree="true"; \
+	lb config --archive-areas "main contrib nonfree" \
+		--apt-source-archives false \
+		--firmware-chroot true \
+		--image-name tv-nonfree-custom
+
+config-nonfree-hardened:
+	export nonfree="true"; \
+	lb config -k grsec-amd64 \
+		--archive-areas "main contrib nonfree" \
+		--apt-source-archives false \
+		--firmware-chroot true \
+		--image-name tv-nonfree-hardened-custom
+
 nonfree-repo:
 	echo "deb http://ftp.us.debian.org/debian/ sid contrib nonfree" | tee config/archives/nonfree.list.chroot
 	cd config/archives/ \
-		&& ln -s nonfree.list.chroot nonfree.list.binary
+		&& ln -sf nonfree.list.chroot nonfree.list.binary
 	echo "deb http://ftp.us.debian.org/debian/ jessie contrib nonfree" | tee config/archives/nonfree-jessie.list.chroot
 	cd config/archives/ \
-		&& ln -s nonfree.list.chroot nonfree.list.binary
+		&& ln -sf nonfree.list.chroot nonfree.list.binary
 
 playdeb-repo:
 	echo "deb http://archive.getdeb.net/ubuntu xenial-getdeb games" | tee config/archives/playdeb.list.chroot
 	echo "deb-src http://archive.getdeb.net/ubuntu xenial-getdeb games" | tee -a config/archives/playdeb.list.chroot
 	wget -q -O- http://archive.getdeb.net/getdeb-archive.key > config/archives/playdeb.list.key.chroot
 	cd config/archives/ \
-		&& ln -s playdeb.list.chroot playdeb.list.binary \
-		&& ln -s playdeb.list.key.chroot playdeb.list.key.binary
+		&& ln -sf playdeb.list.chroot playdeb.list.binary \
+		&& ln -sf playdeb.list.key.chroot playdeb.list.key.binary
 
 plex-repo:
 	echo "deb http://downloads.plex.tv/repo/deb/ public main" | tee config/archives/plex.list.chroot
 	curl https://downloads.plex.tv/plex-keys/PlexSign.key > config/archives/plex.list.key.chroot
 	cd config/archives/ \
-		&& ln -s plex.list.chroot plex.list.binary \
-		&& ln -s plex.list.key.chroot plex.list.key.binary
+		&& ln -sf plex.list.chroot plex.list.binary \
+		&& ln -sf plex.list.key.chroot plex.list.key.binary
 
 unfree:
 	make nonfree-repo; \
@@ -73,22 +99,22 @@ unfree:
 old-repo:
 	echo "deb http://ftp.us.debian.org/debian/ jessie main " | tee config/archives/jessie.list.chroot
 	cd config/archives/ \
-		&& ln -s jessie.list.chroot jessie.list.binary \
+		&& ln -sf jessie.list.chroot jessie.list.binary \
 
 
 syncthing-repo:
 	echo "deb http://apt.syncthing.net/ syncthing release" | tee config/archives/syncthing.list.chroot
 	curl -s https://syncthing.net/release-key.txt | tee config/archives/syncthing.list.key.chroot
 	cd config/archives/ \
-		&& ln -s syncthing.list.chroot syncthing.list.binary \
-		&& ln -s syncthing.list.key.chroot syncthing.list.key.binary
+		&& ln -sf syncthing.list.chroot syncthing.list.binary \
+		&& ln -sf syncthing.list.key.chroot syncthing.list.key.binary
 
 emby-repo:
 	echo "deb http://download.opensuse.org/repositories/home:/emby/Debian_Next/ /" | tee config/archives/emby.list.chroot
 	curl -s https://download.opensuse.org/repositories/home:/emby/Debian_Next/Release.key | tee config/archives/emby.list.key.chroot
 	cd config/archives/ \
-		&& ln -s emby.list.chroot emby.list.binary \
-		&& ln -s emby.list.key.chroot emby.list.key.binary
+		&& ln -sf emby.list.chroot emby.list.binary \
+		&& ln -sf emby.list.key.chroot emby.list.key.binary
 
 i2pd-repo:
 	echo "deb http://repo.lngserv.ru/debian jessie main" | tee config/archives/i2pd.list.chroot
@@ -96,8 +122,8 @@ i2pd-repo:
 	gpg --keyserver keys.gnupg.net --recv-keys 98EBCFE2; \
 	gpg -a --export 98EBCFE2 | tee config/archives/i2pd.list.key.chroot
 	cd config/archives/ \
-		&& ln -s i2pd.list.chroot i2pd.list.binary \
-		&& ln -s i2pd.list.key.chroot i2pd.list.key.binary
+		&& ln -sf i2pd.list.chroot i2pd.list.binary \
+		&& ln -sf i2pd.list.key.chroot i2pd.list.key.binary
 
 tor-repo:
 	echo "deb http://deb.torproject.org/torproject.org stretch main" | tee config/archives/tor.list.chroot
@@ -105,15 +131,22 @@ tor-repo:
 	gpg --keyserver keys.gnupg.net --recv-keys A3C4F0F979CAA22CDBA8F512EE8CBC9E886DDD89; \
 	gpg -a --export A3C4F0F979CAA22CDBA8F512EE8CBC9E886DDD89 | tee config/archives/tor.list.key.chroot
 	cd config/archives/ \
-		&& ln -s tor.list.chroot tor.list.binary \
-		&& ln -s tor.list.key.chroot tor.list.key.binary
+		&& ln -sf tor.list.chroot tor.list.binary \
+		&& ln -sf tor.list.key.chroot tor.list.key.binary
 
 tox-repo:
 	echo "deb http://pkg.tox.chat/debian stable sid" | tee config/archives/tox.list.chroot
 	curl -s https://pkg.tox.chat/debian/pkg.gpg.key | tee config/archives/tox.list.key.chroot
 	cd config/archives/ \
-		&& ln -s tox.list.chroot tox.list.binary \
-		&& ln -s tox.list.key.chroot tox.list.key.binary
+		&& ln -sf tox.list.chroot tox.list.binary \
+		&& ln -sf tox.list.key.chroot tox.list.key.binary
+
+palemoon-repo:
+	echo 'deb http://download.opensuse.org/repositories/home:/stevenpusser/Debian_9.0/ /' | tee config/archives/palemoon.list.chroot
+	curl -s http://download.opensuse.org/repositories/home:/stevenpusser/Debian_9.0/Release.key | tee config/archives/palemoon.list.key.chroot
+	cd config/archives/ \
+		&& ln -sf palemoon.list.chroot palemoon.list.binary \
+		&& ln -sf palemoon.list.key.chroot palemoon.list.key.binary
 
 libre:
 	make old-repo; \
@@ -121,6 +154,7 @@ libre:
 	make emby-repo; \
 	make i2pd-repo; \
 	make tor-repo; \
+	make palemoon-repo; \
 	make tox-repo; \
 
 apt-now-repo:
@@ -128,16 +162,16 @@ apt-now-repo:
 	echo "deb-src http://cmotc.github.io/apt-now/deb-pkg rolling main" | tee -a config/archives/apt-now.list.chroot
 	curl -s https://cmotc.github.io/apt-now/cmotc.github.io.gpg.key | tee config/archives/apt-now.list.key.chroot
 	cd config/archives/ \
-		&& ln -s apt-now.list.chroot apt-now.list.binary \
-		&& ln -s apt-now.list.key.chroot apt-now.list.key.binary
+		&& ln -sf apt-now.list.chroot apt-now.list.binary \
+		&& ln -sf apt-now.list.key.chroot apt-now.list.key.binary
 
 lair-game-repo:
 	echo "deb http://cmotc.github.io/lair-web/lair-deb/debian rolling main" | tee config/archives/lair.list.chroot
 	echo "deb-src http://cmotc.github.io/lair-web/lair-deb/debian rolling main" | tee -a config/archives/lair.list.chroot
 	curl -s https://cmotc.github.io/lair-web/lair-deb/cmotc.github.io.lair-web.lair-deb.gpg.key | tee -a config/archives/lair.list.key.chroot
 	cd config/archives/ \
-		&& ln -s lair.list.chroot lair.list.binary \
-		&& ln -s lair.list.key.chroot lair.list.key.binary
+		&& ln -sf lair.list.chroot lair.list.binary \
+		&& ln -sf lair.list.key.chroot lair.list.key.binary
 
 custom:
 	make apt-now-repo; \
@@ -285,7 +319,7 @@ packages:
 	echo "xserver-xorg-input-all" >> build.list.chroot && \
 	echo "xserver-xorg-legacy" >> build.list.chroot && \
 	echo "xserver-xorg-video-all" >> build.list.chroot && \
-	ln -s build.list.chroot build.list.binary
+	ln -sf build.list.chroot build.list.binary
 
 nonfree-firmware:
 	cd config/package-lists/ && \
@@ -293,7 +327,7 @@ nonfree-firmware:
 	echo "b43-fwcutter" >> nonfree.list.chroot && \
 	echo "firmware-b43-installer" >> nonfree.list.chroot && \
 	echo "firmware-b43legacy-installer" >> nonfree.list.chroot && \
-	ln -s nonfree.list.chroot nonfree.list.binary
+	ln -sf nonfree.list.chroot nonfree.list.binary
 
 easy-user:
 	echo "#!/bin/sh -e" > config/includes.chroot/etc/rc.local
@@ -371,7 +405,7 @@ allclean-hardened:
 
 allclean-nonfree:
 	make clean ; \
-	make config ; \
+	make config-nonfree ; \
 	make libre; \
 	make unfree; \
 	make skel; \
@@ -381,8 +415,48 @@ allclean-nonfree:
 
 allclean-nonfree-hardened:
 	make clean ; \
-	make config-hardened ; \
+	make config-nonfree-hardened ; \
 	make libre; \
+	make unfree; \
+	make skel; \
+	make permissive-user; \
+	make nonfree-firmware ; \
+	make build
+
+allclean-custom:
+	make clean ; \
+	make config-custom ; \
+	make libre; \
+	make custom; \
+	make skel; \
+	make easy-user ; \
+	make build
+
+allclean-hardened-custom:
+	make clean ; \
+	make config-hardened-custom ; \
+	make libre; \
+	make custom; \
+	make skel; \
+	make permissive-user; \
+	make build
+
+allclean-nonfree-custom:
+	make clean; \
+	make config-nonfree-custom ; \
+	make libre; \
+	make custom; \
+	make unfree; \
+	make skel; \
+	make easy-user ; \
+	make nonfree-firmware ; \
+	make build
+
+allclean-nonfree-hardened-custom:
+	make clean; \
+	make config-nonfree-hardened-custom ; \
+	make libre; \
+	make custom; \
 	make unfree; \
 	make skel; \
 	make permissive-user; \
@@ -404,8 +478,7 @@ all-hardened:
 	make build
 
 all-nonfree:
-	make clean-nonfree; \
-	make config ; \
+	make config-nonfree ; \
 	make libre; \
 	make unfree; \
 	make skel; \
@@ -422,48 +495,8 @@ all-nonfree-hardened:
 	make nonfree-firmware ; \
 	make build
 
-allclean-custom:
-	make clean ; \
-	make config ; \
-	make libre; \
-	make custom; \
-	make skel; \
-	make easy-user ; \
-	make build
-
-allclean-hardened-custom:
-	make clean ; \
-	make config-hardened ; \
-	make libre; \
-	make custom; \
-	make skel; \
-	make permissive-user; \
-	make build
-
-allclean-nonfree-custom:
-	make clean-nonfree; \
-	make config ; \
-	make libre; \
-	make custom; \
-	make unfree; \
-	make skel; \
-	make easy-user ; \
-	make nonfree-firmware ; \
-	make build
-
-allclean-nonfree-hardened-custom:
-	make clean-nonfree-hardened; \
-	make config-hardened ; \
-	make libre; \
-	make custom; \
-	make unfree; \
-	make skel; \
-	make permissive-user; \
-	make nonfree-firmware ; \
-	make build
-
 all-custom:
-	make config ; \
+	make config-custom ; \
 	make libre; \
 	make custom; \
 	make skel; \
@@ -471,7 +504,7 @@ all-custom:
 	make build
 
 all-hardened-custom:
-	make config-hardened ; \
+	make config-hardened-custom ; \
 	make libre; \
 	make custom; \
 	make skel; \
@@ -479,8 +512,7 @@ all-hardened-custom:
 	make build
 
 all-nonfree-custom:
-	make clean-nonfree; \
-	make config ; \
+	make config-nonfree-custom ; \
 	make libre; \
 	make custom; \
 	make unfree; \
@@ -490,7 +522,7 @@ all-nonfree-custom:
 	make build
 
 all-nonfree-hardened-custom:
-	make clean-nonfree-hardened; \
+	make config-nonfree-hardened-custom; \
 	make libre; \
 	make custom; \
 	make unfree; \
@@ -500,4 +532,50 @@ all-nonfree-hardened-custom:
 	make build
 
 backup:
-	bash -c 'for iso in $(*.iso); do scp $(iso) media@192.168.2.206:/os_backups/; done'
+	scp tv-amd64.hybrid.iso media@192.168.2.206:os_backups/
+	scp tv-amd64.files media@192.168.2.206:os_backups/
+	scp tv-amd64.contents media@192.168.2.206:os_backups/
+	scp tv-amd64.hybrid.iso.zsync media@192.168.2.206:os_backups/
+	scp tv-amd64.packages media@192.168.2.206:os_backups/
+
+backup-custom:
+	scp tv-amd64.hybrid.iso media@192.168.2.206:os_backups/
+	scp tv-amd64.files media@192.168.2.206:os_backups/
+	scp tv-amd64.contents media@192.168.2.206:os_backups/
+	scp tv-amd64.hybrid.iso.zsync media@192.168.2.206:os_backups/
+	scp tv-amd64.packages media@192.168.2.206:os_backups/
+
+backup-hardened:
+	scp tv-hardened-amd64.hybrid.iso media@192.168.2.206:os_backups/
+	scp tv-hardened-amd64.files media@192.168.2.206:os_backups/
+	scp tv-hardened-amd64.contents media@192.168.2.206:os_backups/
+	scp tv-hardened-amd64.hybrid.iso.zsync media@192.168.2.206:os_backups/
+	scp tv-hardened-amd64.packages media@192.168.2.206:os_backups/
+
+backup-hardened-custom:
+	scp tv-hardened-amd64.hybrid.iso media@192.168.2.206:os_backups/
+	scp tv-hardened-amd64.files media@192.168.2.206:os_backups/
+	scp tv-hardened-amd64.contents media@192.168.2.206:os_backups/
+	scp tv-hardened-amd64.hybrid.iso.zsync media@192.168.2.206:os_backups/
+	scp tv-hardened-amd64.packages media@192.168.2.206:os_backups/
+
+backup-nonfree:
+	scp tv-nonfree-amd64.hybrid.iso media@192.168.2.206:os_backups/
+	scp tv-nonfree-amd64.files media@192.168.2.206:os_backups/
+	scp tv-nonfree-amd64.contents media@192.168.2.206:os_backups/
+	scp tv-nonfree-amd64.hybrid.iso.zsync media@192.168.2.206:os_backups/
+	scp tv-nonfree-amd64.packages media@192.168.2.206:os_backups/
+
+backup-nonfree-custom:
+	scp tv-nonfree-amd64.hybrid.iso media@192.168.2.206:os_backups/
+	scp tv-nonfree-amd64.files media@192.168.2.206:os_backups/
+	scp tv-nonfree-amd64.contents media@192.168.2.206:os_backups/
+	scp tv-nonfree-amd64.hybrid.iso.zsync media@192.168.2.206:os_backups/
+	scp tv-nonfree-amd64.packages media@192.168.2.206:os_backups/
+
+backup-nonfree-hardened-custom:
+	scp tv-nonfree-hardened-amd64.hybrid.iso media@192.168.2.206:os_backups/
+	scp tv-nonfree-hardened-amd64.files media@192.168.2.206:os_backups/
+	scp tv-nonfree-hardened-amd64.contents media@192.168.2.206:os_backups/
+	scp tv-nonfree-hardened-amd64.hybrid.iso.zsync media@192.168.2.206:os_backups/
+	scp tv-nonfree-hardened-amd64.packages media@192.168.2.206:os_backups/
