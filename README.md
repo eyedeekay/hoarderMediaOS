@@ -349,6 +349,8 @@ a text file, in config/packages/*.list.{chroot, binary}. Just add packages per
 their name in the repository, one line at a time. So to add the Awesome Window
 Manager, the Uzbl web browser, the Surfraw terminal web helper, and youtube-dl,
 
+**Example Makefile Fragment: make packages**
+
         cd config/package-lists/ && \
         echo "awesome" >> build.list.chroot && \
         echo "awesome-extra" >> build.list.chroot && \
@@ -361,6 +363,18 @@ After you've create build.list.chroot, link it to build.list.binary to make the
 packages on the installed system as well as the live system.
 
         ln -sf build.list.chroot build.list.binary
+
+All together, 'make packages' should look a little like this:
+
+        packages:
+                cd config/package-lists/ && \
+                        echo "awesome" >> build.list.chroot && \
+                        echo "awesome-extra" >> build.list.chroot && \
+                        echo "surfraw" >> build.list.chroot && \
+                        echo "surfraw-extra" >> build.list.chroot && \
+                        echo "uzbl" >> build.list.chroot && \
+                        echo "youtube-dl" >> build.list.chroot
+                        ln -sf build.list.chroot build.list.binary
 
 Adding Third-Party Repositories to your system
 ----------------------------------------------
@@ -378,6 +392,8 @@ So, the i2pd repository is at [http://repo.lngserv.ru/debian](http://repo.lngser
 and it distributes packages under the codename Jessie, corresponding to Debian
 Jessie and distributing only main(free) packages. Let's use echo and tee to put
 the i2pd.list.chroot file into place:
+
+**Example Makefile Fragment: make i2pd-repo**
 
         echo "deb http://repo.lngserv.ru/debian jessie main" | tee config/archives/i2pd.list.chroot
         echo "deb-src http://repo.lngserv.ru/debian jessie main" | tee -a config/archives/i2pd.list.chroot
@@ -417,6 +433,8 @@ On occasion, you might need to get a GPG key in some way other than via a GPG
 keyserver. If it's over HTTPS, for instance, you can use 'curl -s' to the same
 effect. For example, to include SyncThing's repository, create the sources.list
 entry:
+
+**Example Makefile Fragment: make syncthing-repo**
 
         echo "deb http://apt.syncthing.net/ syncthing release" | tee config/archives/syncthing.list.chroot
 
@@ -480,7 +498,18 @@ Want to create a shell script and set it's permissions?
         echo "nohup bash -c 'sleep 2 && conky 2>1 /dev/null &'" | tee config/includes.binary/etc/skel/conky.sh
         chmod +x config/includes.binary/etc/skel/conky.sh
 
-I mean, even being that explicit is drawing it out. It's just that easy.
+I mean, even being that explicit is drawing it out. It's just that easy. So, all
+together it should look like:
+
+**Example Makefile Fragment: make skel**
+
+        skel:
+                mkdir -p config/includes.chroot/etc/skel/Documents/Slideshows/
+                echo "#/usr/bin/env bash" | tee config/includes.binary/etc/skel/.bash_aliases
+                echo "echo hello, $(whoami)" | tee config/includes.binary/etc/skel/.bash_aliases
+                echo "#/usr/bin/env bash" | tee config/includes.binary/etc/skel/conky.sh; \
+                echo "nohup bash -c 'sleep 2 && conky 2>1 /dev/null &'" | tee config/includes.binary/etc/skel/conky.sh
+                chmod +x config/includes.binary/etc/skel/conky.sh
 
 Step Three: Dockerfile
 ======================
@@ -506,6 +535,8 @@ of language to it's Dockerfiles, you inherit from an existing container with
 FROM, you run commands in the container with RUN. So to create a Debian Sid
 container and install live-build and our supplemental software in it, start your
 Dockerfile like this:
+
+**Example Dockerfile: install dependencies**
 
         FROM debian:sid
         RUN apt-get update
@@ -551,6 +582,14 @@ And establish the working directory.
 Now, all commands will be run as the user livebuilder in the directory
 /home/livebuilder/tv-live
 
+**Example Dockerfile: set up work area**
+
+        RUN useradd -ms /bin/bash livebuilder
+        ADD . /home/livebuilder/tv-live
+        RUN chown -R livebuilder:livebuilder /home/livebuilder/tv-live
+        USER livebuilder
+        WORKDIR /home/livebuilder/tv-live
+
 Copy the Configuration Files
 ----------------------------
 
@@ -566,6 +605,8 @@ Docker container. But it seems like all lb init does, at least the way I've been
 using it, is create a folder called '.build' owned by root. So instead, I just
 add another little helper to the Makefile to do just that at build time.
 
+**Example Makefile Fragment: make docker-init**
+
         docker-init:
                 mkdir -p .build
 
@@ -579,11 +620,20 @@ and add the new init helper as root and switch back to the livebuilder user.
         RUN make docker-init
         USER livebuilder
 
+**Example Dockerfile: copy build files**
+
+        COPY Makefile /home/livebuilder/tv-live/Makefile
+        USER root
+        RUN make docker-init
+        USER livebuilder
+
 Run the Pre-Build Configuration
 -------------------------------
 
 Now, run your custom make commands to prepare the configuration folder and build
 directory.
+
+**Example Dockerfile: fine-tune configuration**
 
         RUN make config-hardened
         RUN make syncthing-repo
