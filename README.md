@@ -339,6 +339,26 @@ Well that's considerable amount of typing saved, all told. And it's arguably a
 bit easier to incorporate into something automatic. So let's keep this modular
 automation via Make going and think of something else to automate.
 
+Installing Packages
+-------------------
+
+Telling the live-build system which packages is also just a matter of creating
+a text file, in config/packages/*.list.{chroot, binary}. Just add packages per
+their name in the repository, one line at a time. So to add the Awesome Window
+Manager, the Uzbl web browser, the Surfraw terminal web helper, and youtube-dl,
+
+        cd config/package-lists/ && \
+        echo "awesome" >> build.list.chroot && \
+        echo "awesome-extra" >> build.list.chroot && \
+        echo "surfraw" >> build.list.chroot && \
+        echo "surfraw-extra" >> build.list.chroot && \
+        echo "uzbl" >> build.list.chroot && \
+        echo "youtube-dl" >> build.list.chroot
+
+After you've create build.list.chroot, link it to build.list.binary
+
+        ln -sf build.list.chroot build.list.binary
+
 Adding Third-Party Repositories to your system
 ----------------------------------------------
 
@@ -528,11 +548,39 @@ Copy the Configuration Files
 ----------------------------
 
 Now that our working area is ready, we need to copy our configuration files into
-the
+the new working directory. In dockerese, copying a folder and a file works the
+same way. You just use the COPY command and specify what you wish to copy. So
+to copy our auto folder in it's entirity, just do:
 
         COPY auto /home/livebuilder/tv-live/auto
 
+Now, for some reason I'm not entirely sure of, lb init doesn't work in the
+Docker container. But it seems like all lb init does, at least the way I've been
+using it, is create a folder called '.build' owned by root. So instead, I just
+add another little helper to the Makefile to do just that at build time.
 
+        docker-init:
+                mkdir -p .build
+
+and to copy the Makefile, just do:
 
         COPY Makefile /home/livebuilder/tv-live/Makefile
 
+and add the new init helper as root and switch back to the livebuilder user.
+
+        USER root
+        RUN make docker-init
+        USER livebuilder
+
+Run the Pre-Build Configuration
+-------------------------------
+
+Now, run your custom make commands to prepare the configuration folder and build
+directory.
+
+        RUN make config-hardened
+        RUN make syncthing-repo
+        RUN make i2pd-repo
+        RUN make skel
+
+and you're almost done!
