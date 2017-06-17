@@ -463,5 +463,76 @@ bootstrap from any distribution where Docker can readily be installed. Docker is
 a container engine and it's just a hair shy of perfect for generating and
 re-generating LiveCD's. Unfortunately, it's not possible to do the very last
 step with a simple "docker build" so instead we'll do everything up to that
-point
+point. Also, live-build create a number of large build artifacts, that you
+probably don't want to accidentally commit and then have the hassle of cleaning
+out of your git history. Docker will build all this in a container leaving your
+configuration directory neat and clean. Docker is also really easy to learn to
+use for simple things, at least so let's look at it in chunks.
+
+Install Dependencies:
+---------------------
+
+Docker containers are a kind of virtual machine-ish thing, which is awesome
+because we can pare it down to pretty much exactly the stuff we need to build
+the liveCD on a highly consistent environment. Docker's got a pretty simple sort
+of language to it's Dockerfiles, you inherit from an existing container with
+FROM, you run commands in the container with RUN. So to create a Debian Sid
+container and install live-build and our supplemental software in it, start your
+Dockerfile like this:
+
+        FROM debian:sid
+        RUN apt-get update
+        RUN apt-get install -yq \
+                apt-transport-https \
+                gpgv-static \
+                gnupg2 \
+                bash \
+                apt-utils \
+                live-build \
+                debootstrap \
+                make \
+                curl
+        RUN apt-get dist-upgrade -yq #I like to do this just to be sure. BTW, this is a comment in a Dockerfile
+
+Recreate Users and Working Directory
+------------------------------------
+
+Next, since live-build requires us to run commands as both a user and the root,
+we need create a user to run commans as, a home directory, and a working
+directory for our configuration. To create a user with an empty home directory
+and a default bash shell, add the following line to the Dockerfile.
+
+        RUN useradd -ms /bin/bash livebuilder
+
+Now, use the ADD Dockerfile command to create the working directory you will use
+to create the iso.
+
+        ADD . /home/livebuilder/tv-live
+
+Transfer ownership of the directory to the new user before doing anything else
+
+        RUN chown -R livebuilder:livebuilder /home/livebuilder/tv-live
+
+Become the new user
+
+        USER livebuilder
+
+And establish the working directory.
+
+        WORKDIR /home/livebuilder/tv-live
+
+Now, all commands will be run as the user livebuilder in the directory
+/home/livebuilder/tv-live
+
+Copy the Configuration Files
+----------------------------
+
+Now that our working area is ready, we need to copy our configuration files into
+the
+
+        COPY auto /home/livebuilder/tv-live/auto
+
+
+
+        COPY Makefile /home/livebuilder/tv-live/Makefile
 
