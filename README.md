@@ -61,7 +61,8 @@ service will also be helpful if you want to backup and share your configuration.
 Step Zero: A crash course in live-build
 =======================================
 
-##See also:
+See also:
+---------
 
   * [Debian live systems manual, First Steps](https://debian-live.alioth.debian.org/live-manual/stable/manual/html/live-manual.en.html#178)
 
@@ -94,18 +95,21 @@ it will many packages on the liveCD that budgie-desktop depends on.
 Step One: Auto Scripts
 ======================
 
-##See also:
+See also:
+---------
 
   * [Debian live systems manual, Dealing with Configuration Changes](https://debian-live.alioth.debian.org/live-manual/stable/manual/html/live-manual.en.html#334)
 
-##Directory Configuration
+Directory Configuration
+-----------------------
 
 First, you'll need to create a new directory for your configuration and change
 into it.
 
         mkdir -p hoarder-live && cd hoarder-live
 
-##Auto Scripts
+Auto Scripts
+------------
 
 The live-build uses a set of configuration files called "auto scripts" which are
 held under a a directory called "auto" in the configuration directory. Create
@@ -120,7 +124,8 @@ which are called by the lb script when you invoke the relevant command. So
 'lb config' runs the configuration file auto/config, lb build does auto/build,
 lb clean does auto/clean.
 
-##The noauto Option
+The noauto Option
+-----------------
 
 When you create an auto script, it runs the commands in the script *instead* of
 the command. That means, in order to actually run the command with the auto
@@ -146,7 +151,8 @@ auto script works.
 
 Simple as that!. And now we're ready to start doing more interesting stuff.
 
-##Setting Defaults
+Setting Defaults
+----------------
 
 The basic purpose of using an auto script is to set arguments which will be
 passed to the lb command. Now if, for example, you wanted to make sure that lb
@@ -181,7 +187,8 @@ installation from live media, sysv-based init, and a merged /usr/ would be:
 
 setting additional options for lb build in auto/build isn't necessary.
 
-##Pre-Process Scripting
+Pre-Process Scripting
+---------------------
 
 Besides setting options, since auto scripts are just shell scripts they can be
 used to set things up in advance of the live-build steps. For example, the sid
@@ -197,7 +204,8 @@ do not exist, I prefer to add it to the auto/clean script.
         [ ! -d .build ] &&              sudo lb init -t 3 4
         lb clean noauto --purge
 
-##Setting Options Conditionally
+Setting Options Conditionally
+-----------------------------
 
 Another thing you might be interested in doing, for example if you want to build
 both a Free and Non-Free version of your iso, or both an Ubuntu and Debian based
