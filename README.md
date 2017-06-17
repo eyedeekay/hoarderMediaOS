@@ -26,7 +26,7 @@ Who this tutorial is targeted at
 
 Enthusiastic Amateurs! People who like Debian/Ubuntu based distributions for
 their excellent stability and diligent community, but who don't necessarily
-want to use one of the regualar desktop environments in the default
+want to use one of the regular desktop environments in the default
 configuration. Ricers, datahoarders, and hobbyists who would rather use Debian
 than Arch or Gentoo. Anyone who uses their home computer for experimentation.
 The point of this tutorial is that **anyone** can learn to continuously
