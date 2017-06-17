@@ -355,7 +355,8 @@ Manager, the Uzbl web browser, the Surfraw terminal web helper, and youtube-dl,
         echo "uzbl" >> build.list.chroot && \
         echo "youtube-dl" >> build.list.chroot
 
-After you've create build.list.chroot, link it to build.list.binary
+After you've create build.list.chroot, link it to build.list.binary to make the
+packages on the installed system as well as the live system.
 
         ln -sf build.list.chroot build.list.binary
 
@@ -582,5 +583,26 @@ directory.
         RUN make syncthing-repo
         RUN make i2pd-repo
         RUN make skel
+        RUN make packages
 
 and you're almost done!
+
+Build the Container
+-------------------
+
+Now you run the commands in your Dockerfile by running docker build in the
+current directory
+
+        docker build -t tv-build .
+
+Just because I can, I keep this in the Makefile under 'make docker'
+
+Run the Priveleged Part of the Build and Extract the Artifacts
+--------------------------------------------------------------
+
+Finally, in order to mount /proc in our container, we must run a command as a
+priveleged user in the container. That command is lb build:
+
+        docker run --privileged -t tv-build lb build
+
+TODO: Extract the build artifacts successfully.
