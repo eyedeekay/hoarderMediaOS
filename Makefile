@@ -13,12 +13,11 @@ clean:
 
 clean-cache:
 	sudo lb clean --cache
+	sudo \rm -rf cache
+	sudo \rm -rf chroot
 
 clean-config:
 	rm -rf config; \
-	make clean-cache
-	make config
-	make packages
 
 config:
 	lb config --firmware-chroot true \
@@ -53,14 +52,14 @@ config-nonfree-hardened:
 		--firmware-chroot true \
 		--image-name tv-nonfree-hardened
 
-config-nonfree:
+config-nonfree-custom:
 	export nonfree="true"; \
 	lb config --archive-areas "main contrib nonfree" \
 		--apt-source-archives false \
 		--firmware-chroot true \
 		--image-name tv-nonfree-custom
 
-config-nonfree-hardened:
+config-nonfree-hardened-custom:
 	export nonfree="true"; \
 	lb config -k grsec-amd64 \
 		--archive-areas "main contrib nonfree" \
@@ -92,9 +91,9 @@ plex-repo:
 		&& ln -sf plex.list.key.chroot plex.list.key.binary
 
 unfree:
-	make nonfree-repo; \
 	make playdeb-repo; \
 	make plex-repo; \
+	#make nonfree-repo; \
 
 old-repo:
 	echo "deb http://ftp.us.debian.org/debian/ jessie main " | tee config/archives/jessie.list.chroot
@@ -226,7 +225,7 @@ skel:
 	mkdir -p config/includes.binary/etc/grsec; \
 	mkdir -p config/includes.chroot/etc/grsec2; \
 	mkdir -p config/includes.binary/etc/grsec2; \
-	touch -p config/includes.chroot/etc/grsec2/pw; \
+	touch config/includes.chroot/etc/grsec2/pw; \
 	touch config/includes.binary/etc/grsec2/pw; \
 	echo "sudo gradm2 -P shutdown" | tee config/includes.chroot/etc/skel/grsec-firstrun.sh; \
 	echo "sudo gradm2 -P admin" | tee -a config/includes.chroot/etc/skel/grsec-firstrun.sh; \
@@ -387,95 +386,58 @@ build:
 	make packages
 	sudo lb build
 
+docker-init:
+	mkdir -p .build
+
+docker:
+	docker build -t hoarder-build .
+
+docker-build:
+	docker run --privileged -t hoarder-build lb build
+
 allclean:
 	make clean ; \
-	make config ; \
-	make libre; \
-	make skel; \
-	make easy-user ; \
-	make build
+	make all
 
 allclean-hardened:
 	make clean ; \
-	make config-hardened ; \
-	make libre; \
-	make skel; \
-	make permissive-user; \
-	make build
+	make all-hardened
 
 allclean-nonfree:
 	make clean ; \
-	make config-nonfree ; \
-	make libre; \
-	make unfree; \
-	make skel; \
-	make easy-user ; \
-	make nonfree-firmware ; \
-	make build
+	make all-nonfree
 
 allclean-nonfree-hardened:
 	make clean ; \
-	make config-nonfree-hardened ; \
-	make libre; \
-	make unfree; \
-	make skel; \
-	make permissive-user; \
-	make nonfree-firmware ; \
-	make build
+	make all-nonfree-hardened
 
 allclean-custom:
 	make clean ; \
-	make config-custom ; \
-	make libre; \
-	make custom; \
-	make skel; \
-	make easy-user ; \
-	make build
+	make all-custom
 
 allclean-hardened-custom:
 	make clean ; \
-	make config-hardened-custom ; \
-	make libre; \
-	make custom; \
-	make skel; \
-	make permissive-user; \
-	make build
+	make all-hardened-custom
 
 allclean-nonfree-custom:
 	make clean; \
-	make config-nonfree-custom ; \
-	make libre; \
-	make custom; \
-	make unfree; \
-	make skel; \
-	make easy-user ; \
-	make nonfree-firmware ; \
-	make build
+	make all-nonfree-custom
 
 allclean-nonfree-hardened-custom:
 	make clean; \
-	make config-nonfree-hardened-custom ; \
-	make libre; \
-	make custom; \
-	make unfree; \
-	make skel; \
-	make permissive-user; \
-	make nonfree-firmware ; \
-	make build
+	make all-nonfree-hardened-custom
 
 all:
 	make config ; \
 	make libre; \
 	make skel; \
-	make easy-user ; \
-	make build
+	make easy-user
 
 all-hardened:
 	make config-hardened ; \
 	make libre; \
 	make skel; \
-	make permissive-user; \
-	make build
+	make permissive-user
 
 all-nonfree:
 	make config-nonfree ; \
@@ -483,8 +445,7 @@ all-nonfree:
 	make unfree; \
 	make skel; \
 	make easy-user ; \
-	make nonfree-firmware ; \
-	make build
+	make nonfree-firmware
 
 all-nonfree-hardened:
 	make config-nonfree-hardened ; \
@@ -492,24 +453,21 @@ all-nonfree-hardened:
 	make unfree; \
 	make skel; \
 	make permissive-user; \
-	make nonfree-firmware ; \
-	make build
+	make nonfree-firmware
 
 all-custom:
 	make config-custom ; \
 	make libre; \
 	make custom; \
 	make skel; \
-	make easy-user ; \
-	make build
+	make easy-user
 
 all-hardened-custom:
 	make config-hardened-custom ; \
 	make libre; \
 	make custom; \
 	make skel; \
-	make permissive-user; \
-	make build
+	make permissive-user
 
 all-nonfree-custom:
 	make config-nonfree-custom ; \
@@ -518,8 +476,7 @@ all-nonfree-custom:
 	make unfree; \
 	make skel; \
 	make easy-user ; \
-	make nonfree-firmware ; \
-	make build
+	make nonfree-firmware
 
 all-nonfree-hardened-custom:
 	make config-nonfree-hardened-custom; \
@@ -528,8 +485,7 @@ all-nonfree-hardened-custom:
 	make unfree; \
 	make skel; \
 	make permissive-user; \
-	make nonfree-firmware ; \
-	make build
+	make nonfree-firmware
 
 backup:
 	scp tv-amd64.hybrid.iso media@192.168.2.206:os_backups/
