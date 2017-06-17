@@ -2,6 +2,8 @@
 
 components=$( [ ! -z "$nonfree" ] && echo "--components=\"main,contrib,non-free\"" || echo "" )
 
+use_proxy=$( [ ! -z "$proxy" ] && echo "--apt-http-proxy \"http://192.168.2.203\"" || echo "" )
+
 if [ ! -z "$components" ]; then
         echo "WARNING: USING NON-FREE COMPONENTS! $components"
         sleep 5
@@ -11,7 +13,7 @@ lb config noauto \
     -b iso-hybrid \
     --debian-installer live \
     --system live \
-    --apt-http-proxy http://192.168.2.203:3142 \
+    "$use_proxy" \
     -d sid \
     --updates no \
     --parent-distribution sid \

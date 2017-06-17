@@ -334,24 +334,24 @@ easy-user:
 	echo "#!/bin/sh -e" > config/includes.binary/etc/rc.local
 	echo "exit 0" >> config/includes.binary/etc/rc.local
 	mkdir -p config/includes.chroot/etc/live/config/
-	echo "LIVE_USER_DEFAULT_GROUPS=\"audio cdrom dip floppy video plugdev netdev powerdev scanner bluetooth fuse docker\"" > config/includes.chroot/etc/live/config/user-setup.conf
+	echo 'LIVE_USER_DEFAULT_GROUPS="audio cdrom dip floppy video plugdev netdev powerdev scanner bluetooth fuse docker"' > config/includes.chroot/etc/live/config/user-setup.conf
 	echo "d-i passwd/user-default-groups cdrom floppy audio dip video plugdev netdev scanner bluetooth wireshark docker lpadmin" > config/preseed/preseed.cfg.chroot
 	echo "d-i partman-auto/choose_recipe select atomic" >> config/preseed/preseed.cfg.chroot
 	echo "d-i partman-basicfilesystems/no_swap boolean false">> config/preseed/preseed.cfg.chroot
-	echo "d-i partman-auto/expert_recipe string boot-root : \\">> config/preseed/preseed.cfg.chroot
-	echo "5120 1 -1 btrfs \\">> config/preseed/preseed.cfg.chroot
-	echo "\$primary{ } \$bootable{ } \\">> config/preseed/preseed.cfg.chroot
-	echo "method{ format } format{ } \\">> config/preseed/preseed.cfg.chroot
-	echo "use_filesystem{ } filesystem{ btrfs } \\">> config/preseed/preseed.cfg.chroot
+	echo 'd-i partman-auto/expert_recipe string boot-root : \'>> config/preseed/preseed.cfg.chroot
+	echo '5120 1 -1 btrfs \'>> config/preseed/preseed.cfg.chroot
+	echo '\$primary{ } \$bootable{ } \>> config/preseed/preseed.cfg.chroot
+	echo 'method{ format } format{ } \'>> config/preseed/preseed.cfg.chroot
+	echo 'use_filesystem{ } filesystem{ btrfs } \'>> config/preseed/preseed.cfg.chroot
 	echo "label { root } mountpoint{ / } .">> config/preseed/preseed.cfg.chroot
 	echo "d-i passwd/user-default-groups cdrom floppy audio dip video plugdev netdev scanner bluetooth wireshark docker lpadmin" > config/preseed/preseed.cfg.binary
 	echo "d-i partman-auto/choose_recipe select atomic" >> config/preseed/preseed.cfg.binary
 	echo "d-i partman-basicfilesystems/no_swap boolean false">> config/preseed/preseed.cfg.binary
-	echo "d-i partman-auto/expert_recipe string boot-root : \\">> config/preseed/preseed.cfg.binary
-	echo "5120 1 -1 btrfs \\">> config/preseed/preseed.cfg.binary
-	echo "\$primary{ } \$bootable{ } \\">> config/preseed/preseed.cfg.binary
-	echo "method{ format } format{ } \\">> config/preseed/preseed.cfg.binary
-	echo "use_filesystem{ } filesystem{ btrfs } \\">> config/preseed/preseed.cfg.binary
+	echo 'd-i partman-auto/expert_recipe string boot-root : \'>> config/preseed/preseed.cfg.binary
+	echo '5120 1 -1 btrfs \'>> config/preseed/preseed.cfg.binary
+	echo '\$primary{ } \$bootable{ } \'>> config/preseed/preseed.cfg.binary
+	echo 'method{ format } format{ } \'>> config/preseed/preseed.cfg.binary
+	echo 'use_filesystem{ } filesystem{ btrfs } \'>> config/preseed/preseed.cfg.binary
 	echo "label { root } mountpoint{ / } .">> config/preseed/preseed.cfg.binary
 
 permissive-user:
@@ -361,25 +361,25 @@ permissive-user:
 	echo "gradm2 -F -L /etc/grsec/learning.logs &" >> config/includes.binary/etc/rc.local
 	echo "exit 0" >> config/includes.binary/etc/rc.local
 	mkdir -p config/includes.chroot/etc/live/config/
-	echo "LIVE_USER_DEFAULT_GROUPS=\"audio cdrom dip floppy video plugdev netdev powerdev scanner bluetooth fuse docker grsec-tpe\"" > config/includes.chroot/etc/live/config/user-setup.conf
+	echo 'LIVE_USER_DEFAULT_GROUPS="audio cdrom dip floppy video plugdev netdev powerdev scanner bluetooth fuse docker grsec-tpe"' > config/includes.chroot/etc/live/config/user-setup.conf
 	echo "d-i passwd/user-default-groups cdrom floppy audio dip video plugdev netdev scanner bluetooth wireshark docker grsec-tpe lpadmin" > config/preseed/preseed.cfg.chroot
 	echo "d-i partman-auto/choose_recipe select atomic" >> config/preseed/preseed.cfg.chroot
 	echo "d-i partman-basicfilesystems/no_swap boolean false">> config/preseed/preseed.cfg.chroot
-	echo "d-i partman-auto/expert_recipe string boot-root : \\">> config/preseed/preseed.cfg.chroot
-	echo "5120 1 -1 btrfs \\">> config/preseed/preseed.cfg.chroot
-	echo "\$primary{ } \$bootable{ } \\">> config/preseed/preseed.cfg.chroot
-	echo "method{ format } format{ } \\">> config/preseed/preseed.cfg.chroot
-	echo "use_filesystem{ } filesystem{ btrfs } \\">> config/preseed/preseed.cfg.chroot
+	echo 'd-i partman-auto/expert_recipe string boot-root : \'>> config/preseed/preseed.cfg.chroot
+	echo '5120 1 -1 btrfs \'>> config/preseed/preseed.cfg.chroot
+	echo '\$primary{ } \$bootable{ } \'>> config/preseed/preseed.cfg.chroot
+	echo 'method{ format } format{ } \'>> config/preseed/preseed.cfg.chroot
+	echo 'use_filesystem{ } filesystem{ btrfs } \'>> config/preseed/preseed.cfg.chroot
 	echo "label { root } mountpoint{ / } .">> config/preseed/preseed.cfg.chroot
 	echo "d-i passwd/user-default-groups cdrom floppy audio dip video plugdev netdev scanner bluetooth wireshark docker grsec-tpe lpadmin" > config/preseed/preseed.cfg.binary
 	echo "d-i partman-auto/choose_recipe select atomic" >> config/preseed/preseed.cfg.binary
 	echo "d-i partman-basicfilesystems/no_swap boolean false">> config/preseed/preseed.cfg.binary
-	echo "d-i partman-auto/expert_recipe string boot-root : \\">> config/preseed/preseed.cfg.binary
-	echo "5120 1 -1 btrfs \\">> config/preseed/preseed.cfg.binary
-	echo "\$primary{ } \$bootable{ } \\">> config/preseed/preseed.cfg.binary
-	echo "method{ format } format{ } \\">> config/preseed/preseed.cfg.binary
-	echo "use_filesystem{ } filesystem{ btrfs } \\">> config/preseed/preseed.cfg.binary
-
+	echo 'd-i partman-auto/expert_recipe string boot-root : \'>> config/preseed/preseed.cfg.binary
+	echo '5120 1 -1 btrfs \'>> config/preseed/preseed.cfg.binary
+	echo '\$primary{ } \$bootable{ } \'>> config/preseed/preseed.cfg.binary
+	echo 'method{ format } format{ } \'>> config/preseed/preseed.cfg.binary
+	echo 'use_filesystem{ } filesystem{ btrfs } \'>> config/preseed/preseed.cfg.binary
+	echo "label { root } mountpoint{ / } .">> config/preseed/preseed.cfg.binary
 
 
 build:
