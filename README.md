@@ -3,10 +3,8 @@ hoarderMediaOS
 
 or...
 
-How I decided to continuously remaster my own Debian Variant without, like,
-===========================================================================
-totally meaning to.
-===================
+How I decided to continuously remaster my own Debian Variant without, like, totally meaning to.
+===============================================================================================
 
 OK, this thing is a work in progress, so bear with me while I do it, but here's
 what I'm attempting. I have spent alot of time refining my home PC's
