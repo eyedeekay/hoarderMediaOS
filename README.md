@@ -307,6 +307,8 @@ pretty much the type of task that make is designed to automate.
 Supplementing your auto scripts with Make
 -----------------------------------------
 
+See Also: [man lb_config](http://manpages.ubuntu.com/manpages/trusty/man1/lb_config.1.html)
+
 So you've got your auto/config script which provides the defaults for lb config.
 But now, you're building variations on the theme and you want to give each
 variation it's own tame without setting it in the auto script or having to type
@@ -342,6 +344,8 @@ automation via Make going and think of something else to automate.
 Installing Packages
 -------------------
 
+See Also: [Customizing Package Installation](https://debian-live.alioth.debian.org/live-manual/stable/manual/html/live-manual.en.html#396)
+
 Telling the live-build system which packages is also just a matter of creating
 a text file, in config/packages/*.list.{chroot, binary}. Just add packages per
 their name in the repository, one line at a time. So to add the Awesome Window
@@ -362,6 +366,8 @@ packages on the installed system as well as the live system.
 
 Adding Third-Party Repositories to your system
 ----------------------------------------------
+
+See Also: [Package Sources](https://debian-live.alioth.debian.org/live-manual/stable/manual/html/live-manual.en.html#371)
 
 One of the most common tasks with live-build is adding a third-party repository
 from which to retrieve software that isn't ready to be a part of Debian for one
@@ -449,6 +455,8 @@ and the last two in to "make unfree" like so:
 
 Editing the Default Home Directory Template
 -------------------------------------------
+
+See Also: [Includes](https://debian-live.alioth.debian.org/live-manual/stable/manual/html/live-manual.en.html#500)
 
 Another basic customization that you may want to do is to alter the default home
 directory template, a.k.a. etc/skel. Adding files and folders to etc/skel is
@@ -606,3 +614,4 @@ priveleged user in the container. That command is lb build:
         docker run --privileged -t tv-build lb build
 
 TODO: Extract the build artifacts successfully.
+
