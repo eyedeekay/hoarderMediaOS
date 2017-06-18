@@ -393,7 +393,7 @@ docker:
 	docker build -t hoarder-build .
 
 docker-build:
-	docker run --privileged -t hoarder-build lb build
+	docker run -i --privileged -t hoarder-build lb build
 
 allclean:
 	make clean ; \
