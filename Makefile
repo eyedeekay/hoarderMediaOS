@@ -512,7 +512,14 @@ all-nonfree-hardened-custom:
 	make nonfree-firmware
 
 sum:
-	sha256sum tv-*amd64.hybrid.iso > tv-*amd64.hybrid.iso.sha256sum
+	sha256sum tv-amd64.hybrid.iso > tv-amd64.hybrid.iso.sha256sum ; \
+	sha256sum tv-custom-amd64.hybrid.iso > tv-custom-amd64.hybrid.iso.sha256sum ; \
+	sha256sum tv-hardened-amd64.hybrid.iso > tv-hardened-amd64.hybrid.iso.sha256sum ; \
+	sha256sum tv-hardened-custom-amd64.hybrid.iso > tv-hardened-custom-amd64.hybrid.iso.sha256sum ; \
+	sha256sum tv-nonfree-amd64.hybrid.iso > tv-nonfree-amd64.hybrid.iso.sha256sum ; \
+	sha256sum tv-nonfree-custom-amd64.hybrid.iso > tv-nonfree-customamd64.hybrid.iso.sha256sum ; \
+	sha256sum tv-nonfree-hardened-amd64.hybrid.iso > tv-nonfree-hardened-amd64.hybrid.iso.sha256sum ; \
+	sha256sum tv-nonfree-hardened-custom-amd64.hybrid.iso > tv-nonfree-hardened-custom-amd64.hybrid.iso.sha256sum ;
 
 sig:
 	gpg --batch --yes --clear-sign -u "$(SIGNING_KEY)" tv-*amd64.hybrid.iso.sha256sum
@@ -529,3 +536,20 @@ backup:
 	scp tv-*amd64.contents media@192.168.2.206:os_backups/
 	scp tv-*amd64.hybrid.iso.zsync media@192.168.2.206:os_backups/
 	scp tv-*amd64.packages media@192.168.2.206:os_backups/
+
+get-backup:
+	scp media@192.168.2.206:os_backups/tv-*amd64.hybrid.iso .
+	scp media@192.168.2.206:os_backups/tv-*amd64.hybrid.iso.sha256sum .
+	scp media@192.168.2.206:os_backups/tv-*amd64.hybrid.iso.sha256sum.asc .
+	scp media@192.168.2.206:os_backups/tv-*amd64.files .
+	scp media@192.168.2.206:os_backups/tv-*amd64.contents .
+	scp media@192.168.2.206:os_backups/tv-*amd64.hybrid.iso.zsync .
+	scp media@192.168.2.206:os_backups/tv-*amd64.packages .
+
+get-infos:
+	scp media@192.168.2.206:os_backups/tv-*amd64.hybrid.iso.sha256sum .
+	scp media@192.168.2.206:os_backups/tv-*amd64.hybrid.iso.sha256sum.asc .
+	scp media@192.168.2.206:os_backups/tv-*amd64.files .
+	scp media@192.168.2.206:os_backups/tv-*amd64.contents .
+	scp media@192.168.2.206:os_backups/tv-*amd64.hybrid.iso.zsync .
+	scp media@192.168.2.206:os_backups/tv-*amd64.packages .
