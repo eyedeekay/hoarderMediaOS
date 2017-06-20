@@ -518,50 +518,10 @@ sigsum:
 	gpg --batch --yes --clear-sign -u "$(SIGNING_KEY)" tv-*amd64.hybrid.iso.sha256sum
 
 backup:
-	scp tv-amd64.hybrid.iso media@192.168.2.206:os_backups/
-	scp tv-amd64.files media@192.168.2.206:os_backups/
-	scp tv-amd64.contents media@192.168.2.206:os_backups/
-	scp tv-amd64.hybrid.iso.zsync media@192.168.2.206:os_backups/
-	scp tv-amd64.packages media@192.168.2.206:os_backups/
-
-backup-custom:
-	scp tv-amd64.hybrid.iso media@192.168.2.206:os_backups/
-	scp tv-amd64.files media@192.168.2.206:os_backups/
-	scp tv-amd64.contents media@192.168.2.206:os_backups/
-	scp tv-amd64.hybrid.iso.zsync media@192.168.2.206:os_backups/
-	scp tv-amd64.packages media@192.168.2.206:os_backups/
-
-backup-hardened:
-	scp tv-hardened-amd64.hybrid.iso media@192.168.2.206:os_backups/
-	scp tv-hardened-amd64.files media@192.168.2.206:os_backups/
-	scp tv-hardened-amd64.contents media@192.168.2.206:os_backups/
-	scp tv-hardened-amd64.hybrid.iso.zsync media@192.168.2.206:os_backups/
-	scp tv-hardened-amd64.packages media@192.168.2.206:os_backups/
-
-backup-hardened-custom:
-	scp tv-hardened-amd64.hybrid.iso media@192.168.2.206:os_backups/
-	scp tv-hardened-amd64.files media@192.168.2.206:os_backups/
-	scp tv-hardened-amd64.contents media@192.168.2.206:os_backups/
-	scp tv-hardened-amd64.hybrid.iso.zsync media@192.168.2.206:os_backups/
-	scp tv-hardened-amd64.packages media@192.168.2.206:os_backups/
-
-backup-nonfree:
-	scp tv-nonfree-amd64.hybrid.iso media@192.168.2.206:os_backups/
-	scp tv-nonfree-amd64.files media@192.168.2.206:os_backups/
-	scp tv-nonfree-amd64.contents media@192.168.2.206:os_backups/
-	scp tv-nonfree-amd64.hybrid.iso.zsync media@192.168.2.206:os_backups/
-	scp tv-nonfree-amd64.packages media@192.168.2.206:os_backups/
-
-backup-nonfree-custom:
-	scp tv-nonfree-amd64.hybrid.iso media@192.168.2.206:os_backups/
-	scp tv-nonfree-amd64.files media@192.168.2.206:os_backups/
-	scp tv-nonfree-amd64.contents media@192.168.2.206:os_backups/
-	scp tv-nonfree-amd64.hybrid.iso.zsync media@192.168.2.206:os_backups/
-	scp tv-nonfree-amd64.packages media@192.168.2.206:os_backups/
-
-backup-nonfree-hardened-custom:
-	scp tv-nonfree-hardened-amd64.hybrid.iso media@192.168.2.206:os_backups/
-	scp tv-nonfree-hardened-amd64.files media@192.168.2.206:os_backups/
-	scp tv-nonfree-hardened-amd64.contents media@192.168.2.206:os_backups/
-	scp tv-nonfree-hardened-amd64.hybrid.iso.zsync media@192.168.2.206:os_backups/
-	scp tv-nonfree-hardened-amd64.packages media@192.168.2.206:os_backups/
+	scp tv-*amd64.hybrid.iso media@192.168.2.206:os_backups/
+	scp tv-*amd64.hybrid.iso.sha256sum media@192.168.2.206:os_backups/
+	scp tv-*amd64.hybrid.iso.sha256sum.asc media@192.168.2.206:os_backups/
+	scp tv-*amd64.files media@192.168.2.206:os_backups/
+	scp tv-*amd64.contents media@192.168.2.206:os_backups/
+	scp tv-*amd64.hybrid.iso.zsync media@192.168.2.206:os_backups/
+	scp tv-*amd64.packages media@192.168.2.206:os_backups/
