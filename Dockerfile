@@ -19,6 +19,7 @@ RUN chown -R livebuilder:livebuilder /home/livebuilder/hoarder-live
 USER livebuilder
 WORKDIR /home/livebuilder/hoarder-live
 COPY auto /home/livebuilder/hoarder-live/auto
+RUN chown -R root:root /home/livebuilder/hoarder-live/auto
 COPY Makefile /home/livebuilder/hoarder-live/Makefile
 USER root
 RUN make docker-init
