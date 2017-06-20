@@ -511,6 +511,12 @@ all-nonfree-hardened-custom:
 	make permissive-user; \
 	make nonfree-firmware
 
+sum:
+	sha256sum tv-*amd64.hybrid.iso > tv-*amd64.hybrid.iso.sha256sum
+
+sigsum:
+	gpg --batch --yes --clear-sign -u "$(SIGNING_KEY)" tv-*amd64.hybrid.iso.sha256sum
+
 backup:
 	scp tv-amd64.hybrid.iso media@192.168.2.206:os_backups/
 	scp tv-amd64.files media@192.168.2.206:os_backups/
