@@ -12,9 +12,7 @@ clean:
 	make clean-config
 
 clean-cache:
-	sudo lb clean --cache
-	sudo \rm -rf cache
-	sudo \rm -rf chroot
+	sudo lb clean --purge
 
 clean-config:
 	rm -rf config; \
@@ -37,9 +35,31 @@ config-hardened-custom:
 		--firmware-chroot true \
 		--image-name tv-hardened-custom
 
+config-proxy:
+	export proxy="true"; \
+	lb config --firmware-chroot true \
+		--image-name tv
+
+config-hardened-proxy:
+	export proxy="true"; \
+	lb config -k grsec-amd64 \
+		--firmware-chroot true \
+		--image-name tv-hardened
+
+config-custom-proxy:
+	export proxy="true"; \
+	lb config --firmware-chroot true \
+		--image-name tv-custom
+
+config-hardened-custom-proxy:
+	export proxy="true"; \
+	lb config -k grsec-amd64 \
+		--firmware-chroot true \
+		--image-name tv-hardened-custom
+
 config-nonfree:
 	export nonfree="true"; \
-	lb config --archive-areas "main contrib nonfree" \
+	lb config --archive-areas "main contrib non-free" \
 		--apt-source-archives false \
 		--firmware-chroot true \
 		--image-name tv-nonfree
@@ -47,14 +67,14 @@ config-nonfree:
 config-nonfree-hardened:
 	export nonfree="true"; \
 	lb config -k grsec-amd64 \
-		--archive-areas "main contrib nonfree" \
+		--archive-areas "main contrib non-free" \
 		--apt-source-archives false \
 		--firmware-chroot true \
 		--image-name tv-nonfree-hardened
 
 config-nonfree-custom:
 	export nonfree="true"; \
-	lb config --archive-areas "main contrib nonfree" \
+	lb config --archive-areas "main contrib non-free" \
 		--apt-source-archives false \
 		--firmware-chroot true \
 		--image-name tv-nonfree-custom
@@ -62,7 +82,7 @@ config-nonfree-custom:
 config-nonfree-hardened-custom:
 	export nonfree="true"; \
 	lb config -k grsec-amd64 \
-		--archive-areas "main contrib nonfree" \
+		--archive-areas "main contrib non-free" \
 		--apt-source-archives false \
 		--firmware-chroot true \
 		--image-name tv-nonfree-hardened-custom
@@ -142,19 +162,20 @@ tox-repo:
 
 palemoon-repo:
 	echo 'deb http://download.opensuse.org/repositories/home:/stevenpusser/Debian_9.0/ /' | tee config/archives/palemoon.list.chroot
-	curl -s http://download.opensuse.org/repositories/home:/stevenpusser/Debian_9.0/Release.key | tee config/archives/palemoon.list.key.chroot
+	curl -s https://download.opensuse.org/repositories/home:/stevenpusser/Debian_9.0/Release.key | tee config/archives/palemoon.list.key.chroot
 	cd config/archives/ \
 		&& ln -sf palemoon.list.chroot palemoon.list.binary \
 		&& ln -sf palemoon.list.key.chroot palemoon.list.key.binary
 
 libre:
 	make old-repo; \
+	make tor-repo; \
 	make syncthing-repo; \
 	make emby-repo; \
 	make i2pd-repo; \
-	make tor-repo; \
 	make palemoon-repo; \
-	make tox-repo; \
+	#make tox-repo; \
+
 
 apt-now-repo:
 	echo "deb http://cmotc.github.io/apt-now/deb-pkg rolling main" | tee config/archives/apt-now.list.chroot
@@ -247,9 +268,10 @@ skel:
 
 packages:
 	cd config/package-lists/ && \
-	rm build.list.chroot build.list.binary 2> /dev/null ; \
 	echo "awesome" >> build.list.chroot && \
 	echo "awesome-extra" >> build.list.chroot && \
+	echo "apt-transport-tor" >> build.list.chroot && \
+	echo "apt-transport-https" >> build.list.chroot && \
 	echo "coreutils" >> build.list.chroot && \
 	echo "openrc" >> build.list.chroot && \
 	echo "adduser" >> build.list.chroot && \
@@ -298,7 +320,6 @@ packages:
 	echo "sen" >> build.list.chroot && \
 	echo "sakura" >> build.list.chroot && \
 	echo "uzbl" >> build.list.chroot && \
-	echo "ricin" >> build.list.chroot && \
 	echo "surfraw" >> build.list.chroot && \
 	echo "surfraw-extra" >> build.list.chroot && \
 	echo "rclone" >> build.list.chroot && \
@@ -340,7 +361,7 @@ easy-user:
 	echo "d-i partman-basicfilesystems/no_swap boolean false">> config/preseed/preseed.cfg.chroot
 	echo 'd-i partman-auto/expert_recipe string boot-root : \'>> config/preseed/preseed.cfg.chroot
 	echo '5120 1 -1 btrfs \'>> config/preseed/preseed.cfg.chroot
-	echo '\$primary{ } \$bootable{ } \>> config/preseed/preseed.cfg.chroot
+	echo '$$primary{ } $$bootable{ } \'>> config/preseed/preseed.cfg.chroot
 	echo 'method{ format } format{ } \'>> config/preseed/preseed.cfg.chroot
 	echo 'use_filesystem{ } filesystem{ btrfs } \'>> config/preseed/preseed.cfg.chroot
 	echo "label { root } mountpoint{ / } .">> config/preseed/preseed.cfg.chroot
@@ -349,7 +370,7 @@ easy-user:
 	echo "d-i partman-basicfilesystems/no_swap boolean false">> config/preseed/preseed.cfg.binary
 	echo 'd-i partman-auto/expert_recipe string boot-root : \'>> config/preseed/preseed.cfg.binary
 	echo '5120 1 -1 btrfs \'>> config/preseed/preseed.cfg.binary
-	echo '\$primary{ } \$bootable{ } \'>> config/preseed/preseed.cfg.binary
+	echo '$$primary{ } $$bootable{ } \'>> config/preseed/preseed.cfg.binary
 	echo 'method{ format } format{ } \'>> config/preseed/preseed.cfg.binary
 	echo 'use_filesystem{ } filesystem{ btrfs } \'>> config/preseed/preseed.cfg.binary
 	echo "label { root } mountpoint{ / } .">> config/preseed/preseed.cfg.binary
@@ -367,7 +388,7 @@ permissive-user:
 	echo "d-i partman-basicfilesystems/no_swap boolean false">> config/preseed/preseed.cfg.chroot
 	echo 'd-i partman-auto/expert_recipe string boot-root : \'>> config/preseed/preseed.cfg.chroot
 	echo '5120 1 -1 btrfs \'>> config/preseed/preseed.cfg.chroot
-	echo '\$primary{ } \$bootable{ } \'>> config/preseed/preseed.cfg.chroot
+	echo '$$primary{ } $$bootable{ } \'>> config/preseed/preseed.cfg.chroot
 	echo 'method{ format } format{ } \'>> config/preseed/preseed.cfg.chroot
 	echo 'use_filesystem{ } filesystem{ btrfs } \'>> config/preseed/preseed.cfg.chroot
 	echo "label { root } mountpoint{ / } .">> config/preseed/preseed.cfg.chroot
@@ -376,7 +397,7 @@ permissive-user:
 	echo "d-i partman-basicfilesystems/no_swap boolean false">> config/preseed/preseed.cfg.binary
 	echo 'd-i partman-auto/expert_recipe string boot-root : \'>> config/preseed/preseed.cfg.binary
 	echo '5120 1 -1 btrfs \'>> config/preseed/preseed.cfg.binary
-	echo '\$primary{ } \$bootable{ } \'>> config/preseed/preseed.cfg.binary
+	echo '$$primary{ } $$bootable{ } \'>> config/preseed/preseed.cfg.binary
 	echo 'method{ format } format{ } \'>> config/preseed/preseed.cfg.binary
 	echo 'use_filesystem{ } filesystem{ btrfs } \'>> config/preseed/preseed.cfg.binary
 	echo "label { root } mountpoint{ / } .">> config/preseed/preseed.cfg.binary
@@ -393,7 +414,10 @@ docker:
 	docker build -t hoarder-build .
 
 docker-build:
-	docker run -i --privileged -t hoarder-build lb build
+	docker run -i --privileged -t hoarder-build make build
+
+docker-clean:
+	docker run -i --privileged -t hoarder-build lb clean --purge
 
 allclean:
 	make clean ; \

@@ -661,5 +661,20 @@ priveleged user in the container. That command is lb build:
 
         docker run --privileged -t tv-build lb build
 
-TODO: Extract the build artifacts successfully.
+For some reason, when I run this command in a container, the files are built,
+and then lost. To work around this difficulty, I modify the auto/build script
+to launch directly into bash after completing the build process.
 
+**Example auto/build Figure 2:**
+
+        #! /usr/bin/env bash
+        lb build noauto \
+            "$@"
+
+From the prompt, you can inspect the results of the build, and extract the build
+artifacts using docker cp:
+
+        docker cp tv-build:/home/livebuilder/tv-live/tv-* .
+
+and you now have, what I think, is a pretty great way to remaster your own live
+install media.

@@ -9,9 +9,11 @@ RUN apt-get install -yq \
                 live-build \
                 debootstrap \
                 make \
-                curl
+                curl \
+                sudo \
+                procps
 RUN apt-get dist-upgrade -yq
-RUN useradd -ms /bin/bash livebuilder
+RUN useradd -ms /bin/bash livebuilder && echo "livebuilder:liverbuilder" | chpasswd && adduser livebuilder sudo
 ADD . /home/livebuilder/hoarder-live
 RUN chown -R livebuilder:livebuilder /home/livebuilder/hoarder-live
 USER livebuilder
@@ -21,11 +23,10 @@ COPY Makefile /home/livebuilder/hoarder-live/Makefile
 USER root
 RUN make docker-init
 USER livebuilder
-RUN make config-hardened-custom
+RUN make config-hardened-custom-proxy
 RUN make libre
 RUN make custom
 RUN make skel
 RUN make permissive-user
 RUN make packages
 USER root
-
