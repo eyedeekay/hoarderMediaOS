@@ -514,8 +514,12 @@ all-nonfree-hardened-custom:
 sum:
 	sha256sum tv-*amd64.hybrid.iso > tv-*amd64.hybrid.iso.sha256sum
 
-sigsum:
+sig:
 	gpg --batch --yes --clear-sign -u "$(SIGNING_KEY)" tv-*amd64.hybrid.iso.sha256sum
+
+sigsum:
+	make sum
+	make sig
 
 backup:
 	scp tv-*amd64.hybrid.iso media@192.168.2.206:os_backups/
