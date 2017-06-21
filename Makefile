@@ -837,7 +837,7 @@ garbage-collect:
 			README.md; \
 		git commit -am "$(DEV_MESSAGE)"
 	git push github --force --all
-	git push origin --force --tags
+	git push github --force --tags
 
 docker:
 	docker build -t hoarder-build .
