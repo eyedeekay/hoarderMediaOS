@@ -46,23 +46,23 @@ config-hardened-custom:
 		--image-name tv-hardened-custom
 
 config-proxy:
-	export proxy_addr="http://192.168.2.203:3124"; \
+	export proxy_addr="http://192.168.2.203:3142"; \
 	lb config --firmware-chroot true \
 		--image-name tv
 
 config-hardened-proxy:
-	export proxy_addr="http://192.168.2.203:3124"; \
+	export proxy_addr="http://192.168.2.203:3142"; \
 	lb config -k grsec-amd64 \
 		--firmware-chroot true \
 		--image-name tv-hardened
 
 config-custom-proxy:
-	export proxy_addr="http://192.168.2.203:3124"; \
+	export proxy_addr="http://192.168.2.203:3142"; \
 	lb config --firmware-chroot true \
 		--image-name tv-custom
 
 config-hardened-custom-proxy:
-	export proxy_addr="http://192.168.2.203:3124"; \
+	export proxy_addr="http://192.168.2.203:3142"; \
 	lb config -k grsec-amd64 \
 		--firmware-chroot true \
 		--image-name tv-hardened-custom
