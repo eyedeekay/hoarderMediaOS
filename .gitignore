@@ -1,4 +1,6 @@
 *.iso
+*.iso.sha256sum
+*.iso.sha256sum.asc
 *.contents
 *.hybrid.iso.zsync
 *.packages

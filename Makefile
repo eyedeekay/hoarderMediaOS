@@ -830,12 +830,12 @@ docker-build:
 	docker run -i --privileged -t hoarder-build make build
 
 docker-build-hardened-on-hardened:
-	sudo sysctl -w kernel.grsecurity.chroot_deny_chmod=0
-	sudo sysctl -w kernel.grsecurity.chroot_deny_mknod=0
-	sudo sysctl -w kernel.grsecurity.chroot_deny_mount=0
-	sudo sysctl -p
+	docker run -i --privileged -t hoarder-build sysctl -w kernel.grsecurity.chroot_deny_chmod=0
+	docker run -i --privileged -t hoarder-build sysctl -w kernel.grsecurity.chroot_deny_mknod=0
+	docker run -i --privileged -t hoarder-build sysctl -w kernel.grsecurity.chroot_deny_mount=0
+	docker run -i --privileged -t hoarder-build sysctl -p
 	docker run -i --privileged -t hoarder-build make build
-	sudo sysctl -w kernel.grsecurity.chroot_deny_chmod=1
-	sudo sysctl -w kernel.grsecurity.chroot_deny_mknod=1
-	sudo sysctl -w kernel.grsecurity.chroot_deny_mount=1
-	sudo sysctl -p
+	docker run -i --privileged -t hoarder-build sysctl -w kernel.grsecurity.chroot_deny_chmod=1
+	docker run -i --privileged -t hoarder-build sysctl -w kernel.grsecurity.chroot_deny_mknod=1
+	docker run -i --privileged -t hoarder-build sysctl -w kernel.grsecurity.chroot_deny_mount=1
+	docker run -i --privileged -t hoarder-build sysctl -p
