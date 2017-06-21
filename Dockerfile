@@ -16,10 +16,8 @@ RUN apt-get dist-upgrade -yq
 RUN useradd -ms /bin/bash livebuilder && echo "livebuilder:liverbuilder" | chpasswd && adduser livebuilder sudo
 ADD . /home/livebuilder/hoarder-live
 RUN chown -R livebuilder:livebuilder /home/livebuilder/hoarder-live
-USER livebuilder
 WORKDIR /home/livebuilder/hoarder-live
 COPY auto /home/livebuilder/hoarder-live/auto
-USER root
 RUN chown -R root:root /home/livebuilder/hoarder-live/auto
 USER livebuilder
 COPY Makefile /home/livebuilder/hoarder-live/Makefile

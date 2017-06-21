@@ -407,18 +407,6 @@ build:
 	make packages
 	sudo lb build
 
-docker-init:
-	mkdir -p .build
-
-docker:
-	docker build -t hoarder-build .
-
-docker-build:
-	docker run -i --privileged -t hoarder-build make build
-
-docker-clean:
-	docker run -i --privileged -t hoarder-build lb clean --purge
-
 allclean:
 	make clean ; \
 	make all
@@ -810,3 +798,20 @@ upload:
 	github-release upload --user cmotc --repo hoarderMediaOS --tag $(shell date +'%y.%m.%d') \
 		--name "tv-nonfree-hardened-custom-amd64.hybrid.iso" \
 		--file tv-nonfree-hardened-custom-amd64.hybrid.iso;\
+
+docker:
+	docker build -t hoarder-build .
+
+docker-init:
+	mkdir -p .build
+
+docker-clean:
+	docker run -i --privileged -t hoarder-build lb clean --purge
+
+docker-build:
+	docker run -i --privileged -t hoarder-build make build
+
+docker-build-hardened-on-hardened:
+	sysctl -w kernel.grsecurity.chroot_deny_mount=0
+	docker run -i --privileged -t hoarder-build make build
+	sysctl -w kernel.grsecurity.chroot_deny_mount=1

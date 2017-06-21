@@ -670,6 +670,7 @@ to launch directly into bash after completing the build process.
         #! /usr/bin/env bash
         lb build noauto \
             "$@"
+        bash
 
 From the prompt, you can inspect the results of the build, and extract the build
 artifacts using docker cp:
@@ -678,3 +679,13 @@ artifacts using docker cp:
 
 and you now have, what I think, is a pretty great way to remaster your own live
 install media.
+
+Step 4: Provide a path to verify Authentic copies
+=================================================
+
+Like I said, we should all be careful about who we trust to assemble all our
+software. I also don't think it's a sin to rely on a stable upstream distro like
+Debian to provide a basis for personal experimentation in computing.
+
+Step 5: Create torrents and Release
+===================================
