@@ -8,6 +8,7 @@ expose:
 
 clean:
 	sudo lb clean; echo "cleaned"
+	make clean-artifacts
 	make clean-cache
 	make clean-config
 
@@ -16,7 +17,15 @@ clean-cache:
 
 clean-config:
 	rm -rf config; \
-	rm tv-*
+
+clean-artifacts:
+	rm *.hybrid.iso
+	rm *.hybrid.iso.sha256sum
+	rm *.hybrid.iso.sha256sum.asc
+	rm *.files
+	rm *.contents
+	rm *.hybrid.iso.zsync
+	rm *.packages
 
 config:
 	lb config --firmware-chroot true \
@@ -815,6 +824,14 @@ upload:
 	github-release upload --user cmotc --repo hoarderMediaOS --tag $(shell date +'%y.%m.%d') \
 		--name "tv-nonfree-hardened-custom-amd64.hybrid.iso" \
 		--file tv-nonfree-hardened-custom-amd64.hybrid.iso;\
+
+garbage-collect:
+	git reflog expire --all --expire=now
+	git gc --aggressive --prune=now
+	git repack -Ad
+	git prune
+	export DEV_MESSAGE="garbage-collected repository"
+	make push
 
 docker:
 	docker build -t hoarder-build .
