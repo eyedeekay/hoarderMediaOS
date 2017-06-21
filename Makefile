@@ -831,7 +831,10 @@ garbage-collect:
 	git repack -Ad
 	git prune
 	export DEV_MESSAGE="garbage-collected repository"
-	make push
+	gpg --batch --yes --clear-sign -u "$(SIGNING_KEY)" \
+		README.md
+	git commit -am "$(DEV_MESSAGE)"
+	git push github
 
 docker:
 	docker build -t hoarder-build .
