@@ -773,12 +773,12 @@ this:
         =PrNx
         -----END PGP SIGNATURE-----
 
-and can be used by anyone with your public key to
-
-
-In order to make the signatures with the Makefile, a fragment like the following
-will work. Note that we don't have to delete failed signatures, a nonexistent
-file will just not produce a signature.
+and can be used by anyone with your public key to assure that the hash they
+are using, and thus the iso it corresponds to, came from the owner of the
+corresponding private key and them alone. In order to make the signatures with
+the Makefile, a fragment like the following will work. Note that we don't have
+to delete failed signatures, a nonexistent file will just not produce a
+signature.
 
         sign:
                 gpg --batch --yes --clear-sign -u "$(SIGNING_KEY)" \
@@ -787,4 +787,13 @@ file will just not produce a signature.
 Step 5: Create torrents and Release
 ===================================
 
+Now we've got everything we need to responsibly share our configuration except
+a means of sharing it. Fortunately, with a little trickery you can actually
+reliably bootstrap some really good ways of distributing your iso file. I like
+a combination of Github Releases and a cool feature of the Bittorrent protocol
+known as "Web Seeds" that allow you to supplement a Peer-to-Peer swarm with an
+HTTP or HTTPS source. Unfortunately, in order to make this automatic we have to
+install an additional couple of dependencies. Fortunately for us, one of those
+dependencies is in Go! Go is an awesome language that anyone can use.
+Unfortunately for us, we have to use Go to compile something for ourselves.
 
