@@ -418,7 +418,7 @@ build-hardened-on-hardened:
 	sudo sysctl kernel.grsecurity.chroot_deny_mknod
 	sudo sysctl kernel.grsecurity.chroot_deny_mount
 	make build
-	sudo sysctl -w kernel.grsecurity.chroot_caps=0
+	sudo sysctl -w kernel.grsecurity.chroot_caps=1
 	sudo sysctl -w kernel.grsecurity.chroot_deny_chmod=1
 	sudo sysctl -w kernel.grsecurity.chroot_deny_mknod=1
 	sudo sysctl -w kernel.grsecurity.chroot_deny_mount=1
@@ -847,7 +847,7 @@ docker-build-hardened-on-hardened:
 	sudo sysctl kernel.grsecurity.chroot_deny_mknod
 	sudo sysctl kernel.grsecurity.chroot_deny_mount
 	docker run -i --privileged -t hoarder-build make build-hardnened-on-hardened
-	sudo sysctl -w kernel.grsecurity.chroot_caps=0
+	sudo sysctl -w kernel.grsecurity.chroot_caps=1
 	sudo sysctl -w kernel.grsecurity.chroot_deny_chmod=1
 	sudo sysctl -w kernel.grsecurity.chroot_deny_mknod=1
 	sudo sysctl -w kernel.grsecurity.chroot_deny_mount=1
