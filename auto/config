@@ -2,7 +2,7 @@
 
 components=$( [ ! -z "$nonfree" ] && echo "--components=\"main,contrib,non-free\"" || echo "" )
 
-useproxy=$( [ ! -z "$proxy" ] && echo "--apt-http-proxy http://192.168.2.203" || echo "" )
+useproxy=$( [ ! -z "$proxy_addr" ] && echo "--apt-http-proxy $proxy_addr" || echo "" )
 
 if [ ! -z "$components" ]; then
         echo "WARNING: USING NON-FREE COMPONENTS! $components"
