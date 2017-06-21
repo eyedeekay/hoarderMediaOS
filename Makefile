@@ -829,14 +829,14 @@ garbage-collect:
 	git filter-branch --tag-name-filter cat --index-filter 'git rm -r --cached --ignore-unmatch binary' --prune-empty -f -- --all
 	rm -rf .git/refs/original/
 	git reflog expire --all --expire=now
+	git gc --prune=now
 	git gc --aggressive --prune=now
 	git repack -Ad
-	git prune
-	export DEV_MESSAGE="garbage-collected repository"
-	gpg --batch --yes --clear-sign -u "$(SIGNING_KEY)" \
-		README.md
-	git commit -am "$(DEV_MESSAGE)"
-	git push github
+	export DEV_MESSAGE="garbage-collected repository" ; \
+		gpg --batch --yes --clear-sign -u "$(SIGNING_KEY)" \
+			README.md; \
+		git commit -am "$(DEV_MESSAGE)"
+	git push github --force --all
 
 docker:
 	docker build -t hoarder-build .
