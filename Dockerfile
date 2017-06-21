@@ -23,8 +23,8 @@ USER livebuilder
 COPY Makefile /home/livebuilder/hoarder-live/Makefile
 USER root
 RUN make clean
-RUN make docker-init
 USER livebuilder
+RUN make docker-init
 RUN make config-hardened-custom-proxy
 RUN make libre
 RUN make custom
