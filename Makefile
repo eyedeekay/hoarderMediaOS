@@ -408,18 +408,25 @@ build:
 	sudo lb build
 
 build-hardened-on-hardened:
+	sudo sysctl -w kernel.grsecurity.chroot_caps=0
 	sudo sysctl -w kernel.grsecurity.chroot_deny_chmod=0
 	sudo sysctl -w kernel.grsecurity.chroot_deny_mknod=0
 	sudo sysctl -w kernel.grsecurity.chroot_deny_mount=0
 	sudo sysctl -p
+	sudo sysctl kernel.grsecurity.chroot_caps
 	sudo sysctl kernel.grsecurity.chroot_deny_chmod
 	sudo sysctl kernel.grsecurity.chroot_deny_mknod
 	sudo sysctl kernel.grsecurity.chroot_deny_mount
 	make build
+	sudo sysctl -w kernel.grsecurity.chroot_caps=0
 	sudo sysctl -w kernel.grsecurity.chroot_deny_chmod=1
 	sudo sysctl -w kernel.grsecurity.chroot_deny_mknod=1
 	sudo sysctl -w kernel.grsecurity.chroot_deny_mount=1
 	sudo sysctl -p
+	sudo sysctl kernel.grsecurity.chroot_caps
+	sudo sysctl kernel.grsecurity.chroot_deny_chmod
+	sudo sysctl kernel.grsecurity.chroot_deny_mknod
+	sudo sysctl kernel.grsecurity.chroot_deny_mount
 
 allclean:
 	make clean ; \
