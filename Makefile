@@ -845,7 +845,7 @@ push:
 	gpg --batch --yes --clear-sign -u "$(SIGNING_KEY)" \
 		README.md
 	git commit -am "$(DEV_MESSAGE)"
-	git push github new-master
+	git push github master
 
 update:
 	git pull
