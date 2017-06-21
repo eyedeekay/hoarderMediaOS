@@ -19,13 +19,13 @@ clean-config:
 	rm -rf config; \
 
 clean-artifacts:
-	rm *.hybrid.iso
-	rm *.hybrid.iso.sha256sum
-	rm *.hybrid.iso.sha256sum.asc
-	rm *.files
-	rm *.contents
-	rm *.hybrid.iso.zsync
-	rm *.packages
+	rm -f *.hybrid.iso
+	rm -f *.hybrid.iso.sha256sum
+	rm -f *.hybrid.iso.sha256sum.asc
+	rm -f *.files
+	rm -f *.contents
+	rm -f *.hybrid.iso.zsync
+	rm -f *.packages
 
 config:
 	lb config --firmware-chroot true \
@@ -826,6 +826,8 @@ upload:
 		--file tv-nonfree-hardened-custom-amd64.hybrid.iso;\
 
 garbage-collect:
+	git filter-branch --tag-name-filter cat --index-filter 'git rm -r --cached --ignore-unmatch binary' --prune-empty -f -- --all
+	rm -rf .git/refs/original/
 	git reflog expire --all --expire=now
 	git gc --aggressive --prune=now
 	git repack -Ad
