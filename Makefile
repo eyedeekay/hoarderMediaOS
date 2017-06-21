@@ -16,6 +16,7 @@ clean-cache:
 
 clean-config:
 	rm -rf config; \
+	rm tv-*
 
 config:
 	lb config --firmware-chroot true \
@@ -817,6 +818,12 @@ upload:
 
 docker:
 	docker build -t hoarder-build .
+
+push:
+	gpg --batch --yes --clear-sign -u "$(SIGNING_KEY)" \
+		README.md
+	git commit -am "$(DEV_MESSAGE)"
+	git push github
 
 update:
 	git pull
