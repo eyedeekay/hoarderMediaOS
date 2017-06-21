@@ -22,6 +22,7 @@ RUN chown -R root:root /home/livebuilder/hoarder-live/auto
 USER livebuilder
 COPY Makefile /home/livebuilder/hoarder-live/Makefile
 USER root
+RUN make clean
 RUN make docker-init
 USER livebuilder
 RUN make config-hardened-custom-proxy
