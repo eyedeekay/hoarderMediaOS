@@ -802,6 +802,10 @@ upload:
 docker:
 	docker build -t hoarder-build .
 
+update:
+	git pull
+	make docker
+
 docker-init:
 	mkdir -p .build
 
@@ -812,6 +816,8 @@ docker-build:
 	docker run -i --privileged -t hoarder-build make build
 
 docker-build-hardened-on-hardened:
-	sysctl -w kernel.grsecurity.chroot_deny_mount=0
+	sudo sysctl -w kernel.grsecurity.chroot_deny_mount=0
+	sudo sysctl -p
 	docker run -i --privileged -t hoarder-build make build
-	sysctl -w kernel.grsecurity.chroot_deny_mount=1
+	sudo sysctl -w kernel.grsecurity.chroot_deny_mount=1
+	sudo sysctl -p

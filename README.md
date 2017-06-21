@@ -680,12 +680,45 @@ artifacts using docker cp:
 and you now have, what I think, is a pretty great way to remaster your own live
 install media.
 
+Unfortunately, because this depends on using chroots as they function in a
+regular GNU/Linux distributio, this means that we won't be able to run our
+build in Docker on our hardened-kernel system. We can work around this, however
+imperfectly, by allowing mounts in chroots
+
+        sudo sysctl -w kernel.grsecurity.chroot_deny_mount=0
+        sudo sysctl -p
+        docker run -i --privileged -t hoarder-build make build
+        sudo sysctl -w kernel.grsecurity.chroot_deny_mount=1
+
 Step 4: Provide a path to verify Authentic copies
 =================================================
 
 Like I said, we should all be careful about who we trust to assemble all our
-software. I also don't think it's a sin to rely on a stable upstream distro like
-Debian to provide a basis for personal experimentation in computing.
+software. Likewise, when you distribute it in binary form, it probably makes
+sense to provide many ways to verify that the recipient of that copy has
+obtained it authentically. To do this, you have many options, and you should
+choose to use them all if possible.
+
+Compute Hashes
+--------------
+
+The first step to helping your fellow enthusiast to verify the authenticity of
+an image, you need to compute hashes of those images. A *hash function* takes
+an arbitrary piece of data, any data will do, and creates a string of a fixed
+size which is totally unique to the piece of data that was *hashed*. So when we
+sha256sum our iso file, we will get a string that is unique to our iso file and
+cannot be reproduced, without an exact copy of the original iso file. The tool
+we should use for this is sha256sum, which computes hashes based on the Secure
+Hashing Algorithm, the 256 bit version, which is used by many GNU/Linux
+distributions to verify the authenticity of their distributed iso files.
+
+In order to produce the sha256sum of the iso file
+
+        sha256sum tv-amd64.hybrid.iso > \
+		tv-amd64.hybrid.iso.sha256sum || \
+		rm tv-amd64.hybrid.iso.sha256sum; \
 
 Step 5: Create torrents and Release
 ===================================
+
+
