@@ -697,7 +697,7 @@ release:
 		--repo hoarderMediaOS \
 		--tag $(shell date +'%y.%m.%d') \
 		--name "hoarderMediaOS" \
-		--description "A re-buildable OS for self-hosting" \
+		--description "A re-buildable OS for self-hosting. Please use the torrent if possible" \
 		--pre-release ; \
 	make upload
 

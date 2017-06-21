@@ -726,6 +726,7 @@ This can now be used to ensure that the file corresponds to the hash, which is
 one half ot the authenticity puzzle. If you want to compute the hashes in your
 Makefile, you could use something like the following snippet.
 
+        **Example Makefile Fragment: hash, delete empty on failure**
         hash:
                 sha256sum tv-amd64.hybrid.iso > \
                         tv-amd64.hybrid.iso.sha256sum || \
@@ -748,7 +749,38 @@ something out there is better for you.
 To get started, we need to generate a signing key. If you already have a signing
 key you want to use, then you can skip this step.
 
+[See Also: Key Generation/Distribution](https://wiki.debian.org/Keysigning#Step_1:_Create_a_RSA_keypair)
 
+[Also See Also: Key Generation](https://keyring.debian.org/creating-key.html)
+
+Before you do anything else, you should edit your $HOME/.gnupg/gpg.conf to not
+use SHA1 as it's hashing algorithm.
+
+        personal-digest-preferences SHA256
+        cert-digest-algo SHA256
+        default-preference-list SHA512 SHA384 SHA256 SHA224 AES256 AES192 AES CAST5 ZLIB BZIP2 ZIP Uncompressed
+
+Now, you'll need to start the gpg key generation procedure:
+
+        gpg --gen-key
+
+You'll be prompted for whick key type you want to generate. RSA and RSA, the
+default key type, is the one that we want. On the next prompt, you'll be
+prompted to select a key size, and you should select 4096 for your signing key.
+Then select a time frame for the key to be valid. For the sake of brevity, I
+direct you to the second
+[link at the top of this section](https://keyring.debian.org/creating-key.html).
+
+Now that you're done with that, you've just got to get ready to share your key.
+First, generate a key revocation certificate. Back it up someplace safe. You
+will use it in case your private key is ever compromised to inform people that
+they must disregard the compromised key and update to an uncompromised key.
+
+        gpg --gen-revoke ${KEY_ID} > ~/.gnupg/revocation-${KEY_ID}.crt
+
+Finally, share the **public** key with the world.
+
+        gpg --send-key ${KEY_ID}
 
 Now that we've got our signing key, let's use it to sign the files:
 
@@ -780,6 +812,7 @@ the Makefile, a fragment like the following will work. Note that we don't have
 to delete failed signatures, a nonexistent file will just not produce a
 signature.
 
+        **Example Makefile Fragment: sign the hash**
         sign:
                 gpg --batch --yes --clear-sign -u "$(SIGNING_KEY)" \
                         tv-amd64.hybrid.iso.sha256sum ; \
@@ -795,5 +828,91 @@ known as "Web Seeds" that allow you to supplement a Peer-to-Peer swarm with an
 HTTP or HTTPS source. Unfortunately, in order to make this automatic we have to
 install an additional couple of dependencies. Fortunately for us, one of those
 dependencies is in Go! Go is an awesome language that anyone can use.
-Unfortunately for us, we have to use Go to compile something for ourselves.
+Unfortunately for us, it's because the excellent Go software involved here isn't
+quite available in Debian just yet.
 
+Install Extra Dependencies
+--------------------------
+
+OK so first, we need to install the extra dependencies here. We'll be using the
+terminal tool "mktorrent" to generate our torrent files, and we'll be using
+golang to get the github-release package.
+
+        sudo apt-get install mktorrent golang
+
+Now, set the GOPATH and run 'go get' to retrieve the package
+
+        export GOPATH="$HOME/.go"
+        mkdir -p "$GOPATH"
+        go get github.com/aktau/github-release
+
+And include the GOPATH in your PATH
+
+        export PATH="$GOPATH:$PATH"
+
+Now, generate a torrent from the file. I just added a bunch of public annouce
+URLS to it, these are open trackers anyone can use. Note that we also use a
+Web Seed to supplement our torrent. This is very, very important, it'll provide
+a consistent source for downloads until a large enough swarm exists that it is
+no longer neccessary.
+
+        mktorrent -a "udp://tracker.openbittorrent.com:80" \
+		-a "udp://tracker.publicbt.com:80" \
+		-a "udp://tracker.istole.it:80" \
+		-a "udp://tracker.btzoo.eu:80/announce" \
+		-a "http://opensharing.org:2710/announce" \
+		-a "udp://open.demonii.com:1337/announce" \
+		-a "http://announce.torrentsmd.com:8080/announce.php" \
+		-a "http://announce.torrentsmd.com:6969/announce" \
+		-a "http://bt.careland.com.cn:6969/announce" \
+		-a "http://i.bandito.org/announce" \
+		-a "http://bttrack.9you.com/announce" \
+		-w https://github.com/"$(MY_ACCOUNT)"/"$(MY_ISO)"/releases/download/$(shell date +'%y.%m.%d')/tv.iso \
+		tv-amd64.hybrid.iso; \
+
+Awesome, now that the torrent is generated, generate a tag for the release on
+github. I just use the date to tag the releases, as the point of this procedure
+is to run builds frequently.
+
+        git tag $(date +'%y.%m.%d'); git push --tags github
+
+in a Makefile, the same command will need to look like this:
+
+        git tag $(shell date +'%y.%m.%d'); git push --tags github
+
+In order to create a Github release for that tag, you'll need to use the
+program we downloaded with go get, github-release:
+
+        github-release release \
+		--user "$(MY_ACCOUNT)" \
+		--repo "$(MY_ISO)" \
+		--tag $(shell date +'%y.%m.%d') \
+		--name "$(MY_ISO)" \
+		--description "A re-buildable OS for self-hosting. Please use the torrent if possible" \
+		--pre-release ; \
+
+Now we're ready to upload our built images and verification materials to the
+release page. I generally upload them from smallest to largest files so to
+upload the sha256 hash:
+
+        github-release upload --user "$(MY_ACCOUNT)" --repo "$(MY_ISO)" --tag $(shell date +'%y.%m.%d') \
+                --name "$(MY_ISO)" \
+                --file tv-amd64.hybrid.iso.sha256sum; \
+
+And the signed sha256 hash:
+
+        github-release upload --user "$(MY_ACCOUNT)" --repo "$(MY_ISO)" --tag $(shell date +'%y.%m.%d') \
+                --name "$(MY_ISO)" \
+                --file tv-amd64.hybrid.iso.sha256sum.asc;\
+
+And the torrent file:
+
+        github-release upload --user "$(MY_ACCOUNT)" --repo "$(MY_ISO)" --tag $(shell date +'%y.%m.%d') \
+                --name "$(MY_ISO)" \
+                --file tv-amd64.hybrid.iso.torrent;\
+
+and finally, the bootable, Live ISO image.
+
+        github-release upload --user "$(MY_ACCOUNT)" --repo "$(MY_ISO)" --tag $(shell date +'%y.%m.%d') \
+                --name "$(MY_ISO)" \
+                --file tv-amd64.hybrid.iso;\
