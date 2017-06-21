@@ -694,12 +694,7 @@ backup:
 
 get-backup:
 	scp media@192.168.2.206:os_backups/tv-*amd64.hybrid.iso . ; \
-	scp media@192.168.2.206:os_backups/tv-*amd64.hybrid.iso.sha256sum . ; \
-	scp media@192.168.2.206:os_backups/tv-*amd64.hybrid.iso.sha256sum.asc . ; \
-	scp media@192.168.2.206:os_backups/tv-*amd64.files . ; \
-	scp media@192.168.2.206:os_backups/tv-*amd64.contents . ; \
-	scp media@192.168.2.206:os_backups/tv-*amd64.hybrid.iso.zsync . ; \
-	scp media@192.168.2.206:os_backups/tv-*amd64.packages . ;
+	make get-infos
 
 get-infos:
 	scp media@192.168.2.206:os_backups/tv-*amd64.hybrid.iso.sha256sum . ; \
@@ -826,6 +821,18 @@ docker:
 update:
 	git pull
 	make docker
+
+docker-enter:
+	docker run -i -t hoarder-build bash
+
+docker-copy:
+	docker cp -t hoarder-build tv-*amd64.hybrid.iso . ; \
+	docker cp -t hoarder-build tv-*amd64.hybrid.iso.sha256sum . ; \
+	docker cp -t hoarder-build tv-*amd64.hybrid.iso.sha256sum.asc . ; \
+	docker cp -t hoarder-build tv-*amd64.files . ; \
+	docker cp -t hoarder-build tv-*amd64.contents . ; \
+	docker cp -t hoarder-build tv-*amd64.hybrid.iso.zsync . ; \
+	docker cp -t hoarder-build tv-*amd64.packages . ;
 
 docker-init:
 	mkdir -p .build
