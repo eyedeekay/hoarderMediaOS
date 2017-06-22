@@ -858,13 +858,13 @@ docker-enter:
 	docker run -i -t hoarder-build bash
 
 docker-copy:
-	docker cp elegant_poitras:os_backups/tv-*amd64.hybrid.iso . ; \
-	docker cp elegant_poitras:os_backups/tv-*amd64.hybrid.iso.sha256sum . ; \
-	docker cp elegant_poitras:os_backups/tv-*amd64.hybrid.iso.sha256sum.asc . ; \
-	docker cp elegant_poitras:os_backups/tv-*amd64.files . ; \
-	docker cp elegant_poitras:os_backups/tv-*amd64.contents . ; \
-	docker cp elegant_poitras:os_backups/tv-*amd64.hybrid.iso.zsync . ; \
-	docker cp elegant_poitras:os_backups/tv-*amd64.packages . ;
+	docker cp elegant_poitras:livebuilder/tv-*amd64.hybrid.iso . ; \
+	docker cp elegant_poitras:livebuilder/tv-*amd64.hybrid.iso.sha256sum . ; \
+	docker cp elegant_poitras:livebuilder/tv-*amd64.hybrid.iso.sha256sum.asc . ; \
+	docker cp elegant_poitras:livebuilder/tv-*amd64.files . ; \
+	docker cp elegant_poitras:livebuilder/tv-*amd64.contents . ; \
+	docker cp elegant_poitras:livebuilder/tv-*amd64.hybrid.iso.zsync . ; \
+	docker cp elegant_poitras:livebuilder/tv-*amd64.packages . ;
 
 docker-init:
 	mkdir -p .build
