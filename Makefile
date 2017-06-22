@@ -858,13 +858,13 @@ docker-enter:
 	docker run -i -t hoarder-build bash
 
 docker-copy:
-	docker cp -t hoarder-build tv-*amd64.hybrid.iso . ; \
-	docker cp -t hoarder-build tv-*amd64.hybrid.iso.sha256sum . ; \
-	docker cp -t hoarder-build tv-*amd64.hybrid.iso.sha256sum.asc . ; \
-	docker cp -t hoarder-build tv-*amd64.files . ; \
-	docker cp -t hoarder-build tv-*amd64.contents . ; \
-	docker cp -t hoarder-build tv-*amd64.hybrid.iso.zsync . ; \
-	docker cp -t hoarder-build tv-*amd64.packages . ;
+	docker cp -t hoarder-build:os_backups/tv-*amd64.hybrid.iso . ; \
+	docker cp -t hoarder-build:os_backups/tv-*amd64.hybrid.iso.sha256sum . ; \
+	docker cp -t hoarder-build:os_backups/tv-*amd64.hybrid.iso.sha256sum.asc . ; \
+	docker cp -t hoarder-build:os_backups/tv-*amd64.files . ; \
+	docker cp -t hoarder-build:os_backups/tv-*amd64.contents . ; \
+	docker cp -t hoarder-build:os_backups/tv-*amd64.hybrid.iso.zsync . ; \
+	docker cp -t hoarder-build:os_backups/tv-*amd64.packages . ;
 
 docker-init:
 	mkdir -p .build
