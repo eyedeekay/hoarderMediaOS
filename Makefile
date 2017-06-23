@@ -858,22 +858,22 @@ docker-enter:
 	docker run -i -t hoarder-build bash
 
 docker-copy:
-	docker cp jovial_volhard:/home/livebuilder/hoarder-live/tv-hardened-custom-amd64.hybrid.iso . ; \
-	docker cp jovial_volhard:/home/livebuilder/hoarder-live/tv-hardened-custom-amd64.hybrid.iso.sha256sum . ; \
-	docker cp jovial_volhard:/home/livebuilder/hoarder-live/tv-hardened-custom-amd64.hybrid.iso.sha256sum.asc . ; \
-	docker cp jovial_volhard:/home/livebuilder/hoarder-live/tv-hardened-custom-amd64.files . ; \
-	docker cp jovial_volhard:/home/livebuilder/hoarder-live/tv-hardened-custom-amd64.contents . ; \
-	docker cp jovial_volhard:/home/livebuilder/hoarder-live/tv-hardened-custom-amd64.hybrid.iso.zsync . ; \
-	docker cp jovial_volhard:/home/livebuilder/hoarder-live/tv-hardened-custom-amd64.packages . ;
+	docker cp tv-live-build:/home/livebuilder/hoarder-live/tv-hardened-custom-amd64.hybrid.iso . ; \
+	docker cp tv-live-build:/home/livebuilder/hoarder-live/tv-hardened-custom-amd64.hybrid.iso.sha256sum . ; \
+	docker cp tv-live-build:/home/livebuilder/hoarder-live/tv-hardened-custom-amd64.hybrid.iso.sha256sum.asc . ; \
+	docker cp tv-live-build:/home/livebuilder/hoarder-live/tv-hardened-custom-amd64.files . ; \
+	docker cp tv-live-build:/home/livebuilder/hoarder-live/tv-hardened-custom-amd64.contents . ; \
+	docker cp tv-live-build:/home/livebuilder/hoarder-live/tv-hardened-custom-amd64.hybrid.iso.zsync . ; \
+	docker cp tv-live-build:/home/livebuilder/hoarder-live/tv-hardened-custom-amd64.packages . ;
 
 docker-init:
 	mkdir -p .build
 
 docker-clean:
-	docker run -i --privileged -t hoarder-build lb clean --purge
+	docker run -i --privileged -t hoarder-build make clean
 
 docker-build:
-	docker run -i --privileged -t hoarder-build make build
+	docker run -i -rm --name "tv-live-build" --privileged -t hoarder-build make build
 
 docker-build-hardened-on-hardened:
 	sudo sysctl -w kernel.grsecurity.chroot_caps=0
@@ -885,7 +885,7 @@ docker-build-hardened-on-hardened:
 	sudo sysctl kernel.grsecurity.chroot_deny_chmod
 	sudo sysctl kernel.grsecurity.chroot_deny_mknod
 	sudo sysctl kernel.grsecurity.chroot_deny_mount
-	docker run -i --privileged -t hoarder-build make build-hardened-on-hardened
+	docker run -rm -i --name "tv-live-build" --privileged -t hoarder-build make build-hardened-on-hardened
 	sudo sysctl -w kernel.grsecurity.chroot_caps=1
 	sudo sysctl -w kernel.grsecurity.chroot_deny_chmod=1
 	sudo sysctl -w kernel.grsecurity.chroot_deny_mknod=1

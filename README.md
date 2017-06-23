@@ -659,7 +659,7 @@ Run the Priveleged Part of the Build and Extract the Artifacts
 Finally, in order to mount /proc in our container, we must run a command as a
 priveleged user in the container. That command is lb build:
 
-        docker run --privileged -t tv-build lb build
+        docker run -i --name "tv-build" --privileged -t tv-build lb build
 
 For some reason, when I run this command in a container, the files are built,
 and then lost. To work around this difficulty, I modify the auto/build script
