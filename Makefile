@@ -858,13 +858,13 @@ docker-enter:
 	docker run -i -t hoarder-build bash
 
 docker-copy:
-	docker cp tv-live-build:/home/livebuilder/hoarder-live/tv-hardened-custom-amd64.hybrid.iso . ; \
-	docker cp tv-live-build:/home/livebuilder/hoarder-live/tv-hardened-custom-amd64.hybrid.iso.sha256sum . ; \
-	docker cp tv-live-build:/home/livebuilder/hoarder-live/tv-hardened-custom-amd64.hybrid.iso.sha256sum.asc . ; \
-	docker cp tv-live-build:/home/livebuilder/hoarder-live/tv-hardened-custom-amd64.files . ; \
-	docker cp tv-live-build:/home/livebuilder/hoarder-live/tv-hardened-custom-amd64.contents . ; \
-	docker cp tv-live-build:/home/livebuilder/hoarder-live/tv-hardened-custom-amd64.hybrid.iso.zsync . ; \
-	docker cp tv-live-build:/home/livebuilder/hoarder-live/tv-hardened-custom-amd64.packages . ;
+	docker cp tv-live-build:/home/livebuilder/hoarder-live/*-amd64.hybrid.iso . ; \
+	docker cp tv-live-build:/home/livebuilder/hoarder-live/*-amd64.hybrid.iso.sha256sum . ; \
+	docker cp tv-live-build:/home/livebuilder/hoarder-live/*-amd64.hybrid.iso.sha256sum.asc . ; \
+	docker cp tv-live-build:/home/livebuilder/hoarder-live/*-amd64.files . ; \
+	docker cp tv-live-build:/home/livebuilder/hoarder-live/*-amd64.contents . ; \
+	docker cp tv-live-build:/home/livebuilder/hoarder-live/*-amd64.hybrid.iso.zsync . ; \
+	docker cp tv-live-build:/home/livebuilder/hoarder-live/*-amd64.packages . ;
 
 docker-init:
 	mkdir -p .build
