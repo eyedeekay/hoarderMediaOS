@@ -21,10 +21,10 @@ COPY auto /home/livebuilder/hoarder-live/auto
 RUN chown -R root:root /home/livebuilder/hoarder-live/auto
 USER livebuilder
 COPY Makefile /home/livebuilder/hoarder-live/Makefile
+RUN make docker-init
 USER root
 RUN make clean
 USER livebuilder
-RUN make docker-init
 RUN make config-hardened-custom-proxy
 RUN make libre
 RUN make custom
