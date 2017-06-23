@@ -873,7 +873,7 @@ docker-clean:
 	docker run -i --privileged -t hoarder-build make clean
 
 docker-build:
-	docker run -i -rm --name "tv-live-build" --privileged -t hoarder-build make build
+	docker run -i --rm --name "tv-live-build" --privileged -t hoarder-build make build
 
 docker-build-hardened-on-hardened:
 	sudo sysctl -w kernel.grsecurity.chroot_caps=0
@@ -885,7 +885,7 @@ docker-build-hardened-on-hardened:
 	sudo sysctl kernel.grsecurity.chroot_deny_chmod
 	sudo sysctl kernel.grsecurity.chroot_deny_mknod
 	sudo sysctl kernel.grsecurity.chroot_deny_mount
-	docker run -rm -i --name "tv-live-build" --privileged -t hoarder-build make build-hardened-on-hardened
+	docker run --rm -i --name "tv-live-build" --privileged -t hoarder-build make build-hardened-on-hardened
 	sudo sysctl -w kernel.grsecurity.chroot_caps=1
 	sudo sysctl -w kernel.grsecurity.chroot_deny_chmod=1
 	sudo sysctl -w kernel.grsecurity.chroot_deny_mknod=1
