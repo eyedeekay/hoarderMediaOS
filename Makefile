@@ -621,3 +621,5 @@ docker-build-hardened-on-hardened:
 	sudo sysctl kernel.grsecurity.chroot_deny_mknod
 	sudo sysctl kernel.grsecurity.chroot_deny_mount
 
+tutorial:
+	cat Tutorial/*.md > TUTORIAL.md

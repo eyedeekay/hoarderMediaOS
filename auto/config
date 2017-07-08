@@ -4,6 +4,18 @@ components=$( [ ! -z "$nonfree" ] && echo "--components=\"main,contrib,non-free\
 
 useproxy=$( [ ! -z "$proxy_addr" ] && echo "--apt-http-proxy $proxy_addr" || echo "" )
 
+mirror=http://ftp.us.debian.org/debian/
+
+if [ -z "$usedevuan" ]; then
+        dsusekeyring="--keyring=/usr/share/keyrings/devuan-archive-keyring.gpg"
+        usekeyring="--keyring-packages=devuan-keyring"
+        mirror="http://packages.devuan.org/merged"
+elif [ -z "$useubuntu" ]; then
+        dsusekeyring="--keyring=/usr/share/keyrings/ubuntu-archive-keyring.gpg"
+        usekeyring="--keyring-packages=ubuntu-archive-keyring"
+        mirror="http://archive.ubuntu.com/ubuntu/"
+fi
+
 if [ ! -z "$components" ]; then
         echo "WARNING: USING NON-FREE COMPONENTS! $components"
         sleep 5
@@ -14,10 +26,11 @@ lb config noauto \
     --debian-installer live \
     --system live \
     $useproxy \
+    $usekeyring \
     -d sid \
     --updates no \
     --parent-distribution sid \
-    --debootstrap-options "--merged-usr --variant=minbase --include=busybox-syslogd,gnupg2,gpgv-static,gnutls-bin,apt-transport-https $components" \
+    --debootstrap-options "--merged-usr --variant=minbase --include=busybox-syslogd,gnupg2,gpgv-static,gnutls-bin,apt-transport-https $components $dsusekeyring $mirror" \
     --initsystem sysvinit \
-    --parent-mirror-bootstrap http://ftp.us.debian.org/debian/ \
+    --parent-mirror-bootstrap "$mirror" \
     "$@"
