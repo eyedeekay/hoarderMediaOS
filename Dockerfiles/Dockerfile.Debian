@@ -1,6 +1,7 @@
 FROM live-build-debian
 COPY Makefile /home/livebuilder/hoarder-live/Makefile
 COPY includes /home/livebuilder/hoarder-live/includes
+COPY config.mk /home/livebuilder/hoarder-live/config.mk
 RUN make docker-init
 USER root
 RUN make clean
