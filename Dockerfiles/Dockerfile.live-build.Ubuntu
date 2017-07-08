@@ -1,0 +1,26 @@
+FROM ubuntu:artful
+RUN apt-get update
+RUN apt-get install -yq \
+                apt-transport-https \
+                gnupg2 \
+                bash \
+                apt-utils \
+                debootstrap \
+                make \
+                sudo \
+                procps \
+                curl
+RUN yes | apt-get dist-upgrade -yq
+RUN echo deb http://ftp.us.debian.org/debian/ sid main | tee /etc/apt/sources.list.d/sid.list
+RUN curl -s https://ftp-master.debian.org/keys/archive-key-9.asc | apt-key add -
+RUN curl -s https://ftp-master.debian.org/keys/archive-key-8.asc | apt-key add -
+RUN curl -s https://ftp-master.debian.org/keys/archive-key-7.0.asc | apt-key add -
+RUN apt-get update
+RUN apt-get install -yq -t sid live-build
+RUN useradd -ms /bin/bash livebuilder && echo "livebuilder:liverbuilder" | chpasswd && adduser livebuilder sudo
+ADD . /home/livebuilder/hoarder-live
+RUN chown -R livebuilder:livebuilder /home/livebuilder/hoarder-live
+WORKDIR /home/livebuilder/hoarder-live
+COPY auto /home/livebuilder/hoarder-live/auto
+RUN chown -R root:root /home/livebuilder/hoarder-live/auto
+USER livebuilder

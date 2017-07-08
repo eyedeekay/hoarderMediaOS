@@ -1,0 +1,14 @@
+FROM live-build-debian
+COPY Makefile /home/livebuilder/hoarder-live/Makefile
+COPY includes /home/livebuilder/hoarder-live/includes
+RUN make docker-init
+USER root
+RUN make clean
+USER livebuilder
+RUN make config-hardened-custom-proxy
+RUN make libre
+RUN make custom
+RUN make skel
+RUN make permissive-user
+RUN make packages
+USER root
