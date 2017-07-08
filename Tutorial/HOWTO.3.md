@@ -1,6 +1,8 @@
 Step Two: Makefile
 ==================
 
+[Standalone Chapter](https://github.com/cmotc/hoarderMediaOS/blob/master/Tutorial/HOWTO.3.md)
+
 Since the auto scripts are just shell scripts, it is absolutely possible to set
 everything up within them and them alone. However, I think it's useful to add
 a second layer of automation here, one that you can script in a little bit

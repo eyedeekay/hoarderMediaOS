@@ -1,6 +1,8 @@
 Step 5: Create torrents and Release
 ===================================
 
+[Standalone Chapter](https://github.com/cmotc/hoarderMediaOS/blob/master/Tutorial/HOWTO.6.md)
+
 Now we've got everything we need to responsibly share our configuration except
 a means of sharing it. Fortunately, with a little trickery you can actually
 reliably bootstrap some really good ways of distributing your iso file. I like

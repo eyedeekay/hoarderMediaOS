@@ -1,6 +1,8 @@
 How I decided to continuously remaster my own Debian Variant without, like, totally meaning to.
 ===============================================================================================
 
+[Standalone Chapter](https://github.com/cmotc/hoarderMediaOS/blob/master/Tutorial/HOWTO.0.md)
+
 OK, this thing is a work in progress, so bear with me while I do it, but here's
 what I'm attempting. I have spent alot of time refining my home PC's
 configuration based on defaults in the Debian installer, and the packages
@@ -90,6 +92,8 @@ service will also be helpful if you want to backup and share your configuration.
 Step Zero: A crash course in live-build
 =======================================
 
+[Standalone Chapter](https://github.com/cmotc/hoarderMediaOS/blob/master/Tutorial/HOWTO.1.md)
+
 See also:
 ---------
 
@@ -122,6 +126,8 @@ This will get you a live system with the excellent budgie desktop. In doing so,
 it will many packages on the liveCD that budgie-desktop depends on.
 Step One: Auto Scripts
 ======================
+
+[Standalone Chapter](https://github.com/cmotc/hoarderMediaOS/blob/master/Tutorial/HOWTO.2.md)
 
 See also:
 ---------
@@ -279,6 +285,8 @@ the environment like this:
             "$@"
 Step Two: Makefile
 ==================
+
+[Standalone Chapter](https://github.com/cmotc/hoarderMediaOS/blob/master/Tutorial/HOWTO.3.md)
 
 Since the auto scripts are just shell scripts, it is absolutely possible to set
 everything up within them and them alone. However, I think it's useful to add
@@ -505,6 +513,8 @@ together it should look like:
 Step Three: Dockerfile
 ======================
 
+[Standalone Chapter](https://github.com/cmotc/hoarderMediaOS/blob/master/Tutorial/HOWTO.4.md)
+
 Now let's make it even easier, and, as a bonus, make our install media easy to
 bootstrap from any distribution where Docker can readily be installed. Docker is
 a container engine and it's just a hair shy of perfect for generating and
@@ -690,6 +700,8 @@ imperfectly, by allowing mounts in chroots
 Step 4: Provide a path to verify Authentic copies
 =================================================
 
+[Standalone Chapter](https://github.com/cmotc/hoarderMediaOS/blob/master/Tutorial/HOWTO.5.md)
+
 Like I said, we should all be careful about who we trust to assemble all our
 software. Likewise, when you distribute it in binary form, it probably makes
 sense to provide many ways to verify that the recipient of that copy has
@@ -814,6 +826,8 @@ signature.
                         tv-amd64.hybrid.iso.sha256sum ; \
 Step 5: Create torrents and Release
 ===================================
+
+[Standalone Chapter](https://github.com/cmotc/hoarderMediaOS/blob/master/Tutorial/HOWTO.6.md)
 
 Now we've got everything we need to responsibly share our configuration except
 a means of sharing it. Fortunately, with a little trickery you can actually

@@ -1,6 +1,8 @@
 Step 4: Provide a path to verify Authentic copies
 =================================================
 
+[Standalone Chapter](https://github.com/cmotc/hoarderMediaOS/blob/master/Tutorial/HOWTO.5.md)
+
 Like I said, we should all be careful about who we trust to assemble all our
 software. Likewise, when you distribute it in binary form, it probably makes
 sense to provide many ways to verify that the recipient of that copy has

@@ -1,6 +1,8 @@
 Step Zero: A crash course in live-build
 =======================================
 
+[Standalone Chapter](https://github.com/cmotc/hoarderMediaOS/blob/master/Tutorial/HOWTO.1.md)
+
 See also:
 ---------
 
