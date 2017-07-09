@@ -169,23 +169,34 @@ all-nonfree-hardened-custom:
 	make permissive-user; \
 	make nonfree-firmware
 
+docker-base:
+	docker build -t live-build-debian -f Dockerfiles/Dockerfile.live-build.Debian .
+	docker build -t live-build-ubuntu -f Dockerfiles/Dockerfile.live-build.Ubuntu .
+	docker build -t live-build-devuan -f Dockerfiles/Dockerfile.live-build.Devuan .
+
 docker:
 	make docker-debian
 
 docker-debian:
 	docker build -t live-build-debian -f Dockerfiles/Dockerfile.live-build.Debian .
-	docker build -t hoarder-build-debian -f Dockerfiles/Dockerfile.Debian .
+	docker build -t hoarder-build-debian \
+		--build-arg "nonfree=$(nonfree) customize=$(customize) hardened=$(hardened)" \
+		-f Dockerfiles/Dockerfile.Debian .
 
 docker-ubuntu:
 	docker build -t live-build-ubuntu -f Dockerfiles/Dockerfile.live-build.Ubuntu .
-	docker build -t hoarder-build-ubuntu -f Dockerfiles/Dockerfile.Ubuntu .
+	docker build -t hoarder-build-ubuntu \
+		--build-arg "nonfree=$(nonfree) customize=$(customize) hardened=$(hardened)" \
+		-f Dockerfiles/Dockerfile.Ubuntu .
 
 docker-devuan:
 	docker build -t live-build-devuan -f Dockerfiles/Dockerfile.live-build.Devuan .
-	docker build -t hoarder-build-devuan -f Dockerfiles/Dockerfile.Devuan .
+	docker build -t hoarder-build-devuan \
+		--build-arg "nonfree=$(nonfree) customize=$(customize) hardened=$(hardened)" \
+		-f Dockerfiles/Dockerfile.Devuan .
 
 docker-all:
-	make docker
+	make docker-debian
 	make docker-ubuntu
 	make docker-devuan
 
@@ -227,3 +238,5 @@ docker-build-hardened-on-hardened:
 		-t hoarder-build \
 		make build-hardened-on-hardened
 	make harden-container
+
+#--build-arg "nonfree=$(nonfree) customize=$(customize) harden=$(harden)" \
