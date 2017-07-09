@@ -1,5 +1,5 @@
 dummy:
-	@echo "'make list' to show available commands"
+	make list
 
 include config.mk
 include includes/repos.mk
