@@ -1,3 +1,11 @@
+dummy:
+	@echo "'make list' to show available commands"
+
+include config.mk
+include includes/repos.mk
+include includes/packages.mk
+include includes/skel.mk
+
 list:
 	@echo "Available commands"
 	@echo "=================="
@@ -5,11 +13,6 @@ list:
 	@echo "  self explanatory."
 	@echo ""
 	@grep '^[^#[:space:]].*:' Makefile
-
-include config.mk
-include includes/repos.mk
-include includes/packages.mk
-include includes/skel.mk
 
 clean:
 	sudo lb clean; echo "cleaned"
