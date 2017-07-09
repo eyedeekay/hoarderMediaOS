@@ -550,6 +550,7 @@ garbage-collect:
 	yes | docker system prune
 
 push:
+	git add .
 	gpg --batch --yes --clear-sign -u "$(SIGNING_KEY)" \
 		README.md
 	git commit -am "$(DEV_MESSAGE)"
