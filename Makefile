@@ -2,8 +2,9 @@ dummy:
 	make list
 
 include config.mk
-include includes/repos.mk
+include includes/git.mk
 include includes/packages.mk
+include includes/repos.mk
 include includes/skel.mk
 
 list:
@@ -64,41 +65,27 @@ config-hardened-custom:
 
 config-nonfree:
 	export nonfree="yes"; \
-	lb config --archive-areas "main contrib non-free" \
-		--apt-source-archives false \
-		--firmware-chroot true \
+	lb config --firmware-chroot true \
 		--firmware-binary true \
-		--image-name tv-nonfree
 
 config-nonfree-hardened:
 	export nonfree="yes"; \
 	export hardened="yes"; \
-	lb config -k grsec-amd64 \
-		--archive-areas "main contrib non-free" \
-		--apt-source-archives false \
-		--firmware-chroot true \
+	lb config --firmware-chroot true \
 		--firmware-binary true \
-		--image-name tv-nonfree-hardened
 
 config-nonfree-custom:
 	export nonfree="yes"; \
 	export customize="yes"; \
-	lb config --archive-areas "main contrib non-free" \
-		--apt-source-archives false \
-		--firmware-chroot true \
+	lb config --firmware-chroot true \
 		--firmware-binary true \
-		--image-name tv-nonfree-custom
 
 config-nonfree-hardened-custom:
 	export nonfree="yes"; \
 	export hardened="yes"; \
 	export customize="yes"; \
-	lb config -k grsec-amd64 \
-		--archive-areas "main contrib non-free" \
-		--apt-source-archives false \
-		--firmware-chroot true \
+	lb config --firmware-chroot true \
 		--firmware-binary true \
-		--image-name tv-nonfree-hardened-custom
 
 unfree:
 	make playdeb-repo; \
@@ -143,40 +130,8 @@ build-hardened-on-hardened:
 	sudo sysctl kernel.grsecurity.chroot_deny_mknod
 	sudo sysctl kernel.grsecurity.chroot_deny_mount
 
-allclean:
-	make clean ; \
-	make all-free
-
-allclean-hardened:
-	make clean ; \
-	make all-hardened
-
-allclean-nonfree:
-	make clean ; \
-	make all-nonfree
-
-allclean-nonfree-hardened:
-	make clean ; \
-	make all-nonfree-hardened
-
-allclean-custom:
-	make clean ; \
-	make all-custom
-
-allclean-hardened-custom:
-	make clean ; \
-	make all-hardened-custom
-
-allclean-nonfree-custom:
-	make clean; \
-	make all-nonfree-custom
-
-allclean-nonfree-hardened-custom:
-	make clean; \
-	make all-nonfree-hardened-custom
-
 all:
-	echo "ATTN: Are you sure you don't want to use a container? if so, do make all-free."
+	@echo "ATTN: Are you sure you don't want to use a container? if so, do make all-free."
 
 all-free:
 	make config ; \
@@ -533,30 +488,6 @@ upload:
 		--name "tv-nonfree-hardened-custom-amd64.hybrid.iso" \
 		--file tv-nonfree-hardened-custom-amd64.hybrid.iso;\
 
-garbage-collect:
-	export DEV_MESSAGE="garbage-collected repository" ; \
-		git commit -am "$(DEV_MESSAGE)"
-	git filter-branch --tag-name-filter cat --index-filter 'git rm -r --cached --ignore-unmatch binary' --prune-empty -f -- --all
-	rm -rf .git/refs/original/
-	git reflog expire --all --expire=now
-	git gc --prune=now
-	git gc --aggressive --prune=now
-	git repack -Ad
-	export DEV_MESSAGE="garbage-collected repository" ; \
-		gpg --batch --yes --clear-sign -u "$(SIGNING_KEY)" \
-			README.md; \
-		git commit -am "$(DEV_MESSAGE)"
-	git push github --force --all
-	git push github --force --tags
-	yes | docker system prune
-
-push:
-	git add .
-	gpg --batch --yes --clear-sign -u "$(SIGNING_KEY)" \
-		README.md
-	git commit -am "$(DEV_MESSAGE)"
-	git push github master
-
 docker:
 	make docker-debian
 
@@ -585,13 +516,13 @@ docker-enter:
 	docker run -i -t hoarder-build bash
 
 docker-copy:
-	docker cp tv-live-build:/home/livebuilder/hoarder-live/*-amd64.hybrid.iso . ; \
-	docker cp tv-live-build:/home/livebuilder/hoarder-live/*-amd64.hybrid.iso.sha256sum . ; \
-	docker cp tv-live-build:/home/livebuilder/hoarder-live/*-amd64.hybrid.iso.sha256sum.asc . ; \
-	docker cp tv-live-build:/home/livebuilder/hoarder-live/*-amd64.files . ; \
-	docker cp tv-live-build:/home/livebuilder/hoarder-live/*-amd64.contents . ; \
-	docker cp tv-live-build:/home/livebuilder/hoarder-live/*-amd64.hybrid.iso.zsync . ; \
-	docker cp tv-live-build:/home/livebuilder/hoarder-live/*-amd64.packages . ;
+	docker cp $(image_prename)-live-build:/home/livebuilder/hoarder-live/*-amd64.hybrid.iso . ; \
+	docker cp $(image_prename)-live-build:/home/livebuilder/hoarder-live/*-amd64.hybrid.iso.sha256sum . ; \
+	docker cp $(image_prename)-live-build:/home/livebuilder/hoarder-live/*-amd64.hybrid.iso.sha256sum.asc . ; \
+	docker cp $(image_prename)-live-build:/home/livebuilder/hoarder-live/*-amd64.files . ; \
+	docker cp $(image_prename)-live-build:/home/livebuilder/hoarder-live/*-amd64.contents . ; \
+	docker cp $(image_prename)-live-build:/home/livebuilder/hoarder-live/*-amd64.hybrid.iso.zsync . ; \
+	docker cp $(image_prename)-live-build:/home/livebuilder/hoarder-live/*-amd64.packages . ;
 
 docker-init:
 	mkdir -p .build
@@ -600,7 +531,7 @@ docker-clean:
 	docker run -i --privileged -t hoarder-build make clean
 
 docker-build:
-	docker run -i --name "tv-live-build" --privileged -t hoarder-build make build
+	docker run -i --name "$(image_prename)-live-build" --privileged -t hoarder-build make build
 
 docker-build-hardened-on-hardened:
 	sudo sysctl -w kernel.grsecurity.chroot_caps=0
@@ -612,7 +543,7 @@ docker-build-hardened-on-hardened:
 	sudo sysctl kernel.grsecurity.chroot_deny_chmod
 	sudo sysctl kernel.grsecurity.chroot_deny_mknod
 	sudo sysctl kernel.grsecurity.chroot_deny_mount
-	docker run -i --name "tv-live-build" --privileged -t hoarder-build make build-hardened-on-hardened
+	docker run -i --name "$(image_prename)-live-build" --privileged -t hoarder-build make build-hardened-on-hardened
 	sudo sysctl -w kernel.grsecurity.chroot_caps=1
 	sudo sysctl -w kernel.grsecurity.chroot_deny_chmod=1
 	sudo sysctl -w kernel.grsecurity.chroot_deny_mknod=1
@@ -639,3 +570,6 @@ tutorial:
 	echo "" | tee -a TUTORIAL.md
 	cat "Tutorial/HOWTO.6.RELEASE.md" | tee -a TUTORIAL.md
 	echo "" | tee -a TUTORIAL.md
+
+imagename:
+	@echo "built_image = $(image_prename)$(is_harden)$(non_free)$(customized)"

@@ -27,6 +27,8 @@ packages:
 	echo "docker.io" >> build.list.chroot && \
 	echo "medit" >> build.list.chroot && \
 	echo "nano" >> build.list.chroot && \
+	echo "firejail" >> build.list.chroot && \
+	echo "gocryptfs" >> build.list.chroot && \
 	echo "jackd2" >> build.list.chroot && \
 	echo "jack-mixer" >> build.list.chroot && \
 	echo "alsaplayer-jack" >> build.list.chroot && \

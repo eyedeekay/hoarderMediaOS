@@ -1,7 +1,7 @@
 #! /usr/bin/env bash
 
 components=$( [ ! -z "$nonfree" ] && echo "--components=\"main,contrib,non-free\"" || echo "" )
-archiveareas=$( [ ! -z "$nonfree" ] && echo "--archive-areas \"main,contrib,non-free\"" || echo "" )
+archiveareas=$( [ ! -z "$nonfree" ] && echo "--archive-areas \"main contrib non-free\"" || echo "" )
 nosource=$( [ ! -z "$nonfree" ] && echo "--apt-source-archives false" || echo "" )
 export non_free=$( [ ! -z "$nonfree" ] && echo "-nonfree" || echo "" )
 
@@ -22,6 +22,8 @@ elif [ -z "$useubuntu" ]; then
         dsusekeyring="--keyring=/usr/share/keyrings/ubuntu-archive-keyring.gpg"
         usekeyring="--keyring-packages=ubuntu-archive-keyring"
         mirror="http://archive.ubuntu.com/ubuntu/"
+        components=$( [ ! -z "$nonfree" ] && echo "--components=\"main,restricted,universe,multiverse\"" || echo "" )
+        archiveareas=$( [ ! -z "$nonfree" ] && echo "--archive-areas \"main restricted universe multiverse\"" || echo "" )
 fi
 
 if [ ! -z "$components" ]; then
@@ -44,5 +46,5 @@ lb config noauto \
     $archiveareas \
     $nosource \
     $harden \
-    --image-name "$IMAGE_PRENAME$is_harden$non_free$customized" \
+    --image-name "$image_prename$is_harden$non_free$customized" \
     "$@"
