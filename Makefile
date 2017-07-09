@@ -12,7 +12,7 @@ list:
 	@echo "  These commands are available in this makefile. They should be pretty"
 	@echo "  self explanatory."
 	@echo ""
-	@grep '^[^#[:space:]].*:' Makefile
+	@grep '^[^#[:space:]].*:' Makefile includes/*.mk
 
 clean:
 	sudo lb clean; echo "cleaned"
