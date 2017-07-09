@@ -44,7 +44,8 @@ Windows when they start to get pissed off about Windows 10 serving them ads
 all the damn time. But there are caveats to using these tiny niche distros. You
 have to take matters into your own hands at times, even things that are second
 nature to you or me, might not be obvious to a first-time Mint user, even things
-as simple as being able to use AskUbuntu to get help.
+as simple as being able to use AskUbuntu to get help. It takes a while to learn
+to translate the Arch wiki.
 
 Depending on their complexity, they may also configure 3rd-party repositorys.
 **Please consider that in the most serious of terms**. If they configured a
