@@ -45,26 +45,25 @@ clean-artifacts:
 config:
 	lb config --firmware-chroot true \
 		--firmware-binary true \
-		--image-name tv
 
 config-hardened:
-	lb config -k grsec-amd64 \
-		--firmware-chroot true \
-		--firmware-binary true \
-		--image-name tv-hardened
-
-config-custom:
+	export hardened="yes"; \
 	lb config --firmware-chroot true \
 		--firmware-binary true \
-		--image-name tv-custom
+
+config-custom:
+	export customize="yes"; \
+	lb config --firmware-chroot true \
+		--firmware-binary true \
 
 config-hardened-custom:
-	lb config -k grsec-amd64 \
-		--firmware-chroot true \
+	export hardened="yes"; \
+	export customize="yes"; \
+	lb config --firmware-chroot true \
 		--firmware-binary true \
-		--image-name tv-hardened-custom
 
 config-nonfree:
+	export nonfree="yes"; \
 	lb config --archive-areas "main contrib non-free" \
 		--apt-source-archives false \
 		--firmware-chroot true \
@@ -72,6 +71,8 @@ config-nonfree:
 		--image-name tv-nonfree
 
 config-nonfree-hardened:
+	export nonfree="yes"; \
+	export hardened="yes"; \
 	lb config -k grsec-amd64 \
 		--archive-areas "main contrib non-free" \
 		--apt-source-archives false \
@@ -80,6 +81,8 @@ config-nonfree-hardened:
 		--image-name tv-nonfree-hardened
 
 config-nonfree-custom:
+	export nonfree="yes"; \
+	export customize="yes"; \
 	lb config --archive-areas "main contrib non-free" \
 		--apt-source-archives false \
 		--firmware-chroot true \
@@ -87,6 +90,9 @@ config-nonfree-custom:
 		--image-name tv-nonfree-custom
 
 config-nonfree-hardened-custom:
+	export nonfree="yes"; \
+	export hardened="yes"; \
+	export customize="yes"; \
 	lb config -k grsec-amd64 \
 		--archive-areas "main contrib non-free" \
 		--apt-source-archives false \

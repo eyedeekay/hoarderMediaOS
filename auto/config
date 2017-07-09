@@ -8,9 +8,9 @@ export non_free=$( [ ! -z "$nonfree" ] && echo "-nonfree" || echo "" )
 useproxy=$( [ ! -z "$proxy_addr" ] && echo "--apt-http-proxy $proxy_addr" || echo "" )
 
 harden=$( [ ! -z "$hardened" ] && echo "-k grsec-amd64" || echo "" )
-is_harden=$( [ ! -z "$hardened" ] && echo "-hardened" || echo "" )
+export is_harden=$( [ ! -z "$hardened" ] && echo "-hardened" || echo "" )
 
-customized=$( [ ! -z "$customize" ] && echo "-custom" || echo "" )
+export customized=$( [ ! -z "$customize" ] && echo "-custom" || echo "" )
 
 mirror=http://ftp.us.debian.org/debian/
 
