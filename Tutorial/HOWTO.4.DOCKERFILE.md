@@ -1,7 +1,7 @@
 Step Three: Dockerfile
 ======================
 
-[Standalone Chapter](https://github.com/cmotc/hoarderMediaOS/blob/master/Tutorial/HOWTO.4.md)
+[Standalone Chapter](https://github.com/cmotc/hoarderMediaOS/blob/master/Tutorial/HOWTO.4.DOCKERFILE.md)
 
 Now let's make it even easier, and, as a bonus, make our install media easy to
 bootstrap from any distribution where Docker can readily be installed. Docker is
