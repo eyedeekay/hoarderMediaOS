@@ -623,4 +623,18 @@ docker-build-hardened-on-hardened:
 	sudo sysctl kernel.grsecurity.chroot_deny_mount
 
 tutorial:
-	sed Tutorial/*.md > TUTORIAL.md
+	rm -f TUTORIAL.md
+	cat "Tutorial/HOWTO.0.md" | tee -a TUTORIAL.md
+	echo "" | tee -a TUTORIAL.md
+	cat "Tutorial/HOWTO.1.md" | tee -a TUTORIAL.md
+	echo "" | tee -a TUTORIAL.md
+	cat "Tutorial/HOWTO.2.md" | tee -a TUTORIAL.md
+	echo "" | tee -a TUTORIAL.md
+	cat "Tutorial/HOWTO.3.md" | tee -a TUTORIAL.md
+	echo "" | tee -a TUTORIAL.md
+	cat "Tutorial/HOWTO.4.md" | tee -a TUTORIAL.md
+	echo "" | tee -a TUTORIAL.md
+	cat "Tutorial/HOWTO.5.md" | tee -a TUTORIAL.md
+	echo "" | tee -a TUTORIAL.md
+	cat "Tutorial/HOWTO.6.md" | tee -a TUTORIAL.md
+	echo "" | tee -a TUTORIAL.md

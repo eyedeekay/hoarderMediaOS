@@ -89,6 +89,7 @@ supporting Docker and coming configured with the Docker Hub.
 or install docker per your distribution's instructions or from source. Docker
 will use the debian:sid container as a base. A git repository or a git hosting
 service will also be helpful if you want to backup and share your configuration.
+
 Step Zero: A crash course in live-build
 =======================================
 
@@ -124,6 +125,7 @@ to the configuration, in between the two commands.
 
 This will get you a live system with the excellent budgie desktop. In doing so,
 it will many packages on the liveCD that budgie-desktop depends on.
+
 Step One: Auto Scripts
 ======================
 
@@ -283,6 +285,7 @@ the environment like this:
             --debootstrap-options "--merged-usr --variant=minbase --include=busybox-syslogd,gnupg2,gpgv-static,gnutls-bin $components" \
             --initsystem sysvinit \
             "$@"
+
 Step Two: Makefile
 ==================
 
@@ -510,6 +513,7 @@ together it should look like:
                 echo "#/usr/bin/env bash" | tee config/includes.binary/etc/skel/conky.sh; \
                 echo "nohup bash -c 'sleep 2 && conky 2>1 /dev/null &'" | tee config/includes.binary/etc/skel/conky.sh
                 chmod +x config/includes.binary/etc/skel/conky.sh
+
 Step Three: Dockerfile
 ======================
 
@@ -697,6 +701,7 @@ imperfectly, by allowing mounts in chroots
         sudo sysctl -w kernel.grsecurity.chroot_deny_mknod=0
         sudo sysctl -w kernel.grsecurity.chroot_deny_mount=0
         sudo sysctl -p
+
 Step 4: Provide a path to verify Authentic copies
 =================================================
 
@@ -824,6 +829,7 @@ signature.
         sign:
                 gpg --batch --yes --clear-sign -u "$(SIGNING_KEY)" \
                         tv-amd64.hybrid.iso.sha256sum ; \
+
 Step 5: Create torrents and Release
 ===================================
 
@@ -925,3 +931,4 @@ and finally, the bootable, Live ISO image.
         github-release upload --user "$(MY_ACCOUNT)" --repo "$(MY_ISO)" --tag $(shell date +'%y.%m.%d') \
                 --name "$(MY_ISO)" \
                 --file tv-amd64.hybrid.iso;\
+
