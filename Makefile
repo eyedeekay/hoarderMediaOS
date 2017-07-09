@@ -624,17 +624,17 @@ docker-build-hardened-on-hardened:
 
 tutorial:
 	rm -f TUTORIAL.md
-	cat "Tutorial/HOWTO.0.md" | tee -a TUTORIAL.md
+	cat "Tutorial/HOWTO.0.INTRODUCTION.md" | tee -a TUTORIAL.md
 	echo "" | tee -a TUTORIAL.md
-	cat "Tutorial/HOWTO.1.md" | tee -a TUTORIAL.md
+	cat "Tutorial/HOWTO.1.LIVEBUILD.md" | tee -a TUTORIAL.md
 	echo "" | tee -a TUTORIAL.md
-	cat "Tutorial/HOWTO.2.md" | tee -a TUTORIAL.md
+	cat "Tutorial/HOWTO.2.AUTOSCRIPTS.md" | tee -a TUTORIAL.md
 	echo "" | tee -a TUTORIAL.md
-	cat "Tutorial/HOWTO.3.md" | tee -a TUTORIAL.md
+	cat "Tutorial/HOWTO.3.MAKEFILE.md" | tee -a TUTORIAL.md
 	echo "" | tee -a TUTORIAL.md
-	cat "Tutorial/HOWTO.4.md" | tee -a TUTORIAL.md
+	cat "Tutorial/HOWTO.4.DOCKERFILE.md" | tee -a TUTORIAL.md
 	echo "" | tee -a TUTORIAL.md
-	cat "Tutorial/HOWTO.5.md" | tee -a TUTORIAL.md
+	cat "Tutorial/HOWTO.5.AUTHENTICATE.md" | tee -a TUTORIAL.md
 	echo "" | tee -a TUTORIAL.md
-	cat "Tutorial/HOWTO.6.md" | tee -a TUTORIAL.md
+	cat "Tutorial/HOWTO.6.RELEASE.md" | tee -a TUTORIAL.md
 	echo "" | tee -a TUTORIAL.md
