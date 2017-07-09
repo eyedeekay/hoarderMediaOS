@@ -4,6 +4,7 @@ dummy:
 include config.mk
 include includes/git.mk
 include includes/packages.mk
+include includes/release.mk
 include includes/repos.mk
 include includes/skel.mk
 
@@ -24,17 +25,6 @@ list:
 
 clean:
 	sudo lb clean; echo "cleaned"
-	make clean-artifacts
-	make clean-cache
-	make clean-config
-
-clean-cache:
-	sudo lb clean --purge
-
-clean-config:
-	rm -rf config; \
-
-clean-artifacts:
 	rm -f *.hybrid.iso
 	rm -f *.hybrid.iso.sha256sum
 	rm -f *.hybrid.iso.sha256sum.asc
@@ -42,6 +32,8 @@ clean-artifacts:
 	rm -f *.contents
 	rm -f *.hybrid.iso.zsync
 	rm -f *.packages
+	sudo lb clean --purge
+	rm -rf config
 
 config:
 	lb config --firmware-chroot true \
@@ -57,14 +49,14 @@ config-custom:
 	lb config --firmware-chroot true \
 		--firmware-binary true \
 
-config-hardened-custom:
-	export hardened="yes"; \
-	export customize="yes"; \
+config-nonfree:
+	export nonfree="yes"; \
 	lb config --firmware-chroot true \
 		--firmware-binary true \
 
-config-nonfree:
-	export nonfree="yes"; \
+config-hardened-custom:
+	export hardened="yes"; \
+	export customize="yes"; \
 	lb config --firmware-chroot true \
 		--firmware-binary true \
 
@@ -110,25 +102,9 @@ build:
 	sudo lb build
 
 build-hardened-on-hardened:
-	sudo sysctl -w kernel.grsecurity.chroot_caps=0
-	sudo sysctl -w kernel.grsecurity.chroot_deny_chmod=0
-	sudo sysctl -w kernel.grsecurity.chroot_deny_mknod=0
-	sudo sysctl -w kernel.grsecurity.chroot_deny_mount=0
-	sudo sysctl -p
-	sudo sysctl kernel.grsecurity.chroot_caps
-	sudo sysctl kernel.grsecurity.chroot_deny_chmod
-	sudo sysctl kernel.grsecurity.chroot_deny_mknod
-	sudo sysctl kernel.grsecurity.chroot_deny_mount
+	make soften-container
 	make build
-	sudo sysctl -w kernel.grsecurity.chroot_caps=1
-	sudo sysctl -w kernel.grsecurity.chroot_deny_chmod=1
-	sudo sysctl -w kernel.grsecurity.chroot_deny_mknod=1
-	sudo sysctl -w kernel.grsecurity.chroot_deny_mount=1
-	sudo sysctl -p
-	sudo sysctl kernel.grsecurity.chroot_caps
-	sudo sysctl kernel.grsecurity.chroot_deny_chmod
-	sudo sysctl kernel.grsecurity.chroot_deny_mknod
-	sudo sysctl kernel.grsecurity.chroot_deny_mount
+	make harden-container
 
 all:
 	@echo "ATTN: Are you sure you don't want to use a container? if so, do make all-free."
@@ -193,301 +169,6 @@ all-nonfree-hardened-custom:
 	make permissive-user; \
 	make nonfree-firmware
 
-sum:
-	sha256sum tv-amd64.hybrid.iso > \
-		tv-amd64.hybrid.iso.sha256sum || \
-		rm tv-amd64.hybrid.iso.sha256sum; \
-	sha256sum tv-custom-amd64.hybrid.iso > \
-		tv-custom-amd64.hybrid.iso.sha256sum || \
-		rm tv-custom-amd64.hybrid.iso.sha256sum; \
-	sha256sum tv-hardened-amd64.hybrid.iso > \
-		tv-hardened-amd64.hybrid.iso.sha256sum || \
-		rm tv-hardened-amd64.hybrid.iso.sha256sum; \
-	sha256sum tv-hardened-custom-amd64.hybrid.iso > \
-		tv-hardened-custom-amd64.hybrid.iso.sha256sum || \
-		rm tv-hardened-custom-amd64.hybrid.iso.sha256sum; \
-	sha256sum tv-nonfree-amd64.hybrid.iso > \
-		tv-nonfree-amd64.hybrid.iso.sha256sum || \
-		rm tv-nonfree-amd64.hybrid.iso.sha256sum; \
-	sha256sum tv-nonfree-custom-amd64.hybrid.iso > \
-		tv-nonfree-custom-amd64.hybrid.iso.sha256sum || \
-		rm tv-nonfree-custom-amd64.hybrid.iso.sha256sum; \
-	sha256sum tv-nonfree-hardened-amd64.hybrid.iso > \
-		tv-nonfree-hardened-amd64.hybrid.iso.sha256sum || \
-		rm tv-nonfree-hardened-amd64.hybrid.iso.sha256sum; \
-	sha256sum tv-nonfree-hardened-custom-amd64.hybrid.iso > \
-		tv-nonfree-hardened-custom-amd64.hybrid.iso.sha256sum || \
-		rm tv-nonfree-hardened-custom-amd64.hybrid.iso.sha256sum; \
-	echo sums computed
-
-sig:
-	gpg --batch --yes --clear-sign -u "$(SIGNING_KEY)" \
-		tv-amd64.hybrid.iso.sha256sum ; \
-	gpg --batch --yes --clear-sign -u "$(SIGNING_KEY)" \
-		tv-custom-amd64.hybrid.iso.sha256sum ; \
-	gpg --batch --yes --clear-sign -u "$(SIGNING_KEY)" \
-		tv-hardened-amd64.hybrid.iso.sha256sum ; \
-	gpg --batch --yes --clear-sign -u "$(SIGNING_KEY)" \
-		tv-hardened-custom-amd64.hybrid.iso.sha256sum ; \
-	gpg --batch --yes --clear-sign -u "$(SIGNING_KEY)" \
-		tv-nonfree-amd64.hybrid.iso.sha256sum ; \
-	gpg --batch --yes --clear-sign -u "$(SIGNING_KEY)" \
-		tv-nonfree-custom-amd64.hybrid.iso.sha256sum ; \
-	gpg --batch --yes --clear-sign -u "$(SIGNING_KEY)" \
-		tv-nonfree-hardened-amd64.hybrid.iso.sha256sum ; \
-	gpg --batch --yes --clear-sign -u "$(SIGNING_KEY)" \
-		tv-nonfree-hardened-custom-amd64.hybrid.iso.sha256sum ; \
-	echo images signed
-
-sigsum:
-	make sum
-	make sig
-
-torrent:
-	mktorrent -a "udp://tracker.openbittorrent.com:80" \
-		-a "udp://tracker.publicbt.com:80" \
-		-a "udp://tracker.istole.it:80" \
-		-a "udp://tracker.btzoo.eu:80/announce" \
-		-a "http://opensharing.org:2710/announce" \
-		-a "udp://open.demonii.com:1337/announce" \
-		-a "http://announce.torrentsmd.com:8080/announce.php" \
-		-a "http://announce.torrentsmd.com:6969/announce" \
-		-a "http://bt.careland.com.cn:6969/announce" \
-		-a "http://i.bandito.org/announce" \
-		-a "http://bttrack.9you.com/announce" \
-		-w https://github.com/cmotc/hoarderMediaOS/releases/download/$(shell date +'%y.%m.%d')/tv.iso \
-		tv-amd64.hybrid.iso; \
-	mktorrent -a "udp://tracker.openbittorrent.com:80" \
-		-a "udp://tracker.publicbt.com:80" \
-		-a "udp://tracker.istole.it:80" \
-		-a "udp://tracker.btzoo.eu:80/announce" \
-		-a "http://opensharing.org:2710/announce" \
-		-a "udp://open.demonii.com:1337/announce" \
-		-a "http://announce.torrentsmd.com:8080/announce.php" \
-		-a "http://announce.torrentsmd.com:6969/announce" \
-		-a "http://bt.careland.com.cn:6969/announce" \
-		-a "http://i.bandito.org/announce" \
-		-a "http://bttrack.9you.com/announce" \
-		-a "http://bttrack.9you.com/announce" \
-		-w https://github.com/cmotc/hoarderMediaOS/releases/download/$(shell date +'%y.%m.%d')/tv-custom.iso \
-		tv-custom-amd64.hybrid.iso; \
-	mktorrent -a "udp://tracker.openbittorrent.com:80" \
-		-a "udp://tracker.publicbt.com:80" \
-		-a "udp://tracker.istole.it:80" \
-		-a "udp://tracker.btzoo.eu:80/announce" \
-		-a "http://opensharing.org:2710/announce" \
-		-a "udp://open.demonii.com:1337/announce" \
-		-a "http://announce.torrentsmd.com:8080/announce.php" \
-		-a "http://announce.torrentsmd.com:6969/announce" \
-		-a "http://bt.careland.com.cn:6969/announce" \
-		-a "http://i.bandito.org/announce" \
-		-a "http://bttrack.9you.com/announce" \
-		-a "http://bttrack.9you.com/announce" \
-		-w https://github.com/cmotc/hoarderMediaOS/releases/download/$(shell date +'%y.%m.%d')/tv-hardened.iso \
-		tv-hardened-amd64.hybrid.iso; \
-	mktorrent -a "udp://tracker.openbittorrent.com:80" \
-		-a "udp://tracker.publicbt.com:80" \
-		-a "udp://tracker.istole.it:80" \
-		-a "udp://tracker.btzoo.eu:80/announce" \
-		-a "http://opensharing.org:2710/announce" \
-		-a "udp://open.demonii.com:1337/announce" \
-		-a "http://announce.torrentsmd.com:8080/announce.php" \
-		-a "http://announce.torrentsmd.com:6969/announce" \
-		-a "http://bt.careland.com.cn:6969/announce" \
-		-a "http://i.bandito.org/announce" \
-		-a "http://bttrack.9you.com/announce" \
-		-a "http://bttrack.9you.com/announce" \
-		-w https://github.com/cmotc/hoarderMediaOS/releases/download/$(shell date +'%y.%m.%d')/tv-hardened-custom.iso \
-		tv-hardened-custom-amd64.hybrid.iso; \
-	mktorrent -a "udp://tracker.openbittorrent.com:80" \
-		-a "udp://tracker.publicbt.com:80" \
-		-a "udp://tracker.istole.it:80" \
-		-a "udp://tracker.btzoo.eu:80/announce" \
-		-a "http://opensharing.org:2710/announce" \
-		-a "udp://open.demonii.com:1337/announce" \
-		-a "http://announce.torrentsmd.com:8080/announce.php" \
-		-a "http://announce.torrentsmd.com:6969/announce" \
-		-a "http://bt.careland.com.cn:6969/announce" \
-		-a "http://i.bandito.org/announce" \
-		-a "http://bttrack.9you.com/announce" \
-		-a "http://bttrack.9you.com/announce" \
-		-w https://github.com/cmotc/hoarderMediaOS/releases/download/$(shell date +'%y.%m.%d')/tv-nonfree.iso \
-		tv-nonfree-amd64.hybrid.iso; \
-	mktorrent -a "udp://tracker.openbittorrent.com:80" \
-		-a "udp://tracker.publicbt.com:80" \
-		-a "udp://tracker.istole.it:80" \
-		-a "udp://tracker.btzoo.eu:80/announce" \
-		-a "http://opensharing.org:2710/announce" \
-		-a "udp://open.demonii.com:1337/announce" \
-		-a "http://announce.torrentsmd.com:8080/announce.php" \
-		-a "http://announce.torrentsmd.com:6969/announce" \
-		-a "http://bt.careland.com.cn:6969/announce" \
-		-a "http://i.bandito.org/announce" \
-		-a "http://bttrack.9you.com/announce" \
-		-a "http://bttrack.9you.com/announce" \
-		-w https://github.com/cmotc/hoarderMediaOS/releases/download/$(shell date +'%y.%m.%d')/tv-nonfree-custom.iso \
-		tv-nonfree-custom-amd64.hybrid.iso; \
-	mktorrent -a "udp://tracker.openbittorrent.com:80" \
-		-a "udp://tracker.publicbt.com:80" \
-		-a "udp://tracker.istole.it:80" \
-		-a "udp://tracker.btzoo.eu:80/announce" \
-		-a "http://opensharing.org:2710/announce" \
-		-a "udp://open.demonii.com:1337/announce" \
-		-a "http://announce.torrentsmd.com:8080/announce.php" \
-		-a "http://announce.torrentsmd.com:6969/announce" \
-		-a "http://bt.careland.com.cn:6969/announce" \
-		-a "http://i.bandito.org/announce" \
-		-a "http://bttrack.9you.com/announce" \
-		-w https://github.com/cmotc/hoarderMediaOS/releases/download/$(shell date +'%y.%m.%d')/tv-nonfree-hardened.iso \
-		tv-nonfree-hardened-amd64.hybrid.iso; \
-	mktorrent -a "udp://tracker.openbittorrent.com:80" \
-		-a "udp://tracker.publicbt.com:80" \
-		-a "udp://tracker.istole.it:80" \
-		-a "udp://tracker.btzoo.eu:80/announce" \
-		-a "http://opensharing.org:2710/announce" \
-		-a "udp://open.demonii.com:1337/announce" \
-		-a "http://announce.torrentsmd.com:8080/announce.php" \
-		-a "http://announce.torrentsmd.com:6969/announce" \
-		-a "http://bt.careland.com.cn:6969/announce" \
-		-a "http://i.bandito.org/announce" \
-		-a "http://bttrack.9you.com/announce" \
-		-a "http://bttrack.9you.com/announce" \
-		-w https://github.com/cmotc/hoarderMediaOS/releases/download/$(shell date +'%y.%m.%d')/tv-nonfree-hardened-custom.iso \
-		tv-nonfree-hardened-custom-amd64.hybrid.iso ; \
-	echo torrents created
-
-backup:
-	scp tv-*amd64.hybrid.iso media@192.168.2.206:os_backups/ ; \
-	scp tv-*amd64.hybrid.iso.sha256sum media@192.168.2.206:os_backups/ ; \
-	scp tv-*amd64.hybrid.iso.sha256sum.asc media@192.168.2.206:os_backups/ ; \
-	scp tv-*amd64.files media@192.168.2.206:os_backups/ ; \
-	scp tv-*amd64.contents media@192.168.2.206:os_backups/ ; \
-	scp tv-*amd64.hybrid.iso.zsync media@192.168.2.206:os_backups/ ; \
-	scp tv-*amd64.packages media@192.168.2.206:os_backups/ ;
-
-get-backup:
-	scp media@192.168.2.206:os_backups/tv-*amd64.hybrid.iso . ; \
-	make get-infos
-
-get-infos:
-	scp media@192.168.2.206:os_backups/tv-*amd64.hybrid.iso.sha256sum . ; \
-	scp media@192.168.2.206:os_backups/tv-*amd64.hybrid.iso.sha256sum.asc . ; \
-	scp media@192.168.2.206:os_backups/tv-*amd64.files . ; \
-	scp media@192.168.2.206:os_backups/tv-*amd64.contents . ; \
-	scp media@192.168.2.206:os_backups/tv-*amd64.hybrid.iso.zsync . ; \
-	scp media@192.168.2.206:os_backups/tv-*amd64.packages . ;
-
-release:
-	make sigsum
-	make torrent
-	git tag $(shell date +'%y.%m.%d'); git push --tags github
-	github-release release \
-		--user cmotc \
-		--repo hoarderMediaOS \
-		--tag $(shell date +'%y.%m.%d') \
-		--name "hoarderMediaOS" \
-		--description "A re-buildable OS for self-hosting. Please use the torrent if possible" \
-		--pre-release ; \
-	make upload
-
-upload:
-	github-release upload --user cmotc --repo hoarderMediaOS --tag $(shell date +'%y.%m.%d') \
-		--name "tv-amd64.hybrid.iso.sha256sum" \
-		--file tv-amd64.hybrid.iso.sha256sum; \
-	github-release upload --user cmotc --repo hoarderMediaOS --tag $(shell date +'%y.%m.%d') \
-		--name "tv-amd64.hybrid.iso.sha256sum.asc" \
-		--file tv-amd64.hybrid.iso.sha256sum.asc;\
-	github-release upload --user cmotc --repo hoarderMediaOS --tag $(shell date +'%y.%m.%d') \
-		--name "tv-amd64.hybrid.iso.torrent" \
-		--file tv-amd64.hybrid.iso.torrent;\
-	github-release upload --user cmotc --repo hoarderMediaOS --tag $(shell date +'%y.%m.%d') \
-		--name "tv-amd64.hybrid.iso" \
-		--file tv-amd64.hybrid.iso;\
-	github-release upload --user cmotc --repo hoarderMediaOS --tag $(shell date +'%y.%m.%d') \
-		--name "tv-hardened-amd64.hybrid.iso.sha256sum" \
-		--file tv-hardened-amd64.hybrid.iso.sha256sum; \
-	github-release upload --user cmotc --repo hoarderMediaOS --tag $(shell date +'%y.%m.%d') \
-		--name "tv-hardened-amd64.hybrid.iso.sha256sum.asc" \
-		--file tv-hardened-amd64.hybrid.iso.sha256sum.asc;\
-	github-release upload --user cmotc --repo hoarderMediaOS --tag $(shell date +'%y.%m.%d') \
-		--name "tv-hardened-amd64.hybrid.iso.torrent" \
-		--file tv-hardened-amd64.hybrid.iso.torrent;\
-	github-release upload --user cmotc --repo hoarderMediaOS --tag $(shell date +'%y.%m.%d') \
-		--name "tv-hardened-amd64.hybrid.iso" \
-		--file tv-hardened-amd64.hybrid.iso;\
-	github-release upload --user cmotc --repo hoarderMediaOS --tag $(shell date +'%y.%m.%d') \
-		--name "tv-custom-amd64.hybrid.iso.sha256sum" \
-		--file tv-custom-amd64.hybrid.iso.sha256sum; \
-	github-release upload --user cmotc --repo hoarderMediaOS --tag $(shell date +'%y.%m.%d') \
-		--name "tv-custom-amd64.hybrid.iso.sha256sum.asc" \
-		--file tv-custom-amd64.hybrid.iso.sha256sum.asc;\
-	github-release upload --user cmotc --repo hoarderMediaOS --tag $(shell date +'%y.%m.%d') \
-		--name "tv-custom-amd64.hybrid.iso.torrent" \
-		--file tv-custom-amd64.hybrid.iso.torrent;\
-	github-release upload --user cmotc --repo hoarderMediaOS --tag $(shell date +'%y.%m.%d') \
-		--name "tv-custom-amd64.hybrid.iso" \
-		--file tv-custom-amd64.hybrid.iso;\
-	github-release upload --user cmotc --repo hoarderMediaOS --tag $(shell date +'%y.%m.%d') \
-		--name "tv-hardened-custom-amd64.hybrid.iso.sha256sum" \
-		--file tv-hardened-custom-amd64.hybrid.iso.sha256sum; \
-	github-release upload --user cmotc --repo hoarderMediaOS --tag $(shell date +'%y.%m.%d') \
-		--name "tv-hardened-custom-amd64.hybrid.iso.sha256sum.asc" \
-		--file tv-hardened-custom-amd64.hybrid.iso.sha256sum.asc;\
-	github-release upload --user cmotc --repo hoarderMediaOS --tag $(shell date +'%y.%m.%d') \
-		--name "tv-hardened-custom-amd64.hybrid.iso.torrent" \
-		--file tv-hardened-custom-amd64.hybrid.iso.torrent;\
-	github-release upload --user cmotc --repo hoarderMediaOS --tag $(shell date +'%y.%m.%d') \
-		--name "tv-hardened-custom-amd64.hybrid.iso" \
-		--file tv-hardened-custom-amd64.hybrid.iso;\
-	github-release upload --user cmotc --repo hoarderMediaOS --tag $(shell date +'%y.%m.%d') \
-		--name "tv-nonfree-amd64.hybrid.iso.sha256sum" \
-		--file tv-nonfree-amd64.hybrid.iso.sha256sum; \
-	github-release upload --user cmotc --repo hoarderMediaOS --tag $(shell date +'%y.%m.%d') \
-		--name "tv-nonfree-amd64.hybrid.iso.asc" \
-		--file tv-nonfree-amd64.hybrid.iso.sha256sum.asc;\
-	github-release upload --user cmotc --repo hoarderMediaOS --tag $(shell date +'%y.%m.%d') \
-		--name "tv-nonfree-amd64.hybrid.iso.torrent" \
-		--file tv-nonfree-amd64.hybrid.iso.torrent;\
-	github-release upload --user cmotc --repo hoarderMediaOS --tag $(shell date +'%y.%m.%d') \
-		--name "tv-nonfree-amd64.hybrid.iso" \
-		--file tv-nonfree-amd64.hybrid.iso;\
-	github-release upload --user cmotc --repo hoarderMediaOS --tag $(shell date +'%y.%m.%d') \
-		--name "tv-nonfree-hardened-amd64.hybrid.iso.sha256sum" \
-		--file tv-nonfree-hardened-amd64.hybrid.iso.sha256sum; \
-	github-release upload --user cmotc --repo hoarderMediaOS --tag $(shell date +'%y.%m.%d') \
-		--name "tv-nonfree-hardened-amd64.hybrid.iso.sha256sum.asc" \
-		--file tv-nonfree-hardened-amd64.hybrid.iso.sha256sum.asc;\
-	github-release upload --user cmotc --repo hoarderMediaOS --tag $(shell date +'%y.%m.%d') \
-		--name "tv-nonfree-hardened-amd64.hybrid.iso.torrent" \
-		--file tv-nonfree-hardened-amd64.hybrid.iso.torrent;\
-	github-release upload --user cmotc --repo hoarderMediaOS --tag $(shell date +'%y.%m.%d') \
-		--name "tv-nonfree-hardened-amd64.hybrid.iso" \
-		--file tv-nonfree-hardened-amd64.hybrid.iso;\
-	github-release upload --user cmotc --repo hoarderMediaOS --tag $(shell date +'%y.%m.%d') \
-		--name "tv-nonfree-custom-amd64.hybrid.iso.sha256sum" \
-		--file tv-nonfree-custom-amd64.hybrid.iso.sha256sum; \
-	github-release upload --user cmotc --repo hoarderMediaOS --tag $(shell date +'%y.%m.%d') \
-		--name "tv-nonfree-custom-amd64.hybrid.iso.sha256sum.asc" \
-		--file tv-nonfree-custom-amd64.hybrid.iso.sha256sum.asc;\
-	github-release upload --user cmotc --repo hoarderMediaOS --tag $(shell date +'%y.%m.%d') \
-		--name "tv-nonfree-custom-amd64.hybrid.iso.torrent" \
-		--file tv-nonfree-custom-amd64.hybrid.iso.torrent;\
-	github-release upload --user cmotc --repo hoarderMediaOS --tag $(shell date +'%y.%m.%d') \
-		--name "tv-nonfree-custom-amd64.hybrid.iso" \
-		--file tv-nonfree-custom-amd64.hybrid.iso;\
-	github-release upload --user cmotc --repo hoarderMediaOS --tag $(shell date +'%y.%m.%d') \
-		--name "tv-nonfree-hardened-custom-amd64.hybrid.iso.sha256sum" \
-		--file tv-nonfree-hardened-custom-amd64.hybrid.iso.sha256sum; \
-	github-release upload --user cmotc --repo hoarderMediaOS --tag $(shell date +'%y.%m.%d') \
-		--name "tv-nonfree-hardened-custom-amd64.hybrid.iso.sha256sum.asc" \
-		--file tv-nonfree-hardened-custom-amd64.hybrid.iso.sha256sum.asc;\
-	github-release upload --user cmotc --repo hoarderMediaOS --tag $(shell date +'%y.%m.%d') \
-		--name "tv-nonfree-hardened-custom-amd64.hybrid.iso.torrent" \
-		--file tv-nonfree-hardened-custom-amd64.hybrid.iso.torrent;\
-	github-release upload --user cmotc --repo hoarderMediaOS --tag $(shell date +'%y.%m.%d') \
-		--name "tv-nonfree-hardened-custom-amd64.hybrid.iso" \
-		--file tv-nonfree-hardened-custom-amd64.hybrid.iso;\
-
 docker:
 	make docker-debian
 
@@ -512,9 +193,6 @@ docker-update:
 	git pull
 	make docker-all
 
-docker-enter:
-	docker run -i -t hoarder-build bash
-
 docker-copy:
 	docker cp $(image_prename)-live-build:/home/livebuilder/hoarder-live/*-amd64.hybrid.iso . ; \
 	docker cp $(image_prename)-live-build:/home/livebuilder/hoarder-live/*-amd64.hybrid.iso.sha256sum . ; \
@@ -528,48 +206,24 @@ docker-init:
 	mkdir -p .build
 
 docker-clean:
-	docker run -i --privileged -t hoarder-build make clean
+	docker run -i \
+		--name "$(image_prename)-live-build" \
+		--privileged \
+		-t hoarder-build \
+		make clean
 
 docker-build:
-	docker run -i --name "$(image_prename)-live-build" --privileged -t hoarder-build make build
+	docker run -i \
+		--name "$(image_prename)-live-build" \
+		--privileged \
+		-t hoarder-build \
+		make build
 
 docker-build-hardened-on-hardened:
-	sudo sysctl -w kernel.grsecurity.chroot_caps=0
-	sudo sysctl -w kernel.grsecurity.chroot_deny_chmod=0
-	sudo sysctl -w kernel.grsecurity.chroot_deny_mknod=0
-	sudo sysctl -w kernel.grsecurity.chroot_deny_mount=0
-	sudo sysctl -p
-	sudo sysctl kernel.grsecurity.chroot_caps
-	sudo sysctl kernel.grsecurity.chroot_deny_chmod
-	sudo sysctl kernel.grsecurity.chroot_deny_mknod
-	sudo sysctl kernel.grsecurity.chroot_deny_mount
-	docker run -i --name "$(image_prename)-live-build" --privileged -t hoarder-build make build-hardened-on-hardened
-	sudo sysctl -w kernel.grsecurity.chroot_caps=1
-	sudo sysctl -w kernel.grsecurity.chroot_deny_chmod=1
-	sudo sysctl -w kernel.grsecurity.chroot_deny_mknod=1
-	sudo sysctl -w kernel.grsecurity.chroot_deny_mount=1
-	sudo sysctl -p
-	sudo sysctl kernel.grsecurity.chroot_caps
-	sudo sysctl kernel.grsecurity.chroot_deny_chmod
-	sudo sysctl kernel.grsecurity.chroot_deny_mknod
-	sudo sysctl kernel.grsecurity.chroot_deny_mount
-
-tutorial:
-	rm -f TUTORIAL.md
-	cat "Tutorial/HOWTO.0.INTRODUCTION.md" | tee -a TUTORIAL.md
-	echo "" | tee -a TUTORIAL.md
-	cat "Tutorial/HOWTO.1.LIVEBUILD.md" | tee -a TUTORIAL.md
-	echo "" | tee -a TUTORIAL.md
-	cat "Tutorial/HOWTO.2.AUTOSCRIPTS.md" | tee -a TUTORIAL.md
-	echo "" | tee -a TUTORIAL.md
-	cat "Tutorial/HOWTO.3.MAKEFILE.md" | tee -a TUTORIAL.md
-	echo "" | tee -a TUTORIAL.md
-	cat "Tutorial/HOWTO.4.DOCKERFILE.md" | tee -a TUTORIAL.md
-	echo "" | tee -a TUTORIAL.md
-	cat "Tutorial/HOWTO.5.AUTHENTICATE.md" | tee -a TUTORIAL.md
-	echo "" | tee -a TUTORIAL.md
-	cat "Tutorial/HOWTO.6.RELEASE.md" | tee -a TUTORIAL.md
-	echo "" | tee -a TUTORIAL.md
-
-imagename:
-	@echo "built_image = $(image_prename)$(is_harden)$(non_free)$(customized)"
+	make soften-container
+	docker run -i \
+		--name "$(image_prename)-live-build" \
+		--privileged \
+		-t hoarder-build \
+		make build-hardened-on-hardened
+	make harden-container
