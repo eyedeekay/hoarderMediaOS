@@ -1,15 +1,15 @@
+list:
+	@echo "Available commands"
+	@echo "=================="
+	@echo "  These commands are available in this makefile. They should be pretty"
+	@echo "  self explanatory."
+	@echo ""
+	@grep '^[^#[:space:]].*:' Makefile
+
 include config.mk
 include includes/repos.mk
 include includes/packages.mk
 include includes/skel.mk
-
-expose:
-	echo "clean = sudo lb clean"
-	echo "config = lb config"
-	echo "build = sudo lb build"
-	echo "all = clean; config; build"
-	echo "packages = echo \"package list\""
-	cat config/package-lists/build.list.chroot
 
 clean:
 	sudo lb clean; echo "cleaned"
@@ -147,7 +147,7 @@ build-hardened-on-hardened:
 
 allclean:
 	make clean ; \
-	make all
+	make all-free
 
 allclean-hardened:
 	make clean ; \
@@ -178,6 +178,9 @@ allclean-nonfree-hardened-custom:
 	make all-nonfree-hardened-custom
 
 all:
+	echo "ATTN: Are you sure you don't want to use a container? if so, do make all-free."
+
+all-free:
 	make config ; \
 	make libre; \
 	make skel; \
