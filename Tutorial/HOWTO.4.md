@@ -150,9 +150,9 @@ priveleged user in the container. That command is lb build:
 
         docker run -i --name "tv-build" --privileged -t tv-build lb build
 
-For some reason, when I run this command in a container, the files are built,
-and then lost. To work around this difficulty, I modify the auto/build script
-to launch directly into bash after completing the build process.
+Specifying the --name of the container you want to run the command in will keep
+you from losing track of the build artifacts when you copy them to the host
+machine later.
 
 **Example auto/build Figure 2:**
 
@@ -181,7 +181,7 @@ imperfectly, by allowing mounts in chroots
         sudo sysctl -p
         docker run -i --privileged -t hoarder-build make build
         sudo sysctl -w kernel.grsecurity.chroot_caps=0
-        sudo sysctl -w kernel.grsecurity.chroot_deny_chmod=0
-        sudo sysctl -w kernel.grsecurity.chroot_deny_mknod=0
-        sudo sysctl -w kernel.grsecurity.chroot_deny_mount=0
+        sudo sysctl -w kernel.grsecurity.chroot_deny_chmod=1
+        sudo sysctl -w kernel.grsecurity.chroot_deny_mknod=1
+        sudo sysctl -w kernel.grsecurity.chroot_deny_mount=1
         sudo sysctl -p
