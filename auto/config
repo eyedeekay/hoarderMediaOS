@@ -1,8 +1,16 @@
 #! /usr/bin/env bash
 
 components=$( [ ! -z "$nonfree" ] && echo "--components=\"main,contrib,non-free\"" || echo "" )
+archiveareas=$( [ ! -z "$nonfree" ] && echo "--archive-areas \"main,contrib,non-free\"" || echo "" )
+nosource=$( [ ! -z "$nonfree" ] && echo "--apt-source-archives false" || echo "" )
+export non_free=$( [ ! -z "$nonfree" ] && echo "-nonfree" || echo "" )
 
 useproxy=$( [ ! -z "$proxy_addr" ] && echo "--apt-http-proxy $proxy_addr" || echo "" )
+
+harden=$( [ ! -z "$hardened" ] && echo "-k grsec-amd64" || echo "" )
+is_harden=$( [ ! -z "$hardened" ] && echo "-hardened" || echo "" )
+
+customized=$( [ ! -z "$customize" ] && echo "-custom" || echo "" )
 
 mirror=http://ftp.us.debian.org/debian/
 
@@ -33,4 +41,8 @@ lb config noauto \
     --debootstrap-options "--merged-usr --variant=minbase --include=busybox-syslogd,gnupg2,gpgv-static,gnutls-bin,apt-transport-https $components $dsusekeyring $mirror" \
     --initsystem sysvinit \
     --parent-mirror-bootstrap "$mirror" \
+    $archiveareas \
+    $nosource \
+    $harden \
+    --image-name "$IMAGE_PRENAME$is_harden$non_free$customized" \
     "$@"

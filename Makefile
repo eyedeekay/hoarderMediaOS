@@ -9,6 +9,13 @@ include includes/skel.mk
 list:
 	@echo "Available commands"
 	@echo "=================="
+	@echo ""
+	@echo " Image Name Prefix: $(IMAGE_PRENAME)"
+	@echo ""
+	@echo " Proxy: $(proxy_addr)"
+	@echo ""
+	@echo " Signing Key $(KEY)"
+	@echo ""
 	@echo "  These commands are available in this makefile. They should be pretty"
 	@echo "  self explanatory."
 	@echo ""
@@ -37,72 +44,54 @@ clean-artifacts:
 
 config:
 	lb config --firmware-chroot true \
+		--firmware-binary true \
 		--image-name tv
 
 config-hardened:
 	lb config -k grsec-amd64 \
 		--firmware-chroot true \
+		--firmware-binary true \
 		--image-name tv-hardened
 
 config-custom:
 	lb config --firmware-chroot true \
+		--firmware-binary true \
 		--image-name tv-custom
 
 config-hardened-custom:
 	lb config -k grsec-amd64 \
 		--firmware-chroot true \
-		--image-name tv-hardened-custom
-
-config-proxy:
-	export proxy_addr="http://192.168.2.203:3142"; \
-	lb config --firmware-chroot true \
-		--image-name tv
-
-config-hardened-proxy:
-	export proxy_addr="http://192.168.2.203:3142"; \
-	lb config -k grsec-amd64 \
-		--firmware-chroot true \
-		--image-name tv-hardened
-
-config-custom-proxy:
-	export proxy_addr="http://192.168.2.203:3142"; \
-	lb config --firmware-chroot true \
-		--image-name tv-custom
-
-config-hardened-custom-proxy:
-	export proxy_addr="http://192.168.2.203:3142"; \
-	lb config -k grsec-amd64 \
-		--firmware-chroot true \
+		--firmware-binary true \
 		--image-name tv-hardened-custom
 
 config-nonfree:
-	export nonfree="true"; \
 	lb config --archive-areas "main contrib non-free" \
 		--apt-source-archives false \
 		--firmware-chroot true \
+		--firmware-binary true \
 		--image-name tv-nonfree
 
 config-nonfree-hardened:
-	export nonfree="true"; \
 	lb config -k grsec-amd64 \
 		--archive-areas "main contrib non-free" \
 		--apt-source-archives false \
 		--firmware-chroot true \
+		--firmware-binary true \
 		--image-name tv-nonfree-hardened
 
 config-nonfree-custom:
-	export nonfree="true"; \
 	lb config --archive-areas "main contrib non-free" \
 		--apt-source-archives false \
 		--firmware-chroot true \
+		--firmware-binary true \
 		--image-name tv-nonfree-custom
 
 config-nonfree-hardened-custom:
-	export nonfree="true"; \
 	lb config -k grsec-amd64 \
 		--archive-areas "main contrib non-free" \
 		--apt-source-archives false \
 		--firmware-chroot true \
+		--firmware-binary true \
 		--image-name tv-nonfree-hardened-custom
 
 unfree:

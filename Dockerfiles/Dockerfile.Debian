@@ -6,7 +6,7 @@ RUN make docker-init
 USER root
 RUN make clean
 USER livebuilder
-RUN make config-hardened-custom-proxy
+RUN make config-hardened-custom
 RUN make libre
 RUN make custom
 RUN make skel
