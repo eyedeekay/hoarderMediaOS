@@ -1,7 +1,7 @@
 #! /usr/bin/env bash
 
 components=$( [ ! -z "$nonfree" ] && echo "--components=\"main,contrib,non-free\"" || echo "" )
-archiveareas=$( [ ! -z "$nonfree" ] && echo "--archive-areas \"main contrib non-free\"" || echo "" )
+archiveareas=$( [ ! -z "$nonfree" ] && echo "--archive-areas \"main,contrib,non-free\"" || echo "" )
 nosource=$( [ ! -z "$nonfree" ] && echo "--apt-source-archives false" || echo "" )
 export non_free=$( [ ! -z "$nonfree" ] && echo "-nonfree" || echo "" )
 
@@ -13,13 +13,15 @@ export is_harden=$( [ ! -z "$hardened" ] && echo "-hardened" || echo "" )
 export customized=$( [ ! -z "$customize" ] && echo "-custom" || echo "" )
 
 mirror=http://ftp.us.debian.org/debian/
+dsusekeyring="--keyring=keyrings/debian.gpg"
+usekeyring="--keyring-packages=debian-archive-keyring"
 
 if [ -z "$usedevuan" ]; then
-        dsusekeyring="--keyring=/usr/share/keyrings/devuan-archive-keyring.gpg"
+        dsusekeyring="--keyring=keyrings/devuan.gpg"
         usekeyring="--keyring-packages=devuan-keyring"
         mirror="http://packages.devuan.org/merged"
 elif [ -z "$useubuntu" ]; then
-        dsusekeyring="--keyring=/usr/share/keyrings/ubuntu-archive-keyring.gpg"
+        dsusekeyring="--keyring=keyrings/ubuntu.gpg"
         usekeyring="--keyring-packages=ubuntu-archive-keyring"
         mirror="http://archive.ubuntu.com/ubuntu/"
         components=$( [ ! -z "$nonfree" ] && echo "--components=\"main,restricted,universe,multiverse\"" || echo "" )
@@ -28,6 +30,7 @@ fi
 
 if [ ! -z "$components" ]; then
         echo "WARNING: USING NON-FREE COMPONENTS! $components"
+        echo "--merged-usr $dsusekeyring --variant=minbase --include=busybox-syslogd,gnupg2,gpgv-static,gnutls-bin,apt-transport-https $components"
         sleep 5
 fi
 
@@ -36,15 +39,15 @@ lb config noauto \
     --debian-installer live \
     --system live \
     $useproxy \
-    $usekeyring \
-    -d sid \
+    "$usekeyring" \
+    -d unstable \
     --updates no \
-    --parent-distribution sid \
-    --debootstrap-options "--merged-usr --variant=minbase --include=busybox-syslogd,gnupg2,gpgv-static,gnutls-bin,apt-transport-https $components $dsusekeyring $mirror" \
+    --parent-distribution unstable \
+    --debootstrap-options "--merged-usr $dsusekeyring --variant=minbase --include=busybox-syslogd,gnupg2,gpgv-static,gnutls-bin,apt-transport-https $components" \
     --initsystem sysvinit \
-    --parent-mirror-bootstrap "$mirror" \
     $archiveareas \
     $nosource \
-    $harden \
+    "$harden" \
     --image-name "$image_prename$is_harden$non_free$customized" \
-    "$@"
+    "$@" \
+    --parent-mirror-bootstrap "$mirror"

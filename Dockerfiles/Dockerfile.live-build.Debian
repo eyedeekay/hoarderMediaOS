@@ -20,3 +20,4 @@ WORKDIR /home/livebuilder/hoarder-live
 COPY auto /home/livebuilder/hoarder-live/auto
 RUN chown -R root:root /home/livebuilder/hoarder-live/auto
 USER livebuilder
+COPY keyrings/ keyrings/
