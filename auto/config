@@ -13,15 +13,15 @@ export is_harden=$( [ ! -z "$hardened" ] && echo "-hardened" || echo "" )
 export customized=$( [ ! -z "$customize" ] && echo "-custom" || echo "" )
 
 mirror=http://ftp.us.debian.org/debian/
-dsusekeyring="--keyring=keyrings/debian.gpg"
+dsusekeyring="--keyring=keyrings/debian-archive-keyring.gpg"
 usekeyring="--keyring-packages debian-keyring,debian-archive-keyring"
 
 if [ ! -z "$devuan" ]; then
-        dsusekeyring="--keyring=keyrings/devuan.gpg"
+        dsusekeyring="--keyring=keyrings/devuan-archive-keyring.gpg"
         usekeyring="--keyring-packages devuan-keyring"
         mirror="http://packages.devuan.org/merged"
 elif [ ! -z "$ubuntu" ]; then
-        dsusekeyring="--keyring=keyrings/ubuntu.gpg"
+        dsusekeyring="--keyring=keyrings/ubuntu-archive-keyring.gpg"
         usekeyring="--keyring-packages ubuntu-archive-keyring"
         mirror="http://archive.ubuntu.com/ubuntu/"
         components=$( [ ! -z "$nonfree" ] && echo "--components=\"main,restricted,universe,multiverse\"" || echo "" )
