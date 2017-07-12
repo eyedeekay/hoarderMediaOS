@@ -34,7 +34,7 @@ if [ ! -z "$components" ]; then
         sleep 5
 fi
 
-make import-keys
+#make import-keys
 
 lb config noauto \
     -b iso-hybrid \

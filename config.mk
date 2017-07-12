@@ -72,3 +72,10 @@ get-keys:
 	gpg --output keyrings/debian.gpg --armor --export 7638D0442B90D010; \
 	#gpg --recv-keys EDA0D2388AE22BA9
 	#gpg --armor --export EDA0D2388AE22BA9 --output keyrings/debian.gpg
+
+import-keys:
+	gpg --import keyrings/devuan.gpg
+	gpg --import keyrings/debian.gpg
+	gpg --import keyrings/debian-archive-keyring.gpg
+	gpg --import keyrings/devuan-archive-keyring.gpg
+	gpg --import keyrings/ubuntu-archive-keyring.gpg
