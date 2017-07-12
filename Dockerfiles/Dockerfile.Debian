@@ -1,4 +1,5 @@
 FROM live-build-debian
+COPY keyrings/ keyrings/
 COPY Makefile /home/livebuilder/hoarder-live/Makefile
 COPY includes /home/livebuilder/hoarder-live/includes
 COPY config.mk /home/livebuilder/hoarder-live/config.mk

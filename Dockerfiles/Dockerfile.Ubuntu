@@ -1,4 +1,5 @@
 FROM live-build-ubuntu
+COPY keyrings/ keyrings/
 COPY Makefile /home/livebuilder/hoarder-live/Makefile
 COPY config.mk /home/livebuilder/hoarder-live/config.mk
 COPY includes /home/livebuilder/hoarder-live/includes
