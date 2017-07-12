@@ -1,6 +1,7 @@
 export image_prename = tv
 export KEY = "C0CEEE297B5FE45FF610AAC6F05F85FA446C042B"
 export proxy_addr = 'http://192.168.2.203:3142'
+export distro = devuan
 
 soften-container:
 	sudo sysctl -w kernel.grsecurity.chroot_caps=0
@@ -61,3 +62,9 @@ tutorial:
 	echo "" | tee -a TUTORIAL.md
 	cat "Tutorial/HOWTO.6.RELEASE.md" | tee -a TUTORIAL.md
 	echo "" | tee -a TUTORIAL.md
+
+get-keys:
+	gpg --recv-keys 94532124541922FB
+	gpg --armor --export 94532124541922FB --output keyrings/devuan.gpg
+	gpg --recv-keys EDA0D2388AE22BA9
+	gpg --armor --export EDA0D2388AE22BA9 --output keyrings/debian.gpg

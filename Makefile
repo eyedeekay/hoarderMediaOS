@@ -178,19 +178,16 @@ docker:
 	make docker-debian
 
 docker-debian:
-	docker build -t live-build-debian -f Dockerfiles/Dockerfile.live-build.Debian .
 	docker build -t hoarder-build-debian \
 		--build-arg "nonfree=$(nonfree) customize=$(customize) hardened=$(hardened)" \
 		-f Dockerfiles/Dockerfile.Debian .
 
 docker-ubuntu:
-	docker build -t live-build-ubuntu -f Dockerfiles/Dockerfile.live-build.Ubuntu .
 	docker build -t hoarder-build-ubuntu \
 		--build-arg "nonfree=$(nonfree) customize=$(customize) hardened=$(hardened)" \
 		-f Dockerfiles/Dockerfile.Ubuntu .
 
 docker-devuan:
-	docker build -t live-build-devuan -f Dockerfiles/Dockerfile.live-build.Devuan .
 	docker build -t hoarder-build-devuan \
 		--build-arg "nonfree=$(nonfree) customize=$(customize) hardened=$(hardened)" \
 		-f Dockerfiles/Dockerfile.Devuan .
@@ -205,38 +202,41 @@ docker-update:
 	make docker-all
 
 docker-copy:
-	docker cp $(image_prename)-live-build:/home/livebuilder/hoarder-live/*-amd64.hybrid.iso . ; \
-	docker cp $(image_prename)-live-build:/home/livebuilder/hoarder-live/*-amd64.hybrid.iso.sha256sum . ; \
-	docker cp $(image_prename)-live-build:/home/livebuilder/hoarder-live/*-amd64.hybrid.iso.sha256sum.asc . ; \
-	docker cp $(image_prename)-live-build:/home/livebuilder/hoarder-live/*-amd64.files . ; \
-	docker cp $(image_prename)-live-build:/home/livebuilder/hoarder-live/*-amd64.contents . ; \
-	docker cp $(image_prename)-live-build:/home/livebuilder/hoarder-live/*-amd64.hybrid.iso.zsync . ; \
-	docker cp $(image_prename)-live-build:/home/livebuilder/hoarder-live/*-amd64.packages . ;
+	docker cp $(image_prename)-build:/home/livebuilder/hoarder-live/*-amd64.hybrid.iso . ; \
+	docker cp $(image_prename)-build:/home/livebuilder/hoarder-live/*-amd64.hybrid.iso.sha256sum . ; \
+	docker cp $(image_prename)-build:/home/livebuilder/hoarder-live/*-amd64.hybrid.iso.sha256sum.asc . ; \
+	docker cp $(image_prename)-build:/home/livebuilder/hoarder-live/*-amd64.files . ; \
+	docker cp $(image_prename)-build:/home/livebuilder/hoarder-live/*-amd64.contents . ; \
+	docker cp $(image_prename)-build:/home/livebuilder/hoarder-live/*-amd64.hybrid.iso.zsync . ; \
+	docker cp $(image_prename)-build:/home/livebuilder/hoarder-live/*-amd64.packages . ;
 
 docker-init:
 	mkdir -p .build
 
 docker-clean:
 	docker run -i \
-		--name "$(image_prename)-live-build" \
+		--name "$(image_prename)-build" \
 		--privileged \
-		-t hoarder-build \
+		-t hoarder-build-$(distro) \
 		make clean
 
 docker-build:
 	docker run -i \
-		--name "$(image_prename)-live-build" \
+		--name "$(image_prename)-build" \
 		--privileged \
-		-t hoarder-build \
+		-t hoarder-build-$(distro) \
 		make build
 
 docker-build-hardened-on-hardened:
 	make soften-container
 	docker run -i \
-		--name "$(image_prename)-live-build" \
+		--name "$(image_prename)-build" \
 		--privileged \
-		-t hoarder-build \
+		-t hoarder-build-$(distro) \
 		make build-hardened-on-hardened
 	make harden-container
 
 #--build-arg "nonfree=$(nonfree) customize=$(customize) harden=$(harden)" \
+
+throw:
+	scp -r . media@media:Docker/hoarderMediaOS

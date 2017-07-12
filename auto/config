@@ -16,11 +16,11 @@ mirror=http://ftp.us.debian.org/debian/
 dsusekeyring="--keyring=keyrings/debian.gpg"
 usekeyring="--keyring-packages=debian-archive-keyring"
 
-if [ -z "$usedevuan" ]; then
+if [ ! -z "$devuan" ]; then
         dsusekeyring="--keyring=keyrings/devuan.gpg"
         usekeyring="--keyring-packages=devuan-keyring"
         mirror="http://packages.devuan.org/merged"
-elif [ -z "$useubuntu" ]; then
+elif [ ! -z "$ubuntu" ]; then
         dsusekeyring="--keyring=keyrings/ubuntu.gpg"
         usekeyring="--keyring-packages=ubuntu-archive-keyring"
         mirror="http://archive.ubuntu.com/ubuntu/"
@@ -43,11 +43,12 @@ lb config noauto \
     -d unstable \
     --updates no \
     --parent-distribution unstable \
-    --debootstrap-options "--merged-usr $dsusekeyring --variant=minbase --include=busybox-syslogd,gnupg2,gpgv-static,gnutls-bin,apt-transport-https $components" \
+    --debootstrap-options "--merged-usr $dsusekeyring --variant=minbase --include=busybox-syslogd,gnupg2,gpgv-static,gnutls-bin,apt-transport-https,ca-certificates $components" \
     --initsystem sysvinit \
     $archiveareas \
     $nosource \
     "$harden" \
     --image-name "$image_prename$is_harden$non_free$customized" \
     "$@" \
-    --parent-mirror-bootstrap "$mirror"
+    --parent-mirror-bootstrap "$mirror" \
+    --mirror-bootstrap "$mirror"
