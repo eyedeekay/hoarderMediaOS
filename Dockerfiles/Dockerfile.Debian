@@ -5,6 +5,7 @@ COPY includes /home/livebuilder/hoarder-live/includes
 COPY config.mk /home/livebuilder/hoarder-live/config.mk
 RUN make docker-init
 USER root
+COPY auto /home/livebuilder/hoarder-live/auto
 RUN make clean
 USER livebuilder
 RUN make config

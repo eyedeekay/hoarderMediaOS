@@ -13,7 +13,7 @@ export is_harden=$( [ ! -z "$hardened" ] && echo "-hardened" || echo "" )
 export customized=$( [ ! -z "$customize" ] && echo "-custom" || echo "" )
 
 mirror=http://ftp.us.debian.org/debian/
-dsusekeyring="--keyring=keyrings/debian-archive-keyring.gpg"
+dsusekeyring="--keyring keyrings/debian-archive-keyring.gpg"
 usekeyring="--keyring-packages debian-keyring,debian-archive-keyring"
 
 if [ ! -z "$devuan" ]; then
