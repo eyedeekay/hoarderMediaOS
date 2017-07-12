@@ -26,25 +26,25 @@ harden-container:
 	sudo sysctl kernel.grsecurity.chroot_deny_mount
 
 backup:
-	scp tv-*amd64.hybrid.iso media@192.168.2.206:os_backups/ ; \
-	scp tv-*amd64.hybrid.iso.sha256sum media@192.168.2.206:os_backups/ ; \
-	scp tv-*amd64.hybrid.iso.sha256sum.asc media@192.168.2.206:os_backups/ ; \
-	scp tv-*amd64.files media@192.168.2.206:os_backups/ ; \
-	scp tv-*amd64.contents media@192.168.2.206:os_backups/ ; \
-	scp tv-*amd64.hybrid.iso.zsync media@192.168.2.206:os_backups/ ; \
-	scp tv-*amd64.packages media@192.168.2.206:os_backups/ ;
+	scp $(image_prename)-*amd64.hybrid.iso media@192.168.2.206:os_backups/ ; \
+	scp $(image_prename)-*amd64.hybrid.iso.sha256sum media@192.168.2.206:os_backups/ ; \
+	scp $(image_prename)-*amd64.hybrid.iso.sha256sum.asc media@192.168.2.206:os_backups/ ; \
+	scp $(image_prename)-*amd64.files media@192.168.2.206:os_backups/ ; \
+	scp $(image_prename)-*amd64.contents media@192.168.2.206:os_backups/ ; \
+	scp $(image_prename)-*amd64.hybrid.iso.zsync media@192.168.2.206:os_backups/ ; \
+	scp $(image_prename)-*amd64.packages media@192.168.2.206:os_backups/ ;
 
 get-backup:
-	scp media@192.168.2.206:os_backups/tv-*amd64.hybrid.iso . ; \
+	scp media@192.168.2.206:os_backups/$(image_prename)-*amd64.hybrid.iso . ; \
 	make get-infos
 
 get-infos:
-	scp media@192.168.2.206:os_backups/tv-*amd64.hybrid.iso.sha256sum . ; \
-	scp media@192.168.2.206:os_backups/tv-*amd64.hybrid.iso.sha256sum.asc . ; \
-	scp media@192.168.2.206:os_backups/tv-*amd64.files . ; \
-	scp media@192.168.2.206:os_backups/tv-*amd64.contents . ; \
-	scp media@192.168.2.206:os_backups/tv-*amd64.hybrid.iso.zsync . ; \
-	scp media@192.168.2.206:os_backups/tv-*amd64.packages . ;
+	scp media@192.168.2.206:os_backups/$(image_prename)-*amd64.hybrid.iso.sha256sum . ; \
+	scp media@192.168.2.206:os_backups/$(image_prename)-*amd64.hybrid.iso.sha256sum.asc . ; \
+	scp media@192.168.2.206:os_backups/$(image_prename)-*amd64.files . ; \
+	scp media@192.168.2.206:os_backups/$(image_prename)-*amd64.contents . ; \
+	scp media@192.168.2.206:os_backups/$(image_prename)-*amd64.hybrid.iso.zsync . ; \
+	scp media@192.168.2.206:os_backups/$(image_prename)-*amd64.packages . ;
 
 tutorial:
 	rm -f TUTORIAL.md
