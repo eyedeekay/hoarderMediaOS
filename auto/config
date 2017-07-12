@@ -1,7 +1,7 @@
 #! /usr/bin/env bash
 
 components=$( [ ! -z "$nonfree" ] && echo "--components=\"main contrib non-free\"" || echo "" )
-archiveareas=$( [ ! -z "$nonfree" ] && echo "--archive-areas \"main,contrib,non-free\"" || echo "" )
+archiveareas=$( [ ! -z "$nonfree" ] && echo "--archive-areas=\"main,contrib,non-free\"" || echo "" )
 nosource=$( [ ! -z "$nonfree" ] && echo "--apt-source-archives false" || echo "" )
 export non_free=$( [ ! -z "$nonfree" ] && echo "-nonfree" || echo "" )
 
@@ -13,7 +13,7 @@ export is_harden=$( [ ! -z "$hardened" ] && echo "-hardened" || echo "" )
 export customized=$( [ ! -z "$customize" ] && echo "-custom" || echo "" )
 
 mirror=http://ftp.us.debian.org/debian/
-dsusekeyring="--keyring keyrings/debian-archive-keyring.gpg"
+dsusekeyring="--keyring=keyrings/debian-archive-keyring.gpg"
 usekeyring="--keyring-packages=debian-keyring,debian-archive-keyring"
 
 if [ ! -z "$devuan" ]; then
@@ -25,7 +25,7 @@ elif [ ! -z "$ubuntu" ]; then
         usekeyring="--keyring-packages=ubuntu-archive-keyring"
         mirror="http://archive.ubuntu.com/ubuntu/"
         components=$( [ ! -z "$nonfree" ] && echo "--components=\"main,restricted,universe,multiverse\"" || echo "" )
-        archiveareas=$( [ ! -z "$nonfree" ] && echo "--archive-areas \"main restricted universe multiverse\"" || echo "" )
+        archiveareas=$( [ ! -z "$nonfree" ] && echo "--archive-areas=\"main,restricted,universe,multiverse\"" || echo "" )
 fi
 
 if [ ! -z "$components" ]; then
