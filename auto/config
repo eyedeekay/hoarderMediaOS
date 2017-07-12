@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-components=$( [ ! -z "$nonfree" ] && echo "--components=\"main,contrib,non-free\"" || echo "" )
+components=$( [ ! -z "$nonfree" ] && echo "--components=\"main contrib non-free\"" || echo "" )
 archiveareas=$( [ ! -z "$nonfree" ] && echo "--archive-areas \"main,contrib,non-free\"" || echo "" )
 nosource=$( [ ! -z "$nonfree" ] && echo "--apt-source-archives false" || echo "" )
 export non_free=$( [ ! -z "$nonfree" ] && echo "-nonfree" || echo "" )
