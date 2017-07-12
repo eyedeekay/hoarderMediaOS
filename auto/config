@@ -14,15 +14,15 @@ export customized=$( [ ! -z "$customize" ] && echo "-custom" || echo "" )
 
 mirror=http://ftp.us.debian.org/debian/
 dsusekeyring="--keyring=keyrings/debian.gpg"
-usekeyring="--keyring-packages=debian-archive-keyring"
+usekeyring="--keyring-packages debian-keyring,debian-archive-keyring"
 
 if [ ! -z "$devuan" ]; then
         dsusekeyring="--keyring=keyrings/devuan.gpg"
-        usekeyring="--keyring-packages=devuan-keyring"
+        usekeyring="--keyring-packages devuan-keyring"
         mirror="http://packages.devuan.org/merged"
 elif [ ! -z "$ubuntu" ]; then
         dsusekeyring="--keyring=keyrings/ubuntu.gpg"
-        usekeyring="--keyring-packages=ubuntu-archive-keyring"
+        usekeyring="--keyring-packages ubuntu-archive-keyring"
         mirror="http://archive.ubuntu.com/ubuntu/"
         components=$( [ ! -z "$nonfree" ] && echo "--components=\"main,restricted,universe,multiverse\"" || echo "" )
         archiveareas=$( [ ! -z "$nonfree" ] && echo "--archive-areas \"main restricted universe multiverse\"" || echo "" )
