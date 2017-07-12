@@ -22,7 +22,7 @@ packages:
 	echo "xdg-user-dirs" | tee -a build.list.chroot && \
 	echo "git" | tee -a build.list.chroot && \
 	echo "tig" | tee -a build.list.chroot && \
-	echo "lightdm" | tee -a build.list.chroot && \
+	echo "lddm" | tee -a build.list.chroot && \
 	echo "wicd-curses" | tee -a build.list.chroot && \
 	echo "docker.io" | tee -a build.list.chroot && \
 	echo "medit" | tee -a build.list.chroot && \
