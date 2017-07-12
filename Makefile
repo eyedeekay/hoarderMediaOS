@@ -215,14 +215,14 @@ docker-init:
 
 docker-clean:
 	docker run -i \
-		--name "$(image_prename)-build" \
+		--name "$(image_prename)-$(distro)-build" \
 		--privileged \
 		-t $(image_prename)-$(distro) \
 		make clean
 
 docker-build:
 	docker run -i \
-		--name "$(image_prename)-build" \
+		--name "$(image_prename)-$(distro)-build" \
 		--privileged \
 		-t $(image_prename)-$(distro) \
 		make build
@@ -230,7 +230,7 @@ docker-build:
 docker-build-hardened-on-hardened:
 	make soften-container
 	docker run -i \
-		--name "$(image_prename)-build" \
+		--name "$(image_prename)-$(distro)-build" \
 		--privileged \
 		-t $(image_prename)-$(distro) \
 		make build-hardened-on-hardened
