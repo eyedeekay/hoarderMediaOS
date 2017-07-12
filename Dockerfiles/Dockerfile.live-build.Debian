@@ -1,4 +1,6 @@
 FROM debian:sid
+ARG DEBIAN_FRONTEND="noninteractive"
+ENV LANG="C.UTF-8" LC_ALL="C.UTF-8"
 RUN apt-get update && apt-get install -yq --fix-missing \
                 apt-transport-https \
                 gpgv-static \
