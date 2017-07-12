@@ -30,7 +30,7 @@ fi
 
 if [ ! -z "$components" ]; then
         echo "WARNING: USING NON-FREE COMPONENTS! $components"
-        echo "--merged-usr $dsusekeyring --variant=minbase --include=busybox-syslogd,gnupg2,gpgv-static,gnutls-bin,apt-transport-https $components"
+        echo "--merged-usr $dsusekeyring --variant=minbase --include=busybox-syslogd,gnupg2,gpgv-static,gnutls-bin,apt-transport-https,ca-certificates $components"
         sleep 5
 fi
 
