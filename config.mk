@@ -1,5 +1,5 @@
 export image_prename = tv
-export KEY = "C0CEEE297B5FE45FF610AAC6F05F85FA446C042B"
+export KEY = "70D2060738BEF80523ACAFF7D75C03B39B5E14E1"
 export proxy_addr = 'http://192.168.2.203:3142'
 export distro = devuan
 
