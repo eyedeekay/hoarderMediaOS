@@ -236,6 +236,17 @@ docker-build-hardened-on-hardened:
 		make build-hardened-on-hardened
 	make harden-container
 
+docker-build-hardened-on-dockerproxy:
+	make soften-container
+	docker run -i \
+		--name "$(image_prename)-$(distro)-build-dockerproxy" \
+		--privileged \
+		--network=peer-vpn-network \
+		--ip=192.168.3.102 \
+		-t $(image_prename)-$(distro) \
+		make build-hardened-on-hardened
+
+
 #--build-arg "nonfree=$(nonfree) customize=$(customize) harden=$(harden)" \
 
 throw:
