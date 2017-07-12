@@ -178,17 +178,17 @@ docker:
 	make docker-debian
 
 docker-debian:
-	docker build -t hoarder-build-debian \
+	docker build -t $(image_prename)-debian \
 		--build-arg "nonfree=$(nonfree) customize=$(customize) hardened=$(hardened)" \
 		-f Dockerfiles/Dockerfile.Debian .
 
 docker-ubuntu:
-	docker build -t hoarder-build-ubuntu \
+	docker build -t $(image_prename)-ubuntu \
 		--build-arg "nonfree=$(nonfree) customize=$(customize) hardened=$(hardened)" \
 		-f Dockerfiles/Dockerfile.Ubuntu .
 
 docker-devuan:
-	docker build -t hoarder-build-devuan \
+	docker build -t $(image_prename)-devuan \
 		--build-arg "nonfree=$(nonfree) customize=$(customize) hardened=$(hardened)" \
 		-f Dockerfiles/Dockerfile.Devuan .
 
@@ -217,14 +217,14 @@ docker-clean:
 	docker run -i \
 		--name "$(image_prename)-build" \
 		--privileged \
-		-t hoarder-build-$(distro) \
+		-t $(image_prename)-$(distro) \
 		make clean
 
 docker-build:
 	docker run -i \
 		--name "$(image_prename)-build" \
 		--privileged \
-		-t hoarder-build-$(distro) \
+		-t $(image_prename)-$(distro) \
 		make build
 
 docker-build-hardened-on-hardened:
@@ -232,7 +232,7 @@ docker-build-hardened-on-hardened:
 	docker run -i \
 		--name "$(image_prename)-build" \
 		--privileged \
-		-t hoarder-build-$(distro) \
+		-t $(image_prename)-$(distro) \
 		make build-hardened-on-hardened
 	make harden-container
 
