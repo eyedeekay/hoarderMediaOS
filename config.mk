@@ -1,6 +1,6 @@
 export image_prename = tv
 export KEY = "70D2060738BEF80523ACAFF7D75C03B39B5E14E1"
-export proxy_addr = 'http://192.168.2.204:3142'
+export proxy_addr = 'http://192.168.2.204:3142/'
 export distro = debian
 #export distro = ubuntu
 #export distro = devuan
