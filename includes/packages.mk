@@ -4,6 +4,7 @@ packages:
 	echo "awesome-extra" | tee -a build.list.chroot && \
 	echo "apt-transport-tor" | tee -a build.list.chroot && \
 	echo "apt-transport-https" | tee -a build.list.chroot && \
+	echo "ca-certificates" | tee -a build.list.chroot && \
 	echo "coreutils" | tee -a build.list.chroot && \
 	echo "openrc" | tee -a build.list.chroot && \
 	echo "adduser" | tee -a build.list.chroot && \
