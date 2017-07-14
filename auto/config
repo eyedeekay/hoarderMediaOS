@@ -54,4 +54,5 @@ lb config noauto \
     --image-name "$image_prename$is_harden$non_free$customized" \
     "$@" \
     --parent-mirror-bootstrap "$mirror" \
+    --security false \
     --mirror-bootstrap "$mirror"
