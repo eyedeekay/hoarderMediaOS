@@ -228,7 +228,7 @@ docker-build:
 		make build
 
 docker-build-hardened-on-hardened:
-	make soften-container
+	make soften-container; echo softened
 	docker run -i \
 		--name "$(image_prename)-$(distro)-build" \
 		--privileged \
@@ -237,7 +237,7 @@ docker-build-hardened-on-hardened:
 	make harden-container
 
 docker-build-hardened-on-dockerproxy:
-	make soften-container
+	make soften-container; echo softened
 	docker run -i \
 		--name "$(image_prename)-$(distro)-build-dockerproxy" \
 		--privileged \
@@ -245,6 +245,7 @@ docker-build-hardened-on-dockerproxy:
 		--ip=192.168.3.102 \
 		-t $(image_prename)-$(distro) \
 		make build-hardened-on-hardened
+	make harden-container
 
 
 #--build-arg "nonfree=$(nonfree) customize=$(customize) harden=$(harden)" \
