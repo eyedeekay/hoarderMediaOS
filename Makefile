@@ -197,6 +197,11 @@ docker-all:
 	make docker-ubuntu
 	make docker-devuan
 
+docker-clean:
+	docker rm tv-debian-build
+	docker rm tv-ubuntu-build
+	docker rm tv-devuan-build
+
 docker-update:
 	git pull
 	make docker-all
@@ -213,7 +218,7 @@ docker-copy:
 docker-init:
 	mkdir -p .build
 
-docker-clean:
+docker-build-clean:
 	docker run -i \
 		--name "$(image_prename)-$(distro)-build" \
 		--privileged \
