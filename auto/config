@@ -46,7 +46,7 @@ lb config noauto \
     -d unstable \
     --updates no \
     --parent-distribution unstable \
-    --debootstrap-options "--merged-usr $dsusekeyring --variant=minbase --include=busybox-syslogd,gnupg2,gpgv-static,gnutls-bin $components" \
+    --debootstrap-options "--merged-usr --no-check-certificate $dsusekeyring --variant=minbase --include=busybox-syslogd,gnupg2,gpgv-static,gnutls-bin $components" \
     --initsystem sysvinit \
     $archiveareas \
     $nosource \
