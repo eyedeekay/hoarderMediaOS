@@ -1,5 +1,6 @@
 FROM ubuntu:artful
 ARG DEBIAN_FRONTEND="noninteractive"
+ENV DEBIAN_FRONTEND="noninteractive"
 ENV LANG="C.UTF-8" LC_ALL="C.UTF-8"
 RUN apt-get update && apt-get install -yq --fix-missing \
                 apt-transport-https \
@@ -10,7 +11,8 @@ RUN apt-get update && apt-get install -yq --fix-missing \
                 make \
                 sudo \
                 procps \
-                curl
+                curl \
+                ca-certificates
 RUN yes | apt-get dist-upgrade -yq
 RUN echo deb http://ftp.us.debian.org/debian/ sid main | tee /etc/apt/sources.list.d/sid.list
 RUN curl -s https://ftp-master.debian.org/keys/archive-key-9.asc | apt-key add -
