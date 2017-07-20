@@ -23,7 +23,7 @@ packages:
 	echo "xdg-user-dirs" | tee -a build.list.chroot && \
 	echo "git" | tee -a build.list.chroot && \
 	echo "tig" | tee -a build.list.chroot && \
-	echo "lddm" | tee -a build.list.chroot && \
+	echo "sddm" | tee -a build.list.chroot && \
 	echo "wicd-curses" | tee -a build.list.chroot && \
 	echo "docker.io" | tee -a build.list.chroot && \
 	echo "medit" | tee -a build.list.chroot && \
@@ -45,6 +45,7 @@ packages:
 	echo "pandoc" | tee -a build.list.chroot && \
 	echo "python-vte" | tee -a build.list.chroot && \
 	echo "syncthing" | tee -a build.list.chroot && \
+	echo "mosh" | tee -a build.list.chroot && \
 	echo "mutt" | tee -a build.list.chroot && \
 	echo "lftp" | tee -a build.list.chroot && \
 	echo "rtl-sdr" | tee -a build.list.chroot && \
@@ -53,7 +54,8 @@ packages:
 	echo "tor-arm" | tee -a build.list.chroot && \
 	echo "keychain" | tee -a build.list.chroot && \
 	echo "sen" | tee -a build.list.chroot && \
-	echo "sakura" | tee -a build.list.chroot && \
+	echo "stterm" | tee -a build.list.chroot && \
+	echo "tmux" | tee -a build.list.chroot && \
 	echo "uzbl" | tee -a build.list.chroot && \
 	echo "surfraw" | tee -a build.list.chroot && \
 	echo "surfraw-extra" | tee -a build.list.chroot && \
@@ -68,6 +70,7 @@ packages:
 	echo "gnutls-bin" | tee -a build.list.chroot && \
 	echo "firmware-ath9k-htc" | tee -a build.list.chroot && \
 	echo "firmware-linux-free" | tee -a nonfree.list.chroot && \
+	echo "xwayland" | tee -a build.list.chroot && \
 	echo "xserver-xorg" | tee -a build.list.chroot && \
 	echo "xserver-common" | tee -a build.list.chroot && \
 	echo "xserver-xorg-core" | tee -a build.list.chroot && \
