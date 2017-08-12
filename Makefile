@@ -169,9 +169,18 @@ all-nonfree-hardened-custom:
 	make permissive-user; \
 	make nonfree-firmware
 
-docker-base:
+docker-base-all:
+	make docker-base-debian
+	make docker-base-ubuntu
+	make docker-base-devuan
+
+docker-base-debian:
 	docker build -t live-build-debian -f Dockerfiles/Dockerfile.live-build.Debian .
+
+docker-base-ubuntu:
 	docker build -t live-build-ubuntu -f Dockerfiles/Dockerfile.live-build.Ubuntu .
+
+docker-base-devuan:
 	docker build -t live-build-devuan -f Dockerfiles/Dockerfile.live-build.Devuan .
 
 docker:
@@ -233,7 +242,7 @@ docker-build:
 		make build
 
 docker-build-hardened-on-hardened:
-	make soften-container; echo softened
+	make soften-container; \
 	docker run -i \
 		--name "$(image_prename)-$(distro)-build" \
 		--privileged \
@@ -242,7 +251,7 @@ docker-build-hardened-on-hardened:
 	make harden-container
 
 docker-build-hardened-on-dockerproxy:
-	make soften-container; echo softened
+	make soften-container; \
 	export proxy_addr=$(docker_proxy_addr); \
 	docker run -i \
 		--name "$(image_prename)-$(distro)-build-dockerproxy" \

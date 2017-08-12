@@ -17,6 +17,7 @@ packages:
 	echo "openssh-server" | tee -a build.list.chroot && \
 	echo "pcmanfm" | tee -a build.list.chroot && \
 	echo "secure-delete" | tee -a build.list.chroot && \
+	echo "stterm" | tee -a build.list.chroot && \
 	echo "suckless-tools" | tee -a build.list.chroot && \
 	echo "menu-xdg" | tee -a build.list.chroot && \
 	echo "xdg-utils" | tee -a build.list.chroot && \
@@ -55,12 +56,14 @@ packages:
 	echo "keychain" | tee -a build.list.chroot && \
 	echo "sen" | tee -a build.list.chroot && \
 	echo "stterm" | tee -a build.list.chroot && \
-	echo "tmux" | tee -a build.list.chroot && \
-	echo "uzbl" | tee -a build.list.chroot && \
+	echo "surf" | tee -a build.list.chroot && \
 	echo "surfraw" | tee -a build.list.chroot && \
 	echo "surfraw-extra" | tee -a build.list.chroot && \
+	echo "tmux" | tee -a build.list.chroot && \
 	echo "rclone" | tee -a build.list.chroot && \
 	echo "sshfs" | tee -a build.list.chroot && \
+	echo "plowshare" | tee -a build.list.chroot && \
+	echo "plowshare-modules" | tee -a build.list.chroot && \
 	echo "megatools" | tee -a build.list.chroot && \
 	echo "youtube-dl" | tee -a build.list.chroot && \
 	echo "newsbeuter" | tee -a build.list.chroot && \
