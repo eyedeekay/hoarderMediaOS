@@ -11,3 +11,5 @@ cache/
 chroot/
 binary/
 .build/
+repokeys.gpg
+repokeys.gpg~
