@@ -90,6 +90,7 @@ libre:
 	make tor-repo; \
 	make syncthing-repo; \
 	make palemoon-repo; \
+	make devuan-key; \
 	#make emby-repo; \
 	#make tox-repo; \
 
@@ -267,8 +268,23 @@ docker-clobber:
 	docker system prune -f
 	true
 
+docker-clobber-all:
+	make docker-clobber
+	docker rmi -f live-build-debian \
+		live-build-devuan \
+		live-build-ubuntu \
+		tv-debian \
+		tv-devuan \
+		tv-ubuntu; \
+	true
+
 docker-rebuild:
 	make docker-clobber
+	make docker-all
+	make docker-build
+
+docker-rebuild-all:
+	make docker-clobber-all
 	make docker-base-all
 	make docker-all
 	make docker-build

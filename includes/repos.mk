@@ -1,4 +1,10 @@
 
+devuan-key:
+	gpg -a --export 94532124541922FB | tee config/archives/devuan.list.key.chroot
+	cd config/archives/ \
+		&& ln -sf devuan.list.chroot devuan.list.binary \
+		&& ln -sf devuan.list.key.chroot devuan.list.key.binary
+
 apt-now-repo:
 	echo "deb http://eyedeekay.github.io/apt-now/deb-pkg rolling main" | tee config/archives/apt-now.list.chroot
 	echo "deb-src http://eyedeekay.github.io/apt-now/deb-pkg rolling main" | tee -a config/archives/apt-now.list.chroot
