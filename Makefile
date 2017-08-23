@@ -260,10 +260,7 @@ docker-build-hardened-on-hardened:
 docker-clobber:
 	docker rmi -f tv-debian \
 		tv-devuan \
-		tv-ubuntu \
-		live-build-debian \
-		live-build-devuan \
-		live-build-ubuntu; \
+		tv-ubuntu; \
 	docker rm -f tv-build-debian \
 		tv-build-devuan \
 		tv-build-ubuntu; \

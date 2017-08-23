@@ -70,11 +70,11 @@ tutorial:
 
 get-keys:
 	gpg --recv-keys 94532124541922FB; \
-	yes | gpg --output keyrings/devuan.gpg --armor --export 94532124541922FB;
+	yes | gpg --armor --export 94532124541922FB --output keyrings/devuan.asc;
 	gpg --recv-keys 7638D0442B90D010 ; \
-	yes | gpg --output keyrings/debian.gpg --armor --export 7638D0442B90D010;
+	yes | gpg --armor --export 7638D0442B90D010 --output keyrings/debian.asc;
 	gpg --recv-keys EDA0D2388AE22BA9;
-	yes | gpg --armor --export EDA0D2388AE22BA9 --output keyrings/debian.gpg
+	yes | gpg --armor --export EDA0D2388AE22BA9 --output keyrings/debian.asc
 
 import-keys:
 	gpg --import keyrings/devuan.gpg

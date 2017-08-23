@@ -89,7 +89,7 @@ nonfree-repo:
 playdeb-repo:
 	echo "deb http://archive.getdeb.net/ubuntu xenial-getdeb games" | tee config/archives/playdeb.list.chroot
 	echo "deb-src http://archive.getdeb.net/ubuntu xenial-getdeb games" | tee -a config/archives/playdeb.list.chroot
-	wget -q -O- http://archive.getdeb.net/getdeb-archive.key > config/archives/playdeb.list.key.chroot
+	curl -s http://archive.getdeb.net/getdeb-archive.key > config/archives/playdeb.list.key.chroot
 	cd config/archives/ \
 		&& ln -sf playdeb.list.chroot playdeb.list.binary \
 		&& ln -sf playdeb.list.key.chroot playdeb.list.key.binary

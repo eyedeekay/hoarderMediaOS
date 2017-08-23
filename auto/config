@@ -13,20 +13,25 @@ export is_harden=$( [ ! -z "$hardened" ] && echo "-hardened" || echo "" )
 export customized=$( [ ! -z "$customize" ] && echo "-custom" || echo "" )
 
 
-dsusekeyring="--keyring=keyrings/debian-archive-keyring.gpg"
+dsusekeyring="--keyring=$HOME/.gnupg/pubring.gpg"
+#dsusekeyring="--keyring=/usr/share/keyrings/debian-archive-keyring.gpg"
 usekeyring="--keyring-packages=debian-keyring,debian-archive-keyring"
 mirror='http://ftp.us.debian.org/debian/'
 
+make import-keys
 if [ "$distro" = "devuan" ]; then
-        dsusekeyring="--keyring=keyrings/devuan-archive-keyring.gpg"
+        #dsusekeyring="--keyring=keyrings/devuan-archive-keyring.gpg"
+        #dsusekeyring="--keyring=/usr/share/keyrings/devuan-archive-keyring.gpg"
         usekeyring="--keyring-packages=devuan-keyring,debian-keyring,debian-archive-keyring"
         mirror='http://packages.devuan.org/merged'
 elif [ "$distro" = "ubuntu" ]; then
-        dsusekeyring="--keyring=keyrings/ubuntu-archive-keyring.gpg"
+        #dsusekeyring="--keyring=keyrings/ubuntu-archive-keyring.gpg"
+        #dsusekeyring="--keyring=/usr/share/keyrings/ubuntu-archive-keyring.gpg"
         usekeyring="--keyring-packages=ubuntu-archive-keyring,debian-keyring,debian-archive-keyring"
         mirror='http://archive.ubuntu.com/ubuntu/'
         components=$( [ ! -z "$nonfree" ] && echo "--components=\"main,restricted,universe,multiverse\"" || echo "" )
         archiveareas=$( [ ! -z "$nonfree" ] && echo "--archive-areas=\"main,restricted,universe,multiverse\"" || echo "" )
+        distromode="--mode ubuntu"
 fi
 
 if [ ! -z "$components" ]; then
@@ -34,8 +39,6 @@ if [ ! -z "$components" ]; then
         echo "--merged-usr $dsusekeyring --variant=minbase --include=busybox-syslogd,gnupg2,gpgv-static,gnutls-bin,apt-transport-https,ca-certificates $components $proxy_addr"
         sleep 5
 fi
-
-#make import-keys
 
 lb config noauto \
     -b iso-hybrid \
@@ -47,12 +50,13 @@ lb config noauto \
     -d unstable \
     --updates no \
     --parent-distribution unstable \
-    --debootstrap-options "--merged-usr $dsusekeyring --variant=minbase --include=busybox-syslogd,gnupg2,gpgv-static,gnutls-bin $components $proxy_addr" \
+    --debootstrap-options "--merged-usr $dsusekeyring --variant=minbase --include=busybox-syslogd,gnupg2,gpgv-static,gnutls-bin $components" \
     --initsystem sysvinit \
     $archiveareas \
     $nosource \
     "$harden" \
     --image-name "$image_prename$is_harden$non_free$customized" \
+    "$distromode" \
     "$@" \
     --parent-mirror-bootstrap "$mirror" \
     --security false \
