@@ -1,7 +1,7 @@
 
 devuan-key:
-	echo "deb http://packages.devuan.org/merged unstable main" | tee config/archives/devuan.list.chroot
-	echo "deb-src http://packages.devuan.org/merged unstable main" | tee -a config/archives/devuan.list.chroot
+	#echo "deb http://packages.devuan.org/merged unstable main" | tee config/archives/devuan.list.chroot
+	#echo "deb-src http://packages.devuan.org/merged unstable main" | tee -a config/archives/devuan.list.chroot
 	gpg --keyserver keys.gnupg.net --recv-keys 94532124541922FB; \
 	gpg -a --export 94532124541922FB | tee config/archives/devuan.list.key.chroot
 	cd config/archives/ \
@@ -49,8 +49,8 @@ emby-repo:
 i2pd-repo:
 	echo "deb http://repo.lngserv.ru/debian jessie main" | tee config/archives/i2pd.list.chroot
 	echo "deb-src http://repo.lngserv.ru/debian jessie main" | tee -a config/archives/i2pd.list.chroot
-	gpg --keyserver keys.gnupg.net --recv-keys 98EBCFE2; \
-	gpg -a --export 98EBCFE2 | tee config/archives/i2pd.list.key.chroot
+	gpg --keyserver keys.gnupg.net --recv-keys 66F6C87B98EBCFE2; \
+	gpg -a --export 66F6C87B98EBCFE2 | tee config/archives/i2pd.list.key.chroot
 	cd config/archives/ \
 		&& ln -sf i2pd.list.chroot i2pd.list.binary \
 		&& ln -sf i2pd.list.key.chroot i2pd.list.key.binary

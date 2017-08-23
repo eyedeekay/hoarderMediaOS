@@ -14,16 +14,16 @@ export customized=$( [ ! -z "$customize" ] && echo "-custom" || echo "" )
 
 
 dsusekeyring="--keyring=$HOME/.gnupg/repokeys.gpg"
-usekeyring="--keyring-packages debian-keyring,debian-archive-keyring"
+#usekeyring="--keyring-packages debian-keyring,debian-archive-keyring"
 mirror='http://ftp.us.debian.org/debian/'
 bootstrapopts="--merged-usr $dsusekeyring --variant=minbase --include=busybox-syslogd,gnupg2,gnutls-bin,apt-transport-https,ca-certificates $components"
 
 if [ "$distro" = "devuan" ]; then
-        usekeyring="--keyring-packages devuan-keyring,debian-keyring,debian-archive-keyring"
+        #usekeyring="--keyring-packages devuan-keyring,debian-keyring,debian-archive-keyring"
         mirror='http://packages.devuan.org/merged'
         bootstrapopts="--merged-usr $dsusekeyring --variant=minbase --include=busybox-syslogd,gnupg2,gnutls-bin,apt-transport-https,ca-certificates $components"
 elif [ "$distro" = "ubuntu" ]; then
-        usekeyring="--keyring-packages ubuntu-archive-keyring,debian-keyring,debian-archive-keyring"
+        #usekeyring="--keyring-packages ubuntu-archive-keyring,debian-keyring,debian-archive-keyring"
         mirror='http://archive.ubuntu.com/ubuntu/'
         bootstrapopts="--merged-usr $dsusekeyring --variant=minbase --include=busybox-syslogd,gnupg2,gnutls-bin,apt-transport-https,ca-certificates $components"
         components=$( [ ! -z "$nonfree" ] && echo "--components=\"main,restricted,universe,multiverse\"" || echo "" )
