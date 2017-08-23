@@ -13,22 +13,19 @@ export is_harden=$( [ ! -z "$hardened" ] && echo "-hardened" || echo "" )
 export customized=$( [ ! -z "$customize" ] && echo "-custom" || echo "" )
 
 
-dsusekeyring="--keyring=$HOME/.gnupg/pubring.gpg"
-#dsusekeyring="--keyring=/usr/share/keyrings/debian-archive-keyring.gpg"
-usekeyring="--keyring-packages=debian-keyring,debian-archive-keyring"
+dsusekeyring="--keyring=$HOME/.gnupg/pubring.kbx"
+usekeyring="--keyring-packages debian-keyring,debian-archive-keyring"
 mirror='http://ftp.us.debian.org/debian/'
+bootstrapopts="--merged-usr $dsusekeyring --variant=minbase --include=busybox-syslogd,gnupg2,gpgv-static,gnutls-bin,apt-transport-https,ca-certificates,debian-keyring,debian-archive-keyring $components"
 
-make import-keys
 if [ "$distro" = "devuan" ]; then
-        #dsusekeyring="--keyring=keyrings/devuan-archive-keyring.gpg"
-        #dsusekeyring="--keyring=/usr/share/keyrings/devuan-archive-keyring.gpg"
-        usekeyring="--keyring-packages=devuan-keyring,debian-keyring,debian-archive-keyring"
+        usekeyring="--keyring-packages devuan-keyring,debian-keyring,debian-archive-keyring"
         mirror='http://packages.devuan.org/merged'
+        bootstrapopts="--merged-usr $dsusekeyring --variant=minbase --include=busybox-syslogd,gnupg2,gpgv-static,gnutls-bin,apt-transport-https,ca-certificates,devuan-keyring $components"
 elif [ "$distro" = "ubuntu" ]; then
-        #dsusekeyring="--keyring=keyrings/ubuntu-archive-keyring.gpg"
-        #dsusekeyring="--keyring=/usr/share/keyrings/ubuntu-archive-keyring.gpg"
-        usekeyring="--keyring-packages=ubuntu-archive-keyring,debian-keyring,debian-archive-keyring"
+        usekeyring="--keyring-packages ubuntu-archive-keyring,debian-keyring,debian-archive-keyring"
         mirror='http://archive.ubuntu.com/ubuntu/'
+        bootstrapopts="--merged-usr $dsusekeyring --variant=minbase --include=busybox-syslogd,gnupg2,gpgv-static,gnutls-bin,apt-transport-https,ca-certificates $components"
         components=$( [ ! -z "$nonfree" ] && echo "--components=\"main,restricted,universe,multiverse\"" || echo "" )
         archiveareas=$( [ ! -z "$nonfree" ] && echo "--archive-areas=\"main,restricted,universe,multiverse\"" || echo "" )
         distromode="--mode ubuntu"
@@ -36,7 +33,7 @@ fi
 
 if [ ! -z "$components" ]; then
         echo "WARNING: USING NON-FREE COMPONENTS! $components"
-        echo "--merged-usr $dsusekeyring --variant=minbase --include=busybox-syslogd,gnupg2,gpgv-static,gnutls-bin,apt-transport-https,ca-certificates $components $proxy_addr"
+        echo "$bootstrapopts"
         sleep 5
 fi
 
@@ -46,11 +43,11 @@ lb config noauto \
     --debian-installer live \
     --system live \
     $useproxy \
-    "$usekeyring" \
+    $usekeyring \
     -d unstable \
     --updates no \
     --parent-distribution unstable \
-    --debootstrap-options "--merged-usr $dsusekeyring --variant=minbase --include=busybox-syslogd,gnupg2,gpgv-static,gnutls-bin $components" \
+    --debootstrap-options "$bootstrapopts" \
     --initsystem sysvinit \
     $archiveareas \
     $nosource \

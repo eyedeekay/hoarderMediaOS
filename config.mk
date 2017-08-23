@@ -2,7 +2,7 @@ export image_prename = tv
 export KEY = "70D2060738BEF80523ACAFF7D75C03B39B5E14E1"
 
 #export proxy_addr = 'http://127.0.0.1:3142'
-export proxy_addr = http://172.17.0.2:3142
+export proxy_addr = http://172.17.0.3:3142
 #export proxy_addr = 'http://aptcacher:3142/'
 #export distro = debian
 #export distro = ubuntu
@@ -57,15 +57,17 @@ tutorial:
 	echo "" | tee -a TUTORIAL.md
 	cat "Tutorial/HOWTO.1.LIVEBUILD.md" | tee -a TUTORIAL.md
 	echo "" | tee -a TUTORIAL.md
-	cat "Tutorial/HOWTO.2.AUTOSCRIPTS.md" | tee -a TUTORIAL.md
+	cat "Tutorial/HOWTO.2.APTCACHERNG.md" | tee -a TUTORIAL.md
 	echo "" | tee -a TUTORIAL.md
-	cat "Tutorial/HOWTO.3.MAKEFILE.md" | tee -a TUTORIAL.md
+	cat "Tutorial/HOWTO.3.AUTOSCRIPTS.md" | tee -a TUTORIAL.md
 	echo "" | tee -a TUTORIAL.md
-	cat "Tutorial/HOWTO.4.DOCKERFILE.md" | tee -a TUTORIAL.md
+	cat "Tutorial/HOWTO.4.MAKEFILE.md" | tee -a TUTORIAL.md
 	echo "" | tee -a TUTORIAL.md
-	cat "Tutorial/HOWTO.5.AUTHENTICATE.md" | tee -a TUTORIAL.md
+	cat "Tutorial/HOWTO.5.DOCKERFILE.md" | tee -a TUTORIAL.md
 	echo "" | tee -a TUTORIAL.md
-	cat "Tutorial/HOWTO.6.RELEASE.md" | tee -a TUTORIAL.md
+	cat "Tutorial/HOWTO.6.AUTHENTICATE.md" | tee -a TUTORIAL.md
+	echo "" | tee -a TUTORIAL.md
+	cat "Tutorial/HOWTO.7.RELEASE.md" | tee -a TUTORIAL.md
 	echo "" | tee -a TUTORIAL.md
 
 get-keys:
@@ -77,8 +79,6 @@ get-keys:
 	yes | gpg --armor --export EDA0D2388AE22BA9 --output keyrings/debian.asc
 
 import-keys:
-	gpg --import keyrings/devuan.gpg
-	gpg --import keyrings/debian.gpg
-	gpg --import keyrings/debian-archive-keyring.gpg
-	gpg --import keyrings/devuan-archive-keyring.gpg
-	gpg --import keyrings/ubuntu-archive-keyring.gpg
+	gpg --import keyrings/*.gpg; \
+	gpg --import /usr/share/keyrings/*-archive-keyring.gpg; \
+	true

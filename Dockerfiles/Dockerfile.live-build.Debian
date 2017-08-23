@@ -20,7 +20,8 @@ RUN apt-get update && apt-get install -yq --fix-missing \
                 procps \
                 ca-certificates \
                 debian-keyring \
-                debian-archive-keyring
+                debian-archive-keyring \
+                dirmngr
 RUN apt-get dist-upgrade -yq
 RUN useradd -ms /bin/bash livebuilder && echo "livebuilder:liverbuilder" | chpasswd && adduser livebuilder sudo
 ADD . /home/livebuilder/hoarder-live
@@ -30,3 +31,4 @@ COPY auto /home/livebuilder/hoarder-live/auto
 RUN chown -R root:root /home/livebuilder/hoarder-live/auto
 USER livebuilder
 COPY keyrings/ keyrings/
+RUN make import-keys

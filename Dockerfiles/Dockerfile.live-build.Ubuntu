@@ -15,7 +15,10 @@ RUN apt-get update && apt-get install -yq --fix-missing \
                 procps \
                 curl \
                 ca-certificates \
-                ubuntu-keyring
+                debian-keyring \
+                debian-archive-keyring \
+                ubuntu-keyring \
+                dirmngr
 RUN yes | apt-get dist-upgrade -yq
 RUN echo deb http://ftp.us.debian.org/debian/ sid main | tee /etc/apt/sources.list.d/sid.list
 RUN curl -s https://ftp-master.debian.org/keys/archive-key-9.asc | apt-key add -
@@ -31,3 +34,4 @@ COPY auto /home/livebuilder/hoarder-live/auto
 RUN chown -R root:root /home/livebuilder/hoarder-live/auto
 USER livebuilder
 COPY keyrings/ keyrings/
+RUN make import-keys
