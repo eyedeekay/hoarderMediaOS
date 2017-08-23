@@ -2,6 +2,10 @@ FROM debian:sid
 ARG DEBIAN_FRONTEND="noninteractive"
 ENV DEBIAN_FRONTEND="noninteractive"
 ENV LANG="C.UTF-8" LC_ALL="C.UTF-8"
+RUN apt-get update && apt-get install -yq auto-apt-proxy apt-transport-https apt-utils
+RUN echo "Acquire::http::Proxy \"http://172.17.0.2:3142\";" | tee -a /etc/apt/apt.conf.d/00proxy
+RUN echo "Acquire::https::Proxy-Auto-Detect \"true\";" | tee -a /etc/apt/apt.conf.d/00proxy
+RUN echo "Acquire::http::Proxy-Auto-Detect \"/usr/bin/auto-apt-proxy\";" | tee /etc/apt/apt.conf.d/auto-apt-proxy.conf
 RUN apt-get update && apt-get install -yq --fix-missing \
                 apt-transport-https \
                 gpgv-static \
@@ -14,7 +18,9 @@ RUN apt-get update && apt-get install -yq --fix-missing \
                 curl \
                 sudo \
                 procps \
-                ca-certificates
+                ca-certificates \
+                debian-keyring \
+                debian-archive-keyring
 RUN apt-get dist-upgrade -yq
 RUN useradd -ms /bin/bash livebuilder && echo "livebuilder:liverbuilder" | chpasswd && adduser livebuilder sudo
 ADD . /home/livebuilder/hoarder-live

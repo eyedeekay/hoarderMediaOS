@@ -17,6 +17,7 @@ packages:
 	echo "openssh-server" | tee -a build.list.chroot && \
 	echo "pcmanfm" | tee -a build.list.chroot && \
 	echo "secure-delete" | tee -a build.list.chroot && \
+	echo "ifupdown" | tee -a build.list.chroot && \
 	echo "stterm" | tee -a build.list.chroot && \
 	echo "suckless-tools" | tee -a build.list.chroot && \
 	echo "menu-xdg" | tee -a build.list.chroot && \

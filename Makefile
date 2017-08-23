@@ -85,12 +85,12 @@ unfree:
 	#make nonfree-repo; \
 
 libre:
+	make i2pd-repo; \
 	make old-repo; \
 	make tor-repo; \
 	make syncthing-repo; \
-	make emby-repo; \
-	make i2pd-repo; \
 	make palemoon-repo; \
+	#make emby-repo; \
 	#make tox-repo; \
 
 custom:
@@ -98,7 +98,6 @@ custom:
 	make lair-game-repo
 
 build:
-	make packages
 	sudo lb build
 
 build-hardened-on-hardened:
@@ -114,12 +113,14 @@ all-free:
 	make libre; \
 	make skel; \
 	make easy-user
+	make packages
 
 all-hardened:
 	make config-hardened ; \
 	make libre; \
 	make skel; \
 	make permissive-user
+	make packages
 
 all-nonfree:
 	make config-nonfree ; \
@@ -128,6 +129,7 @@ all-nonfree:
 	make skel; \
 	make easy-user ; \
 	make nonfree-firmware
+	make packages
 
 all-nonfree-hardened:
 	make config-nonfree-hardened ; \
@@ -136,6 +138,7 @@ all-nonfree-hardened:
 	make skel; \
 	make permissive-user; \
 	make nonfree-firmware
+	make packages
 
 all-custom:
 	make config-custom ; \
@@ -143,6 +146,7 @@ all-custom:
 	make custom; \
 	make skel; \
 	make easy-user
+	make packages
 
 all-hardened-custom:
 	make config-hardened-custom ; \
@@ -150,6 +154,7 @@ all-hardened-custom:
 	make custom; \
 	make skel; \
 	make permissive-user
+	make packages
 
 all-nonfree-custom:
 	make config-nonfree-custom ; \
@@ -159,6 +164,7 @@ all-nonfree-custom:
 	make skel; \
 	make easy-user ; \
 	make nonfree-firmware
+	make packages
 
 all-nonfree-hardened-custom:
 	make config-nonfree-hardened-custom; \
@@ -168,6 +174,7 @@ all-nonfree-hardened-custom:
 	make skel; \
 	make permissive-user; \
 	make nonfree-firmware
+	make packages
 
 docker-base-all:
 	make docker-base-debian
@@ -175,29 +182,29 @@ docker-base-all:
 	make docker-base-devuan
 
 docker-base-debian:
-	docker build -t live-build-debian -f Dockerfiles/Dockerfile.live-build.Debian .
+	docker build --force-rm -t live-build-debian -f Dockerfiles/Dockerfile.live-build.Debian .
 
 docker-base-ubuntu:
-	docker build -t live-build-ubuntu -f Dockerfiles/Dockerfile.live-build.Ubuntu .
+	docker build --force-rm -t live-build-ubuntu -f Dockerfiles/Dockerfile.live-build.Ubuntu .
 
 docker-base-devuan:
-	docker build -t live-build-devuan -f Dockerfiles/Dockerfile.live-build.Devuan .
+	docker build --force-rm -t live-build-devuan -f Dockerfiles/Dockerfile.live-build.Devuan .
 
 docker:
 	make docker-debian
 
 docker-debian:
-	docker build -t $(image_prename)-debian \
+	docker build --force-rm -t $(image_prename)-debian \
 		--build-arg "nonfree=$(nonfree) customize=$(customize) hardened=$(hardened)" \
 		-f Dockerfiles/Dockerfile.Debian .
 
 docker-ubuntu:
-	docker build -t $(image_prename)-ubuntu \
+	docker build --force-rm -t $(image_prename)-ubuntu \
 		--build-arg "nonfree=$(nonfree) customize=$(customize) hardened=$(hardened)" \
 		-f Dockerfiles/Dockerfile.Ubuntu .
 
 docker-devuan:
-	docker build -t $(image_prename)-devuan \
+	docker build --force-rm -t $(image_prename)-devuan \
 		--build-arg "nonfree=$(nonfree) customize=$(customize) hardened=$(hardened)" \
 		-f Dockerfiles/Dockerfile.Devuan .
 
@@ -250,20 +257,24 @@ docker-build-hardened-on-hardened:
 		make build-hardened-on-hardened
 	make harden-container
 
-docker-build-hardened-on-dockerproxy:
-	make soften-container; \
-	export proxy_addr=$(docker_proxy_addr); \
-	docker run -i \
-		--name "$(image_prename)-$(distro)-build-dockerproxy" \
-		--privileged \
-		--network=peer-vpn-network \
-		--ip=192.168.99.102 \
-		-t $(image_prename)-$(distro) \
-		make build-hardened-on-hardened
-	make harden-container
+docker-clobber:
+	docker rmi -f tv-debian \
+		tv-devuan \
+		tv-ubuntu \
+		live-build-debian \
+		live-build-devuan \
+		live-build-ubuntu; \
+	docker rm -f tv-build-debian \
+		tv-build-devuan \
+		tv-build-ubuntu; \
+	docker system prune -f
+	true
 
-
-#--build-arg "nonfree=$(nonfree) customize=$(customize) harden=$(harden)" \
+docker-rebuild:
+	make docker-clobber
+	make docker-base-all
+	make docker-all
+	make docker-build
 
 throw:
 	scp -r . media@media:Docker/hoarderMediaOS

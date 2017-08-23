@@ -3,26 +3,27 @@
 components=$( [ ! -z "$nonfree" ] && echo "--components=\"main,contrib,non-free\"" || echo "" )
 archiveareas=$( [ ! -z "$nonfree" ] && echo "--archive-areas=\"main,contrib,non-free\"" || echo "" )
 nosource=$( [ ! -z "$nonfree" ] && echo "--apt-source-archives false" || echo "" )
+
 export non_free=$( [ ! -z "$nonfree" ] && echo "-nonfree" || echo "" )
 
 useproxy=$( [ ! -z "$proxy_addr" ] && echo "--apt-http-proxy $proxy_addr" || echo "" )
-
 harden=$( [ ! -z "$hardened" ] && echo "-k grsec-amd64" || echo "" )
-export is_harden=$( [ ! -z "$hardened" ] && echo "-hardened" || echo "" )
 
+export is_harden=$( [ ! -z "$hardened" ] && echo "-hardened" || echo "" )
 export customized=$( [ ! -z "$customize" ] && echo "-custom" || echo "" )
 
-mirror='http://ftp.us.debian.org/debian/'
+
 dsusekeyring="--keyring=keyrings/debian-archive-keyring.gpg"
 usekeyring="--keyring-packages=debian-keyring,debian-archive-keyring"
+mirror='http://ftp.us.debian.org/debian/'
 
-if [ ! -z "$devuan" ]; then
+if [ "$distro" = "devuan" ]; then
         dsusekeyring="--keyring=keyrings/devuan-archive-keyring.gpg"
-        usekeyring="--keyring-packages=devuan-keyring"
+        usekeyring="--keyring-packages=devuan-keyring,debian-keyring,debian-archive-keyring"
         mirror='http://packages.devuan.org/merged'
-elif [ ! -z "$ubuntu" ]; then
+elif [ "$distro" = "ubuntu" ]; then
         dsusekeyring="--keyring=keyrings/ubuntu-archive-keyring.gpg"
-        usekeyring="--keyring-packages=ubuntu-archive-keyring"
+        usekeyring="--keyring-packages=ubuntu-archive-keyring,debian-keyring,debian-archive-keyring"
         mirror='http://archive.ubuntu.com/ubuntu/'
         components=$( [ ! -z "$nonfree" ] && echo "--components=\"main,restricted,universe,multiverse\"" || echo "" )
         archiveareas=$( [ ! -z "$nonfree" ] && echo "--archive-areas=\"main,restricted,universe,multiverse\"" || echo "" )
@@ -30,7 +31,7 @@ fi
 
 if [ ! -z "$components" ]; then
         echo "WARNING: USING NON-FREE COMPONENTS! $components"
-        echo "--merged-usr $dsusekeyring --variant=minbase --include=busybox-syslogd,gnupg2,gpgv-static,gnutls-bin,apt-transport-https,ca-certificates $components"
+        echo "--merged-usr $dsusekeyring --variant=minbase --include=busybox-syslogd,gnupg2,gpgv-static,gnutls-bin,apt-transport-https,ca-certificates $components $proxy_addr"
         sleep 5
 fi
 
@@ -46,7 +47,7 @@ lb config noauto \
     -d unstable \
     --updates no \
     --parent-distribution unstable \
-    --debootstrap-options "--merged-usr $dsusekeyring --variant=minbase --include=busybox-syslogd,gnupg2,gpgv-static,gnutls-bin $components" \
+    --debootstrap-options "--merged-usr $dsusekeyring --variant=minbase --include=busybox-syslogd,gnupg2,gpgv-static,gnutls-bin $components $proxy_addr" \
     --initsystem sysvinit \
     $archiveareas \
     $nosource \

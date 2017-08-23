@@ -1,16 +1,16 @@
 
 apt-now-repo:
-	echo "deb http://cmotc.github.io/apt-now/deb-pkg rolling main" | tee config/archives/apt-now.list.chroot
-	echo "deb-src http://cmotc.github.io/apt-now/deb-pkg rolling main" | tee -a config/archives/apt-now.list.chroot
-	curl -s https://cmotc.github.io/apt-now/cmotc.github.io.gpg.key | tee config/archives/apt-now.list.key.chroot
+	echo "deb http://eyedeekay.github.io/apt-now/deb-pkg rolling main" | tee config/archives/apt-now.list.chroot
+	echo "deb-src http://eyedeekay.github.io/apt-now/deb-pkg rolling main" | tee -a config/archives/apt-now.list.chroot
+	curl -s https://eyedeekay.github.io/apt-now/eyedeekay.github.io.gpg.key | tee config/archives/apt-now.list.key.chroot
 	cd config/archives/ \
 		&& ln -sf apt-now.list.chroot apt-now.list.binary \
 		&& ln -sf apt-now.list.key.chroot apt-now.list.key.binary
 
 lair-game-repo:
-	echo "deb http://cmotc.github.io/lair-web/lair-deb/debian rolling main" | tee config/archives/lair.list.chroot
-	echo "deb-src http://cmotc.github.io/lair-web/lair-deb/debian rolling main" | tee -a config/archives/lair.list.chroot
-	curl -s https://cmotc.github.io/lair-web/lair-deb/cmotc.github.io.lair-web.lair-deb.gpg.key | tee -a config/archives/lair.list.key.chroot
+	echo "deb http://eyedeekay.github.io/lair-web/lair-deb/debian rolling main" | tee config/archives/lair.list.chroot
+	echo "deb-src http://eyedeekay.github.io/lair-web/lair-deb/debian rolling main" | tee -a config/archives/lair.list.chroot
+	curl -s https://eyedeekay.github.io/lair-web/lair-deb/cmotc.github.io.lair-web.lair-deb.gpg.key | tee -a config/archives/lair.list.key.chroot
 	cd config/archives/ \
 		&& ln -sf lair.list.chroot lair.list.binary \
 		&& ln -sf lair.list.key.chroot lair.list.key.binary
@@ -18,7 +18,10 @@ lair-game-repo:
 old-repo:
 	echo "deb http://ftp.us.debian.org/debian/ jessie main " | tee config/archives/jessie.list.chroot
 	cd config/archives/ \
-		&& ln -sf jessie.list.chroot jessie.list.binary \
+		&& ln -sf jessie.list.chroot jessie.list.binary
+	#echo "deb $(mirror) jessie main " | tee config/archives/jessie.list.chroot
+	#cd config/archives/ \
+		#&& ln -sf jessie.list.chroot jessie.list.binary \
 
 
 syncthing-repo:
@@ -76,6 +79,12 @@ nonfree-repo:
 	echo "deb http://ftp.us.debian.org/debian/ jessie contrib nonfree" | tee config/archives/nonfree-jessie.list.chroot
 	cd config/archives/ \
 		&& ln -sf nonfree.list.chroot nonfree.list.binary
+	#echo "deb $(mirror) sid contrib nonfree" | tee config/archives/nonfree.list.chroot
+	#cd config/archives/ \
+		#&& ln -sf nonfree.list.chroot nonfree.list.binary
+	#echo "deb $(mirror) jessie contrib nonfree" | tee config/archives/nonfree-jessie.list.chroot
+	#cd config/archives/ \
+		#&& ln -sf nonfree.list.chroot nonfree.list.binary
 
 playdeb-repo:
 	echo "deb http://archive.getdeb.net/ubuntu xenial-getdeb games" | tee config/archives/playdeb.list.chroot
