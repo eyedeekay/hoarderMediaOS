@@ -3,7 +3,7 @@ export KEY = "70D2060738BEF80523ACAFF7D75C03B39B5E14E1"
 
 #export proxy_addr = 'http://127.0.0.1:3142'
 export proxy_addr = http://172.17.0.2:3142
-#export proxy_addr = 'http://aptcacher:3142/'
+#export proxy_addr = 'http://apthoarder:3142/'
 #export distro = debian
 #export distro = ubuntu
 export distro = devuan
@@ -71,15 +71,15 @@ tutorial:
 	echo "" | tee -a TUTORIAL.md
 
 get-keys:
-	gpg --no-default-keyring --keyring repokeys.gpg --recv-keys 94532124541922FB; \
-	yes | gpg --no-default-keyring --keyring repokeys.gpg  --armor --export 94532124541922FB > keyrings/devuan.asc; \
-	yes | gpg --no-default-keyring --keyring repokeys.gpg  --export 94532124541922FB > keyrings/devuan.gpg; \
-	gpg --no-default-keyring --keyring repokeys.gpg --recv-keys 7638D0442B90D010 ; \
-	yes | gpg --no-default-keyring --keyring repokeys.gpg --armor --export 7638D0442B90D010 > keyrings/debian.asc; \
-	yes | gpg --no-default-keyring --keyring repokeys.gpg  --export 7638D0442B90D010 > keyrings/debian.gpg; \
+	gpg --keyserver keys.gnupg.net --no-default-keyring --keyring repokeys.gpg --recv-keys 94532124541922FB; \
+	yes | gpg --keyserver keys.gnupg.net --no-default-keyring --keyring repokeys.gpg  --armor --export 94532124541922FB > keyrings/devuan.asc; \
+	yes | gpg --keyserver keys.gnupg.net --no-default-keyring --keyring repokeys.gpg  --export 94532124541922FB > keyrings/devuan.gpg; \
+	gpg --keyserver keys.gnupg.net --no-default-keyring --keyring repokeys.gpg --recv-keys 7638D0442B90D010 ; \
+	yes | gpg --keyserver keys.gnupg.net --no-default-keyring --keyring repokeys.gpg --armor --export 7638D0442B90D010 > keyrings/debian.asc; \
+	yes | gpg --keyserver keys.gnupg.net --no-default-keyring --keyring repokeys.gpg  --export 7638D0442B90D010 > keyrings/debian.gpg; \
 	cp /usr/share/keyrings/*-archive-keyring.gpg keyrings
 
 import-keys:
-	gpg --no-default-keyring --keyring repokeys.gpg --import keyrings/*.gpg; \
-	gpg --no-default-keyring --keyring repokeys.gpg --import /usr/share/keyrings/*-archive-keyring.gpg; \
+	gpg --keyserver keys.gnupg.net --no-default-keyring --keyring repokeys.gpg --import keyrings/*.gpg; \
+	gpg --keyserver keys.gnupg.net --no-default-keyring --keyring repokeys.gpg --import /usr/share/keyrings/*-archive-keyring.gpg; \
 	true

@@ -1,8 +1,10 @@
 
 devuan-key:
+	echo "deb http://packages.devuan.org/merged unstable main" | tee config/archives/devuan.list.chroot
+	echo "deb-src http://packages.devuan.org/merged unstable main" | tee -a config/archives/devuan.list.chroot
+	gpg --keyserver keys.gnupg.net --recv-keys 94532124541922FB; \
 	gpg -a --export 94532124541922FB | tee config/archives/devuan.list.key.chroot
 	cd config/archives/ \
-		&& ln -sf devuan.list.chroot devuan.list.binary \
 		&& ln -sf devuan.list.key.chroot devuan.list.key.binary
 
 apt-now-repo:

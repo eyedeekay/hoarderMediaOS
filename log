@@ -1,0 +1,13 @@
+make docker-clobber
+make[1]: Entering directory '/home/idk/local-manifest/distro-manifest/hoardermediaos'
+docker rmi -f tv-debian \
+	tv-devuan \
+	tv-ubuntu; \
+docker rm -f tv-build-debian \
+	tv-build-devuan \
+	tv-build-ubuntu; \
+docker system prune -f
+Makefile:262: recipe for target 'docker-clobber' failed
+make[1]: *** [docker-clobber] Interrupt
+Makefile:282: recipe for target 'docker-rebuild' failed
+make: *** [docker-rebuild] Interrupt

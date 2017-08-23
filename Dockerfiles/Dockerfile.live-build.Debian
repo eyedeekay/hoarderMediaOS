@@ -8,7 +8,6 @@ RUN echo "Acquire::https::Proxy-Auto-Detect \"true\";" | tee -a /etc/apt/apt.con
 RUN echo "Acquire::http::Proxy-Auto-Detect \"/usr/bin/auto-apt-proxy\";" | tee /etc/apt/apt.conf.d/auto-apt-proxy.conf
 RUN apt-get update && apt-get install -yq --fix-missing \
                 apt-transport-https \
-                gpgv-static \
                 gnupg2 \
                 bash \
                 apt-utils \
