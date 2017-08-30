@@ -8,7 +8,7 @@ export non_free=$( [ ! -z "$nonfree" ] && echo "-nonfree" || echo "" )
 
 useproxy=$( [ ! -z "$proxy_addr" ] && echo "--apt-http-proxy $proxy_addr" || echo "" )
 if [ -z "$proxy_addr" ]; then
-        export proxy_addr="http://"
+        export proxy_addr="http:/"
 fi
 harden=$( [ ! -z "$hardened" ] && echo "-k grsec-amd64" || echo "" )
 

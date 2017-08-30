@@ -7,6 +7,7 @@ export proxy_addr = http://172.17.0.2:3142
 #export distro = debian
 #export distro = ubuntu
 export distro = devuan
+export hardened = yes
 
 soften-container:
 	sudo sysctl -w kernel.grsecurity.chroot_caps=0
