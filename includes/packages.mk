@@ -18,7 +18,6 @@ packages:
 	echo "pcmanfm" | tee -a build.list.chroot && \
 	echo "secure-delete" | tee -a build.list.chroot && \
 	echo "iproute2" | tee -a build.list.chroot && \
-	echo "ifupdown" | tee -a build.list.chroot && \
 	echo "stterm" | tee -a build.list.chroot && \
 	echo "suckless-tools" | tee -a build.list.chroot && \
 	echo "menu-xdg" | tee -a build.list.chroot && \
@@ -34,7 +33,6 @@ packages:
 	echo "firejail" | tee -a build.list.chroot && \
 	echo "gocryptfs" | tee -a build.list.chroot && \
 	echo "jackd2" | tee -a build.list.chroot && \
-	echo "jack-mixer" | tee -a build.list.chroot && \
 	echo "alsaplayer-jack" | tee -a build.list.chroot && \
 	echo "pulseaudio-module-jack" | tee -a build.list.chroot && \
 	echo "tshark" | tee -a build.list.chroot && \

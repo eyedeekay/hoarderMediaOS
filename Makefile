@@ -224,19 +224,20 @@ docker-update:
 	make docker-all
 
 docker-copy:
-	docker cp $(image_prename)-build:/home/livebuilder/hoarder-live/*-amd64.hybrid.iso . ; \
-	docker cp $(image_prename)-build:/home/livebuilder/hoarder-live/*-amd64.hybrid.iso.sha256sum . ; \
-	docker cp $(image_prename)-build:/home/livebuilder/hoarder-live/*-amd64.hybrid.iso.sha256sum.asc . ; \
-	docker cp $(image_prename)-build:/home/livebuilder/hoarder-live/*-amd64.files . ; \
-	docker cp $(image_prename)-build:/home/livebuilder/hoarder-live/*-amd64.contents . ; \
-	docker cp $(image_prename)-build:/home/livebuilder/hoarder-live/*-amd64.hybrid.iso.zsync . ; \
-	docker cp $(image_prename)-build:/home/livebuilder/hoarder-live/*-amd64.packages . ;
+	docker cp $(image_prename)-$(distro)-build:/home/livebuilder/hoarder-live/$(image_prename)-amd64.hybrid.iso . ; \
+	docker cp $(image_prename)-$(distro)-build:/home/livebuilder/hoarder-live/$(image_prename)-amd64.hybrid.iso.sha256sum . ; \
+	docker cp $(image_prename)-$(distro)-build:/home/livebuilder/hoarder-live/$(image_prename)-amd64.hybrid.iso.sha256sum.asc . ; \
+	docker cp $(image_prename)-$(distro)-build:/home/livebuilder/hoarder-live/$(image_prename)-amd64.files . ; \
+	docker cp $(image_prename)-$(distro)-build:/home/livebuilder/hoarder-live/$(image_prename)-amd64.contents . ; \
+	docker cp $(image_prename)-$(distro)-build:/home/livebuilder/hoarder-live/$(image_prename)-amd64.hybrid.iso.zsync . ; \
+	docker cp $(image_prename)-$(distro)-build:/home/livebuilder/hoarder-live/$(image_prename)-amd64.packages . ;
 
 docker-init:
 	mkdir -p .build
 
 docker-build-clean:
 	docker run -i \
+		-e "distro=$(distro) nonfree=$(nonfree) hardened=$($hardened)" \
 		--name "$(image_prename)-$(distro)-build" \
 		--privileged \
 		-t $(image_prename)-$(distro) \
@@ -244,6 +245,7 @@ docker-build-clean:
 
 docker-build:
 	docker run -i \
+		-e "distro=$(distro) nonfree=$(nonfree) hardened=$($hardened)" \
 		--name "$(image_prename)-$(distro)-build" \
 		--privileged \
 		-t $(image_prename)-$(distro) \
@@ -252,11 +254,13 @@ docker-build:
 docker-build-hardened-on-hardened:
 	make soften-container; \
 	docker run -i \
+		-e "distro=$(distro) nonfree=$(nonfree) hardened=$($hardened)" \
 		--name "$(image_prename)-$(distro)-build" \
 		--privileged \
 		-t $(image_prename)-$(distro) \
 		make build-hardened-on-hardened
 	make harden-container
+
 
 docker-clobber:
 	docker rmi -f tv-debian \

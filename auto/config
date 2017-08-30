@@ -1,12 +1,15 @@
 #! /usr/bin/env bash
 
 components=$( [ ! -z "$nonfree" ] && echo "--components=\"main,contrib,non-free\"" || echo "" )
-archiveareas=$( [ ! -z "$nonfree" ] && echo "--archive-areas=\"main,contrib,non-free\"" || echo "" )
+archiveareas=$( [ ! -z "$nonfree" ] && echo "--archive-areas \"main,contrib,non-free\"" || echo "" )
 nosource=$( [ ! -z "$nonfree" ] && echo "--apt-source-archives false" || echo "" )
 
 export non_free=$( [ ! -z "$nonfree" ] && echo "-nonfree" || echo "" )
 
 useproxy=$( [ ! -z "$proxy_addr" ] && echo "--apt-http-proxy $proxy_addr" || echo "" )
+if [ -z "$proxy_addr" ]; then
+        export proxy_addr="http://"
+fi
 harden=$( [ ! -z "$hardened" ] && echo "-k grsec-amd64" || echo "" )
 
 export is_harden=$( [ ! -z "$hardened" ] && echo "-hardened" || echo "" )
@@ -14,20 +17,22 @@ export customized=$( [ ! -z "$customize" ] && echo "-custom" || echo "" )
 
 
 dsusekeyring="--keyring=$HOME/.gnupg/repokeys.gpg"
-#usekeyring="--keyring-packages debian-keyring,debian-archive-keyring"
-mirror='http://ftp.us.debian.org/debian/'
+mirror="$proxy_addr/ftp.us.debian.org/debian"
+unstable="sid"
 bootstrapopts="--merged-usr $dsusekeyring --variant=minbase --include=busybox-syslogd,gnupg2,gnutls-bin,apt-transport-https,ca-certificates $components"
+usekeyring="--keyring-packages debian-keyring,debian-archive-keyring"
 
 if [ "$distro" = "devuan" ]; then
-        #usekeyring="--keyring-packages devuan-keyring,debian-keyring,debian-archive-keyring"
-        mirror='http://packages.devuan.org/merged'
-        bootstrapopts="--merged-usr $dsusekeyring --variant=minbase --include=busybox-syslogd,gnupg2,gnutls-bin,apt-transport-https,ca-certificates $components"
+        mirror="$proxy_addr/us.mirror.devuan.org/merged/"
+        unstable="unstable"
+        bootstrapopts="--merged-usr $dsusekeyring --variant=minbase --include=busybox-syslogd,gnupg2,gnutls-bin,apt-transport-https,ca-certificates,live-config-sysvinit $components"
+        usekeyring="--keyring-packages devuan-keyring"
 elif [ "$distro" = "ubuntu" ]; then
-        #usekeyring="--keyring-packages ubuntu-archive-keyring,debian-keyring,debian-archive-keyring"
-        mirror='http://archive.ubuntu.com/ubuntu/'
-        bootstrapopts="--merged-usr $dsusekeyring --variant=minbase --include=busybox-syslogd,gnupg2,gnutls-bin,apt-transport-https,ca-certificates $components"
+        mirror="$proxy_addr/archive.ubuntu.com/ubuntu/"
+        bootstrapopts="--merged-usr $dsusekeyring --include=busybox-syslogd,gnupg2,gnutls-bin,apt-transport-https,ca-certificates $components"
         components=$( [ ! -z "$nonfree" ] && echo "--components=\"main,restricted,universe,multiverse\"" || echo "" )
-        archiveareas=$( [ ! -z "$nonfree" ] && echo "--archive-areas=\"main,restricted,universe,multiverse\"" || echo "" )
+        archiveareas=$( [ ! -z "$nonfree" ] && echo "--archive-areas \"main,restricted,universe,multiverse\"" || echo "" )
+        usekeyring="--keyring-packages ubuntu-archive-keyring"
         distromode="--mode ubuntu"
 fi
 
@@ -41,14 +46,13 @@ make import-keys
 
 lb config noauto \
     -b iso-hybrid \
-    --apt aptitude \
     --debian-installer live \
     --system live \
     $useproxy \
     $usekeyring \
-    -d unstable \
+    -d "$unstable" \
     --updates no \
-    --parent-distribution unstable \
+    --parent-distribution "$unstable" \
     --debootstrap-options "$bootstrapopts" \
     --initsystem sysvinit \
     $archiveareas \

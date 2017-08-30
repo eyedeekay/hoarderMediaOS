@@ -77,9 +77,11 @@ get-keys:
 	gpg --keyserver keys.gnupg.net --no-default-keyring --keyring repokeys.gpg --recv-keys 7638D0442B90D010 ; \
 	yes | gpg --keyserver keys.gnupg.net --no-default-keyring --keyring repokeys.gpg --armor --export 7638D0442B90D010 > keyrings/debian.asc; \
 	yes | gpg --keyserver keys.gnupg.net --no-default-keyring --keyring repokeys.gpg  --export 7638D0442B90D010 > keyrings/debian.gpg; \
+	apt-key exportall | tee keyrings/local.asc; \
 	cp /usr/share/keyrings/*-archive-keyring.gpg keyrings
 
 import-keys:
 	gpg --keyserver keys.gnupg.net --no-default-keyring --keyring repokeys.gpg --import keyrings/*.gpg; \
+	gpg --keyserver keys.gnupg.net --no-default-keyring --keyring repokeys.gpg --import keyrings/*.asc; \
 	gpg --keyserver keys.gnupg.net --no-default-keyring --keyring repokeys.gpg --import /usr/share/keyrings/*-archive-keyring.gpg; \
 	true
