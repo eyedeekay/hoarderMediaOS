@@ -8,6 +8,8 @@ export proxy_addr = http://172.17.0.2:3142
 #export distro = ubuntu
 export distro = devuan
 #export hardened = yes
+#export custom = yes
+#export nonfree = yes (Changing this will now will have no effect. Any nonempty, non-null will add non-free software. Use at your own risk.)
 
 soften-container:
 	sudo sysctl -w kernel.grsecurity.chroot_caps=0
