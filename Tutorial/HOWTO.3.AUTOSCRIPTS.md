@@ -1,4 +1,4 @@
-Step One: Auto Scripts
+Step Two: Auto Scripts
 ======================
 
 [Standalone Chapter](https://github.com/cmotc/hoarderMediaOS/blob/master/Tutorial/HOWTO.2.AUTOSCRIPTS.md)

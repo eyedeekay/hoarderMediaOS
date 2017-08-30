@@ -1,5 +1,5 @@
-Step 5: Create torrents and Release
-===================================
+Step Six: Create torrents and Release
+=====================================
 
 [Standalone Chapter](https://github.com/cmotc/hoarderMediaOS/blob/master/Tutorial/HOWTO.6.RELEASE.md)
 

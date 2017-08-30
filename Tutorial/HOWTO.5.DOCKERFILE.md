@@ -1,4 +1,4 @@
-Step Three: Dockerfile
+Step Four: Dockerfile
 ======================
 
 [Standalone Chapter](https://github.com/cmotc/hoarderMediaOS/blob/master/Tutorial/HOWTO.4.DOCKERFILE.md)

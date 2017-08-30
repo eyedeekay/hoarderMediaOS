@@ -1,4 +1,4 @@
-Step Two: Makefile
+Step Three: Makefile
 ==================
 
 [Standalone Chapter](https://github.com/cmotc/hoarderMediaOS/blob/master/Tutorial/HOWTO.3.MAKEFILE.md)

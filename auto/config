@@ -15,15 +15,15 @@ harden=$( [ ! -z "$hardened" ] && echo "-k grsec-amd64" || echo "" )
 export is_harden=$( [ ! -z "$hardened" ] && echo "-hardened" || echo "" )
 export customized=$( [ ! -z "$customize" ] && echo "-custom" || echo "" )
 
-
 dsusekeyring="--keyring=$HOME/.gnupg/repokeys.gpg"
-mirror="$proxy_addr/ftp.us.debian.org/debian"
-unstable="sid"
-stable="sid"
-bootstrapopts="--merged-usr $dsusekeyring --variant=minbase --include=busybox-syslogd,gnupg2,gnutls-bin,apt-transport-https,ca-certificates $components"
-usekeyring="--keyring-packages debian-keyring,debian-archive-keyring"
 
-if [ "$distro" = "devuan" ]; then
+if [ "$distro" = "debian" ]; then
+        mirror="$proxy_addr/ftp.us.debian.org/debian"
+        unstable="sid"
+        stable="sid"
+        bootstrapopts="--merged-usr $dsusekeyring --variant=minbase --include=busybox-syslogd,gnupg2,gnutls-bin,apt-transport-https,ca-certificates $components"
+        usekeyring="--keyring-packages debian-keyring,debian-archive-keyring"
+elif [ "$distro" = "devuan" ]; then
         mirror="$proxy_addr/us.mirror.devuan.org/merged"
         unstable="unstable"
         stable="stable"
@@ -31,7 +31,9 @@ if [ "$distro" = "devuan" ]; then
         usekeyring="--keyring-packages devuan-keyring"
 elif [ "$distro" = "ubuntu" ]; then
         mirror="$proxy_addr/archive.ubuntu.com/ubuntu"
-        bootstrapopts="--merged-usr $dsusekeyring --include=busybox-syslogd,gnupg2,gnutls-bin,apt-transport-https,ca-certificates $components"
+        unstable="artful"
+        stable="artful"
+        bootstrapopts="--merged-usr $dsusekeyring --include=gnupg2,apt-transport-https,ca-certificates --exclude=debian-archive-keyring $components"
         components=$( [ ! -z "$nonfree" ] && echo "--components=\"main,restricted,universe,multiverse\"" || echo "" )
         archiveareas=$( [ ! -z "$nonfree" ] && echo "--archive-areas \"main,restricted,universe,multiverse\"" || echo "" )
         usekeyring="--keyring-packages ubuntu-archive-keyring"

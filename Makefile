@@ -80,10 +80,23 @@ unfree:
 	make plex-repo; \
 	#make nonfree-repo; \
 
+unfree-ubuntu:
+	make playdeb-repo; \
+	make plex-repo; \
+	make nonfree-ubuntu-repo; \
+
 libre:
 	make i2pd-repo; \
 	make old-repo; \
 	make tor-repo; \
+	make syncthing-repo; \
+	make palemoon-repo; \
+	#make emby-repo; \
+	#make tox-repo; \
+
+libre-ubuntu:
+	make i2pd-repo; \
+	make tor-ubuntu-repo; \
 	make syncthing-repo; \
 	make palemoon-repo; \
 	#make emby-repo; \

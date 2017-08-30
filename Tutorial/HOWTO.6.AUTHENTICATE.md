@@ -1,5 +1,5 @@
-Step 4: Provide a path to verify Authentic copies
-=================================================
+Step Five: Provide a path to verify Authentic copies
+====================================================
 
 [Standalone Chapter](https://github.com/cmotc/hoarderMediaOS/blob/master/Tutorial/HOWTO.5.AUTHENTICATE.md)
 

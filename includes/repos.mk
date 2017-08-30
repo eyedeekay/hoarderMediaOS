@@ -44,6 +44,12 @@ old-repo:
 	echo "deb http://ftp.us.debian.org/debian/ jessie main " | tee config/archives/jessie.list.chroot
 	cd config/archives/ \
 		&& ln -sf jessie.list.chroot jessie.list.binary
+	@echo "Package: *" | tee -a config/archives/debdev.pref
+	@echo "Pin: release a=jessie" | tee -a config/archives/debdev.pref
+	@echo "Pin-Priority: 10" | tee -a config/archives/debdev.pref
+	cd config/archives/ \
+		&& ln -sf debdev.pref debdev.pref.chroot
+	cp config/archives/debdev.pref config/apt/preferences
 	#echo "deb $(mirror) jessie main " | tee config/archives/jessie.list.chroot
 	#cd config/archives/ \
 		#&& ln -sf jessie.list.chroot jessie.list.binary \
@@ -73,8 +79,17 @@ i2pd-repo:
 		&& ln -sf i2pd.list.key.chroot i2pd.list.key.binary
 
 tor-repo:
-	echo "deb http://deb.torproject.org/torproject.org stretch main" | tee config/archives/tor.list.chroot
-	echo "deb-src http://deb.torproject.org/torproject.org stretch main" | tee -a config/archives/tor.list.chroot
+	echo "deb http://deb.torproject.org/torproject.org sid main" | tee config/archives/tor.list.chroot
+	echo "deb-src http://deb.torproject.org/torproject.org sid main" | tee -a config/archives/tor.list.chroot
+	gpg --keyserver keys.gnupg.net --recv-keys A3C4F0F979CAA22CDBA8F512EE8CBC9E886DDD89; \
+	gpg -a --export A3C4F0F979CAA22CDBA8F512EE8CBC9E886DDD89 | tee config/archives/tor.list.key.chroot
+	cd config/archives/ \
+		&& ln -sf tor.list.chroot tor.list.binary \
+		&& ln -sf tor.list.key.chroot tor.list.key.binary
+
+tor-ubuntu-repo:
+	echo "deb http://deb.torproject.org/torproject.org zesty main" | tee config/archives/tor.list.chroot
+	echo "deb-src http://deb.torproject.org/torproject.org zesty main" | tee -a config/archives/tor.list.chroot
 	gpg --keyserver keys.gnupg.net --recv-keys A3C4F0F979CAA22CDBA8F512EE8CBC9E886DDD89; \
 	gpg -a --export A3C4F0F979CAA22CDBA8F512EE8CBC9E886DDD89 | tee config/archives/tor.list.key.chroot
 	cd config/archives/ \
@@ -111,6 +126,14 @@ nonfree-repo:
 	#cd config/archives/ \
 		#&& ln -sf nonfree.list.chroot nonfree.list.binary
 
+nonfree-ubuntu-repo:
+	echo "deb http://archive.ubuntu.com/ubuntu/ artful restricted universe multiverse partner" | tee config/archives/nonfree.list.chroot
+	cd config/archives/ \
+		&& ln -sf nonfree.list.chroot nonfree.list.binary
+	echo "deb http://archive.ubuntu.com/ubuntu/ artful-updates restricted universe multiverse partner" | tee config/archives/nonfree-updates.list.chroot
+	cd config/archives/ \
+		&& ln -sf nonfree.list.chroot nonfree.list.binary
+
 playdeb-repo:
 	echo "deb http://archive.getdeb.net/ubuntu xenial-getdeb games" | tee config/archives/playdeb.list.chroot
 	echo "deb-src http://archive.getdeb.net/ubuntu xenial-getdeb games" | tee -a config/archives/playdeb.list.chroot
@@ -125,3 +148,19 @@ plex-repo:
 	cd config/archives/ \
 		&& ln -sf plex.list.chroot plex.list.binary \
 		&& ln -sf plex.list.key.chroot plex.list.key.binary
+
+get-keys:
+	gpg --keyserver keys.gnupg.net --no-default-keyring --keyring repokeys.gpg --recv-keys 94532124541922FB; \
+	yes | gpg --keyserver keys.gnupg.net --no-default-keyring --keyring repokeys.gpg  --armor --export 94532124541922FB > keyrings/devuan.asc; \
+	yes | gpg --keyserver keys.gnupg.net --no-default-keyring --keyring repokeys.gpg  --export 94532124541922FB > keyrings/devuan.gpg; \
+	gpg --keyserver keys.gnupg.net --no-default-keyring --keyring repokeys.gpg --recv-keys 7638D0442B90D010 ; \
+	yes | gpg --keyserver keys.gnupg.net --no-default-keyring --keyring repokeys.gpg --armor --export 7638D0442B90D010 > keyrings/debian.asc; \
+	yes | gpg --keyserver keys.gnupg.net --no-default-keyring --keyring repokeys.gpg  --export 7638D0442B90D010 > keyrings/debian.gpg; \
+	apt-key exportall | tee keyrings/local.asc; \
+	cp /usr/share/keyrings/*-archive-keyring.gpg keyrings
+
+import-keys:
+	gpg --keyserver keys.gnupg.net --no-default-keyring --keyring repokeys.gpg --import keyrings/*.gpg; \
+	gpg --keyserver keys.gnupg.net --no-default-keyring --keyring repokeys.gpg --import keyrings/*.asc; \
+	gpg --keyserver keys.gnupg.net --no-default-keyring --keyring repokeys.gpg --import /usr/share/keyrings/*-archive-keyring.gpg; \
+	true
