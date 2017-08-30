@@ -12,6 +12,7 @@ if [ -z "$proxy_addr" ]; then
 fi
 harden=$( [ ! -z "$hardened" ] && echo "-k grsec-amd64" || echo "" )
 
+export tag_distro="-$distro"
 export is_harden=$( [ ! -z "$hardened" ] && echo "-hardened" || echo "" )
 export customized=$( [ ! -z "$customize" ] && echo "-custom" || echo "" )
 
@@ -62,7 +63,7 @@ lb config noauto \
     $archiveareas \
     $nosource \
     $harden \
-    --image-name "$image_prename$is_harden$non_free$customized" \
+    --image-name "$image_prename$tag_distro$is_harden$non_free$customized" \
     $distromode \
     "$@" \
     --parent-mirror-bootstrap "$mirror" \

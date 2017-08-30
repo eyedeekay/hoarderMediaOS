@@ -2,6 +2,7 @@ packages:
 	cd config/package-lists/ && \
 	echo "awesome" | tee -a build.list.chroot && \
 	echo "awesome-extra" | tee -a build.list.chroot && \
+	echo "auto-apt-proxy" | tee -a build.list.chroot && \
 	echo "apt-transport-tor" | tee -a build.list.chroot && \
 	echo "apt-transport-https" | tee -a build.list.chroot && \
 	echo "ca-certificates" | tee -a build.list.chroot && \

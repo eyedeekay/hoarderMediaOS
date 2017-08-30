@@ -5,8 +5,8 @@ export KEY = "70D2060738BEF80523ACAFF7D75C03B39B5E14E1"
 export proxy_addr = http://172.17.0.2:3142
 #export proxy_addr = 'http://apthoarder:3142/'
 #export distro = debian
-export distro = ubuntu
-#export distro = devuan
+#export distro = ubuntu
+export distro = devuan
 #export hardened = yes
 
 soften-container:

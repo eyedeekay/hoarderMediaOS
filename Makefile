@@ -38,40 +38,8 @@ clean:
 config:
 	lb config
 
-config-hardened:
-	export hardened="yes"; \
-	lb config
-
-config-custom:
-	export customize="yes"; \
-	lb config
-
-config-hardened-custom:
-	export hardened="yes"; \
-	export customize="yes"; \
-	lb config
-
 config-nonfree:
 	export nonfree="yes"; \
-	lb config --firmware-chroot true \
-		--firmware-binary true
-
-config-nonfree-hardened:
-	export nonfree="yes"; \
-	export hardened="yes"; \
-	lb config --firmware-chroot true \
-		--firmware-binary true
-
-config-nonfree-custom:
-	export nonfree="yes"; \
-	export customize="yes"; \
-	lb config --firmware-chroot true \
-		--firmware-binary true
-
-config-nonfree-hardened-custom:
-	export nonfree="yes"; \
-	export hardened="yes"; \
-	export customize="yes"; \
 	lb config --firmware-chroot true \
 		--firmware-binary true
 
