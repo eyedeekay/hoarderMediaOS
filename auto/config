@@ -19,16 +19,18 @@ export customized=$( [ ! -z "$customize" ] && echo "-custom" || echo "" )
 dsusekeyring="--keyring=$HOME/.gnupg/repokeys.gpg"
 mirror="$proxy_addr/ftp.us.debian.org/debian"
 unstable="sid"
+stable="sid"
 bootstrapopts="--merged-usr $dsusekeyring --variant=minbase --include=busybox-syslogd,gnupg2,gnutls-bin,apt-transport-https,ca-certificates $components"
 usekeyring="--keyring-packages debian-keyring,debian-archive-keyring"
 
 if [ "$distro" = "devuan" ]; then
-        mirror="$proxy_addr/us.mirror.devuan.org/merged/"
+        mirror="$proxy_addr/us.mirror.devuan.org/merged"
         unstable="unstable"
+        stable="stable"
         bootstrapopts="--merged-usr $dsusekeyring --variant=minbase --include=busybox-syslogd,gnupg2,gnutls-bin,apt-transport-https,ca-certificates,live-config-sysvinit $components"
         usekeyring="--keyring-packages devuan-keyring"
 elif [ "$distro" = "ubuntu" ]; then
-        mirror="$proxy_addr/archive.ubuntu.com/ubuntu/"
+        mirror="$proxy_addr/archive.ubuntu.com/ubuntu"
         bootstrapopts="--merged-usr $dsusekeyring --include=busybox-syslogd,gnupg2,gnutls-bin,apt-transport-https,ca-certificates $components"
         components=$( [ ! -z "$nonfree" ] && echo "--components=\"main,restricted,universe,multiverse\"" || echo "" )
         archiveareas=$( [ ! -z "$nonfree" ] && echo "--archive-areas \"main,restricted,universe,multiverse\"" || echo "" )
@@ -50,7 +52,7 @@ lb config noauto \
     --system live \
     $useproxy \
     $usekeyring \
-    -d "$unstable" \
+    -d "$stable" \
     --updates no \
     --parent-distribution "$unstable" \
     --debootstrap-options "$bootstrapopts" \

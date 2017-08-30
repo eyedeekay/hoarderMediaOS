@@ -36,48 +36,44 @@ clean:
 	rm -rf config
 
 config:
-	lb config --firmware-chroot true \
-		--firmware-binary true \
+	lb config
 
 config-hardened:
 	export hardened="yes"; \
-	lb config --firmware-chroot true \
-		--firmware-binary true \
+	lb config
 
 config-custom:
 	export customize="yes"; \
-	lb config --firmware-chroot true \
-		--firmware-binary true \
-
-config-nonfree:
-	export nonfree="yes"; \
-	lb config --firmware-chroot true \
-		--firmware-binary true \
+	lb config
 
 config-hardened-custom:
 	export hardened="yes"; \
 	export customize="yes"; \
+	lb config
+
+config-nonfree:
+	export nonfree="yes"; \
 	lb config --firmware-chroot true \
-		--firmware-binary true \
+		--firmware-binary true
 
 config-nonfree-hardened:
 	export nonfree="yes"; \
 	export hardened="yes"; \
 	lb config --firmware-chroot true \
-		--firmware-binary true \
+		--firmware-binary true
 
 config-nonfree-custom:
 	export nonfree="yes"; \
 	export customize="yes"; \
 	lb config --firmware-chroot true \
-		--firmware-binary true \
+		--firmware-binary true
 
 config-nonfree-hardened-custom:
 	export nonfree="yes"; \
 	export hardened="yes"; \
 	export customize="yes"; \
 	lb config --firmware-chroot true \
-		--firmware-binary true \
+		--firmware-binary true
 
 unfree:
 	make playdeb-repo; \
@@ -90,7 +86,6 @@ libre:
 	make tor-repo; \
 	make syncthing-repo; \
 	make palemoon-repo; \
-	make devuan-key; \
 	#make emby-repo; \
 	#make tox-repo; \
 

@@ -1,11 +1,28 @@
 
 devuan-key:
-	#echo "deb http://packages.devuan.org/merged unstable main" | tee config/archives/devuan.list.chroot
-	#echo "deb-src http://packages.devuan.org/merged unstable main" | tee -a config/archives/devuan.list.chroot
+	echo "deb http://packages.devuan.org/merged unstable main" | tee config/archives/devuan.list.chroot
+	echo "deb-src http://packages.devuan.org/merged unstable main" | tee -a config/archives/devuan.list.chroot
+	cd config/archives/ \
+		&& ln -sf nonfree.list.chroot nonfree.list.binary
 	gpg --keyserver keys.gnupg.net --recv-keys 94532124541922FB; \
 	gpg -a --export 94532124541922FB | tee config/archives/devuan.list.key.chroot
 	cd config/archives/ \
 		&& ln -sf devuan.list.key.chroot devuan.list.key.binary
+	echo "deb http://ftp.us.debian.org/debian/ sid main" | tee config/archives/sid.list.chroot
+	gpg --keyserver keys.gnupg.net --recv-keys EF0F382A1A7B6500; \
+	gpg -a --export EF0F382A1A7B6500 | tee config/archives/sid.list.key.chroot
+	cd config/archives/ \
+		&& ln -sf sid.list.key.chroot sid.list.key.binary
+	@echo "Package: *" | tee config/archives/debdev.pref
+	@echo "Pin: origin packages.devuan.org" | tee -a config/archives/debdev.pref
+	@echo "Pin-Priority: 999" | tee -a config/archives/debdev.pref
+	@echo "Package: *" | tee -a config/archives/debdev.pref
+	@echo "Pin: origin ftp.us.debian.org" | tee -a config/archives/debdev.pref
+	@echo "Pin-Priority: 990" | tee -a config/archives/debdev.pref
+	cd config/archives/ \
+		&& ln -sf debdev.pref debdev.pref.chroot
+	cp config/archives/debdev.pref config/apt/preferences
+
 
 apt-now-repo:
 	echo "deb http://eyedeekay.github.io/apt-now/deb-pkg rolling main" | tee config/archives/apt-now.list.chroot
