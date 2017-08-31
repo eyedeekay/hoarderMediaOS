@@ -89,7 +89,7 @@ if [ ! -z "$nonfree" ]; then
         make unfree
         make nonfree-firmware
 fi
-if [ ! -z "$custom" ]; then
+if [ ! -z "$customize" ]; then
         make custom
 fi
 make skel

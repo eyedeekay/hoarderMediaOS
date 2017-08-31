@@ -213,7 +213,7 @@ docker-init:
 
 docker-build-clean:
 	docker run -i \
-		-e "distro=$(distro) nonfree=$(nonfree) hardened=$($hardened)" \
+		-e "distro=$(distro) nonfree=$(nonfree) hardened=$($hardened) customize=$(customize)" \
 		--name "$(image_prename)-$(distro)-build" \
 		--privileged \
 		-t $(image_prename)-$(distro) \
@@ -221,7 +221,7 @@ docker-build-clean:
 
 docker-build:
 	docker run -i \
-		-e "distro=$(distro) nonfree=$(nonfree) hardened=$($hardened)" \
+		-e "distro=$(distro) nonfree=$(nonfree) hardened=$($hardened) customize=$(customize)" \
 		--name "$(image_prename)-$(distro)-build" \
 		--privileged \
 		-t $(image_prename)-$(distro) \
@@ -230,7 +230,7 @@ docker-build:
 docker-build-hardened-on-hardened:
 	make soften-container; \
 	docker run -i \
-		-e "distro=$(distro) nonfree=$(nonfree) hardened=$($hardened)" \
+		-e "distro=$(distro) nonfree=$(nonfree) hardened=$($hardened) customize=$(customize)" \
 		--name "$(image_prename)-$(distro)-build" \
 		--privileged \
 		-t $(image_prename)-$(distro) \
