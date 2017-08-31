@@ -25,7 +25,7 @@ transparently, although it will not cache those packages unless it is configured
 to. It seems like there are three main situations where you might want to make a
 change to how apt-cacher-ng works by default.
 
-###Allow https repositories to CONNECT through apt-cacher-ng
+**Allow https repositories to CONNECT through apt-cacher-ng**
 
 Increasingly, some software sources are making their repositories available only
 by way of https. This is probably not like, super necessary, as it will do
@@ -43,7 +43,7 @@ so it looks like this.
 and voila! You can now use https repositories through your apt-cacher-ng
 instance, however it will not cache those packages yet.
 
-###Third-party Repository using plain http
+**Third-party Repository using plain http**
 
 If you want to cache packages from a thrid-party repository using apt-cacher-ng,
 such as the Devuan repository, then you will need to create a backend for that
@@ -64,7 +64,7 @@ file.
 Next time you start your apt-cacher-ng instance, it will know to cache Devuan
 packages.
 
-###Third-party Repository caching using https
+**Third-party Repository caching using https**
 
 It would also be nice to cache https repositories, and you can do just that with
 apt-cacher-ng. It's pretty similar to using it with plain http, a backend is
@@ -76,7 +76,7 @@ and make apt-cacher-ng aware of it in /etc/apt-cacher-ng/acng.conf
 
         Remap-i2pd: http://i2p.repo ; file:backends_i2pd
 
-###Configuring apt to use your caching proxy
+**Configuring apt to use your caching proxy**
 
 Finally, you'll need to make your applications aware of apt-cacher-ng. To make
 your host machine's apt aware of your proxy, you need to create a file

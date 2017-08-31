@@ -119,10 +119,10 @@ nonfree-repo:
 	echo "deb http://ftp.us.debian.org/debian/ jessie contrib nonfree" | tee config/archives/nonfree-jessie.list.chroot
 	cd config/archives/ \
 		&& ln -sf nonfree.list.chroot nonfree.list.binary
-	#echo "deb $(mirror) sid contrib nonfree" | tee config/archives/nonfree.list.chroot
+	#echo "deb $$mirror sid contrib nonfree" | tee config/archives/nonfree.list.chroot
 	#cd config/archives/ \
 		#&& ln -sf nonfree.list.chroot nonfree.list.binary
-	#echo "deb $(mirror) jessie contrib nonfree" | tee config/archives/nonfree-jessie.list.chroot
+	#echo "deb $$mirror jessie contrib nonfree" | tee config/archives/nonfree-jessie.list.chroot
 	#cd config/archives/ \
 		#&& ln -sf nonfree.list.chroot nonfree.list.binary
 
