@@ -3,3 +3,12 @@ tv-amd64.files
 tv-amd64.hybrid.iso
 tv-amd64.hybrid.iso.zsync
 tv-amd64.packages
+*.iso
+*.iso.sha256sum
+*.iso.sha256sum.asc
+*.contents
+*.hybrid.iso.zsync
+*.packages
+*.files
+*.packages.install
+*.packages.live

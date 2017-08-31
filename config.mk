@@ -5,8 +5,11 @@ export KEY = "70D2060738BEF80523ACAFF7D75C03B39B5E14E1"
 export proxy_addr = http://172.17.0.2:3142
 #export proxy_addr = 'http://apthoarder:3142/'
 #export distro = debian
+# Only Ever
 #export distro = ubuntu
+# export one
 export distro = devuan
+# of these.
 #export hardened = yes
 #export custom = yes
 #export nonfree = yes (Changing this will now will have no effect. Any nonempty, non-null will add non-free software. Use at your own risk.)

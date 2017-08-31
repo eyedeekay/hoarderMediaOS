@@ -9,5 +9,4 @@ COPY auto /home/livebuilder/hoarder-live/auto
 RUN make clean
 USER livebuilder
 RUN make config
-RUN make permissive-user
 USER root
