@@ -49,6 +49,7 @@ fi
 
 make import-keys
 
+
 lb config noauto \
     -b iso-hybrid \
     --debian-installer live \
@@ -69,3 +70,27 @@ lb config noauto \
     --parent-mirror-bootstrap "$mirror" \
     --security false \
     --mirror-bootstrap "$mirror"
+
+
+if [ "$distro" = "debian" ]; then
+        make libre
+elif [ "$distro" = "devuan" ]; then
+        make libre
+        make devuan-key
+elif [ "$distro" = "ubuntu" ]; then
+        make libre-ubuntu
+fi
+if [ ! -z "$hardened" ]; then
+        make permissive-user
+else
+        make easy-user
+fi
+if [ ! -z "$nonfree" ]; then
+        make unfree
+        make nonfree-firmware
+fi
+if [ ! -z "$custom" ]; then
+        make custom
+fi
+make skel
+make packages

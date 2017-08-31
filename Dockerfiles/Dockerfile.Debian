@@ -9,9 +9,5 @@ COPY auto /home/livebuilder/hoarder-live/auto
 RUN make clean
 USER livebuilder
 RUN make config
-RUN make libre
-RUN make custom
-RUN make skel
 RUN make permissive-user
-RUN make packages
 USER root
