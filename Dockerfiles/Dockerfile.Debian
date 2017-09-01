@@ -3,10 +3,10 @@ COPY keyrings/ keyrings/
 COPY Makefile /home/livebuilder/hoarder-live/Makefile
 COPY includes /home/livebuilder/hoarder-live/includes
 COPY config.mk /home/livebuilder/hoarder-live/config.mk
-RUN make docker-init
-USER root
 COPY auto /home/livebuilder/hoarder-live/auto
-RUN make clean
+RUN make docker-init
+#RUN make clean
 USER livebuilder
+RUN make import-keys
 RUN make config
 USER root

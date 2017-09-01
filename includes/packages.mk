@@ -1,11 +1,18 @@
 define PACKAGE_LIST
 awesome
 awesome-extra
+sddm
+stterm
+tmux
+surf
+surfraw
+surfraw-extra
 auto-apt-proxy
 apt-transport-tor
 apt-transport-https
 ca-certificates
 coreutils
+moreutils
 openrc
 adduser
 apparmor
@@ -13,10 +20,10 @@ apparmor-easyprof
 apparmor-notify
 apparmor-profiles
 apparmor-profiles-extra
-minidlna
-openssh-server
+firejail
 pcmanfm
 secure-delete
+ifupdown
 iproute2
 stterm
 suckless-tools
@@ -24,27 +31,25 @@ menu-xdg
 xdg-utils
 xdg-user-dirs
 git
+wget
+curl
 tig
-sddm
 wicd-curses
 docker.io
-medit
+tea
 nano
-firejail
 gocryptfs
 jackd2
 alsaplayer-jack
 pulseaudio-module-jack
 tshark
 mc
-wget
 pax-utils
 paxtest
 paxctld
 gradm2
 apt-build
 pandoc
-python-vte
 syncthing
 mosh
 mutt
@@ -55,11 +60,6 @@ tor
 tor-arm
 keychain
 sen
-stterm
-surf
-surfraw
-surfraw-extra
-tmux
 rclone
 sshfs
 plowshare
@@ -84,13 +84,25 @@ endef
 
 export PACKAGE_LIST
 
+define SERVER_PACKAGE_LIST
+openssh-server
+minidlna
+endef
+
+export SERVER_PACKAGE_LIST
+
 packlist:
 	@echo "$$PACKAGE_LIST"
 
 packages:
 	cd config/package-lists/ && \
-	@echo "$$PACKAGE_LIST" tee -a build.list.chroot && \
+	echo "$$PACKAGE_LIST" tee -a build.list.chroot && \
 	ln -sf build.list.chroot build.list.binary
+
+server-packages:
+	cd config/package-lists/ && \
+	echo "$$SERVER_PACKAGE_LIST" tee -a server.list.chroot && \
+	ln -sf server.list.chroot server.list.binary
 
 nonfree-firmware:
 	cd config/package-lists/ && \

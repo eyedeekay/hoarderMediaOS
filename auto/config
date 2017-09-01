@@ -15,6 +15,7 @@ harden=$( [ ! -z "$hardened" ] && echo "-k grsec-amd64" || echo "" )
 export tag_distro="-$distro"
 export is_harden=$( [ ! -z "$hardened" ] && echo "-hardened" || echo "" )
 export customized=$( [ ! -z "$customize" ] && echo "-custom" || echo "" )
+export serverdist=$( [ ! -z "$server" ] && echo "-server" || echo "" )
 
 dsusekeyring="--keyring=$HOME/.gnupg/repokeys.gpg"
 
@@ -64,7 +65,7 @@ lb config noauto \
     $archiveareas \
     $nosource \
     $harden \
-    --image-name "$image_prename$tag_distro$is_harden$non_free$customized" \
+    --image-name "$image_prename$tag_distro$is_harden$non_free$customized$serverdist" \
     $distromode \
     "$@" \
     --parent-mirror-bootstrap "$mirror" \
@@ -92,5 +93,10 @@ fi
 if [ ! -z "$customize" ]; then
         make custom
 fi
+
 make skel
 make packages
+
+if [ ! -z "$server" ]; then
+        make server-packages
+fi

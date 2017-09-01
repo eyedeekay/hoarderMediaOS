@@ -20,14 +20,11 @@ RUN apt-get update && apt-get install -yq --fix-missing \
                 ca-certificates \
                 debian-keyring \
                 debian-archive-keyring \
-                dirmngr
+                dirmngr \
+                fakeroot-ng
 RUN apt-get dist-upgrade -yq
 RUN adduser --home /home/livebuilder --shell /bin/bash --disabled-password livebuilder && adduser livebuilder sudo
 ADD . /home/livebuilder/hoarder-live
 RUN chown -R livebuilder:livebuilder /home/livebuilder/hoarder-live
 WORKDIR /home/livebuilder/hoarder-live
-COPY auto /home/livebuilder/hoarder-live/auto
-RUN chown -R root:root /home/livebuilder/hoarder-live/auto
-USER livebuilder
-COPY keyrings/ keyrings/
-RUN make import-keys
+#USER livebuilder

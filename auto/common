@@ -1,0 +1,6 @@
+#! /usr/bin/env sh
+export non_free=$( [ ! -z "$nonfree" ] && echo "-nonfree" || echo "" )
+export tag_distro="-$distro"
+export is_harden=$( [ ! -z "$hardened" ] && echo "-hardened" || echo "" )
+export customized=$( [ ! -z "$customize" ] && echo "-custom" || echo "" )
+export serverdist=$( [ ! -z "$server" ] && echo "-server" || echo "" )

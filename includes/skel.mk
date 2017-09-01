@@ -1,3 +1,18 @@
+define TEA_CONFIG
+[General]
+additional_hl=0
+editor_font_name=Monospace
+editor_font_size=8
+pos=@Point(0 15)
+show_linenums=0
+size=@Size(1366 738)
+splitterSizes=@ByteArray(\0\0\0\xff\0\0\0\x1\0\0\0\x2\0\0\x1\xf6\0\0\0\xc0\x1\xff\xff\xff\xff\x1\0\0\0\x2\0)
+word_wrap=2
+
+endef
+
+export TEA_CONFIG
+
 skel:
 	mkdir -p config/includes.chroot/etc/skel/Documents/Books/; \
 	mkdir -p config/includes.chroot/etc/skel/Documents/Slideshows/; \
@@ -43,6 +58,8 @@ skel:
 	mkdir -p config/includes.binary/etc/skel/Projects/; \
 	echo "#bash aliases" | tee config/includes.chroot/etc/skel/.bash_aliases; \
 	echo "#bash aliases" | tee config/includes.binary/etc/skel/.bash_aliases; \
+	echo "$$TEA_CONFIG" | tee config/includes.chroot/etc/skel/.config/tea/profiles/default_profile; \
+	echo "$$TEA_CONFIG" | tee config/includes.binary/etc/skel/.config/tea/profiles/default_profile; \
 	mkdir -p config/includes.chroot/etc/grsec; \
 	mkdir -p config/includes.binary/etc/grsec; \
 	mkdir -p config/includes.chroot/etc/grsec2; \

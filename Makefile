@@ -201,8 +201,6 @@ docker-update:
 
 docker-copy:
 	docker cp $(image_prename)-$(distro)-build:/home/livebuilder/hoarder-live/$(image_prename)-amd64.hybrid.iso . ; \
-	docker cp $(image_prename)-$(distro)-build:/home/livebuilder/hoarder-live/$(image_prename)-amd64.hybrid.iso.sha256sum . ; \
-	docker cp $(image_prename)-$(distro)-build:/home/livebuilder/hoarder-live/$(image_prename)-amd64.hybrid.iso.sha256sum.asc . ; \
 	docker cp $(image_prename)-$(distro)-build:/home/livebuilder/hoarder-live/$(image_prename)-amd64.files . ; \
 	docker cp $(image_prename)-$(distro)-build:/home/livebuilder/hoarder-live/$(image_prename)-amd64.contents . ; \
 	docker cp $(image_prename)-$(distro)-build:/home/livebuilder/hoarder-live/$(image_prename)-amd64.hybrid.iso.zsync . ; \
@@ -226,6 +224,7 @@ docker-build:
 		--privileged \
 		-t $(image_prename)-$(distro) \
 		make build
+	make docker-copy
 
 docker-build-hardened-on-hardened:
 	make soften-container; \
@@ -268,6 +267,11 @@ docker-rebuild-all:
 	make docker-base-all
 	make docker-all
 	make docker-build
+
+docker-release:
+	make docker-build
+	make release
+
 
 throw:
 	scp -r . media@media:Docker/hoarderMediaOS
