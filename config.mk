@@ -1,5 +1,4 @@
 export image_prename = tv
-export image_prename
 export KEY = "70D2060738BEF80523ACAFF7D75C03B39B5E14E1"
 
 #export proxy_addr = 'http://127.0.0.1:3142'
@@ -11,16 +10,14 @@ export proxy_addr = http://172.17.0.2:3142
 # export one
 export distro = devuan
 # of these.
-export tag_distro = -"$(distro)"
-#export hardened = yes
+export hardened = yes
 #export custom = yes
 #export nonfree = yes (Changing this will now will have no effect. Any nonempty, non-null will add non-free software. Use at your own risk.)
 #export server = yes
 
-$(shell ./auto/common)
 
 getname:
-	echo "$$image_prename$$tag_distro$$is_harden$$non_free$$customized$$serverdist"
+	@echo "$(image_prename)-$(distro)"
 
 soften-container:
 	sudo sysctl -w kernel.grsecurity.chroot_caps=0

@@ -1,55 +1,60 @@
 #! /usr/bin/env bash
 
-components=$( [ ! -z "$nonfree" ] && echo "--components=\"main,contrib,non-free\"" || echo "" )
-archiveareas=$( [ ! -z "$nonfree" ] && echo "--archive-areas \"main,contrib,non-free\"" || echo "" )
-nosource=$( [ ! -z "$nonfree" ] && echo "--apt-source-archives false" || echo "" )
+make get-keys 1> /dev/null
+make import-keys 1> /dev/null
+
+export components=$( [ ! -z "$nonfree" ] && echo "--components=\"main,contrib,non-free\"" || echo "" )
+export archiveareas=$( [ ! -z "$nonfree" ] && echo "--archive-areas \"main,contrib,non-free\"" || echo "" )
+export nosource=$( [ ! -z "$nonfree" ] && echo "--apt-source-archives false" || echo "" )
 
 export non_free=$( [ ! -z "$nonfree" ] && echo "-nonfree" || echo "" )
 
-useproxy=$( [ ! -z "$proxy_addr" ] && echo "--apt-http-proxy $proxy_addr" || echo "" )
+export useproxy=$( [ ! -z "$proxy_addr" ] && echo "--apt-http-proxy $proxy_addr" || echo "" )
 if [ -z "$proxy_addr" ]; then
         export proxy_addr="http:/"
 fi
-harden=$( [ ! -z "$hardened" ] && echo "-k grsec-amd64" || echo "" )
+export harden=$( [ ! -z "$hardened" ] && echo "-k grsec-amd64" || echo "" )
 
-export tag_distro="-$distro"
 export is_harden=$( [ ! -z "$hardened" ] && echo "-hardened" || echo "" )
 export customized=$( [ ! -z "$customize" ] && echo "-custom" || echo "" )
 export serverdist=$( [ ! -z "$server" ] && echo "-server" || echo "" )
 
-dsusekeyring="--keyring=$HOME/.gnupg/repokeys.gpg"
+export dsusekeyring="--keyring=$HOME/.gnupg/repokeys.gpg"
 
 if [ "$distro" = "debian" ]; then
-        mirror="$proxy_addr/ftp.us.debian.org/debian"
-        unstable="sid"
-        stable="sid"
-        bootstrapopts="--merged-usr $dsusekeyring --variant=minbase --include=busybox-syslogd,gnupg2,gnutls-bin,apt-transport-https,ca-certificates $components"
-        usekeyring="--keyring-packages debian-keyring,debian-archive-keyring"
+        export mirror="$proxy_addr/ftp.us.debian.org/debian"
+        export unstable="sid"
+        export stable="sid"
+        export bootstrapopts="--merged-usr $dsusekeyring --variant=minbase --include=busybox-syslogd,gnupg2,gnutls-bin,apt-transport-https,ca-certificates $components"
+        export usekeyring="--keyring-packages debian-keyring,debian-archive-keyring"
 elif [ "$distro" = "devuan" ]; then
-        mirror="$proxy_addr/us.mirror.devuan.org/merged"
-        unstable="unstable"
-        stable="stable"
-        bootstrapopts="--merged-usr $dsusekeyring --variant=minbase --include=busybox-syslogd,gnupg2,gnutls-bin,apt-transport-https,ca-certificates,live-config-sysvinit $components"
-        usekeyring="--keyring-packages devuan-keyring"
+        export mirror="$proxy_addr/us.mirror.devuan.org/merged"
+        export unstable="unstable"
+        export stable="stable"
+        export bootstrapopts="--merged-usr $dsusekeyring --variant=minbase --include=busybox-syslogd,gnupg2,gnutls-bin,apt-transport-https,ca-certificates,live-config-sysvinit $components"
+        export usekeyring="--keyring-packages devuan-keyring"
 elif [ "$distro" = "ubuntu" ]; then
-        mirror="$proxy_addr/archive.ubuntu.com/ubuntu"
-        unstable="artful"
-        stable="artful"
-        bootstrapopts="--merged-usr $dsusekeyring --include=gnupg2,apt-transport-https,ca-certificates --exclude=debian-archive-keyring $components"
-        components=$( [ ! -z "$nonfree" ] && echo "--components=\"main,restricted,universe,multiverse\"" || echo "" )
-        archiveareas=$( [ ! -z "$nonfree" ] && echo "--archive-areas \"main,restricted,universe,multiverse\"" || echo "" )
-        usekeyring="--keyring-packages ubuntu-archive-keyring"
-        distromode="--mode ubuntu"
+        export mirror="$proxy_addr/archive.ubuntu.com/ubuntu"
+        export unstable="artful"
+        export stable="artful"
+        export bootstrapopts="--merged-usr $dsusekeyring --include=gnupg2,apt-transport-https,ca-certificates --exclude=debian-archive-keyring $components"
+        export components=$( [ ! -z "$nonfree" ] && echo "--components=\"main,restricted,universe,multiverse\"" || echo "" )
+        export archiveareas=$( [ ! -z "$nonfree" ] && echo "--archive-areas \"main,restricted,universe,multiverse\"" || echo "" )
+        export usekeyring="--keyring-packages ubuntu-archive-keyring"
+        export distromode="--mode ubuntu"
 fi
 
 if [ ! -z "$components" ]; then
         echo "WARNING: USING NON-FREE COMPONENTS! $components"
-        echo "$bootstrapopts"
-        sleep 5
+        echo "$archiveareas"
 fi
-
-make import-keys
-
+        echo "$mirror"
+        echo "$unstable"
+        echo "$stable"
+        echo "$bootstrapopts"
+        echo "$usekeyring"
+        echo "$distromode"
+sleep 5
 
 lb config noauto \
     -b iso-hybrid \
@@ -65,38 +70,39 @@ lb config noauto \
     $archiveareas \
     $nosource \
     $harden \
-    --image-name "$image_prename$tag_distro$is_harden$non_free$customized$serverdist" \
+    --image-name "$image_prename-$distro" \
     $distromode \
     "$@" \
     --parent-mirror-bootstrap "$mirror" \
     --security false \
-    --mirror-bootstrap "$mirror"
+    --mirror-bootstrap "$mirror" \
+    --verbose
 
 
-if [ "$distro" = "debian" ]; then
-        make libre
-elif [ "$distro" = "devuan" ]; then
-        make libre
-        make devuan-key
+make libre 1> /dev/null
+if [ "$distro" = "devuan" ]; then
+        make devuan-key 1> /dev/null
 elif [ "$distro" = "ubuntu" ]; then
-        make libre-ubuntu
+        make libre-ubuntu 1> /dev/null
 fi
 if [ ! -z "$hardened" ]; then
-        make permissive-user
+        make permissive-user 1> /dev/null
 else
-        make easy-user
+        make easy-user 1> /dev/null
 fi
 if [ ! -z "$nonfree" ]; then
-        make unfree
-        make nonfree-firmware
+        make unfree 1> /dev/null
+        make nonfree-firmware 1> /dev/null
 fi
 if [ ! -z "$customize" ]; then
-        make custom
+        make custom 1> /dev/null
 fi
 
-make skel
-make packages
+make skel 1> /dev/null
+make packages 1> /dev/null
 
 if [ ! -z "$server" ]; then
-        make server-packages
+        make server-packages 1> /dev/null
 fi
+
+echo "$distro"

@@ -11,5 +11,6 @@ cache/
 chroot/
 binary/
 .build/
+local/
 repokeys.gpg
 repokeys.gpg~

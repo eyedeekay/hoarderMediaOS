@@ -13,6 +13,7 @@ list:
 	@echo "=================="
 	@echo ""
 	@echo " Image Name Prefix: $(IMAGE_PRENAME)"
+	@echo "  Whole Image Variant $$image_prename$$tag_distro$$is_harden$$non_free$$customized$$serverdist"
 	@echo ""
 	@echo " Proxy: $(proxy_addr)"
 	@echo ""
@@ -32,7 +33,6 @@ clean:
 	rm -f *.contents
 	rm -f *.hybrid.iso.zsync
 	rm -f *.packages
-	sudo lb clean --purge
 	rm -rf config
 
 config:
@@ -129,13 +129,14 @@ docker-update:
 	make docker-all
 
 docker-copy:
-	docker cp $(image_prename)-$(distro)-build:/home/livebuilder/hoarder-live/$(image_prename)-amd64.hybrid.iso . ; \
-	docker cp $(image_prename)-$(distro)-build:/home/livebuilder/hoarder-live/$(image_prename)-amd64.files . ; \
-	docker cp $(image_prename)-$(distro)-build:/home/livebuilder/hoarder-live/$(image_prename)-amd64.contents . ; \
-	docker cp $(image_prename)-$(distro)-build:/home/livebuilder/hoarder-live/$(image_prename)-amd64.hybrid.iso.zsync . ; \
-	docker cp $(image_prename)-$(distro)-build:/home/livebuilder/hoarder-live/$(image_prename)-amd64.packages . ;
+	docker cp $(image_prename)-$(distro)-build:/home/livebuilder/hoarder-live/$(image_prename)-$(distro)-amd64.hybrid.iso . ; \
+	docker cp $(image_prename)-$(distro)-build:/home/livebuilder/hoarder-live/$(image_prename)-$(distro)-amd64.files . ; \
+	docker cp $(image_prename)-$(distro)-build:/home/livebuilder/hoarder-live/$(image_prename)-$(distro)-amd64.contents . ; \
+	docker cp $(image_prename)-$(distro)-build:/home/livebuilder/hoarder-live/$(image_prename)-$(distro)-amd64.hybrid.iso.zsync . ; \
+	docker cp $(image_prename)-$(distro)-build:/home/livebuilder/hoarder-live/$(image_prename)-$(distro)-amd64.packages . ;
 
 docker-init:
+	rm -fr .build; \
 	mkdir -p .build
 
 docker-build-clean:
@@ -153,7 +154,6 @@ docker-build:
 		--privileged \
 		-t $(image_prename)-$(distro) \
 		make build
-	make docker-copy
 
 docker-build-hardened-on-hardened:
 	make soften-container; \
@@ -187,20 +187,27 @@ docker-clobber-all:
 	true
 
 docker-rebuild:
-	make docker-clobber
-	make docker-all
-	make docker-build
+	make docker-base-$(distro)
+	make docker-$(distro)
+
+docker-full-build:
+	docker rm -f $(image_prename)-$(distro); \
+	docker rm -f live-build-$(distro); \
+	make docker-base-$(distro)
+	make docker-$(distro)
 
 docker-rebuild-all:
+	make docker-clobber
+	make docker-all
+
+docker-rebuild-clean:
 	make docker-clobber-all
 	make docker-base-all
 	make docker-all
-	make docker-build
 
 docker-release:
 	make docker-build
 	make release
-
 
 throw:
 	scp -r . media@media:Docker/hoarderMediaOS

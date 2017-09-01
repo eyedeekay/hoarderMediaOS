@@ -1,12 +1,11 @@
 FROM live-build-debian
-COPY keyrings/ keyrings/
-COPY Makefile /home/livebuilder/hoarder-live/Makefile
-COPY includes /home/livebuilder/hoarder-live/includes
+COPY auto/ /home/livebuilder/hoarder-live/auto
 COPY config.mk /home/livebuilder/hoarder-live/config.mk
-COPY auto /home/livebuilder/hoarder-live/auto
-RUN make docker-init
-#RUN make clean
+COPY includes/ /home/livebuilder/hoarder-live/includes
+COPY keyrings/ keyrings/
+COPY Makefile/ /home/livebuilder/hoarder-live/Makefile
+RUN chown -R livebuilder:livebuilder /home/livebuilder/
 USER livebuilder
-RUN make import-keys
+RUN make docker-init
 RUN make config
 USER root

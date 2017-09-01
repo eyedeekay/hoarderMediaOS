@@ -12,3 +12,9 @@ tv-amd64.packages
 *.files
 *.packages.install
 *.packages.live
+Tutorial/
+local/
+.build/
+Dockerfiles/
+err
+log

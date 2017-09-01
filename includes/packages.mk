@@ -36,7 +36,7 @@ curl
 tig
 wicd-curses
 docker.io
-tea
+medit
 nano
 gocryptfs
 jackd2
@@ -86,6 +86,7 @@ export PACKAGE_LIST
 
 define SERVER_PACKAGE_LIST
 openssh-server
+mosh
 minidlna
 endef
 
@@ -96,12 +97,12 @@ packlist:
 
 packages:
 	cd config/package-lists/ && \
-	echo "$$PACKAGE_LIST" tee -a build.list.chroot && \
+	echo "$$PACKAGE_LIST" | tee -a build.list.chroot && \
 	ln -sf build.list.chroot build.list.binary
 
 server-packages:
 	cd config/package-lists/ && \
-	echo "$$SERVER_PACKAGE_LIST" tee -a server.list.chroot && \
+	echo "$$SERVER_PACKAGE_LIST" | tee -a server.list.chroot && \
 	ln -sf server.list.chroot server.list.binary
 
 nonfree-firmware:

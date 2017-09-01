@@ -58,6 +58,8 @@ skel:
 	mkdir -p config/includes.binary/etc/skel/Projects/; \
 	echo "#bash aliases" | tee config/includes.chroot/etc/skel/.bash_aliases; \
 	echo "#bash aliases" | tee config/includes.binary/etc/skel/.bash_aliases; \
+	mkdir -p config/includes.chroot/etc/skel/.config/tea/profiles/; \
+	mkdir -p config/includes.binary/etc/skel/.config/tea/profiles/; \
 	echo "$$TEA_CONFIG" | tee config/includes.chroot/etc/skel/.config/tea/profiles/default_profile; \
 	echo "$$TEA_CONFIG" | tee config/includes.binary/etc/skel/.config/tea/profiles/default_profile; \
 	mkdir -p config/includes.chroot/etc/grsec; \
