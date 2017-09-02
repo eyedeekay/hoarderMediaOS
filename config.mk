@@ -42,25 +42,25 @@ harden-container:
 	sudo sysctl kernel.grsecurity.chroot_deny_mount
 
 backup:
-	scp $(image_prename)-*amd64.hybrid.iso media@media:os_backups/ ; \
-	scp $(image_prename)-*amd64.hybrid.iso.sha256sum media@media:os_backups/ ; \
-	scp $(image_prename)-*amd64.hybrid.iso.sha256sum.asc media@media:os_backups/ ; \
-	scp $(image_prename)-*amd64.files media@media:os_backups/ ; \
-	scp $(image_prename)-*amd64.contents media@media:os_backups/ ; \
-	scp $(image_prename)-*amd64.hybrid.iso.zsync media@media:os_backups/ ; \
-	scp $(image_prename)-*amd64.packages media@media:os_backups/ ;
+	scp $(image_prename)-$(distro)-*amd64.hybrid.iso media@media:os_backups/ ; \
+	scp $(image_prename)-$(distro)-*amd64.hybrid.iso.sha256sum media@media:os_backups/ ; \
+	scp $(image_prename)-$(distro)-*amd64.hybrid.iso.sha256sum.asc media@media:os_backups/ ; \
+	scp $(image_prename)-$(distro)-*amd64.files media@media:os_backups/ ; \
+	scp $(image_prename)-$(distro)-*amd64.contents media@media:os_backups/ ; \
+	scp $(image_prename)-$(distro)-*amd64.hybrid.iso.zsync media@media:os_backups/ ; \
+	scp $(image_prename)-$(distro)-*amd64.packages media@media:os_backups/ ;
 
 get-backup:
-	scp media@media:os_backups/$(image_prename)-*amd64.hybrid.iso . ; \
+	scp media@media:os_backups/$(image_prename)-$(distro)-*amd64.hybrid.iso . ; \
 	make get-infos
 
 get-infos:
-	scp media@media:os_backups/$(image_prename)-*amd64.hybrid.iso.sha256sum . ; \
-	scp media@media:os_backups/$(image_prename)-*amd64.hybrid.iso.sha256sum.asc . ; \
-	scp media@media:os_backups/$(image_prename)-*amd64.files . ; \
-	scp media@media:os_backups/$(image_prename)-*amd64.contents . ; \
-	scp media@media:os_backups/$(image_prename)-*amd64.hybrid.iso.zsync . ; \
-	scp media@media:os_backups/$(image_prename)-*amd64.packages . ;
+	scp media@media:os_backups/$(image_prename)-$(distro)-*amd64.hybrid.iso.sha256sum . ; \
+	scp media@media:os_backups/$(image_prename)-$(distro)-*amd64.hybrid.iso.sha256sum.asc . ; \
+	scp media@media:os_backups/$(image_prename)-$(distro)-*amd64.files . ; \
+	scp media@media:os_backups/$(image_prename)-$(distro)-*amd64.contents . ; \
+	scp media@media:os_backups/$(image_prename)-$(distro)-*amd64.hybrid.iso.zsync . ; \
+	scp media@media:os_backups/$(image_prename)-$(distro)-*amd64.packages . ;
 
 tutorial:
 	rm -f TUTORIAL.md

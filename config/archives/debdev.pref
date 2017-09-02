@@ -1,0 +1,6 @@
+Package: *
+Pin: origin packages.devuan.org
+Pin-Priority: 999
+Package: *
+Pin: origin ftp.us.debian.org
+Pin-Priority: 990

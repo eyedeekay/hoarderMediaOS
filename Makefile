@@ -139,15 +139,8 @@ docker-init:
 	rm -fr .build; \
 	mkdir -p .build
 
-docker-build-clean:
-	docker run -i \
-		-e "distro=$(distro) nonfree=$(nonfree) hardened=$($hardened) customize=$(customize)" \
-		--name "$(image_prename)-$(distro)-build" \
-		--privileged \
-		-t $(image_prename)-$(distro) \
-		make clean
-
 docker-build:
+	docker rm -f $(image_prename)-$(distro); \
 	docker run -i \
 		-e "distro=$(distro) nonfree=$(nonfree) hardened=$($hardened) customize=$(customize)" \
 		--name "$(image_prename)-$(distro)-build" \
@@ -207,6 +200,7 @@ docker-rebuild-clean:
 
 docker-release:
 	make docker-build
+	make docker-copy
 	make release
 
 throw:

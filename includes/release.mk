@@ -1,13 +1,13 @@
 
 sum:
-	sha256sum "$image_prename-$distro-amd64.hybrid.iso" > \
-		"$image_prename-$distro-amd64.hybrid.iso.sha256sum" || \
-		rm $image_prename-$distro-amd64.hybrid.iso.sha256sum; \
+	sha256sum "$(image_prename)-$(distro)-amd64.hybrid.iso" > \
+		"$(image_prename)-$(distro)-amd64.hybrid.iso.sha256sum" || \
+		rm $(image_prename)-$(distro)-amd64.hybrid.iso.sha256sum; \
 	echo sums computed
 
 sig:
 	gpg --batch --yes --clear-sign -u "$(SIGNING_KEY)" \
-		"$image_prename-$distro-amd64.hybrid.iso.sha256sum" ; \
+		"$(image_prename)-$(distro)-amd64.hybrid.iso.sha256sum" ; \
 	echo images signed
 
 sigsum:
@@ -27,7 +27,7 @@ torrent:
 		-a "http://i.bandito.org/announce" \
 		-a "http://bttrack.9you.com/announce" \
 		-w https://github.com/cmotc/hoarderMediaOS/releases/download/$(shell date +'%y.%m.%d')/tv.iso \
-		"$image_prename-$distro-amd64.hybrid.iso"; \
+		"$(image_prename)-$(distro)-amd64.hybrid.iso"; \
 	@echo torrents created
 
 release:
@@ -45,14 +45,14 @@ release:
 
 upload:
 	github-release upload --user cmotc --repo hoarderMediaOS --tag $(shell date +'%y.%m.%d') \
-		--name "$image_prename-$distro-amd64.hybrid.iso.sha256sum" \
-		--file "$image_prename-$distro-amd64.hybrid.iso.sha256sum"; \
+		--name "$(image_prename)-$(distro)-amd64.hybrid.iso.sha256sum" \
+		--file "$(image_prename)-$(distro)-amd64.hybrid.iso.sha256sum"; \
 	github-release upload --user cmotc --repo hoarderMediaOS --tag $(shell date +'%y.%m.%d') \
-		--name "$image_prename-$distro-amd64.hybrid.iso.sha256sum.asc" \
-		--file "$image_prename-$distro-amd64.hybrid.iso.sha256sum.asc";\
+		--name "$(image_prename)-$(distro)-amd64.hybrid.iso.sha256sum.asc" \
+		--file "$(image_prename)-$(distro)-amd64.hybrid.iso.sha256sum.asc";\
 	github-release upload --user cmotc --repo hoarderMediaOS --tag $(shell date +'%y.%m.%d') \
-		--name "$image_prename-$distro-amd64.hybrid.iso.torrent" \
-		--file "$image_prename-$distro-amd64.hybrid.iso.torrent";\
+		--name "$(image_prename)-$(distro)-amd64.hybrid.iso.torrent" \
+		--file "$(image_prename)-$(distro)-amd64.hybrid.iso.torrent";\
 	github-release upload --user cmotc --repo hoarderMediaOS --tag $(shell date +'%y.%m.%d') \
-		--name "$image_prename-$distro-amd64.hybrid.iso" \
-		--file "$image_prename-$distro-amd64.hybrid.iso";\
+		--name "$(image_prename)-$(distro)-amd64.hybrid.iso" \
+		--file "$(image_prename)-$(distro)-amd64.hybrid.iso";\

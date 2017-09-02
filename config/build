@@ -1,0 +1,10 @@
+[Image]
+Architecture: amd64
+Archive-Areas: main
+Distribution: stable
+Mirror-Bootstrap: http://172.17.0.2:3142/us.mirror.devuan.org/merged
+
+[FIXME]
+Configuration-Version: 1:20170213
+Name: tv-devuan
+Type: iso-hybrid

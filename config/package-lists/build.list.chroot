@@ -1,4 +1,3 @@
-define PACKAGE_LIST
 awesome
 awesome-extra
 sddm
@@ -81,35 +80,3 @@ xserver-xorg-input-all
 xserver-xorg-legacy
 xserver-xorg-video-all
 
-endef
-
-export PACKAGE_LIST
-
-define SERVER_PACKAGE_LIST
-openssh-server
-mosh
-minidlna
-
-endef
-
-export SERVER_PACKAGE_LIST
-
-packlist:
-	@echo "$$PACKAGE_LIST"
-
-packages:
-	cd config/package-lists/ && \
-	echo "$$PACKAGE_LIST" | tee -a build.list.chroot && \
-	ln -sf build.list.chroot build.list.binary
-
-server-packages:
-	cd config/package-lists/ && \
-	echo "$$SERVER_PACKAGE_LIST" | tee -a server.list.chroot && \
-	ln -sf server.list.chroot server.list.binary
-
-nonfree-firmware:
-	cd config/package-lists/ && \
-	echo "b43-fwcutter" | tee -a nonfree.list.chroot && \
-	echo "firmware-b43-installer" | tee -a nonfree.list.chroot && \
-	echo "firmware-b43legacy-installer" | tee -a nonfree.list.chroot && \
-	ln -sf nonfree.list.chroot nonfree.list.binary

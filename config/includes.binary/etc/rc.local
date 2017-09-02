@@ -1,0 +1,3 @@
+#!/bin/sh -e
+gradm2 -F -L /etc/grsec/learning.logs &
+exit 0

@@ -86,6 +86,8 @@ skel:
 	echo "sudo gradm2 -F -L /etc/grsec/learning.logs -O /etc/grsec/policy" | tee config/includes.binary/etc/skel/grsec-learn.sh; \
 
 easy-user:
+	mkdir -p config/includes.chroot/etc/
+	mkdir -p config/includes.binary/etc/
 	echo "#!/bin/sh -e" > config/includes.chroot/etc/rc.local
 	echo "exit 0" >> config/includes.chroot/etc/rc.local
 	echo "#!/bin/sh -e" > config/includes.binary/etc/rc.local
@@ -112,6 +114,8 @@ easy-user:
 	echo "label { root } mountpoint{ / } .">> config/preseed/preseed.cfg.binary
 
 permissive-user:
+	mkdir -p config/includes.chroot/etc/
+	mkdir -p config/includes.binary/etc/
 	echo "#!/bin/sh -e" > config/includes.chroot/etc/rc.local
 	echo "exit 0" >> config/includes.chroot/etc/rc.local
 	echo "#!/bin/sh -e" > config/includes.binary/etc/rc.local
