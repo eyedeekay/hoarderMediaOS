@@ -24,7 +24,6 @@ RUN apt-get update && apt-get install -yq --fix-missing \
                 dirmngr \
                 fakeroot-ng
 RUN yes | apt-get dist-upgrade -yq
-ADD . /home/livebuilder/hoarder-live
 RUN chown -R livebuilder:livebuilder /home/livebuilder/
 WORKDIR /home/livebuilder/hoarder-live
 #USER livebuilder

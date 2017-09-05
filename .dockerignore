@@ -15,6 +15,7 @@ tv-amd64.packages
 Tutorial/
 local/
 .build/
+.git/
 Dockerfiles/
 err
 log

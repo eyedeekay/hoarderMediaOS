@@ -13,6 +13,7 @@ apt-transport-https
 ca-certificates
 coreutils
 moreutils
+dpkg
 openrc
 adduser
 apparmor

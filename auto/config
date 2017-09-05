@@ -29,8 +29,8 @@ if [ "$distro" = "debian" ]; then
         export usekeyring="--keyring-packages debian-keyring,debian-archive-keyring"
 elif [ "$distro" = "devuan" ]; then
         export mirror="$proxy_addr/us.mirror.devuan.org/merged"
-        export unstable="unstable"
-        export stable="stable"
+        export unstable="ceres"
+        export stable="jessie"
         export bootstrapopts="--merged-usr $dsusekeyring --variant=minbase --include=busybox-syslogd,gnupg2,gnutls-bin,apt-transport-https,ca-certificates,live-config-sysvinit $components"
         export usekeyring="--keyring-packages devuan-keyring"
 elif [ "$distro" = "ubuntu" ]; then

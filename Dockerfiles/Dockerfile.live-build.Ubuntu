@@ -29,6 +29,5 @@ RUN curl -s https://ftp-master.debian.org/keys/archive-key-7.0.asc | apt-key add
 RUN apt-get update
 RUN apt-get install -yq -t sid live-build
 #RUN useradd -ms /bin/bash livebuilder && echo "livebuilder:liverbuilder" | chpasswd && adduser livebuilder sudo
-ADD . /home/livebuilder/hoarder-live
 WORKDIR /home/livebuilder/hoarder-live
 #USER livebuilder

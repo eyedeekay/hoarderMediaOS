@@ -10,7 +10,7 @@ export proxy_addr = http://172.17.0.2:3142
 # export one
 export distro = devuan
 # of these.
-export hardened = yes
+#export hardened = yes
 #export custom = yes
 #export nonfree = yes (Changing this will now will have no effect. Any nonempty, non-null will add non-free software. Use at your own risk.)
 #export server = yes

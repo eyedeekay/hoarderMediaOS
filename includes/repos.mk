@@ -1,7 +1,7 @@
 
 devuan-key:
-	echo "deb http://packages.devuan.org/merged unstable main" | tee config/archives/devuan.list.chroot
-	echo "deb-src http://packages.devuan.org/merged unstable main" | tee -a config/archives/devuan.list.chroot
+	echo "deb http://us.mirror.devuan.org/merged unstable main" | tee config/archives/devuan.list.chroot
+	echo "deb-src http://us.mirror.devuan.org/merged unstable main" | tee -a config/archives/devuan.list.chroot
 	cd config/archives/ \
 		&& ln -sf nonfree.list.chroot nonfree.list.binary
 	gpg --keyserver keys.gnupg.net --recv-keys 94532124541922FB; \
@@ -14,7 +14,7 @@ devuan-key:
 	cd config/archives/ \
 		&& ln -sf sid.list.key.chroot sid.list.key.binary
 	@echo "Package: *" | tee config/archives/debdev.pref
-	@echo "Pin: origin packages.devuan.org" | tee -a config/archives/debdev.pref
+	@echo "Pin: origin us.mirror.devuan.org" | tee -a config/archives/debdev.pref
 	@echo "Pin-Priority: 999" | tee -a config/archives/debdev.pref
 	@echo "Package: *" | tee -a config/archives/debdev.pref
 	@echo "Pin: origin ftp.us.debian.org" | tee -a config/archives/debdev.pref

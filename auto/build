@@ -1,4 +1,6 @@
 #! /usr/bin/env bash
-make import-keys
-lb build noauto --verbose "$@"
+#make get-keys
+#make import-keys
+lb build noauto "$@"
 ls
+bash

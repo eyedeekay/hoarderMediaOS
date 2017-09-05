@@ -129,18 +129,18 @@ docker-update:
 	make docker-all
 
 docker-copy:
-	docker cp $(image_prename)-$(distro)-build:/home/livebuilder/hoarder-live/$(image_prename)-$(distro)-amd64.hybrid.iso . ; \
-	docker cp $(image_prename)-$(distro)-build:/home/livebuilder/hoarder-live/$(image_prename)-$(distro)-amd64.files . ; \
-	docker cp $(image_prename)-$(distro)-build:/home/livebuilder/hoarder-live/$(image_prename)-$(distro)-amd64.contents . ; \
-	docker cp $(image_prename)-$(distro)-build:/home/livebuilder/hoarder-live/$(image_prename)-$(distro)-amd64.hybrid.iso.zsync . ; \
-	docker cp $(image_prename)-$(distro)-build:/home/livebuilder/hoarder-live/$(image_prename)-$(distro)-amd64.packages . ;
+	docker cp $(image_prename)-$(distro)-build:/home/livebuilder/hoarder-live/$(image_prename)-$(distro)-amd64.hybrid.iso
+	docker cp $(image_prename)-$(distro)-build:/home/livebuilder/hoarder-live/$(image_prename)-$(distro)-amd64.files
+	docker cp $(image_prename)-$(distro)-build:/home/livebuilder/hoarder-live/$(image_prename)-$(distro)-amd64.contents
+	docker cp $(image_prename)-$(distro)-build:/home/livebuilder/hoarder-live/$(image_prename)-$(distro)-amd64.hybrid.iso.zsync
+	docker cp $(image_prename)-$(distro)-build:/home/livebuilder/hoarder-live/$(image_prename)-$(distro)-amd64.packages
 
 docker-init:
 	rm -fr .build; \
 	mkdir -p .build
 
 docker-build:
-	docker rm -f $(image_prename)-$(distro); \
+	docker rm -f $(image_prename)-$(distro)-build; \
 	docker run -i \
 		-e "distro=$(distro) nonfree=$(nonfree) hardened=$($hardened) customize=$(customize)" \
 		--name "$(image_prename)-$(distro)-build" \
