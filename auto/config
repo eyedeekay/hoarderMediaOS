@@ -3,23 +3,30 @@
 make get-keys 1> /dev/null
 make import-keys 1> /dev/null
 
-export components=$( [ ! -z "$nonfree" ] && echo "--components=\"main,contrib,non-free\"" || echo "" )
-export archiveareas=$( [ ! -z "$nonfree" ] && echo "--archive-areas \"main,contrib,non-free\"" || echo "" )
-export nosource=$( [ ! -z "$nonfree" ] && echo "--apt-source-archives false" || echo "" )
+export dsusekeyring="--keyring=$HOME/.gnupg/repokeys.gpg"
 
-export non_free=$( [ ! -z "$nonfree" ] && echo "-nonfree" || echo "" )
+if [ "$nonfree" = "yes" ]; then
+        export non_free='-nonfree'
+        export nosource='--apt-source-archives false'
+        export components='--components="main contrib non-free"'
+        export archiveareas='--archive-areas "main,contrib,non-free"'
+fi
+
+if [ "$hardened" = "yes" ]; then
+        export harden='-k grsec-amd64'
+        export is_harden="-hardened"
+fi
+
 
 export useproxy=$( [ ! -z "$proxy_addr" ] && echo "--apt-http-proxy $proxy_addr" || echo "" )
+
 if [ -z "$proxy_addr" ]; then
         export proxy_addr="http:/"
 fi
-export harden=$( [ ! -z "$hardened" ] && echo "-k grsec-amd64" || echo "" )
 
-export is_harden=$( [ ! -z "$hardened" ] && echo "-hardened" || echo "" )
 export customized=$( [ ! -z "$customize" ] && echo "-custom" || echo "" )
 export serverdist=$( [ ! -z "$server" ] && echo "-server" || echo "" )
 
-export dsusekeyring="--keyring=$HOME/.gnupg/repokeys.gpg"
 
 if [ "$distro" = "debian" ]; then
         export mirror="$proxy_addr/ftp.us.debian.org/debian"
@@ -29,8 +36,8 @@ if [ "$distro" = "debian" ]; then
         export usekeyring="--keyring-packages debian-keyring,debian-archive-keyring"
 elif [ "$distro" = "devuan" ]; then
         export mirror="$proxy_addr/us.mirror.devuan.org/merged"
-        export unstable="ceres"
-        export stable="jessie"
+        export unstable="stable"
+        export stable="stable"
         export bootstrapopts="--merged-usr $dsusekeyring --variant=minbase --include=busybox-syslogd,gnupg2,gnutls-bin,apt-transport-https,ca-certificates,live-config-sysvinit $components"
         export usekeyring="--keyring-packages devuan-keyring"
 elif [ "$distro" = "ubuntu" ]; then
@@ -72,25 +79,37 @@ lb config noauto \
     $harden \
     --image-name "$image_prename-$distro" \
     $distromode \
-    "$@" \
-    --parent-mirror-bootstrap "$mirror" \
     --security false \
     --mirror-bootstrap "$mirror" \
+    --parent-mirror-bootstrap "$mirror" \
+    --parent-mirror-binary "$mirror" \
+    --parent-mirror-binary-security "$mirror" \
+    --parent-mirror-chroot "$mirror" \
+    --parent-mirror-chroot-security "$mirror" \
+    --mirror-binary "$mirror" \
+    --mirror-binary-security "$mirror" \
+    --mirror-chroot "$mirror" \
+    --mirror-chroot-security "$mirror" \
+    --security false \
     --verbose
+    "$@" \
 
 
 make libre 1> /dev/null
+
 if [ "$distro" = "devuan" ]; then
         make devuan-key 1> /dev/null
 elif [ "$distro" = "ubuntu" ]; then
         make libre-ubuntu 1> /dev/null
 fi
-if [ ! -z "$hardened" ]; then
+
+if [ "$hardened" = "yes" ]; then
         make permissive-user 1> /dev/null
 else
         make easy-user 1> /dev/null
 fi
-if [ ! -z "$nonfree" ]; then
+
+if [ "$nonfree" = "yes" ]; then
         make unfree 1> /dev/null
         make nonfree-firmware 1> /dev/null
 fi

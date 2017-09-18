@@ -1,8 +1,10 @@
 FROM debian:sid
 ARG DEBIAN_FRONTEND="noninteractive"
 ENV DEBIAN_FRONTEND="noninteractive" LANG="C.UTF-8" LC_ALL="C.UTF-8"
-RUN adduser --home /home/livebuilder --shell /bin/bash --disabled-password livebuilder && adduser livebuilder sudo
+RUN adduser --home /home/livebuilder --shell /bin/bash --disabled-password --gecos "livebuilder" livebuilder
+RUN adduser livebuilder sudo
 RUN apt-get update
+RUN apt-get dist-upgrade -yq
 RUN apt-get install -yq auto-apt-proxy apt-transport-https apt-utils iproute
 RUN echo "Acquire::http::Proxy \"http://172.17.0.2:3142\";" | tee -a /etc/apt/apt.conf.d/00proxy
 RUN echo "Acquire::https::Proxy-Auto-Detect \"true\";" | tee -a /etc/apt/apt.conf.d/00proxy
@@ -23,7 +25,6 @@ RUN apt-get update && apt-get install -yq --fix-missing \
                 debian-archive-keyring \
                 dirmngr \
                 fakeroot-ng
-RUN apt-get dist-upgrade -yq
 RUN chown -R livebuilder:livebuilder /home/livebuilder/
 WORKDIR /home/livebuilder/hoarder-live
 #USER livebuilder

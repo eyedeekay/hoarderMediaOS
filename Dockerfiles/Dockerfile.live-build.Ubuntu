@@ -1,12 +1,14 @@
 FROM ubuntu:devel
 ARG DEBIAN_FRONTEND="noninteractive"
 ENV DEBIAN_FRONTEND="noninteractive" LANG="C.UTF-8" LC_ALL="C.UTF-8"
-RUN adduser --home /home/livebuilder --shell /bin/bash --disabled-password livebuilder && adduser livebuilder sudo
+RUN adduser --home /home/livebuilder --shell /bin/bash --disabled-password --gecos "livebuilder" livebuilder
+RUN adduser livebuilder sudo
 RUN apt-get update
 RUN apt-get install -yq auto-apt-proxy apt-transport-https apt-utils iproute
 RUN echo "Acquire::http::Proxy \"http://172.17.0.2:3142\";" | tee -a /etc/apt/apt.conf.d/00proxy
 RUN echo "Acquire::https::Proxy-Auto-Detect \"true\";" | tee -a /etc/apt/apt.conf.d/00proxy
 RUN echo "Acquire::http::Proxy-Auto-Detect \"/usr/bin/auto-apt-proxy\";" | tee /etc/apt/apt.conf.d/auto-apt-proxy.conf
+RUN yes no | apt-get dist-upgrade -y
 RUN apt-get update && apt-get install -yq --fix-missing \
                 gnupg2 \
                 bash \
@@ -20,14 +22,8 @@ RUN apt-get update && apt-get install -yq --fix-missing \
                 debian-archive-keyring \
                 ubuntu-keyring \
                 dirmngr \
-                fakeroot-ng
-RUN yes | apt-get dist-upgrade -yq
-RUN echo deb http://ftp.us.debian.org/debian/ sid main | tee /etc/apt/sources.list.d/sid.list
-RUN curl -s https://ftp-master.debian.org/keys/archive-key-9.asc | apt-key add -
-RUN curl -s https://ftp-master.debian.org/keys/archive-key-8.asc | apt-key add -
-RUN curl -s https://ftp-master.debian.org/keys/archive-key-7.0.asc | apt-key add -
+                fakeroot-ng \
+                live-build
 RUN apt-get update
-RUN apt-get install -yq -t sid live-build
-#RUN useradd -ms /bin/bash livebuilder && echo "livebuilder:liverbuilder" | chpasswd && adduser livebuilder sudo
 WORKDIR /home/livebuilder/hoarder-live
 #USER livebuilder

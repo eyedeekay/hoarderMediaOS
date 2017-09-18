@@ -1,4 +1,10 @@
 
+proxy-setup:
+	echo 'Acquire::HTTP::Proxy "http://192.168.1.3:3142";' | tee /etc/apt/apt.conf.d/01proxy
+	echo 'Acquire::HTTPS::Proxy-Auto-Detect "/usr/bin/auto-apt-proxy";' | tee -a /etc/apt/apt.conf.d/01proxy
+	echo 'Acquire::http::Proxy-Auto-Detect "/usr/bin/auto-apt-proxy";' | tee -a /etc/apt/apt.conf.d/auto-apt-proxy.conf
+
+
 devuan-key:
 	echo "deb http://us.mirror.devuan.org/merged unstable main" | tee config/archives/devuan.list.chroot
 	echo "deb-src http://us.mirror.devuan.org/merged unstable main" | tee -a config/archives/devuan.list.chroot
@@ -72,6 +78,8 @@ emby-repo:
 i2pd-repo:
 	echo "deb http://repo.lngserv.ru/debian jessie main" | tee config/archives/i2pd.list.chroot
 	echo "deb-src http://repo.lngserv.ru/debian jessie main" | tee -a config/archives/i2pd.list.chroot
+	echo "#deb http://i2p.repo jessie main" | tee -a config/archives/i2pd.list.chroot
+	echo "#deb-src http://i2p.repo jessie main" | tee -a config/archives/i2pd.list.chroot
 	gpg --keyserver keys.gnupg.net --recv-keys 66F6C87B98EBCFE2; \
 	gpg -a --export 66F6C87B98EBCFE2 | tee config/archives/i2pd.list.key.chroot
 	cd config/archives/ \
@@ -98,6 +106,7 @@ tor-ubuntu-repo:
 
 tox-repo:
 	echo "deb http://pkg.tox.chat/debian stable sid" | tee config/archives/tox.list.chroot
+	echo "#deb http://tox.repo stable sid" | tee config/archives/tox.list.chroot
 	curl -s https://pkg.tox.chat/debian/pkg.gpg.key | tee config/archives/tox.list.key.chroot
 	cd config/archives/ \
 		&& ln -sf tox.list.chroot tox.list.binary \
