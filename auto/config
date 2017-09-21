@@ -32,13 +32,13 @@ if [ "$distro" = "debian" ]; then
         export mirror="$proxy_addr/ftp.us.debian.org/debian"
         export unstable="sid"
         export stable="sid"
-        export bootstrapopts="--merged-usr $dsusekeyring --variant=minbase --include=busybox-syslogd,gnupg2,gnutls-bin,apt-transport-https,ca-certificates $components"
+        export bootstrapopts="--merged-usr $dsusekeyring --variant=minbase --include=gnupg2,gnutls-bin,apt-transport-https,ca-certificates $components"
         export usekeyring="--keyring-packages debian-keyring,debian-archive-keyring"
 elif [ "$distro" = "devuan" ]; then
         export mirror="$proxy_addr/us.mirror.devuan.org/merged"
         export unstable="stable"
         export stable="stable"
-        export bootstrapopts="--merged-usr $dsusekeyring --variant=minbase --include=busybox-syslogd,gnupg2,gnutls-bin,apt-transport-https,ca-certificates,live-config-sysvinit $components"
+        export bootstrapopts="--merged-usr $dsusekeyring --variant=minbase --include=busybox-syslogd,gnupg2,gnutls-bin,apt-transport-https,ca-certificates,live-config-sysvinit --exclude=systemd,systemd-sysv $components"
         export usekeyring="--keyring-packages devuan-keyring"
 elif [ "$distro" = "ubuntu" ]; then
         export mirror="$proxy_addr/archive.ubuntu.com/ubuntu"
@@ -80,12 +80,12 @@ lb config noauto \
     --image-name "$image_prename-$distro" \
     $distromode \
     --security false \
-    --mirror-bootstrap "$mirror" \
     --parent-mirror-bootstrap "$mirror" \
     --parent-mirror-binary "$mirror" \
     --parent-mirror-binary-security "$mirror" \
     --parent-mirror-chroot "$mirror" \
     --parent-mirror-chroot-security "$mirror" \
+    --mirror-bootstrap "$mirror" \
     --mirror-binary "$mirror" \
     --mirror-binary-security "$mirror" \
     --mirror-chroot "$mirror" \
