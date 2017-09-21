@@ -6,7 +6,7 @@ RUN adduser --home /home/livebuilder --shell /bin/bash --disabled-password --gec
 RUN adduser livebuilder sudo
 RUN apt-get update
 RUN apt-get install -yq auto-apt-proxy apt-transport-https apt-utils iproute
-RUN echo "Acquire::http::Proxy \"$CACHING_PROXY:3142\";" | tee -a /etc/apt/apt.conf.d/00proxy
+RUN echo "Acquire::http::Proxy \"http://$CACHING_PROXY:3142\";" | tee -a /etc/apt/apt.conf.d/00proxy
 RUN echo "Acquire::https::Proxy-Auto-Detect \"/usr/bin/auto-apt-proxy\";" | tee -a /etc/apt/apt.conf.d/00proxy
 RUN echo "Acquire::http::Proxy-Auto-Detect \"/usr/bin/auto-apt-proxy\";" | tee /etc/apt/apt.conf.d/auto-apt-proxy.conf
 RUN yes n | apt-get dist-upgrade -y -f
