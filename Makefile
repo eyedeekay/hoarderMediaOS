@@ -88,13 +88,13 @@ docker-base-all:
 	make docker-base-devuan
 
 docker-base-debian:
-	docker build --force-rm --build-arg CACHING_PROXY="$(proxy_addr)" -t live-build-debian -f Dockerfiles/Dockerfile.live-build.Debian .
+	docker build --force-rm --build-arg "CACHING_PROXY=$(proxy_addr)" -t live-build-debian -f Dockerfiles/Dockerfile.live-build.Debian .
 
 docker-base-ubuntu:
-	docker build --force-rm --build-arg CACHING_PROXY="$(proxy_addr)" -t live-build-ubuntu -f Dockerfiles/Dockerfile.live-build.Ubuntu .
+	docker build --force-rm --build-arg "CACHING_PROXY=$(proxy_addr)" -t live-build-ubuntu -f Dockerfiles/Dockerfile.live-build.Ubuntu .
 
 docker-base-devuan:
-	docker build --force-rm --build-arg CACHING_PROXY="$(proxy_addr)" -t live-build-devuan -f Dockerfiles/Dockerfile.live-build.Devuan .
+	docker build --force-rm --build-arg "CACHING_PROXY=$(proxy_addr)" -t live-build-devuan -f Dockerfiles/Dockerfile.live-build.Devuan .
 
 docker:
 	make docker-base-$(distro)
