@@ -1,4 +1,4 @@
-FROM live-build-ubuntu
+FROM tv-build-ubuntu
 ARG nonfree=""
 ARG hardened=""
 ARG customize=""

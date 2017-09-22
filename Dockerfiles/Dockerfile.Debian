@@ -1,4 +1,4 @@
-FROM live-build-debian
+FROM tv-build-debian
 ARG nonfree=""
 ARG hardened=""
 ARG customize=""
