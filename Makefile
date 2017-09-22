@@ -88,13 +88,13 @@ docker-base-all:
 	make docker-base-devuan
 
 docker-base-debian:
-	docker build --force-rm --build-arg "CACHING_PROXY=$(proxy_addr)" -t live-build-debian -f Dockerfiles/Dockerfile.live-build.Debian .
+	docker build --force-rm --build-arg "CACHING_PROXY=$(proxy_addr)" -t $(image_prename)-build-debian -f Dockerfiles/Dockerfile.live-build.Debian .
 
 docker-base-ubuntu:
-	docker build --force-rm --build-arg "CACHING_PROXY=$(proxy_addr)" -t live-build-ubuntu -f Dockerfiles/Dockerfile.live-build.Ubuntu .
+	docker build --force-rm --build-arg "CACHING_PROXY=$(proxy_addr)" -t $(image_prename)-build-ubuntu -f Dockerfiles/Dockerfile.live-build.Ubuntu .
 
 docker-base-devuan:
-	docker build --force-rm --build-arg "CACHING_PROXY=$(proxy_addr)" -t live-build-devuan -f Dockerfiles/Dockerfile.live-build.Devuan .
+	docker build --force-rm --build-arg "CACHING_PROXY=$(proxy_addr)" -t $(image_prename)-build-devuan -f Dockerfiles/Dockerfile.live-build.Devuan .
 
 docker:
 	make docker-base-$(distro)
@@ -121,9 +121,9 @@ docker-all:
 	make docker-devuan
 
 docker-clean:
-	docker rm tv-debian-build
-	docker rm tv-ubuntu-build
-	docker rm tv-devuan-build
+	docker rm $(image_prename)-debian-build
+	docker rm $(image_prename)-ubuntu-build
+	docker rm $(image_prename)-devuan-build
 
 docker-update:
 	git pull
@@ -161,23 +161,23 @@ docker-build-hardened-on-hardened:
 
 
 docker-clobber:
-	docker rmi -f tv-debian \
-		tv-devuan \
-		tv-ubuntu; \
-	docker rm -f tv-build-debian \
-		tv-build-devuan \
-		tv-build-ubuntu; \
+	docker rmi -f $(image_prename)-debian \
+		$(image_prename)-devuan \
+		$(image_prename)-ubuntu; \
+	docker rm -f $(image_prename)-build-debian \
+		$(image_prename)-build-devuan \
+		$(image_prename)-build-ubuntu; \
 	docker system prune -f
 	true
 
 docker-clobber-all:
 	make docker-clobber
-	docker rmi -f live-build-debian \
-		live-build-devuan \
-		live-build-ubuntu \
-		tv-debian \
-		tv-devuan \
-		tv-ubuntu; \
+	docker rmi -f $(image_prename)-build-debian \
+		$(image_prename)-build-devuan \
+		$(image_prename)-build-ubuntu \
+		$(image_prename)-debian \
+		$(image_prename)-devuan \
+		$(image_prename)-ubuntu; \
 	true
 
 docker-rebuild:
@@ -186,7 +186,7 @@ docker-rebuild:
 
 docker-full-build:
 	docker rm -f $(image_prename)-$(distro); \
-	docker rm -f live-build-$(distro); \
+	docker rm -f $(image_prename)-build-$(distro); \
 	make docker-base-$(distro)
 	make docker-$(distro)
 
