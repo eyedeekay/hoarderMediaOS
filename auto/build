@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
-#make get-keys
-#make import-keys
+make get-keys
+make import-keys
 lb build noauto "$@"
 ls
 bash
