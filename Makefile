@@ -121,9 +121,8 @@ docker-all:
 	make docker-devuan
 
 docker-clean:
-	docker rm $(image_prename)-debian-build
-	docker rm $(image_prename)-ubuntu-build
-	docker rm $(image_prename)-devuan-build
+	docker rm $(image_prename)-$(distro)
+	docker rm $(image_prename)-$(distro)-build
 
 docker-update:
 	git pull
@@ -164,17 +163,17 @@ docker-clobber:
 	docker rmi -f $(image_prename)-debian \
 		$(image_prename)-devuan \
 		$(image_prename)-ubuntu; \
-	docker rm -f $(image_prename)-build-debian \
-		$(image_prename)-build-devuan \
-		$(image_prename)-build-ubuntu; \
+	docker rm -f $(image_prename)-debian-build \
+		$(image_prename)-devuan-build \
+		$(image_prename)-ubuntu-build; \
 	docker system prune -f
 	true
 
 docker-clobber-all:
 	make docker-clobber
-	docker rmi -f $(image_prename)-build-debian \
-		$(image_prename)-build-devuan \
-		$(image_prename)-build-ubuntu \
+	docker rmi -f $(image_prename)-debian-build \
+		$(image_prename)-devuan-build \
+		$(image_prename)-ubuntu-build \
 		$(image_prename)-debian \
 		$(image_prename)-devuan \
 		$(image_prename)-ubuntu; \
@@ -186,7 +185,7 @@ docker-rebuild:
 
 docker-full-build:
 	docker rm -f $(image_prename)-$(distro); \
-	docker rm -f $(image_prename)-build-$(distro); \
+	docker rm -f $(image_prename)-$(distro)-build; \
 	make docker-base-$(distro)
 	make docker-$(distro)
 
