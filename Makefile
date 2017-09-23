@@ -122,28 +122,28 @@ docker-all:
 
 docker-clean:
 	docker rm $(image_prename)-$(distro)
-	docker rm $(image_prename)-$(distro)-build
+	docker rm $(image_prename)-build
 
 docker-update:
 	git pull
 	make docker-all
 
 docker-copy:
-	docker cp $(image_prename)-$(distro)-build:/home/livebuilder/hoarder-live/$(image_prename)-$(distro)-amd64.hybrid.iso
-	docker cp $(image_prename)-$(distro)-build:/home/livebuilder/hoarder-live/$(image_prename)-$(distro)-amd64.files
-	docker cp $(image_prename)-$(distro)-build:/home/livebuilder/hoarder-live/$(image_prename)-$(distro)-amd64.contents
-	docker cp $(image_prename)-$(distro)-build:/home/livebuilder/hoarder-live/$(image_prename)-$(distro)-amd64.hybrid.iso.zsync
-	docker cp $(image_prename)-$(distro)-build:/home/livebuilder/hoarder-live/$(image_prename)-$(distro)-amd64.packages
+	docker cp $(image_prename)-build-$(distro):/home/livebuilder/hoarder-live/$(image_prename)-$(distro)-amd64.hybrid.iso
+	docker cp $(image_prename)-build-$(distro):/home/livebuilder/hoarder-live/$(image_prename)-$(distro)-amd64.files
+	docker cp $(image_prename)-build-$(distro):/home/livebuilder/hoarder-live/$(image_prename)-$(distro)-amd64.contents
+	docker cp $(image_prename)-build-$(distro):/home/livebuilder/hoarder-live/$(image_prename)-$(distro)-amd64.hybrid.iso.zsync
+	docker cp $(image_prename)-build-$(distro):/home/livebuilder/hoarder-live/$(image_prename)-$(distro)-amd64.packages
 
 docker-init:
 	rm -fr .build; \
 	mkdir -p .build
 
 docker-build:
-	docker rm -f $(image_prename)-$(distro)-build; \
+	docker rm -f $(image_prename)-build-$(distro); \
 	docker run -i \
 		-e "distro=$(distro) nonfree=$(nonfree) hardened=$($hardened) customize=$(customize)" \
-		--name "$(image_prename)-$(distro)-build" \
+		--name "$(image_prename)-build-$(distro)" \
 		--privileged \
 		-t $(image_prename)-$(distro) \
 		make build
@@ -152,7 +152,7 @@ docker-build-hardened-on-hardened:
 	make soften-container; \
 	docker run -i \
 		-e "distro=$(distro) nonfree=$(nonfree) hardened=$($hardened) customize=$(customize)" \
-		--name "$(image_prename)-$(distro)-build" \
+		--name "$(image_prename)-build-$(distro)" \
 		--privileged \
 		-t $(image_prename)-$(distro) \
 		make build-hardened-on-hardened
@@ -185,7 +185,7 @@ docker-rebuild:
 
 docker-full-build:
 	docker rm -f $(image_prename)-$(distro); \
-	docker rm -f $(image_prename)-$(distro)-build; \
+	docker rm -f $(image_prename)-build-$(distro); \
 	make docker-base-$(distro)
 	make docker-$(distro)
 
