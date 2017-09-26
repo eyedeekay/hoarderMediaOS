@@ -81,7 +81,7 @@ docker-setup:
 	make docker-$(distro)
 
 docker:
-	docker build --force-rm -t $(image_prename)-debian \
+	docker build --force-rm -t $(image_prename)-$(distro) \
 		--build-arg "nonfree=$(nonfree) customize=$(customize) hardened=$(hardened)" \
 		-f Dockerfiles/Dockerfile.$(distro) .
 

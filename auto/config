@@ -31,19 +31,19 @@ export serverdist=$( [ ! -z "$server" ] && echo "-server" || echo "" )
 
 
 if [ "$distro" = "debian" ]; then
-        export mirror="$proxy_addr/ftp.us.debian.org/debian"
+        export mirror="http://ftp.us.debian.org/debian"
         export unstable="sid"
         export stable="sid"
         export bootstrapopts="--merged-usr $dsusekeyring --variant=minbase --include=gnupg2,gnutls-bin,apt-transport-https,ca-certificates $components"
         export usekeyring="--keyring-packages debian-keyring,debian-archive-keyring"
 elif [ "$distro" = "devuan" ]; then
-        export mirror="$proxy_addr/us.mirror.devuan.org/merged"
+        export mirror="http://us.mirror.devuan.org/merged"
         export unstable="stable"
         export stable="stable"
         export bootstrapopts="--merged-usr $dsusekeyring --variant=minbase --include=busybox-syslogd,gnupg2,gnutls-bin,apt-transport-https,ca-certificates,live-config-sysvinit --exclude=systemd,systemd-sysv $components"
         export usekeyring="--keyring-packages devuan-keyring"
 elif [ "$distro" = "ubuntu" ]; then
-        export mirror="$proxy_addr/archive.ubuntu.com/ubuntu"
+        export mirror="http://archive.ubuntu.com/ubuntu"
         export unstable="artful"
         export stable="artful"
         export bootstrapopts="--merged-usr $dsusekeyring --include=gnupg2,apt-transport-https,ca-certificates --exclude=debian-archive-keyring $components"
@@ -84,15 +84,16 @@ lb config noauto \
     $distromode \
     --security false \
     --parent-mirror-bootstrap "$mirror" \
-    --parent-mirror-binary "$mirror" \
-    --parent-mirror-binary-security "$mirror" \
-    --mirror-binary "$mirror" \
-    --mirror-binary-security "$mirror" \
     --parent-mirror-chroot "$mirror" \
     --parent-mirror-chroot-security "$mirror" \
+    --parent-mirror-binary "$mirror" \
+    --parent-mirror-binary-security "$mirror" \
+    --parent-mirror-debian-installer "$mirror" \
+    --mirror-bootstrap "$mirror" \
     --mirror-chroot "$mirror" \
     --mirror-chroot-security "$mirror" \
-    --mirror-bootstrap "$mirror" \
+    --mirror-binary "$mirror" \
+    --mirror-binary-security "$mirror" \
     --verbose
 
 
