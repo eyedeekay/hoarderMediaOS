@@ -34,7 +34,7 @@ docker-clobber-all:
 
 docker-full-build:
 	make docker-clobber
-	make docker
+	make docker-conf
 	make docker-build
 
 docker-copy:
@@ -76,9 +76,19 @@ docker-release:
 docker-base:
 	docker build --force-rm --build-arg "CACHING_PROXY=$(proxy_addr)" -t $(image_prename)-build-devuan -f Dockerfiles/Dockerfile.live-build.$(distro) .
 
-docker:
+docker-setup:
 	make docker-base-$(distro)
 	make docker-$(distro)
+
+docker:
+	docker build --force-rm -t $(image_prename)-debian \
+		--build-arg "nonfree=$(nonfree) customize=$(customize) hardened=$(hardened)" \
+		-f Dockerfiles/Dockerfile.$(distro) .
+
+docker-conf:
+	make docker-base
+	make docker
+
 
 docker-debian:
 	docker build --force-rm -t $(image_prename)-debian \
