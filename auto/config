@@ -1,5 +1,7 @@
 #! /usr/bin/env bash
 
+[ ! -d .build ] && lb init -t 3 4
+
 make get-keys 1> /dev/null
 make import-keys 1> /dev/null
 
@@ -69,9 +71,10 @@ lb config noauto \
     --system live \
     $useproxy \
     $usekeyring \
-    -d "$stable" \
+    -d "$unstable" \
     --updates no \
-    --parent-distribution "$unstable" \
+    --parent-distribution "$stable" \
+    --parent-debian-installer-distribution "$stable" \
     --debootstrap-options "$bootstrapopts" \
     --initsystem sysvinit \
     $archiveareas \
@@ -83,13 +86,13 @@ lb config noauto \
     --parent-mirror-bootstrap "$mirror" \
     --parent-mirror-binary "$mirror" \
     --parent-mirror-binary-security "$mirror" \
-    --parent-mirror-chroot "$mirror" \
-    --parent-mirror-chroot-security "$mirror" \
-    --mirror-bootstrap "$mirror" \
     --mirror-binary "$mirror" \
     --mirror-binary-security "$mirror" \
+    --parent-mirror-chroot "$mirror" \
+    --parent-mirror-chroot-security "$mirror" \
     --mirror-chroot "$mirror" \
     --mirror-chroot-security "$mirror" \
+    --mirror-bootstrap "$mirror" \
     --security false \
     --verbose
     "$@" \

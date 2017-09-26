@@ -163,17 +163,17 @@ docker-clobber:
 	docker rmi -f $(image_prename)-debian \
 		$(image_prename)-devuan \
 		$(image_prename)-ubuntu; \
-	docker rm -f $(image_prename)-debian-build \
-		$(image_prename)-devuan-build \
-		$(image_prename)-ubuntu-build; \
+	docker rm -f $(image_prename)-build-debian \
+		$(image_prename)-build-devuan \
+		$(image_prename)-build-ubuntu; \
 	docker system prune -f
 	true
 
 docker-clobber-all:
 	make docker-clobber
-	docker rmi -f $(image_prename)-debian-build \
-		$(image_prename)-devuan-build \
-		$(image_prename)-ubuntu-build \
+	docker rmi -f $(image_prename)-build-debian \
+		$(image_prename)-build-devuan \
+		$(image_prename)-build-ubuntu \
 		$(image_prename)-debian \
 		$(image_prename)-devuan \
 		$(image_prename)-ubuntu; \

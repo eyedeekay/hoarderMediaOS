@@ -1,7 +1,5 @@
 #! /usr/bin/env bash
 
 
-[ ! -d .build ] && sudo lb init -t 3 4
-
 lb clean noauto --all "$@"
 
