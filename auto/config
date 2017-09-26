@@ -93,9 +93,7 @@ lb config noauto \
     --mirror-chroot "$mirror" \
     --mirror-chroot-security "$mirror" \
     --mirror-bootstrap "$mirror" \
-    --security false \
     --verbose
-    "$@" \
 
 
 make libre 1> /dev/null
