@@ -12,3 +12,4 @@ USER livebuilder
 RUN make docker-init
 RUN make config
 USER root
+CMD make build

@@ -50,24 +50,14 @@ docker-init:
 
 docker-build:
 	docker rm -f $(image_prename)-build-$(distro); \
-	docker run -i \
-		-e "distro=$(distro) nonfree=$(nonfree) hardened=$($hardened) customize=$(customize)" \
-		--name "$(image_prename)-build-$(distro)" \
-		--privileged \
-		-t $(image_prename)-$(distro) \
-		make build
-	make docker-copy
-
-docker-build-hardened-on-hardened:
 	make soften-container; \
 	docker run -i \
 		-e "distro=$(distro) nonfree=$(nonfree) hardened=$($hardened) customize=$(customize)" \
 		--name "$(image_prename)-build-$(distro)" \
 		--privileged \
-		-t $(image_prename)-$(distro) \
-	make build-hardened-on-hardened
+		-t $(image_prename)-$(distro)
 	make docker-copy
-	make harden-container
+	make harden-container; true
 
 docker-release:
 	make docker-build
