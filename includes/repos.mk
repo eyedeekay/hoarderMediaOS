@@ -173,3 +173,6 @@ import-keys:
 	gpg --keyserver $(keyserver) --no-default-keyring --keyring repokeys.gpg --import keyrings/*.asc
 	gpg --keyserver $(keyserver) --no-default-keyring --keyring repokeys.gpg --import /usr/share/keyrings/*-archive-keyring.gpg
 	true
+
+export-keys:
+	gpg --export --no-default-keyring --keyring repokeys.gpg > keyrings/repokeys.gpg

@@ -4,6 +4,7 @@
 
 make get-keys 1> /dev/null
 make import-keys 1> /dev/null
+make export-keys 1> /dev/null
 
 if [ -f keyrings/repokeys.gpg ]; then
         gpg --no-default-keyring --keyring repokeys.gpg --import keyrings/repokeys.gpg
