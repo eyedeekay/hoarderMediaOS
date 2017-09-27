@@ -12,7 +12,7 @@ RUN chown -R livebuilder:livebuilder /home/livebuilder/
 USER livebuilder
 RUN make docker-init
 RUN make config
-RUN if [ -f repokeys.gpg ]; then \
+RUN if [ -f keyrings/repokeys.gpg ]; then \
         gpg --no-default-keyring --keyring repokeys.gpg --import repokeys.gpg \
         fi
 USER root
