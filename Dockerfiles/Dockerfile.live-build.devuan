@@ -11,7 +11,7 @@ RUN echo "Acquire::http::Proxy \"$CACHING_PROXY\";" | tee -a /etc/apt/apt.conf.d
 RUN echo "Acquire::https::Proxy-Auto-Detect \"/usr/bin/auto-apt-proxy\";" | tee -a /etc/apt/apt.conf.d/00proxy
 RUN echo "Acquire::http::Proxy-Auto-Detect \"/usr/bin/auto-apt-proxy\";" | tee /etc/apt/apt.conf.d/auto-apt-proxy.conf
 RUN yes n | apt-get dist-upgrade -y -f
-RUN apt-get update && apt-get install -yq --fix-missing \
+RUN apt-get update && apt-get install -yq --fix-missing --reinstall \
                 gnupg2 \
                 bash \
                 apt-utils \
