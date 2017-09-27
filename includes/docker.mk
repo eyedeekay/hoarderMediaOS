@@ -82,7 +82,9 @@ docker-setup:
 
 docker:
 	docker build --force-rm -t $(image_prename)-$(distro) \
-		--build-arg "nonfree=$(nonfree) customize=$(customize) hardened=$(hardened)" \
+		--build-arg "nonfree=$(nonfree)" \
+		--build-arg "customize=$(customize)" \
+		--build-arg "hardened=$(hardened)" \
 		-f Dockerfiles/Dockerfile.$(distro) .
 
 docker-conf:
@@ -91,17 +93,23 @@ docker-conf:
 
 docker-debian:
 	docker build --force-rm -t $(image_prename)-debian \
-		--build-arg "nonfree=$(nonfree) customize=$(customize) hardened=$(hardened)" \
+		--build-arg "nonfree=$(nonfree)" \
+		--build-arg "customize=$(customize)" \
+		--build-arg "hardened=$(hardened)" \
 		-f Dockerfiles/Dockerfile.debian .
 
 docker-ubuntu:
 	docker build --force-rm -t $(image_prename)-ubuntu \
-		--build-arg "nonfree=$(nonfree) customize=$(customize) hardened=$(hardened)" \
+		--build-arg "nonfree=$(nonfree)" \
+		--build-arg "customize=$(customize)" \
+		--build-arg "hardened=$(hardened)" \
 		-f Dockerfiles/Dockerfile.ubuntu .
 
 docker-devuan:
 	docker build --force-rm -t $(image_prename)-devuan \
-		--build-arg "nonfree=$(nonfree) customize=$(customize) hardened=$(hardened)" \
+		--build-arg "nonfree=$(nonfree)" \
+		--build-arg "customize=$(customize)" \
+		--build-arg "hardened=$(hardened)" \
 		-f Dockerfiles/Dockerfile.devuan .
 
 docker-all:
