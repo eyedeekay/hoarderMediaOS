@@ -1,7 +1,10 @@
 export image_prename ?= tv
 export KEY ?= "70D2060738BEF80523ACAFF7D75C03B39B5E14E1"
 
-export proxy_addr ?= http://192.168.1.98:3142
+export proxy_host ?= 192.168.1.98
+export proxy_port ?= 3142
+
+export proxy_addr ?= http://$(proxy_host):$(proxy_port)
 
 #export distro ?= debian
 # Only Ever
@@ -15,9 +18,9 @@ export distro ?= devuan
 export custom ?= yes
 #export nonfree ?= yes
 #export server ?= yes
-export mirror_debian ?= http://ftp.us.debian.org/debian
-export mirror_devuan ?= http://us.mirror.devuan.org/merged
-export mirror_ubuntu ?= http://archive.ubuntu.com/ubuntu
+export mirror_debian ?= $(proxy_addr)/ftp.us.debian.org/debian
+export mirror_devuan ?= $(proxy_addr)/us.mirror.devuan.org/merged
+export mirror_ubuntu ?= $(proxy_addr)/archive.ubuntu.com/ubuntu
 
 getname:
 	@echo "$(image_prename)-$(distro)"
