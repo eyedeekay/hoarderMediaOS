@@ -10,12 +10,12 @@ devuan-key:
 	echo "deb-src http://us.mirror.devuan.org/merged unstable main" | tee -a config/archives/devuan.list.chroot
 	cd config/archives/ \
 		&& ln -sf nonfree.list.chroot nonfree.list.binary
-	gpg --keyserver hkp://pool.sks-keyservers.net --recv-keys 94532124541922FB; \
+	gpg --keyserver http://keyserver.ubuntu.com --recv-keys 94532124541922FB; \
 	gpg -a --export 94532124541922FB | tee config/archives/devuan.list.key.chroot
 	cd config/archives/ \
 		&& ln -sf devuan.list.key.chroot devuan.list.key.binary
 	echo "deb http://ftp.us.debian.org/debian/ sid main" | tee config/archives/sid.list.chroot
-	gpg --keyserver hkp://pool.sks-keyservers.net --recv-keys EF0F382A1A7B6500; \
+	gpg --keyserver http://keyserver.ubuntu.com --recv-keys EF0F382A1A7B6500; \
 	gpg -a --export EF0F382A1A7B6500 | tee config/archives/sid.list.key.chroot
 	cd config/archives/ \
 		&& ln -sf sid.list.key.chroot sid.list.key.binary
@@ -80,7 +80,7 @@ i2pd-repo:
 	echo "deb-src http://repo.lngserv.ru/debian jessie main" | tee -a config/archives/i2pd.list.chroot
 	echo "#deb http://i2p.repo jessie main" | tee -a config/archives/i2pd.list.chroot
 	echo "#deb-src http://i2p.repo jessie main" | tee -a config/archives/i2pd.list.chroot
-	gpg --keyserver hkp://pool.sks-keyservers.net --recv-keys 66F6C87B98EBCFE2; \
+	gpg --keyserver http://keyserver.ubuntu.com --recv-keys 66F6C87B98EBCFE2; \
 	gpg -a --export 66F6C87B98EBCFE2 | tee config/archives/i2pd.list.key.chroot
 	cd config/archives/ \
 		&& ln -sf i2pd.list.chroot i2pd.list.binary \
@@ -89,7 +89,7 @@ i2pd-repo:
 tor-repo:
 	echo "deb http://deb.torproject.org/torproject.org sid main" | tee config/archives/tor.list.chroot
 	echo "deb-src http://deb.torproject.org/torproject.org sid main" | tee -a config/archives/tor.list.chroot
-	gpg --keyserver hkp://pool.sks-keyservers.net --recv-keys A3C4F0F979CAA22CDBA8F512EE8CBC9E886DDD89; \
+	gpg --keyserver http://keyserver.ubuntu.com --recv-keys A3C4F0F979CAA22CDBA8F512EE8CBC9E886DDD89; \
 	gpg -a --export A3C4F0F979CAA22CDBA8F512EE8CBC9E886DDD89 | tee config/archives/tor.list.key.chroot
 	cd config/archives/ \
 		&& ln -sf tor.list.chroot tor.list.binary \
@@ -98,7 +98,7 @@ tor-repo:
 tor-ubuntu-repo:
 	echo "deb http://deb.torproject.org/torproject.org zesty main" | tee config/archives/tor.list.chroot
 	echo "deb-src http://deb.torproject.org/torproject.org zesty main" | tee -a config/archives/tor.list.chroot
-	gpg --keyserver hkp://pool.sks-keyservers.net --recv-keys A3C4F0F979CAA22CDBA8F512EE8CBC9E886DDD89; \
+	gpg --keyserver http://keyserver.ubuntu.com --recv-keys A3C4F0F979CAA22CDBA8F512EE8CBC9E886DDD89; \
 	gpg -a --export A3C4F0F979CAA22CDBA8F512EE8CBC9E886DDD89 | tee config/archives/tor.list.key.chroot
 	cd config/archives/ \
 		&& ln -sf tor.list.chroot tor.list.binary \
@@ -159,17 +159,17 @@ plex-repo:
 		&& ln -sf plex.list.key.chroot plex.list.key.binary
 
 get-keys:
-	gpg --keyserver hkp://pool.sks-keyservers.net --no-default-keyring --keyring repokeys.gpg --recv-keys 94532124541922FB; \
-	yes | gpg --keyserver hkp://pool.sks-keyservers.net --no-default-keyring --keyring repokeys.gpg  --armor --export 94532124541922FB > keyrings/devuan.asc; \
-	yes | gpg --keyserver hkp://pool.sks-keyservers.net --no-default-keyring --keyring repokeys.gpg  --export 94532124541922FB > keyrings/devuan.gpg; \
-	gpg --keyserver hkp://pool.sks-keyservers.net --no-default-keyring --keyring repokeys.gpg --recv-keys 7638D0442B90D010 ; \
-	yes | gpg --keyserver hkp://pool.sks-keyservers.net --no-default-keyring --keyring repokeys.gpg --armor --export 7638D0442B90D010 > keyrings/debian.asc; \
-	yes | gpg --keyserver hkp://pool.sks-keyservers.net --no-default-keyring --keyring repokeys.gpg  --export 7638D0442B90D010 > keyrings/debian.gpg; \
+	gpg --keyserver http://keyserver.ubuntu.com --no-default-keyring --keyring repokeys.gpg --recv-keys 94532124541922FB; \
+	yes | gpg --keyserver http://keyserver.ubuntu.com --no-default-keyring --keyring repokeys.gpg  --armor --export 94532124541922FB > keyrings/devuan.asc; \
+	yes | gpg --keyserver http://keyserver.ubuntu.com --no-default-keyring --keyring repokeys.gpg  --export 94532124541922FB > keyrings/devuan.gpg; \
+	gpg --keyserver http://keyserver.ubuntu.com --no-default-keyring --keyring repokeys.gpg --recv-keys 7638D0442B90D010 ; \
+	yes | gpg --keyserver http://keyserver.ubuntu.com --no-default-keyring --keyring repokeys.gpg --armor --export 7638D0442B90D010 > keyrings/debian.asc; \
+	yes | gpg --keyserver http://keyserver.ubuntu.com --no-default-keyring --keyring repokeys.gpg  --export 7638D0442B90D010 > keyrings/debian.gpg; \
 	apt-key exportall | tee keyrings/local.asc; \
 	cp /usr/share/keyrings/*-archive-keyring.gpg keyrings
 
 import-keys:
-	gpg --keyserver hkp://pool.sks-keyservers.net --no-default-keyring --keyring repokeys.gpg --import keyrings/*.gpg; \
-	gpg --keyserver hkp://pool.sks-keyservers.net --no-default-keyring --keyring repokeys.gpg --import keyrings/*.asc; \
-	gpg --keyserver hkp://pool.sks-keyservers.net --no-default-keyring --keyring repokeys.gpg --import /usr/share/keyrings/*-archive-keyring.gpg; \
+	gpg --keyserver http://keyserver.ubuntu.com --no-default-keyring --keyring repokeys.gpg --import keyrings/*.gpg; \
+	gpg --keyserver http://keyserver.ubuntu.com --no-default-keyring --keyring repokeys.gpg --import keyrings/*.asc; \
+	gpg --keyserver http://keyserver.ubuntu.com --no-default-keyring --keyring repokeys.gpg --import /usr/share/keyrings/*-archive-keyring.gpg; \
 	true
