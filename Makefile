@@ -81,12 +81,9 @@ custom:
 	make lair-game-repo
 
 build:
-	sudo lb build
-
-build-hardened-on-hardened:
-	make soften-container
+	make soften-container; \
 	make build
-	make harden-container
+	make harden-container; true
 
 throw:
 	scp -r . media@media:Docker/hoarderMediaOS
