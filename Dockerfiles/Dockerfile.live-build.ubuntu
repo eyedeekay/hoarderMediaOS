@@ -2,7 +2,7 @@ FROM ubuntu:devel
 ARG DEBIAN_FRONTEND="noninteractive"
 ARG CACHING_PROXY="http://172.17.0.2:3142"
 ENV DEBIAN_FRONTEND="noninteractive" LANG="C.UTF-8" LC_ALL="C.UTF-8"
-RUN adduser --home /home/livebuilder --shell /bin/bash --disabled-password --gecos "livebuilder" livebuilder
+RUN adduser --disabled-password --home /home/livebuilder --shell /bin/bash --disabled-password --gecos "livebuilder" livebuilder
 RUN adduser livebuilder sudo
 RUN apt-get update
 RUN apt-get install -yq auto-apt-proxy apt-transport-https apt-utils iproute
