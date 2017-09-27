@@ -18,9 +18,9 @@ export distro ?= devuan
 export custom ?= yes
 #export nonfree ?= yes
 #export server ?= yes
-export mirror_debian ?= http://$(proxy_host):$(proxy_port)/ftp.us.debian.org/debian
-export mirror_devuan ?= http://$(proxy_host):$(proxy_port)/us.mirror.devuan.org/merged
-export mirror_ubuntu ?= http://$(proxy_host):$(proxy_port)/archive.ubuntu.com/ubuntu
+export mirror_debian ?= http://ftp.us.debian.org/debian
+export mirror_devuan ?= http://us.mirror.devuan.org/merged
+export mirror_ubuntu ?= http://archive.ubuntu.com/ubuntu
 
 getname:
 	@echo "$(image_prename)-$(distro)"
