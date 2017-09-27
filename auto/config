@@ -5,6 +5,11 @@
 make get-keys 1> /dev/null
 make import-keys 1> /dev/null
 
+if [ -f keyrings/repokeys.gpg ]; then
+        gpg --no-default-keyring --keyring repokeys.gpg --import keyrings/repokeys.gpg
+fi
+
+
 export dsusekeyring="--keyring=$HOME/.gnupg/repokeys.gpg"
 
 if [ "$nonfree" = "yes" ]; then
