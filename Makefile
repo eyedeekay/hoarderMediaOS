@@ -1,5 +1,5 @@
 dummy:
-	make list
+	make list | less
 
 include config.mk
 include includes/docker.mk
@@ -14,7 +14,12 @@ list:
 	@echo "=================="
 	@echo ""
 	@echo " Image Name Prefix: $(IMAGE_PRENAME)"
-	@echo "  Whole Image Variant $$image_prename$$tag_distro$$is_harden$$non_free$$customized$$serverdist"
+	@echo "  Whole Image Variant: $(image_prename)"
+	@echo "   Parent Distro: $(distro)"
+	@echo "   Additional Hardening: $(hardened)"
+	@echo "   Non-Free: $(nonfree)"
+	@echo "   Personal Customizations: $(custom)"
+	@echo "   No X variant: $(server)"
 	@echo ""
 	@echo " Proxy: $(proxy_addr)"
 	@echo ""
