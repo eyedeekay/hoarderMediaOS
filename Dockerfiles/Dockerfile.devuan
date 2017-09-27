@@ -13,7 +13,7 @@ USER livebuilder
 RUN make docker-init
 RUN make config
 RUN if [ -f keyrings/repokeys.gpg ]; then \
-        gpg --no-default-keyring --keyring repokeys.gpg --import repokeys.gpg \
+        gpg --no-default-keyring --keyring repokeys.gpg --import repokeys.gpg; \
         fi
 USER root
 CMD make build
