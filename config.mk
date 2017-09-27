@@ -13,6 +13,8 @@ export proxy_addr ?= http://$(proxy_host):$(proxy_port)
 export distro ?= devuan
 # of these.
 
+export keyserver = http://keyserver.ubuntu.com
+
 #These must equal "yes" all lower case to be selected
 #export hardened ?= yes
 export custom ?= yes
