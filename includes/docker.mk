@@ -34,7 +34,7 @@ docker-clobber-all:
 
 docker-full-build:
 	make docker-clobber
-	make docker-conf
+	make docker-setup
 	make docker-build
 
 docker-copy:
@@ -88,7 +88,6 @@ docker:
 docker-conf:
 	make docker-base
 	make docker
-
 
 docker-debian:
 	docker build --force-rm -t $(image_prename)-debian \
