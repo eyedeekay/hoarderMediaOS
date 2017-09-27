@@ -48,16 +48,18 @@ docker-init:
 	rm -fr .build; \
 	mkdir -p .build
 
+docker-rebuild:
+	make docker-setup
+	make docker-build
+
 docker-build:
 	docker rm -f $(image_prename)-build-$(distro); \
-	make soften-container; \
 	docker run -i \
 		-e "distro=$(distro) nonfree=$(nonfree) hardened=$($hardened) customize=$(customize)" \
 		--name "$(image_prename)-build-$(distro)" \
 		--privileged \
 		-t $(image_prename)-$(distro)
 	make docker-copy
-	make harden-container; true
 
 docker-release:
 	make docker-build

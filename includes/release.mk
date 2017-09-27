@@ -58,26 +58,26 @@ upload:
 		--file "$(image_prename)-$(distro)-amd64.hybrid.iso";\
 
 soften-container:
-	sudo sysctl -w kernel.grsecurity.chroot_caps=0
-	sudo sysctl -w kernel.grsecurity.chroot_deny_chmod=0
-	sudo sysctl -w kernel.grsecurity.chroot_deny_mknod=0
-	sudo sysctl -w kernel.grsecurity.chroot_deny_mount=0
-	sudo sysctl -p
-	sudo sysctl kernel.grsecurity.chroot_caps
-	sudo sysctl kernel.grsecurity.chroot_deny_chmod
-	sudo sysctl kernel.grsecurity.chroot_deny_mknod
-	sudo sysctl kernel.grsecurity.chroot_deny_mount
+	su_wrap sysctl -w kernel.grsecurity.chroot_caps=0
+	su_wrap sysctl -w kernel.grsecurity.chroot_deny_chmod=0
+	su_wrap sysctl -w kernel.grsecurity.chroot_deny_mknod=0
+	su_wrap sysctl -w kernel.grsecurity.chroot_deny_mount=0
+	su_wrap sysctl -p
+	su_wrap sysctl kernel.grsecurity.chroot_caps
+	su_wrap sysctl kernel.grsecurity.chroot_deny_chmod
+	su_wrap sysctl kernel.grsecurity.chroot_deny_mknod
+	su_wrap sysctl kernel.grsecurity.chroot_deny_mount
 
 harden-container:
-	sudo sysctl -w kernel.grsecurity.chroot_caps=1
-	sudo sysctl -w kernel.grsecurity.chroot_deny_chmod=1
-	sudo sysctl -w kernel.grsecurity.chroot_deny_mknod=1
-	sudo sysctl -w kernel.grsecurity.chroot_deny_mount=1
-	sudo sysctl -p
-	sudo sysctl kernel.grsecurity.chroot_caps
-	sudo sysctl kernel.grsecurity.chroot_deny_chmod
-	sudo sysctl kernel.grsecurity.chroot_deny_mknod
-	sudo sysctl kernel.grsecurity.chroot_deny_mount
+	su_wrap sysctl -w kernel.grsecurity.chroot_caps=1
+	su_wrap sysctl -w kernel.grsecurity.chroot_deny_chmod=1
+	su_wrap sysctl -w kernel.grsecurity.chroot_deny_mknod=1
+	su_wrap sysctl -w kernel.grsecurity.chroot_deny_mount=1
+	su_wrap sysctl -p
+	su_wrap sysctl kernel.grsecurity.chroot_caps
+	su_wrap sysctl kernel.grsecurity.chroot_deny_chmod
+	su_wrap sysctl kernel.grsecurity.chroot_deny_mknod
+	su_wrap sysctl kernel.grsecurity.chroot_deny_mount
 
 backup:
 	scp $(image_prename)-$(distro)-*amd64.hybrid.iso media@media:os_backups/ ; \
