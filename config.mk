@@ -13,8 +13,9 @@ export proxy_addr ?= http://$(proxy_host):$(proxy_port)
 export distro ?= devuan
 # of these.
 
-export keyserver ?= http://keyserver.ubuntu.com
+#export keyserver ?= http://keyserver.ubuntu.com
 
+export keyserver ?= p80.pool.sks-keyservers.net
 #export keyserver ?= http://keys.gnupg.net/
 #export keyserver ?= http://subkeys.pgp.net:11371/
 #export keyserver ?= http://pool.sks-keyservers.net:11371/
