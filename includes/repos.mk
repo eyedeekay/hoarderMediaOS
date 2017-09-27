@@ -159,17 +159,17 @@ plex-repo:
 		&& ln -sf plex.list.key.chroot plex.list.key.binary
 
 get-keys:
-	gpg --keyserver http://keyserver.ubuntu.com --no-default-keyring --keyring repokeys.gpg --recv-keys 94532124541922FB; \
-	yes | gpg --keyserver http://keyserver.ubuntu.com --no-default-keyring --keyring repokeys.gpg  --armor --export 94532124541922FB > keyrings/devuan.asc; \
-	yes | gpg --keyserver http://keyserver.ubuntu.com --no-default-keyring --keyring repokeys.gpg  --export 94532124541922FB > keyrings/devuan.gpg; \
-	gpg --keyserver http://keyserver.ubuntu.com --no-default-keyring --keyring repokeys.gpg --recv-keys 7638D0442B90D010 ; \
-	yes | gpg --keyserver http://keyserver.ubuntu.com --no-default-keyring --keyring repokeys.gpg --armor --export 7638D0442B90D010 > keyrings/debian.asc; \
-	yes | gpg --keyserver http://keyserver.ubuntu.com --no-default-keyring --keyring repokeys.gpg  --export 7638D0442B90D010 > keyrings/debian.gpg; \
+	gpg --keyserver http://keyserver.ubuntu.com --no-default-keyring --keyring repokeys.gpg --recv-keys 94532124541922FB
+	yes | gpg --keyserver http://keyserver.ubuntu.com --no-default-keyring --keyring repokeys.gpg  --armor --export 94532124541922FB > keyrings/devuan.asc
+	yes | gpg --keyserver http://keyserver.ubuntu.com --no-default-keyring --keyring repokeys.gpg  --export 94532124541922FB > keyrings/devuan.gpg
+	gpg --keyserver http://keyserver.ubuntu.com --no-default-keyring --keyring repokeys.gpg --recv-keys 7638D0442B90D010
+	yes | gpg --keyserver http://keyserver.ubuntu.com --no-default-keyring --keyring repokeys.gpg --armor --export 7638D0442B90D010 > keyrings/debian.asc
+	yes | gpg --keyserver http://keyserver.ubuntu.com --no-default-keyring --keyring repokeys.gpg  --export 7638D0442B90D010 > keyrings/debian.gpg
 	apt-key exportall | tee keyrings/local.asc; \
 	cp /usr/share/keyrings/*-archive-keyring.gpg keyrings
 
 import-keys:
-	gpg --keyserver http://keyserver.ubuntu.com --no-default-keyring --keyring repokeys.gpg --import keyrings/*.gpg; \
-	gpg --keyserver http://keyserver.ubuntu.com --no-default-keyring --keyring repokeys.gpg --import keyrings/*.asc; \
-	gpg --keyserver http://keyserver.ubuntu.com --no-default-keyring --keyring repokeys.gpg --import /usr/share/keyrings/*-archive-keyring.gpg; \
+	gpg --keyserver http://keyserver.ubuntu.com --no-default-keyring --keyring repokeys.gpg --import keyrings/*.gpg
+	gpg --keyserver http://keyserver.ubuntu.com --no-default-keyring --keyring repokeys.gpg --import keyrings/*.asc
+	gpg --keyserver http://keyserver.ubuntu.com --no-default-keyring --keyring repokeys.gpg --import /usr/share/keyrings/*-archive-keyring.gpg
 	true
