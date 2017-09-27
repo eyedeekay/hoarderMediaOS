@@ -80,7 +80,6 @@ lb config noauto \
     -d "$unstable" \
     --updates no \
     --parent-distribution "$stable" \
-    --parent-debian-installer-distribution "$stable" \
     --debootstrap-options "$bootstrapopts" \
     --initsystem sysvinit \
     $archiveareas \
