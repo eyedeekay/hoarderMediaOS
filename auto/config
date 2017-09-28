@@ -76,7 +76,7 @@ sleep 5
 
 lb config noauto \
     -a amd64 \
-    -b hdd \
+    -b iso-hybrid \
     --debian-installer live \
     --system live \
     $useproxy \
