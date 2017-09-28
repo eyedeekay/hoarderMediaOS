@@ -25,7 +25,9 @@ RUN apt-get update && apt-get install -yq --fix-missing --reinstall \
                 dirmngr \
                 fakeroot-ng \
                 live-build \
-                xorriso
+                e2fsprogs \
+                xorriso \
+                cpio
 RUN apt-get update
 WORKDIR /home/livebuilder/hoarder-live
 #USER livebuilder
