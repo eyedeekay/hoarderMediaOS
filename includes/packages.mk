@@ -10,6 +10,7 @@ surfraw-extra
 auto-apt-proxy
 apt-transport-tor
 apt-transport-https
+apt-utils
 ca-certificates
 coreutils
 moreutils
