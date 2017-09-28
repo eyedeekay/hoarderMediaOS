@@ -75,6 +75,7 @@ fi
 sleep 5
 
 lb config noauto \
+        --verbose \
     -a amd64 \
     -b iso-hybrid \
     --cache true \
