@@ -76,7 +76,7 @@ sleep 5
 
 lb config noauto \
         --verbose \
-    -b iso-hybrid \
+    -b hdd \
     --cache true \
     --cache-indices true \
     --cache-packages true \
