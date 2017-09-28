@@ -38,6 +38,7 @@ export serverdist=$( [ ! -z "$server" ] && echo "-server" || echo "" )
 
 if [ "$distro" = "debian" ]; then
         export mirror="$mirror_debian"
+        export mirror_packages="$mirror_debian"
         export unstable="sid"
         export stable="sid"
         export bootstrapopts="--merged-usr $dsusekeyring --variant=minbase --include=gnupg2,gnutls-bin,apt-transport-https,ca-certificates,debian-archive-keyring $components"
@@ -51,6 +52,7 @@ elif [ "$distro" = "devuan" ]; then
         export usekeyring="--keyring-packages devuan-keyring"
 elif [ "$distro" = "ubuntu" ]; then
         export mirror="$mirror_ubuntu"
+        export mirror_packages="$mirror_ubuntu"
         export unstable="artful"
         export stable="artful"
         export bootstrapopts="--merged-usr $dsusekeyring --include=gnupg2,apt-transport-https,ca-certificates --exclude=debian-archive-keyring $components"
@@ -91,16 +93,16 @@ lb config noauto \
     $distromode \
     --security false \
     --parent-mirror-bootstrap "$mirror_packages" \
-    --parent-mirror-chroot "$mirror" \
-    --parent-mirror-chroot-security "$mirror" \
-    --parent-mirror-binary "$mirror" \
-    --parent-mirror-binary-security "$mirror" \
-    --parent-mirror-debian-installer "$mirror" \
+    --parent-mirror-chroot "$mirror_packages" \
+    --parent-mirror-chroot-security "$mirror_packages" \
+    --parent-mirror-binary "$mirror_packages" \
+    --parent-mirror-binary-security "$mirror_packages" \
+    --parent-mirror-debian-installer "$mirror_packages" \
     --mirror-bootstrap "$mirror_packages" \
-    --mirror-chroot "$mirror" \
-    --mirror-chroot-security "$mirror" \
-    --mirror-binary "$mirror" \
-    --mirror-binary-security "$mirror"
+    --mirror-chroot "$mirror_packages" \
+    --mirror-chroot-security "$mirror_packages" \
+    --mirror-binary "$mirror_packages" \
+    --mirror-binary-security "$mirror_packages"
 
 
 make libre 1> /dev/null
