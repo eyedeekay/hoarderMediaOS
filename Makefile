@@ -95,3 +95,6 @@ logs:
 
 errs:
 	docker logs -f $(image_prename)-build-$(distro)
+
+list:
+	docker exec -t $(image_prename)-build-$(distro) ls

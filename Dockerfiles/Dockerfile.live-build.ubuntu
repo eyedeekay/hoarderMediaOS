@@ -24,7 +24,8 @@ RUN apt-get update && apt-get install -yq --fix-missing --reinstall \
                 ubuntu-keyring \
                 dirmngr \
                 fakeroot-ng \
-                live-build
+                live-build \
+                xorriso
 RUN apt-get update
 WORKDIR /home/livebuilder/hoarder-live
 #USER livebuilder

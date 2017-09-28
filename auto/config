@@ -76,7 +76,6 @@ sleep 5
 
 lb config noauto \
         --verbose \
-    -a amd64 \
     -b iso-hybrid \
     --cache true \
     --cache-indices true \
@@ -102,7 +101,7 @@ lb config noauto \
     --parent-mirror-binary "$mirror_packages" \
     --parent-mirror-binary-security "$mirror_packages" \
     --parent-mirror-debian-installer "$mirror_packages" \
-    --mirror-bootstrap "$mirror" \
+    --mirror-bootstrap "$mirror_packages" \
     --mirror-chroot "$mirror_packages" \
     --mirror-chroot-security "$mirror_packages" \
     --mirror-binary "$mirror_packages" \

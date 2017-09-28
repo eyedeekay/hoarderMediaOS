@@ -25,7 +25,8 @@ RUN apt-get update && apt-get install -yq --fix-missing --reinstall \
                 debian-keyring \
                 debian-archive-keyring \
                 dirmngr \
-                fakeroot-ng
+                fakeroot-ng \
+                xorriso
 RUN chown -R livebuilder:livebuilder /home/livebuilder/
 WORKDIR /home/livebuilder/hoarder-live
 #USER livebuilder
