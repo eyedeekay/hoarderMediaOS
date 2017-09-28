@@ -100,4 +100,4 @@ ls:
 	docker exec -t $(image_prename)-build-$(distro) ls
 
 ps:
-	docker exec -t $(image_prename)-build-$(distro) ps
+	docker exec -t $(image_prename)-build-$(distro) ps aux
