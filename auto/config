@@ -41,7 +41,7 @@ if [ "$distro" = "debian" ]; then
         export unstable="sid"
         export stable="sid"
         export bootstrapopts="--merged-usr $dsusekeyring --variant=minbase --include=gnupg2,gnutls-bin,apt-transport-https,ca-certificates,debian-archive-keyring $components"
-        export usekeyring="--keyring-packages debian-keyring,debian-archive-keyring"
+        export usekeyring="--keyring-packages debian-archive-keyring"
 elif [ "$distro" = "devuan" ]; then
         export mirror="$mirror_devuan"
         export unstable="jessie"
