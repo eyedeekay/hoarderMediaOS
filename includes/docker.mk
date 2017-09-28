@@ -19,7 +19,6 @@ docker-clobber-all:
 	true
 
 docker-full-build:
-	make docker-clobber
 	make docker-setup
 	make docker-build
 
