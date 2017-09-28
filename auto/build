@@ -1,5 +1,5 @@
 #! /usr/bin/env bash
 
-lb build noauto "$@" 1>log 2>err & tail -f err
+lb build noauto "$@" 2> err
 ls *
 bash
