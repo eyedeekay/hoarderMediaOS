@@ -1,0 +1,213 @@
+docker logs -f tv-build-devuan
+lb build
+[2017-09-28 05:43:30] lb build 
+[1;37mP[0m: Executing auto/build script.
+Extracting templates from packages: 22%Extracting templates from packages: 44%Extracting templates from packages: 67%Extracting templates from packages: 89%Extracting templates from packages: 100%
+Warning: apt-key output should not be parsed (stdout is not a terminal)
+key 94532124541922FB:
+1 signature not checked due to a missing key
+Warning: apt-key output should not be parsed (stdout is not a terminal)
+Warning: apt-key output should not be parsed (stdout is not a terminal)
+key 0FAD31CA8719FCE4:
+1 signature not checked due to a missing key
+Warning: apt-key output should not be parsed (stdout is not a terminal)
+key EF0F382A1A7B6500:
+2 signatures not checked due to missing keys
+Warning: apt-key output should not be parsed (stdout is not a terminal)
+key D26E6ED000654A3E:
+1 signature not checked due to a missing key
+Warning: apt-key output should not be parsed (stdout is not a terminal)
+key EE8CBC9E886DDD89:
+73 signatures not checked due to missing keys
+--2017-09-28 06:08:00--  http://us.mirror.devuan.org/devuan/dists/jessie/main/Contents-amd64.gz
+Resolving us.mirror.devuan.org (us.mirror.devuan.org)... 46.105.191.77, 2001:41d0:8:2c55::a2
+Connecting to us.mirror.devuan.org (us.mirror.devuan.org)|46.105.191.77|:80... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 55891 (55K) [text/plain]
+Saving to: ‘STDOUT’
+
+     0K .......... .......... .......... .......... .......... 91%  205K 0s
+    50K ....                                                  100% 5.79M=0.2s
+
+2017-09-28 06:08:01 (223 KB/s) - written to stdout [55891/55891]
+
+warning: Unknown type cdrom, skipping line 1
+/tmp/apt-build.config.61keNf: 130: /tmp/apt-build.config.61keNf: dpkg-architecture: not found
+/tmp/apt-build.config.61keNf: 130: /tmp/apt-build.config.61keNf: dpkg-architecture: not found
+2 blocks
+W: Possible missing firmware /lib/firmware/i915/bxt_dmc_ver1_07.bin for module i915
+W: Possible missing firmware /lib/firmware/i915/skl_dmc_ver1_26.bin for module i915
+W: Possible missing firmware /lib/firmware/i915/kbl_dmc_ver1_01.bin for module i915
+W: Possible missing firmware /lib/firmware/i915/kbl_guc_ver9_14.bin for module i915
+W: Possible missing firmware /lib/firmware/i915/bxt_guc_ver8_7.bin for module i915
+W: Possible missing firmware /lib/firmware/i915/skl_guc_ver6_1.bin for module i915
+W: Possible missing firmware /lib/firmware/i915/kbl_huc_ver02_00_1810.bin for module i915
+W: Possible missing firmware /lib/firmware/i915/bxt_huc_ver01_07_1398.bin for module i915
+W: Possible missing firmware /lib/firmware/i915/skl_huc_ver01_07_1398.bin for module i915
+Warning: apt-key output should not be parsed (stdout is not a terminal)
+key 94532124541922FB:
+1 signature not checked due to a missing key
+Warning: apt-key output should not be parsed (stdout is not a terminal)
+Warning: apt-key output should not be parsed (stdout is not a terminal)
+key 0FAD31CA8719FCE4:
+1 signature not checked due to a missing key
+Warning: apt-key output should not be parsed (stdout is not a terminal)
+key EF0F382A1A7B6500:
+2 signatures not checked due to missing keys
+Warning: apt-key output should not be parsed (stdout is not a terminal)
+key D26E6ED000654A3E:
+1 signature not checked due to a missing key
+Warning: apt-key output should not be parsed (stdout is not a terminal)
+key EE8CBC9E886DDD89:
+73 signatures not checked due to missing keys
+Warning: apt-key output should not be parsed (stdout is not a terminal)
+Warning: apt-key output should not be parsed (stdout is not a terminal)
+key 94532124541922FB:
+1 signature not checked due to a missing key
+Warning: apt-key output should not be parsed (stdout is not a terminal)
+Warning: apt-key output should not be parsed (stdout is not a terminal)
+key 0FAD31CA8719FCE4:
+1 signature not checked due to a missing key
+Warning: apt-key output should not be parsed (stdout is not a terminal)
+key EF0F382A1A7B6500:
+2 signatures not checked due to missing keys
+Warning: apt-key output should not be parsed (stdout is not a terminal)
+key D26E6ED000654A3E:
+1 signature not checked due to a missing key
+Warning: apt-key output should not be parsed (stdout is not a terminal)
+key EE8CBC9E886DDD89:
+73 signatures not checked due to missing keys
+2017-09-28 06:20:41 URL:http://us.mirror.devuan.org/devuan/dists/jessie/main/installer-amd64/current/images//cdrom/vmlinuz [3128224/3128224] -> "/home/livebuilder/hoarder-live/cache/installer_debian-installer/http:__us.mirror.devuan.org_devuan_dists_jessie_main_installer-amd64_current_images__cdrom_vmlinuz" [1]
+2017-09-28 06:20:44 URL:http://us.mirror.devuan.org/devuan/dists/jessie/main/installer-amd64/current/images//cdrom/initrd.gz [6436326/6436326] -> "/home/livebuilder/hoarder-live/cache/installer_debian-installer/http:__us.mirror.devuan.org_devuan_dists_jessie_main_installer-amd64_current_images__cdrom_initrd.gz" [1]
+2017-09-28 06:20:46 URL:http://us.mirror.devuan.org/devuan/dists/jessie/main/installer-amd64/current/images//cdrom/gtk/vmlinuz [3128224/3128224] -> "/home/livebuilder/hoarder-live/cache/installer_debian-installer/http:__us.mirror.devuan.org_devuan_dists_jessie_main_installer-amd64_current_images__cdrom_gtk_vmlinuz" [1]
+2017-09-28 06:21:01 URL:http://us.mirror.devuan.org/devuan/dists/jessie/main/installer-amd64/current/images//cdrom/gtk/initrd.gz [25558626/25558626] -> "/home/livebuilder/hoarder-live/cache/installer_debian-installer/http:__us.mirror.devuan.org_devuan_dists_jessie_main_installer-amd64_current_images__cdrom_gtk_initrd.gz" [1]
+2017-09-28 06:21:02 URL:http://us.mirror.devuan.org/devuan/dists/jessie/main/Contents-amd64.gz [55891/55891] -> "-" [1]
+2017-09-28 06:21:13 URL:http://us.mirror.devuan.org/devuan/dists/jessie/main/binary-amd64/Release [93/93] -> "/home/livebuilder/hoarder-live/cache/installer_debian-installer/http:__us.mirror.devuan.org_devuan_dists_jessie_main_binary-amd64_Release" [1]
+2017-09-28 06:21:14 URL:http://us.mirror.devuan.org/devuan/dists/jessie/main/debian-installer/binary-amd64/Packages.gz [5716/5716] -> "/home/livebuilder/hoarder-live/cache/installer_debian-installer/http:__us.mirror.devuan.org_devuan_dists_jessie_main_debian-installer_binary-amd64_Packages.gz" [1]
+2017-09-28 06:21:14 URL:http://us.mirror.devuan.org/devuan/pool/main/a/apt-setup/apt-cdrom-setup_0.112+devuan3_all.udeb [119784/119784] -> "apt-cdrom-setup_0.112+devuan3_all.udeb" [1]
+2017-09-28 06:21:15 URL:http://us.mirror.devuan.org/devuan/pool/main/a/apt-setup/apt-mirror-setup_0.112+devuan3_all.udeb [44828/44828] -> "apt-mirror-setup_0.112+devuan3_all.udeb" [1]
+2017-09-28 06:21:16 URL:http://us.mirror.devuan.org/devuan/pool/main/a/apt-setup/apt-setup-udeb_0.112+devuan3_amd64.udeb [53460/53460] -> "apt-setup-udeb_0.112+devuan3_amd64.udeb" [1]
+2017-09-28 06:21:16 URL:http://us.mirror.devuan.org/devuan/pool/main/b/base-installer/bootstrap-base_1.155+devuan1.0_amd64.udeb [236982/236982] -> "bootstrap-base_1.155+devuan1.0_amd64.udeb" [1]
+2017-09-28 06:21:17 URL:http://us.mirror.devuan.org/devuan/pool/main/c/choose-mirror/choose-mirror_2.63+devuan1.0_all.udeb [1062/1062] -> "choose-mirror_2.63+devuan1.0_all.udeb" [1]
+2017-09-28 06:21:18 URL:http://us.mirror.devuan.org/devuan/pool/main/c/choose-mirror/choose-mirror-bin_2.63+devuan1.0_amd64.udeb [360980/360980] -> "choose-mirror-bin_2.63+devuan1.0_amd64.udeb" [1]
+2017-09-28 06:21:18 URL:http://us.mirror.devuan.org/devuan/pool/main/d/dbus/dbus-udeb_1.8.20-1+devuan1.1_amd64.udeb [139450/139450] -> "dbus-udeb_1.8.20-1+devuan1.1_amd64.udeb" [1]
+2017-09-28 06:21:19 URL:http://us.mirror.devuan.org/devuan/pool/main/d/dbus/libdbus-1-3-udeb_1.8.20-1+devuan1.1_amd64.udeb [85796/85796] -> "libdbus-1-3-udeb_1.8.20-1+devuan1.1_amd64.udeb" [1]
+2017-09-28 06:21:19 URL:http://us.mirror.devuan.org/devuan/pool/main/d/debootstrap/debootstrap-udeb_1.0.86+devuan1.0_all.udeb [19500/19500] -> "debootstrap-udeb_1.0.86+devuan1.0_all.udeb" [1]
+2017-09-28 06:21:20 URL:http://us.mirror.devuan.org/devuan/pool/main/d/devuan-keyring/devuan-keyring-udeb_2016.11.22_all.udeb [6802/6802] -> "devuan-keyring-udeb_2016.11.22_all.udeb" [1]
+2017-09-28 06:21:20 URL:http://us.mirror.devuan.org/devuan/pool/main/g/gdisk/gdisk-udeb_1.0.0-2+devuan0.4_amd64.udeb [114940/114940] -> "gdisk-udeb_1.0.0-2+devuan0.4_amd64.udeb" [1]
+2017-09-28 06:21:21 URL:http://us.mirror.devuan.org/devuan/pool/main/j/jessie-support/jessie-support_0.2_all.udeb [762/762] -> "jessie-support_0.2_all.udeb" [1]
+2017-09-28 06:21:21 URL:http://us.mirror.devuan.org/devuan/pool/main/m/main-menu/main-menu_1.46+devuan0.5_amd64.udeb [28856/28856] -> "main-menu_1.46+devuan0.5_amd64.udeb" [1]
+2017-09-28 06:21:22 URL:http://us.mirror.devuan.org/devuan/pool/main/n/netcfg/netcfg_1.133+devuan0.1_amd64.udeb [502044/502044] -> "netcfg_1.133+devuan0.1_amd64.udeb" [1]
+2017-09-28 06:21:23 URL:http://us.mirror.devuan.org/devuan/pool/main/n/netcfg/netcfg-static_1.133+devuan0.1_amd64.udeb [394284/394284] -> "netcfg-static_1.133+devuan0.1_amd64.udeb" [1]
+2017-09-28 06:21:24 URL:http://us.mirror.devuan.org/devuan/pool/main/n/net-retriever/download-installer_1.39+devuan-1.3_all.udeb [3594/3594] -> "download-installer_1.39+devuan-1.3_all.udeb" [1]
+2017-09-28 06:21:24 URL:http://us.mirror.devuan.org/devuan/pool/main/n/net-retriever/net-retriever_1.39+devuan-1.3_all.udeb [20328/20328] -> "net-retriever_1.39+devuan-1.3_all.udeb" [1]
+2017-09-28 06:21:24 URL:http://us.mirror.devuan.org/devuan/pool/main/p/pkgsel/pkgsel_0.43+devuan1_all.udeb [12272/12272] -> "pkgsel_0.43+devuan1_all.udeb" [1]
+2017-09-28 06:21:25 URL:http://us.mirror.devuan.org/devuan/pool/main/r/rootskel-gtk/rootskel-gtk_1.31+devuan1.1_amd64.udeb [10470/10470] -> "rootskel-gtk_1.31+devuan1.1_amd64.udeb" [1]
+2017-09-28 06:21:26 URL:http://us.mirror.devuan.org/devuan/pool/main/u/util-linux/cfdisk-udeb_2.26.2-6+devuan1_amd64.udeb [851388/851388] -> "cfdisk-udeb_2.26.2-6+devuan1_amd64.udeb" [1]
+2017-09-28 06:21:27 URL:http://us.mirror.devuan.org/devuan/pool/main/u/util-linux/fdisk-udeb_2.26.2-6+devuan1_amd64.udeb [51054/51054] -> "fdisk-udeb_2.26.2-6+devuan1_amd64.udeb" [1]
+2017-09-28 06:21:27 URL:http://us.mirror.devuan.org/devuan/pool/main/u/util-linux/libblkid1-udeb_2.26.2-6+devuan1_amd64.udeb [102822/102822] -> "libblkid1-udeb_2.26.2-6+devuan1_amd64.udeb" [1]
+2017-09-28 06:21:28 URL:http://us.mirror.devuan.org/devuan/pool/main/u/util-linux/libfdisk1-udeb_2.26.2-6+devuan1_amd64.udeb [131232/131232] -> "libfdisk1-udeb_2.26.2-6+devuan1_amd64.udeb" [1]
+2017-09-28 06:21:29 URL:http://us.mirror.devuan.org/devuan/pool/main/u/util-linux/libsmartcols1-udeb_2.26.2-6+devuan1_amd64.udeb [55402/55402] -> "libsmartcols1-udeb_2.26.2-6+devuan1_amd64.udeb" [1]
+2017-09-28 06:21:29 URL:http://us.mirror.devuan.org/devuan/pool/main/u/util-linux/libuuid1-udeb_2.26.2-6+devuan1_amd64.udeb [7166/7166] -> "libuuid1-udeb_2.26.2-6+devuan1_amd64.udeb" [1]
+2017-09-28 06:21:29 URL:http://us.mirror.devuan.org/devuan/pool/main/u/util-linux/util-linux-udeb_2.26.2-6+devuan1_amd64.udeb [29634/29634] -> "util-linux-udeb_2.26.2-6+devuan1_amd64.udeb" [1]
+5758 blocks
+Warning: apt-key output should not be parsed (stdout is not a terminal)
+key 94532124541922FB:
+1 signature not checked due to a missing key
+Warning: apt-key output should not be parsed (stdout is not a terminal)
+Warning: apt-key output should not be parsed (stdout is not a terminal)
+key 0FAD31CA8719FCE4:
+1 signature not checked due to a missing key
+Warning: apt-key output should not be parsed (stdout is not a terminal)
+key EF0F382A1A7B6500:
+2 signatures not checked due to missing keys
+Warning: apt-key output should not be parsed (stdout is not a terminal)
+key D26E6ED000654A3E:
+1 signature not checked due to a missing key
+Warning: apt-key output should not be parsed (stdout is not a terminal)
+key EE8CBC9E886DDD89:
+73 signatures not checked due to missing keys
+Warning: apt-key output should not be parsed (stdout is not a terminal)
+Extracting templates from packages: 22%Extracting templates from packages: 44%Extracting templates from packages: 67%Extracting templates from packages: 89%Extracting templates from packages: 100%
+Warning: apt-key output should not be parsed (stdout is not a terminal)
+key 94532124541922FB:
+1 signature not checked due to a missing key
+Warning: apt-key output should not be parsed (stdout is not a terminal)
+Warning: apt-key output should not be parsed (stdout is not a terminal)
+key 0FAD31CA8719FCE4:
+1 signature not checked due to a missing key
+Warning: apt-key output should not be parsed (stdout is not a terminal)
+key EF0F382A1A7B6500:
+2 signatures not checked due to missing keys
+Warning: apt-key output should not be parsed (stdout is not a terminal)
+key D26E6ED000654A3E:
+1 signature not checked due to a missing key
+Warning: apt-key output should not be parsed (stdout is not a terminal)
+key EE8CBC9E886DDD89:
+73 signatures not checked due to missing keys
+Warning: apt-key output should not be parsed (stdout is not a terminal)
+Warning: apt-key output should not be parsed (stdout is not a terminal)
+key 94532124541922FB:
+1 signature not checked due to a missing key
+Warning: apt-key output should not be parsed (stdout is not a terminal)
+Warning: apt-key output should not be parsed (stdout is not a terminal)
+key 0FAD31CA8719FCE4:
+1 signature not checked due to a missing key
+Warning: apt-key output should not be parsed (stdout is not a terminal)
+key EF0F382A1A7B6500:
+2 signatures not checked due to missing keys
+Warning: apt-key output should not be parsed (stdout is not a terminal)
+key D26E6ED000654A3E:
+1 signature not checked due to a missing key
+Warning: apt-key output should not be parsed (stdout is not a terminal)
+key EE8CBC9E886DDD89:
+73 signatures not checked due to missing keys
+--2017-09-28 07:07:22--  http://us.mirror.devuan.org/devuan/dists/jessie/Release
+Resolving us.mirror.devuan.org (us.mirror.devuan.org)... 46.105.191.77, 2001:41d0:8:2c55::a2
+Connecting to us.mirror.devuan.org (us.mirror.devuan.org)|46.105.191.77|:80... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 141363 (138K) [text/plain]
+Saving to: ‘/home/livebuilder/hoarder-live/cache/binary_package-lists/http:__us.mirror.devuan.org_devuan_dists_jessie_Release’
+
+     0K .......... .......... .......... .......... .......... 36%  233K 0s
+    50K .......... .......... .......... .......... .......... 72%  474K 0s
+   100K .......... .......... .......... ........             100% 3.17M=0.3s
+
+2017-09-28 07:07:23 (416 KB/s) - ‘/home/livebuilder/hoarder-live/cache/binary_package-lists/http:__us.mirror.devuan.org_devuan_dists_jessie_Release’ saved [141363/141363]
+
+--2017-09-28 07:07:23--  http://us.mirror.devuan.org/devuan/dists/jessie/main/binary-amd64/Packages.gz
+Resolving us.mirror.devuan.org (us.mirror.devuan.org)... 46.105.191.77, 2001:41d0:8:2c55::a2
+Connecting to us.mirror.devuan.org (us.mirror.devuan.org)|46.105.191.77|:80... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 79720 (78K) [text/plain]
+Saving to: ‘/home/livebuilder/hoarder-live/cache/binary_package-lists/http:__us.mirror.devuan.org_devuan_dists_jessie_main_binary-amd64_Packages.gz’
+
+     0K .......... .......... .......... .......... .......... 64%  230K 0s
+    50K .......... .......... .......                         100% 6.20M=0.2s
+
+2017-09-28 07:07:23 (352 KB/s) - ‘/home/livebuilder/hoarder-live/cache/binary_package-lists/http:__us.mirror.devuan.org_devuan_dists_jessie_main_binary-amd64_Packages.gz’ saved [79720/79720]
+
+--2017-09-28 07:07:24--  http://us.mirror.devuan.org/devuan/dists/jessie/contrib/binary-amd64/Packages.gz
+Resolving us.mirror.devuan.org (us.mirror.devuan.org)... 46.105.191.77, 2001:41d0:8:2c55::a2
+Connecting to us.mirror.devuan.org (us.mirror.devuan.org)|46.105.191.77|:80... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 20 [text/plain]
+Saving to: ‘/home/livebuilder/hoarder-live/cache/binary_package-lists/http:__us.mirror.devuan.org_devuan_dists_jessie_contrib_binary-amd64_Packages.gz’
+
+     0K                                                       100% 1.06M=0s
+
+2017-09-28 07:07:25 (1.06 MB/s) - ‘/home/livebuilder/hoarder-live/cache/binary_package-lists/http:__us.mirror.devuan.org_devuan_dists_jessie_contrib_binary-amd64_Packages.gz’ saved [20/20]
+
+--2017-09-28 07:07:25--  http://us.mirror.devuan.org/devuan/dists/jessie/non-free/binary-amd64/Packages.gz
+Resolving us.mirror.devuan.org (us.mirror.devuan.org)... 46.105.191.77, 2001:41d0:8:2c55::a2
+Connecting to us.mirror.devuan.org (us.mirror.devuan.org)|46.105.191.77|:80... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 20 [text/plain]
+Saving to: ‘/home/livebuilder/hoarder-live/cache/binary_package-lists/http:__us.mirror.devuan.org_devuan_dists_jessie_non-free_binary-amd64_Packages.gz’
+
+     0K                                                       100% 1.11M=0s
+
+2017-09-28 07:07:25 (1.11 MB/s) - ‘/home/livebuilder/hoarder-live/cache/binary_package-lists/http:__us.mirror.devuan.org_devuan_dists_jessie_non-free_binary-amd64_Packages.gz’ saved [20/20]
+
+^[[A^[[Aq^CMakefile:123: recipe for target 'build' failed
+make: *** [build] Interrupt
