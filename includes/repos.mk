@@ -8,8 +8,6 @@ proxy-setup:
 devuan-key:
 	echo "deb http://us.mirror.devuan.org/merged unstable main" | tee config/archives/devuan.list.chroot
 	echo "deb-src http://us.mirror.devuan.org/merged unstable main" | tee -a config/archives/devuan.list.chroot
-	echo "deb http://us.mirror.devuan.org/devuan unstable main" | tee -a config/archives/devuan.list.chroot
-	echo "deb-src http://us.mirror.devuan.org/devuan unstable main" | tee -a config/archives/devuan.list.chroot
 	cd config/archives/ \
 		&& ln -sf nonfree.list.chroot nonfree.list.binary
 	gpg --keyserver $(keyserver) --recv-keys 94532124541922FB; \
