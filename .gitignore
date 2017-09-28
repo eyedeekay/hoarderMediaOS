@@ -16,3 +16,7 @@ repokeys.gpg
 repokeys.gpg~
 keyrings/repokeys.gpg
 keyrings/repokeys.gpg~
+log
+err
+*log
+*err
