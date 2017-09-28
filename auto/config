@@ -102,7 +102,7 @@ lb config noauto \
     --parent-mirror-binary "$mirror_packages" \
     --parent-mirror-binary-security "$mirror_packages" \
     --parent-mirror-debian-installer "$mirror_packages" \
-    --mirror-bootstrap "$mirror_packages" \
+    --mirror-bootstrap "$mirror" \
     --mirror-chroot "$mirror_packages" \
     --mirror-chroot-security "$mirror_packages" \
     --mirror-binary "$mirror_packages" \
