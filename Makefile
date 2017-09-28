@@ -30,41 +30,6 @@ list:
 	@echo ""
 	@grep '^[^#[:space:]].*:' Makefile includes/*.mk
 
-define sudo_wrap
-#!/bin/bash
-timeout=10 #seconds
-set -m
-echoerr() { echo "$@" 1>&2; }
-keep_eye_on() {
-    pid=$1
-    time_passed=0
-    while kill -0 $pid &> /dev/null; do
-        sleep 1
-        let time_passed=time_passed+1
-        if [ $time_passed -ge $timeout ]; then
-            echoerr "Timeout reached."
-            kill -9 $pid
-            exit 1
-        fi
-    done
-}
-if [ -z "$1" ]; then
-    echoerr "Please specify a process to run!"
-    exit 1
-fi;
-sudo $@ &
-pid=$!
-keep_eye_on $pid &
-while true; do
-    if kill -0 $pid &> /dev/null; then
-        fg sudo > /dev/null; [ $? == 1 ] && break;
-    else
-        break
-    fi
-done
-
-endef
-
 sudo_wrap:
 	@echo $(su_wrap) > /usr/bin/su_wrap
 	chmod +x /usr/bin/su_wrap
