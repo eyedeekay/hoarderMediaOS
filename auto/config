@@ -44,6 +44,7 @@ if [ "$distro" = "debian" ]; then
         export usekeyring="--keyring-packages debian-archive-keyring"
 elif [ "$distro" = "devuan" ]; then
         export mirror="$mirror_devuan"
+        export mirror_packages="$mirror_devuan_packages"
         export unstable="jessie"
         export stable="jessie"
         export bootstrapopts="--merged-usr $dsusekeyring --variant=minbase --include=devuan-keyring --exclude=systemd,systemd-sysv $components"
@@ -89,13 +90,13 @@ lb config noauto \
     --image-name "$image_prename-$distro" \
     $distromode \
     --security false \
-    --parent-mirror-bootstrap "$mirror" \
+    --parent-mirror-bootstrap "$mirror_packages" \
     --parent-mirror-chroot "$mirror" \
     --parent-mirror-chroot-security "$mirror" \
     --parent-mirror-binary "$mirror" \
     --parent-mirror-binary-security "$mirror" \
     --parent-mirror-debian-installer "$mirror" \
-    --mirror-bootstrap "$mirror" \
+    --mirror-bootstrap "$mirror_packages" \
     --mirror-chroot "$mirror" \
     --mirror-chroot-security "$mirror" \
     --mirror-binary "$mirror" \
