@@ -21,6 +21,7 @@ list:
 	@echo "   Personal Customizations: $(custom)"
 	@echo "   No X variant: $(server)"
 	@echo ""
+	@echo " Mirror: $(mirror_devuan)"
 	@echo " Proxy: $(proxy_addr)"
 	@echo ""
 	@echo " Signing Key $(KEY)"
@@ -29,10 +30,6 @@ list:
 	@echo "  self explanatory."
 	@echo ""
 	@grep '^[^#[:space:]].*:' Makefile includes/*.mk
-
-sudo_wrap:
-	@echo $(su_wrap) > /usr/bin/su_wrap
-	chmod +x /usr/bin/su_wrap
 
 clean:
 	sudo lb clean; echo "cleaned"
@@ -47,11 +44,6 @@ clean:
 
 config:
 	lb config
-
-config-nonfree:
-	export nonfree="yes"; \
-	lb config --firmware-chroot true \
-		--firmware-binary true
 
 unfree:
 	make playdeb-repo; \

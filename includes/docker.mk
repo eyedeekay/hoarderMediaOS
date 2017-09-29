@@ -77,21 +77,21 @@ docker-base-devuan:
 docker-debian:
 	docker build --force-rm -t $(image_prename)-debian \
 		--build-arg "nonfree=$(nonfree)" \
-		--build-arg "customize=$(customize)" \
+		--build-arg "customize=$(custom)" \
 		--build-arg "hardened=$(hardened)" \
 		-f Dockerfiles/Dockerfile.debian .
 
 docker-ubuntu:
 	docker build --force-rm -t $(image_prename)-ubuntu \
 		--build-arg "nonfree=$(nonfree)" \
-		--build-arg "customize=$(customize)" \
+		--build-arg "customize=$(custom)" \
 		--build-arg "hardened=$(hardened)" \
 		-f Dockerfiles/Dockerfile.ubuntu .
 
 docker-devuan:
 	docker build --force-rm -t $(image_prename)-devuan \
 		--build-arg "nonfree=$(nonfree)" \
-		--build-arg "customize=$(customize)" \
+		--build-arg "customize=$(custom)" \
 		--build-arg "hardened=$(hardened)" \
 		-f Dockerfiles/Dockerfile.devuan .
 

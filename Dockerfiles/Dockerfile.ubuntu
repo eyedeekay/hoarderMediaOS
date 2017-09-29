@@ -1,5 +1,4 @@
 FROM tv-build-ubuntu
-VOLUME /home/livebuilder/
 ARG nonfree=""
 ARG hardened=""
 ARG customize=""
@@ -12,5 +11,6 @@ RUN make docker-init
 RUN chown -R livebuilder:livebuilder /home/livebuilder/
 USER livebuilder
 RUN make config
+VOLUME /home/livebuilder/hoarder-live/
 USER root
 CMD make build
