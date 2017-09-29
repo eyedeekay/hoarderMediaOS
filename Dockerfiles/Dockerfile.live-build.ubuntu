@@ -27,7 +27,10 @@ RUN apt-get update && apt-get install -yq --fix-missing --reinstall \
                 live-build \
                 e2fsprogs \
                 xorriso \
-                cpio
+                cpio \
+                squashfs-tools \
+                live-boot \
+                syslinux-common
 RUN apt-get update
 WORKDIR /home/livebuilder/hoarder-live
 #USER livebuilder

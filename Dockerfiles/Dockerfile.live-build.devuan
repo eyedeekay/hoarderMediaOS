@@ -28,8 +28,9 @@ RUN apt-get update && apt-get install -yq --fix-missing --reinstall \
                 dirmngr \
                 fakeroot-ng \
                 e2fsprogs \
-                xorriso \
-                cpio
+                squashfs-tools \
+                live-boot \
+                syslinux-common
 RUN chown -R livebuilder:livebuilder /home/livebuilder/
 WORKDIR /home/livebuilder/hoarder-live
 #USER livebuilder
