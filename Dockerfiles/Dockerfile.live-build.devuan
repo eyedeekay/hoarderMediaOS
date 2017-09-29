@@ -33,4 +33,4 @@ RUN apt-get update && apt-get install -yq --fix-missing --reinstall \
                 syslinux-common
 RUN chown -R livebuilder:livebuilder /home/livebuilder/
 WORKDIR /home/livebuilder/hoarder-live
-#USER livebuilder
+

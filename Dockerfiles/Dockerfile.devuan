@@ -1,16 +1,15 @@
 FROM tv-build-devuan
-#VOLUME /home/livebuilder/hoarder-live/
 ARG nonfree=""
 ARG hardened=""
 ARG customize=""
+RUN make docker-init
+RUN chown -R livebuilder:livebuilder /home/livebuilder/hoarder-live
+USER livebuilder
 COPY auto /home/livebuilder/hoarder-live/auto
 COPY config.mk /home/livebuilder/hoarder-live/config.mk
 COPY includes /home/livebuilder/hoarder-live/includes
 COPY keyrings/ keyrings/
 COPY Makefile /home/livebuilder/hoarder-live/Makefile
-RUN make docker-init
-RUN chown -R livebuilder:livebuilder /home/livebuilder/
-USER livebuilder
 RUN make config
 USER root
 CMD make build
