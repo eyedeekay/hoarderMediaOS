@@ -8,7 +8,6 @@ COPY config.mk /home/livebuilder/hoarder-live/config.mk
 COPY includes /home/livebuilder/hoarder-live/includes
 COPY keyrings/ keyrings/
 COPY Makefile /home/livebuilder/hoarder-live/Makefile
-RUN make sudo_wrap
 RUN chown -R livebuilder:livebuilder /home/livebuilder/
 RUN make docker-init
 USER livebuilder
