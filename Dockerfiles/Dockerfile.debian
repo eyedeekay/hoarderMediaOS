@@ -1,4 +1,5 @@
 FROM tv-build-debian
+VOLUME /home/livebuilder/
 ARG nonfree=""
 ARG hardened=""
 ARG customize=""
