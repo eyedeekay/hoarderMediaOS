@@ -70,7 +70,7 @@ if [ ! -z "$components" ]; then
         echo "$archiveareas"
 fi
         echo "$mirror"
-        echo "$mirror"
+        echo "$mirror_packages"
         echo "$unstable"
         echo "$stable"
         echo "$bootstrapopts"

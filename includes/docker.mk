@@ -42,7 +42,7 @@ docker-build:
 	docker run -i \
 		-e "distro=$(distro) nonfree=$(nonfree) hardened=$($hardened) customize=$(customize)" \
 		--name "$(image_prename)-build-$(distro)" \
-		--volume $(shell pwd)/build \
+		--volume $(shell pwd)/build:/home/livebuilder/hoarder-live \
 		--privileged \
 		-t $(image_prename)-$(distro)
 	make docker-copy
