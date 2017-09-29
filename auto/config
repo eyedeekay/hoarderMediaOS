@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-[ ! -d .build ] && lb init -t 3 4
+[ ! -d .build ] && sudo lb init -t 3 4
 
 make get-keys 1> /dev/null
 make import-keys 1> /dev/null
@@ -27,10 +27,6 @@ fi
 
 
 export useproxy=$( [ ! -z "$proxy_addr" ] && echo "--apt-http-proxy $proxy_addr" || echo "" )
-
-if [ -z "$proxy_addr" ]; then
-        export proxy_addr="http:/"
-fi
 
 export customized=$( [ ! -z "$customize" ] && echo "-custom" || echo "" )
 export serverdist=$( [ ! -z "$server" ] && echo "-server" || echo "" )

@@ -42,6 +42,7 @@ docker-build:
 	docker run -i \
 		-e "distro=$(distro) nonfree=$(nonfree) hardened=$($hardened) customize=$(customize)" \
 		--name "$(image_prename)-build-$(distro)" \
+		--volume $(shell pwd)/build \
 		--privileged \
 		-t $(image_prename)-$(distro)
 	make docker-copy
@@ -107,3 +108,15 @@ docker-all:
 docker-setup:
 	make docker-base-$(distro)
 	make docker-$(distro)
+
+errs:
+	docker exec -t $(image_prename)-build-$(distro) cat err
+
+logs:
+	docker logs -f $(image_prename)-build-$(distro)
+
+ls:
+	docker exec -t $(image_prename)-build-$(distro) ls
+
+ps:
+	docker exec -t $(image_prename)-build-$(distro) ps aux

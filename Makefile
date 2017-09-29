@@ -89,15 +89,3 @@ build:
 
 throw:
 	scp -r . media@media:Docker/hoarderMediaOS
-
-errs:
-	docker exec -t $(image_prename)-build-$(distro) cat err
-
-logs:
-	docker logs -f $(image_prename)-build-$(distro)
-
-ls:
-	docker exec -t $(image_prename)-build-$(distro) ls
-
-ps:
-	docker exec -t $(image_prename)-build-$(distro) ps aux

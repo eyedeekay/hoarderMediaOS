@@ -1,5 +1,6 @@
 #! /usr/bin/env bash
 
 lb build noauto "$@" 2> err
+lb build noauto "$@" 2> err.retry
 ls *
 bash
