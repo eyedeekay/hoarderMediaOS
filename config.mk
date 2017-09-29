@@ -30,7 +30,3 @@ export mirror_debian ?= http://ftp.us.debian.org/debian
 export mirror_devuan ?= http://us.mirror.devuan.org/merged
 export mirror_devuan_devuan ?= http://us.mirror.devuan.org/devuan
 export mirror_ubuntu ?= http://archive.ubuntu.com/ubuntu
-
-getname:
-	@echo "$(image_prename)-$(distro)"
-

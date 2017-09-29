@@ -80,6 +80,7 @@ sleep 5
 
 lb config noauto \
         --verbose \
+        --debug \
     -b hdd \
     --cache true \
     --cache-indices true \

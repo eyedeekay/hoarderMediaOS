@@ -119,3 +119,5 @@ tutorial:
 	cat "Tutorial/HOWTO.7.RELEASE.md" | tee -a TUTORIAL.md
 	echo "" | tee -a TUTORIAL.md
 
+getname:
+	@echo "$(image_prename)-$(distro)"
