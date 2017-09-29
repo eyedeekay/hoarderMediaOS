@@ -2,8 +2,6 @@ FROM tv-build-devuan
 ARG nonfree=""
 ARG hardened=""
 ARG customize=""
-#RUN make docker-init
-RUN bash -c 'lb init -t 3 5'
 RUN chown -R livebuilder:livebuilder /home/livebuilder/hoarder-live
 USER livebuilder
 COPY auto /home/livebuilder/hoarder-live/auto
