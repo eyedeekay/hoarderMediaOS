@@ -7,6 +7,7 @@ tmux
 surf
 surfraw
 surfraw-extra
+apt
 auto-apt-proxy
 apt-transport-tor
 apt-transport-https
