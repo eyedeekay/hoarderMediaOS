@@ -6,11 +6,11 @@ export proxy_port ?= 3142
 
 export proxy_addr ?= http://$(proxy_host):$(proxy_port)
 
-export distro ?= debian
+#export distro ?= debian
 # Only Ever
 #export distro ?= ubuntu
 # export one
-#export distro ?= devuan
+export distro ?= devuan
 # of these.
 
 #export keyserver ?= http://keyserver.ubuntu.com

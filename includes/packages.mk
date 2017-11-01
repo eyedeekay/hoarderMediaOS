@@ -22,7 +22,7 @@ apparmor-easyprof
 apparmor-notify
 apparmor-profiles
 apparmor-profiles-extra
-firejail
+bubblewrap
 pcmanfm
 secure-delete
 ifupdown
