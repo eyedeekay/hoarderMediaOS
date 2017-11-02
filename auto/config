@@ -105,12 +105,13 @@ lb config noauto \
     --parent-mirror-chroot-security "$mirror" \
     --parent-mirror-binary "$mirror" \
     --parent-mirror-binary-security "$mirror" \
-    --parent-mirror-debian-installer "$mirror" \
+    --parent-mirror-debian-installer "$parent_mirror" \
     --mirror-bootstrap "$parent_mirror" \
     --mirror-chroot "$mirror" \
     --mirror-chroot-security "$mirror" \
     --mirror-binary "$mirror" \
-    --mirror-binary-security "$mirror"
+    --mirror-binary-security "$mirror" \
+    --parent-mirror-debian-installer "$parent_mirror"
 
 
 make libre 1> /dev/null
