@@ -84,12 +84,13 @@ lb config noauto \
         --debug \
         --force \
     --apt aptitude \
-    --apt-recommends false \
+    --apt-recommends true \
     --apt-options "--assume-yes --fix-missing" \
     $useproxy \
     --binary-images iso-hybrid \
     --cache true \
     --updates true \
+    --security false \
     --cache-indices true \
     --cache-packages true \
     --distribution "$unstable" \
@@ -104,8 +105,7 @@ lb config noauto \
     $harden \
     --image-name "$image_prename$customized$hardened$serverdist$nonfree-$distro" \
     $distromode \
-    --parent-mirror-bootstrap "$mirror" \
-    --security false #\
+    --parent-mirror-bootstrap "$mirror" #\
     #--system live \
     #--parent-mirror-chroot "$mirror" \
     #--parent-mirror-chroot-security "$mirror" \
