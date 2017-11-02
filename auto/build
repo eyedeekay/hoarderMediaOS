@@ -1,6 +1,8 @@
 #! /usr/bin/env bash
 
-lb build noauto "$@" 2> err
+lb build noauto "$@" 1>log 2> err &
+sleep 2
+tail -f log
 lb build noauto "$@" 2> err.retry
 ls *
 bash
