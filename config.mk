@@ -4,7 +4,7 @@ export KEY ?= "70D2060738BEF80523ACAFF7D75C03B39B5E14E1"
 export proxy_host ?= 192.168.1.98
 export proxy_port ?= 3142
 
-export proxy_addr ?= http://$(proxy_host):$(proxy_port)
+export proxy_addr ?= http://$(proxy_host):$(proxy_port)/
 
 #export distro ?= debian
 # Only Ever
