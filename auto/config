@@ -81,11 +81,14 @@ sleep 5
 lb config noauto \
         --verbose \
         --debug \
+    --apt aptitude \
+    --apt-recommends false \
     -b hdd \
     --cache true \
     --cache-indices true \
     --cache-packages true \
-    --debian-installer live \
+    --debug \
+    --force \
     --system live \
     $useproxy \
     $usekeyring \
