@@ -83,12 +83,11 @@ lb config noauto \
         --verbose \
         --debug \
         --force \
-    --apt apt \
     --apt-recommends false \
     $useproxy \
     --binary-images iso-hybrid \
-    --binary-filesystem ext4 \
     --cache true \
+    --updates true \
     --cache-indices true \
     --cache-packages true \
     --distribution "$unstable" \
@@ -104,9 +103,8 @@ lb config noauto \
     --image-name "$image_prename$customized$hardened$serverdist$nonfree-$distro" \
     $distromode \
     --parent-mirror-bootstrap "$mirror" \
-    --security false \
-    --updates true #\
-    #--system live #\
+    --security false #\
+    #--system live \
     #--parent-mirror-chroot "$mirror" \
     #--parent-mirror-chroot-security "$mirror" \
     #--parent-mirror-binary "$mirror" \

@@ -60,7 +60,7 @@ libre:
 	make old-repo; \
 	make tor-repo; \
 	make syncthing-repo; \
-	make palemoon-repo; \
+	#make palemoon-repo; \
 	#make emby-repo; \
 	#make tox-repo; \
 
@@ -68,7 +68,7 @@ libre-ubuntu:
 	make i2pd-repo; \
 	make tor-ubuntu-repo; \
 	make syncthing-repo; \
-	make palemoon-repo; \
+	#make palemoon-repo; \
 	#make emby-repo; \
 	#make tox-repo; \
 
