@@ -22,11 +22,11 @@ devuan-key:
 	cd config/archives/ \
 		&& ln -sf sid.list.key.chroot sid.list.key.binary
 	@echo "Package: *" | tee config/archives/debdev.pref.chroot
-	@echo "Pin: release a=ceres" | tee -a config/archives/debdev.pref.chroot
+	@echo "Pin: release n=ceres" | tee -a config/archives/debdev.pref.chroot
 	@echo "Pin-Priority: 999" | tee -a config/archives/debdev.pref.chroot
 	@echo "Package: *" | tee -a config/archives/debdev.pref.chroot
-	@echo "Pin: release a=sid" | tee -a config/archives/debdev.pref.chroot
-	@echo "Pin-Priority: 990" | tee -a config/archives/debdev.pref.chroot
+	@echo "Pin: release n=sid" | tee -a config/archives/debdev.pref.chroot
+	@echo "Pin-Priority: 901" | tee -a config/archives/debdev.pref.chroot
 	cd config/archives/ \
 		&& ln -sf debdev.pref.chroot debdev.pref.binary
 	cp config/archives/debdev.pref config/apt/preferences
