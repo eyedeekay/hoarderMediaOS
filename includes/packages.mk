@@ -5,6 +5,8 @@ sddm
 stterm
 tmux
 surf
+libgtk-3.0
+libwebkit2gtk-4.0-37
 surfraw
 surfraw-extra
 auto-apt-proxy
@@ -53,6 +55,7 @@ paxctld
 gradm2
 pandoc
 syncthing
+procps
 mosh
 mutt
 lftp
@@ -75,6 +78,8 @@ owncloud-client-cmd
 gnutls-bin
 firmware-ath9k-htc
 firmware-linux-free
+udev
+default-dbus-session-bus
 xwayland
 xserver-xorg
 xserver-common
