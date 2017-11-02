@@ -84,18 +84,18 @@ lb config noauto \
         --force \
     --apt aptitude \
     --apt-recommends false \
+    $useproxy \
     --binary-images iso-hybrid \
     --binary-filesystem ext4 \
     --cache true \
     --cache-indices true \
     --cache-packages true \
     --distribution "$unstable" \
+    --parent-distribution "$stable" \
     --firmware-chroot false \
     --firmware-binary false \
-    $useproxy \
     $usekeyring \
     --updates no \
-    --parent-distribution "$stable" \
     --debootstrap-options "$bootstrapopts" \
     --initsystem sysvinit \
     $archiveareas \
@@ -103,9 +103,10 @@ lb config noauto \
     $harden \
     --image-name "$image_prename$customized$hardened$serverdist$nonfree-$distro" \
     $distromode \
+    --parent-mirror-bootstrap "$mirror" \
     --security false \
+    --updates true #\
     #--system live #\
-    #--parent-mirror-bootstrap "$mirror" \
     #--parent-mirror-chroot "$mirror" \
     #--parent-mirror-chroot-security "$mirror" \
     #--parent-mirror-binary "$mirror" \
