@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-[ ! -d .build ] && sudo bash -c "lb init -t 3 4" || make docker-init
+[ ! -d .build ] && sudo bash -c "lb init -t 3 4" > init.err || make docker-init
 
 make get-keys 1> /dev/null
 make import-keys 1> /dev/null
@@ -96,7 +96,6 @@ lb config noauto \
     --firmware-chroot false \
     --firmware-binary false \
     $usekeyring \
-    --updates no \
     --debootstrap-options "$bootstrapopts" \
     --initsystem sysvinit \
     $archiveareas \
