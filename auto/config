@@ -42,7 +42,7 @@ if [ "$distro" = "debian" ]; then
         export mirror_packages="$mirror_debian"
         export unstable="sid"
         export stable="sid"
-        export bootstrapopts="--merged-usr $dsusekeyring --variant=minbase --include=gnupg2,gnutls-bin,apt-transport-https,apt-utils,ca-certificates,debian-archive-keyring --exclude=systemd,systemd-sysv $components"
+        export bootstrapopts="--merged-usr $dsusekeyring --variant=minbase --include=gnupg2,gnutls-bin,apt-transport-https,ca-certificates,debian-archive-keyring --exclude=systemd,systemd-sysv $components"
         export usekeyring="--keyring-packages debian-archive-keyring"
 elif [ "$distro" = "devuan" ]; then
         export mirror="$mirror_devuan"
@@ -50,7 +50,7 @@ elif [ "$distro" = "devuan" ]; then
         #export unstable="ceres"
         export unstable="jessie"
         export stable="jessie"
-        export bootstrapopts="--merged-usr $dsusekeyring --variant=minbase --include=busybox-syslogd,gnupg2,gnutls-bin,apt-transport-https,apt-utils,ca-certificates,devuan-keyring --exclude=systemd,systemd-sysv $components"
+        export bootstrapopts="--merged-usr $dsusekeyring --variant=minbase --include=busybox-syslogd,gnupg2,gnutls-bin,apt-transport-https,ca-certificates,devuan-keyring --exclude=systemd,systemd-sysv $components"
         export usekeyring="--keyring-packages devuan-keyring"
 elif [ "$distro" = "ubuntu" ]; then
         export mirror="$mirror_ubuntu"
@@ -83,7 +83,9 @@ lb config noauto \
         --verbose \
         --debug \
         --force \
+    --apt aptitude \
     --apt-recommends false \
+    --apt-options "--assume-yes --fix-missing" \
     $useproxy \
     --binary-images iso-hybrid \
     --cache true \

@@ -51,7 +51,6 @@ pax-utils
 paxtest
 paxctld
 gradm2
-apt-build
 pandoc
 syncthing
 mosh
