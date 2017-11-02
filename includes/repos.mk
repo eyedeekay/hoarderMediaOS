@@ -6,8 +6,10 @@ proxy-setup:
 
 
 devuan-key:
-	echo "deb $(proxy_addr)us.mirror.devuan.org/merged unstable main" | tee config/archives/devuan.list.chroot
-	echo "deb-src http://us.mirror.devuan.org/merged unstable main" | tee -a config/archives/devuan.list.chroot
+	echo "deb $(proxy_addr)us.mirror.devuan.org/merged ceres main" | tee config/archives/devuan.list.chroot
+	echo "deb-src http://us.mirror.devuan.org/merged ceres main" | tee -a config/archives/devuan.list.chroot
+	echo "deb $(proxy_addr)us.mirror.devuan.org/devuan ceres main" | tee config/archives/devuan.list.chroot
+	echo "deb-src http://us.mirror.devuan.org/devuan ceres main" | tee -a config/archives/devuan.list.chroot
 	cd config/archives/ \
 		&& ln -sf nonfree.list.chroot nonfree.list.binary
 	gpg --keyserver $(keyserver) --recv-keys 94532124541922FB; \
@@ -20,10 +22,10 @@ devuan-key:
 	cd config/archives/ \
 		&& ln -sf sid.list.key.chroot sid.list.key.binary
 	@echo "Package: *" | tee config/archives/debdev.pref
-	@echo "Pin: origin us.mirror.devuan.org" | tee -a config/archives/debdev.pref
+	@echo "Pin: release a=ceres" | tee -a config/archives/debdev.pref
 	@echo "Pin-Priority: 999" | tee -a config/archives/debdev.pref
 	@echo "Package: *" | tee -a config/archives/debdev.pref
-	@echo "Pin: origin ftp.us.debian.org" | tee -a config/archives/debdev.pref
+	@echo "Pin: release a=sid" | tee -a config/archives/debdev.pref
 	@echo "Pin-Priority: 990" | tee -a config/archives/debdev.pref
 	cd config/archives/ \
 		&& ln -sf debdev.pref debdev.pref.chroot
@@ -45,21 +47,6 @@ lair-game-repo:
 	cd config/archives/ \
 		&& ln -sf lair.list.chroot lair.list.binary \
 		&& ln -sf lair.list.key.chroot lair.list.key.binary
-
-old-repo:
-	echo "deb $(proxy_addr)ftp.us.debian.org/debian/ jessie main " | tee config/archives/jessie.list.chroot
-	cd config/archives/ \
-		&& ln -sf jessie.list.chroot jessie.list.binary
-	@echo "Package: *" | tee -a config/archives/debdev.pref
-	@echo "Pin: release a=jessie" | tee -a config/archives/debdev.pref
-	@echo "Pin-Priority: 10" | tee -a config/archives/debdev.pref
-	cd config/archives/ \
-		&& ln -sf debdev.pref debdev.pref.chroot
-	cp config/archives/debdev.pref config/apt/preferences
-	#echo "deb $(mirror) jessie main " | tee config/archives/jessie.list.chroot
-	#cd config/archives/ \
-		#&& ln -sf jessie.list.chroot jessie.list.binary \
-
 
 syncthing-repo:
 	echo "deb $(proxy_addr)apt.syncthing.net/ syncthing release" | tee config/archives/syncthing.list.chroot

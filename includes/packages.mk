@@ -23,6 +23,7 @@ apparmor-notify
 apparmor-profiles
 apparmor-profiles-extra
 bubblewrap
+firejail
 pcmanfm
 secure-delete
 ifupdown
