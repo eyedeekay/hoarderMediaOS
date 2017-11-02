@@ -4,9 +4,7 @@ awesome-extra
 sddm
 stterm
 tmux
-surf
-libgtk-3.0
-libwebkit2gtk-4.0-37
+uzbl
 surfraw
 surfraw-extra
 auto-apt-proxy
