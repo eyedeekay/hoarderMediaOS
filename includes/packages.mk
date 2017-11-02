@@ -16,6 +16,7 @@ coreutils
 moreutils
 dpkg
 openrc
+initscripts
 adduser
 apparmor
 apparmor-easyprof
@@ -77,6 +78,8 @@ gnutls-bin
 firmware-ath9k-htc
 firmware-linux-free
 udev
+dbus
+util-linux
 default-dbus-session-bus
 xwayland
 xserver-xorg
