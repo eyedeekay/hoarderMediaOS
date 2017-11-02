@@ -89,7 +89,7 @@ lb config noauto \
     $useproxy \
     --binary-images iso-hybrid \
     --cache true \
-    --updates true \
+    --updates false \
     --security false \
     --cache-indices true \
     --cache-packages true \
