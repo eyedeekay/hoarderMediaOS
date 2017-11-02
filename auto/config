@@ -82,7 +82,6 @@ lb config noauto \
         --verbose \
         --debug \
         --force \
-        --clean \
     --apt aptitude \
     --apt-recommends false \
     --binary-images iso-hybrid \
