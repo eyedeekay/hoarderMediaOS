@@ -4,6 +4,7 @@ awesome-extra
 sddm
 stterm
 tmux
+surf
 surfraw
 surfraw-extra
 auto-apt-proxy
