@@ -81,20 +81,20 @@ sleep 5
 lb config noauto \
         --verbose \
         --debug \
+        --force \
+        --clean \
     --apt aptitude \
     --apt-recommends false \
-    -b hdd \
+    --binary-images iso-hybrid \
+    --binary-filesystem ext4 \
     --cache true \
     --cache-indices true \
     --cache-packages true \
-    --debug \
-    --force \
+    --distribution "$unstable" \
     --firmware-chroot false \
     --firmware-binary false \
-    --system live \
     $useproxy \
     $usekeyring \
-    -d "$unstable" \
     --updates no \
     --parent-distribution "$stable" \
     --debootstrap-options "$bootstrapopts" \
@@ -105,18 +105,19 @@ lb config noauto \
     --image-name "$image_prename$customized$hardened$serverdist$nonfree-$distro" \
     $distromode \
     --security false \
-    --parent-mirror-bootstrap "$parent_mirror" \
-    --parent-mirror-chroot "$mirror" \
-    --parent-mirror-chroot-security "$mirror" \
-    --parent-mirror-binary "$mirror" \
-    --parent-mirror-binary-security "$mirror" \
-    --parent-mirror-debian-installer "$parent_mirror" \
-    --mirror-bootstrap "$parent_mirror" \
-    --mirror-chroot "$mirror" \
-    --mirror-chroot-security "$mirror" \
-    --mirror-binary "$mirror" \
-    --mirror-binary-security "$mirror" \
-    --parent-mirror-debian-installer "$parent_mirror"
+    #--system live #\
+    #--parent-mirror-bootstrap "$mirror" \
+    #--parent-mirror-chroot "$mirror" \
+    #--parent-mirror-chroot-security "$mirror" \
+    #--parent-mirror-binary "$mirror" \
+    #--parent-mirror-binary-security "$mirror" \
+    #--parent-mirror-debian-installer "$parent_mirror" \
+    #--mirror-bootstrap "$mirror" \
+    #--mirror-chroot "$mirror" \
+    #--mirror-chroot-security "$mirror" \
+    #--mirror-binary "$mirror" \
+    #--mirror-binary-security "$mirror" \
+    #--parent-mirror-debian-installer "$parent_mirror"
 
 
 make libre 1> /dev/null
