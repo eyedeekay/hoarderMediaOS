@@ -1,5 +1,5 @@
 #! /usr/bin/env bash
 
 
-lb clean noauto "$@"
+lb clean noauto --purge
 
