@@ -78,7 +78,7 @@ logs:
 	docker logs -f $(image_prename)-build-$(distro)
 
 ls:
-	docker exec -t $(image_prename)-build-$(distro) ls config
+	docker exec -t $(image_prename)-build-$(distro) ls
 
 ps:
 	docker exec -t $(image_prename)-build-$(distro) ps aux
