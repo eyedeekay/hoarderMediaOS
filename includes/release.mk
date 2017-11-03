@@ -1,5 +1,5 @@
 
-export GITHUB_RELEASE_PATH ?= "$(HOME)/.go/bin/github-release"
+export GITHUB_RELEASE_PATH = "$(HOME)/.go/bin/github-release"
 
 sum:
 	sha256sum "$(image_prename)-$(distro)-amd64.hybrid.iso" > \
