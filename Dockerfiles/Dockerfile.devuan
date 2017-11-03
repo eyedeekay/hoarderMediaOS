@@ -1,4 +1,5 @@
 FROM tv-build-devuan
+ARG distro="devuan"
 ARG nonfree=""
 ARG hardened=""
 ARG customize=""
