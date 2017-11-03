@@ -49,7 +49,7 @@ elif [ "$distro" = "devuan" ]; then
         export mirror_packages="$mirror_devuan_devuan"
         #export unstable="ceres"
         export unstable="ceres"
-        export stable="jessie"
+        export stable="ceres"
         export bootstrapopts="--merged-usr $dsusekeyring --variant=minbase --include=busybox-syslogd,gnupg2,dpkg,apt-utils,apt-transport-https,gnutls-bin,ca-certificates,devuan-keyring --exclude=systemd,systemd-sysv $components"
         export usekeyring="--keyring-packages devuan-keyring"
 elif [ "$distro" = "ubuntu" ]; then
