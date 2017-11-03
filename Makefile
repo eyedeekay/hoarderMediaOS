@@ -5,7 +5,7 @@ include config.mk
 include includes/docker.mk
 include includes/git.mk
 include includes/packages.mk
-include includes/release.mk
+#include includes/release.mk
 include includes/repos.mk
 include includes/skel.mk
 

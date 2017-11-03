@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-lb clean noauto "$@"
+lb clean
 
 lb build noauto "$@" > >(tee -a log) 2> >(tee -a err >&2)
 
