@@ -45,7 +45,7 @@ if [ "$distro" = "debian" ]; then
         export bootstrapopts="--merged-usr $dsusekeyring --variant=minbase --include=gnupg2,dpkg,apt-utils,apt-transport-https,gnutls-bin,ca-certificates,debian-archive-keyring --exclude=systemd,systemd-sysv $components"
         export usekeyring="--keyring-packages debian-archive-keyring"
 elif [ "$distro" = "devuan" ]; then
-        export mirror="$mirror_devuan"
+        export mirror="http://us.mirror.devuan.org/merged"
         export unstable="ceres"
         export stable="ceres"
         export bootstrapopts="--merged-usr $dsusekeyring --variant=minbase --include=busybox-syslogd,gnupg2,dpkg,apt-utils,apt-transport-https,gnutls-bin,ca-certificates,devuan-keyring --exclude=systemd,systemd-sysv $components"
@@ -68,6 +68,7 @@ if [ ! -z "$components" ]; then
         echo "WARNING: USING NON-FREE COMPONENTS! $components"
         echo "$archiveareas"
 fi
+        echo "settings check:"
         echo "$mirror"
         echo "$mirror_packages"
         echo "$unstable"
