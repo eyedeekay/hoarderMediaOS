@@ -147,3 +147,5 @@ if [ ! -z "$server" ]; then
 fi
 
 echo "$distro"
+
+find . -type d -empty -delete
