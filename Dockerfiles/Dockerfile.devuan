@@ -17,5 +17,4 @@ COPY Makefile /home/livebuilder/hoarder-live/Makefile
 RUN make docker-init
 RUN make config
 USER root
-RUN make clean
 CMD make build
