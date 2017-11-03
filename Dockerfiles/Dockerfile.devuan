@@ -3,6 +3,10 @@ ARG distro="devuan"
 ARG nonfree=""
 ARG hardened=""
 ARG customize=""
+ENV distro="devuan"
+ENV nonfree=""
+ENV hardened=""
+ENV customize=""
 RUN chown -R livebuilder:livebuilder /home/livebuilder/hoarder-live
 USER livebuilder
 COPY auto /home/livebuilder/hoarder-live/auto
