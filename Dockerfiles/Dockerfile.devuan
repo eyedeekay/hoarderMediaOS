@@ -9,6 +9,7 @@ COPY config.mk /home/livebuilder/hoarder-live/config.mk
 COPY includes /home/livebuilder/hoarder-live/includes
 COPY keyrings/ keyrings/
 COPY Makefile /home/livebuilder/hoarder-live/Makefile
+RUN make docker-init
 RUN make config
 USER root
 RUN make clean
