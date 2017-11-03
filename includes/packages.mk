@@ -9,6 +9,7 @@ surfraw
 surfraw-extra
 dpkg
 auto-apt-proxy
+apt-file
 apt-transport-tor
 apt-transport-https
 apt-utils

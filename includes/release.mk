@@ -1,4 +1,6 @@
 
+export GITHUB_RELEASE_PATH ?= "$(HOME)/.go/bin/github-release"
+
 sum:
 	sha256sum "$(image_prename)-$(distro)-amd64.hybrid.iso" > \
 		"$(image_prename)-$(distro)-amd64.hybrid.iso.sha256sum" || \
@@ -33,27 +35,25 @@ torrent:
 release:
 	make sigsum
 	make torrent
-	git tag $(shell date +'%y.%m.%d'); git push --tags github
-	github-release release \
+	$(GITHUB_RELEASE_PATH) release \
 		--user cmotc \
 		--repo hoarderMediaOS \
 		--tag $(shell date +'%y.%m.%d') \
 		--name "hoarderMediaOS" \
 		--description "A re-buildable OS for self-hosting. Please use the torrent if possible" \
-		--pre-release ; \
 	make upload
 
 upload:
-	github-release upload --user cmotc --repo hoarderMediaOS --tag $(shell date +'%y.%m.%d') \
+	$(GITHUB_RELEASE_PATH) upload --user cmotc --repo hoarderMediaOS --tag $(shell date +'%y.%m.%d') \
 		--name "$(image_prename)-$(distro)-amd64.hybrid.iso.sha256sum" \
 		--file "$(image_prename)-$(distro)-amd64.hybrid.iso.sha256sum"; \
-	github-release upload --user cmotc --repo hoarderMediaOS --tag $(shell date +'%y.%m.%d') \
+	$(GITHUB_RELEASE_PATH) upload --user cmotc --repo hoarderMediaOS --tag $(shell date +'%y.%m.%d') \
 		--name "$(image_prename)-$(distro)-amd64.hybrid.iso.sha256sum.asc" \
 		--file "$(image_prename)-$(distro)-amd64.hybrid.iso.sha256sum.asc";\
-	github-release upload --user cmotc --repo hoarderMediaOS --tag $(shell date +'%y.%m.%d') \
+	$(GITHUB_RELEASE_PATH) upload --user cmotc --repo hoarderMediaOS --tag $(shell date +'%y.%m.%d') \
 		--name "$(image_prename)-$(distro)-amd64.hybrid.iso.torrent" \
 		--file "$(image_prename)-$(distro)-amd64.hybrid.iso.torrent";\
-	github-release upload --user cmotc --repo hoarderMediaOS --tag $(shell date +'%y.%m.%d') \
+	$(GITHUB_RELEASE_PATH) upload --user cmotc --repo hoarderMediaOS --tag $(shell date +'%y.%m.%d') \
 		--name "$(image_prename)-$(distro)-amd64.hybrid.iso" \
 		--file "$(image_prename)-$(distro)-amd64.hybrid.iso";\
 
