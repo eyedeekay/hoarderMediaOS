@@ -11,4 +11,5 @@ COPY Makefile /home/livebuilder/hoarder-live/Makefile
 USER livebuilder
 RUN make config
 USER root
+RUN lb clean
 CMD make build

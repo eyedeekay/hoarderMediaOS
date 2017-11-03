@@ -11,4 +11,5 @@ COPY keyrings/ keyrings/
 COPY Makefile /home/livebuilder/hoarder-live/Makefile
 RUN make config
 USER root
+RUN lb clean
 CMD make build
