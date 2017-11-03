@@ -5,7 +5,7 @@ include config.mk
 include includes/docker.mk
 include includes/git.mk
 include includes/packages.mk
-#include includes/release.mk
+include includes/release.mk
 include includes/repos.mk
 include includes/skel.mk
 
@@ -32,7 +32,9 @@ list:
 	@grep '^[^#[:space:]].*:' Makefile includes/*.mk
 
 clean:
-	sudo lb clean; echo "cleaned"
+	sudo lb clean
+
+clobber: clean
 	rm -f *.hybrid.iso
 	rm -f *.hybrid.iso.sha256sum
 	rm -f *.hybrid.iso.sha256sum.asc

@@ -10,6 +10,6 @@ COPY includes /home/livebuilder/hoarder-live/includes
 COPY keyrings/ keyrings/
 COPY Makefile /home/livebuilder/hoarder-live/Makefile
 RUN make config
+RUN make clean
 USER root
-RUN lb clean
 CMD make build
