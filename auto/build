@@ -1,6 +1,5 @@
 #! /usr/bin/env bash
 
-make config
 lb build noauto "$@" > >(tee -a log) 2> >(tee -a err >&2)
 
 bash
