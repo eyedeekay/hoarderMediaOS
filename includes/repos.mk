@@ -29,7 +29,6 @@ devuan-key:
 	@echo "Pin-Priority: 901" | tee -a config/archives/debdev.pref.chroot
 	cd config/archives/ \
 		&& ln -sf debdev.pref.chroot debdev.pref.binary
-	cp config/archives/debdev.pref config/apt/preferences
 
 
 apt-now-repo:
