@@ -148,4 +148,4 @@ fi
 
 echo "$distro"
 
-find . -type d -empty -delete
+find ./config -type d -empty -delete
