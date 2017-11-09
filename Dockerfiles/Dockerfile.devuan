@@ -12,7 +12,7 @@ USER livebuilder
 COPY auto /home/livebuilder/hoarder-live/auto
 COPY config.mk /home/livebuilder/hoarder-live/config.mk
 COPY includes /home/livebuilder/hoarder-live/includes
-COPY keyrings/ keyrings/
+COPY keyrings/ /home/livebuilder/hoarder-live/keyrings/
 COPY Makefile /home/livebuilder/hoarder-live/Makefile
 RUN make docker-init
 RUN make config

@@ -31,7 +31,7 @@ docker-copy:
 
 docker-init:
 	rm -fr .build; \
-	mkdir -p .build
+	mkdir -p .build && touch .build/config
 
 docker-rebuild:
 	make docker-setup
