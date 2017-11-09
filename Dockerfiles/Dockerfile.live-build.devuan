@@ -31,6 +31,8 @@ RUN apt-get update && apt-get install -yq --fix-missing --reinstall \
                 e2fsprogs \
                 squashfs-tools \
                 live-boot \
+                live-tools \
+                live-wrapper \
                 syslinux-common \
                 less
 RUN chown -R livebuilder:livebuilder /home/livebuilder/
