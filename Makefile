@@ -80,6 +80,9 @@ custom:
 	make lair-game-repo
 
 build:
+	make docker-init
+	make config
+	lb clean
 	lb build
 
 throw:

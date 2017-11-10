@@ -31,6 +31,7 @@ docker-copy:
 
 docker-init:
 	rm -fr .build; \
+	sudo lb init -t 3 5; \
 	mkdir -p .build && touch .build/config
 
 docker-rebuild:
@@ -40,6 +41,7 @@ docker-rebuild:
 docker-build:
 	docker rm -f $(image_prename)-build-$(distro); \
 	docker run -i \
+		--device /run/initctl \
 		-e "distro=$(distro) nonfree=$(nonfree) hardened=$($hardened) customize=$(customize)" \
 		--name "$(image_prename)-build-$(distro)" \
 		--privileged \
