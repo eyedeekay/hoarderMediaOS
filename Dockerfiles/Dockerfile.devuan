@@ -15,7 +15,7 @@ COPY includes /home/livebuilder/hoarder-live/includes/
 COPY auto /home/livebuilder/hoarder-live/auto/
 COPY keyrings/ /home/livebuilder/hoarder-live/keyrings/
 USER root
-RUN /usr/bin/lb init -t 3 5
+RUN /usr/bin/lb init -t 3 5; true
 USER livebuilder
 RUN make config | tee config.log
 USER root
