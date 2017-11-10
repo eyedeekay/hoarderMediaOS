@@ -6,8 +6,8 @@ proxy-setup:
 
 
 devuan-key:
-	echo "deb http://us.mirror.devuan.org/merged ceres main" | tee config/archives/devuan.list.chroot
-	echo "deb-src http://us.mirror.devuan.org/merged ceres main" | tee -a config/archives/devuan.list.chroot
+	echo "#deb http://us.mirror.devuan.org/merged ceres main" | tee config/archives/devuan.list.chroot
+	echo "#deb-src http://us.mirror.devuan.org/merged ceres main" | tee -a config/archives/devuan.list.chroot
 	echo "#deb http://us.mirror.devuan.org/devuan ascii main" | tee -a config/archives/devuan.list.chroot
 	echo "#deb-src http://us.mirror.devuan.org/devuan ascii main" | tee -a config/archives/devuan.list.chroot
 	cd config/archives/ \
