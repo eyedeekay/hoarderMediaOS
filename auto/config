@@ -23,7 +23,7 @@ if [ "$hardened" = "yes" ]; then
         export is_harden="-hardened"
 fi
 
-if [ -z "$proxy_addr" ]; then
+if [ ! -z "$proxy_addr" ]; then
         export useproxy="--apt-http-proxy $proxy_addr"
 fi
 
