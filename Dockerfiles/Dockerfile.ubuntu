@@ -1,15 +1,22 @@
 FROM tv-build-ubuntu
+ARG distro="devuan"
 ARG nonfree=""
 ARG hardened=""
 ARG customize=""
-RUN chown -R livebuilder:livebuilder /home/livebuilder/
-COPY auto /home/livebuilder/hoarder-live/auto
-COPY config.mk /home/livebuilder/hoarder-live/config.mk
-COPY includes /home/livebuilder/hoarder-live/includes
-COPY keyrings/ keyrings/
-COPY Makefile /home/livebuilder/hoarder-live/Makefile
+ENV distro="devuan"
+ENV nonfree=""
+ENV hardened=""
+ENV customize=""
+RUN chown -R livebuilder:livebuilder /home/livebuilder/hoarder-live
 USER livebuilder
-RUN make config
+COPY Makefile /home/livebuilder/hoarder-live/Makefile
+COPY config.mk /home/livebuilder/hoarder-live/config.mk
+COPY includes /home/livebuilder/hoarder-live/includes/
+COPY auto /home/livebuilder/hoarder-live/auto/
+COPY keyrings/ /home/livebuilder/hoarder-live/keyrings/
 USER root
-RUN lb clean
+RUN /usr/bin/lb init -t 3 5; true
+USER livebuilder
+RUN make config | tee config.log
+USER root
 CMD make build
