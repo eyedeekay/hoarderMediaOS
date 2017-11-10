@@ -74,6 +74,9 @@ docker-setup:
 errs:
 	docker exec -t $(image_prename)-build-$(distro) cat err
 
+conflog:
+	docker exec -t $(image_prename)-build-$(distro) cat config.log
+
 logs:
 	docker logs -f $(image_prename)-build-$(distro)
 
