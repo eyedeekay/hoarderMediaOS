@@ -35,6 +35,7 @@ RUN apt-get update && apt-get install -yq --fix-missing --reinstall \
                 live-wrapper \
                 live-config \
                 live-config-sysvinit \
+                sysv-rc-vonf sysv-rc init-system-helper sysvinit* \
                 syslinux-common \
                 less
 RUN chown -R livebuilder:livebuilder /home/livebuilder/
