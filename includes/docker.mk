@@ -85,3 +85,6 @@ ls:
 
 ps:
 	docker exec -t $(image_prename)-build-$(distro) ps aux
+
+enter:
+	docker exec -t $(image_prename)-build-$(distro) bash
