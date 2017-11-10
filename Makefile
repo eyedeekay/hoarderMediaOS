@@ -46,7 +46,7 @@ clobber: clean
 	rm -rf config
 
 config:
-	lb config
+	lb config | tee config.log
 
 unfree:
 	make playdeb-repo; \
