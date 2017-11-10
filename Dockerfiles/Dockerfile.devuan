@@ -9,11 +9,11 @@ ENV hardened=""
 ENV customize=""
 RUN chown -R livebuilder:livebuilder /home/livebuilder/hoarder-live
 USER livebuilder
-COPY auto /home/livebuilder/hoarder-live/auto
-COPY config.mk /home/livebuilder/hoarder-live/config.mk
-COPY includes /home/livebuilder/hoarder-live/includes
-COPY keyrings/ /home/livebuilder/hoarder-live/keyrings/
 COPY Makefile /home/livebuilder/hoarder-live/Makefile
+COPY config.mk /home/livebuilder/hoarder-live/config.mk
+COPY includes /home/livebuilder/hoarder-live/includes/
+COPY auto /home/livebuilder/hoarder-live/auto/
+COPY keyrings/ /home/livebuilder/hoarder-live/keyrings/
 RUN make docker-init
 RUN make config
 USER root

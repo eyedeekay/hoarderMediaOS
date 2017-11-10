@@ -1,7 +1,8 @@
+include config.mk
+
 dummy:
 	make list | less
 
-include config.mk
 include includes/docker.mk
 include includes/git.mk
 include includes/packages.mk
