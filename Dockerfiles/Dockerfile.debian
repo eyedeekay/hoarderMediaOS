@@ -9,7 +9,10 @@ COPY config.mk /home/livebuilder/hoarder-live/config.mk
 COPY includes/ /home/livebuilder/hoarder-live/includes
 COPY keyrings/ keyrings/
 COPY Makefile /home/livebuilder/hoarder-live/Makefile
-RUN make config
+USER root
+RUN export PATH="$PATH:/usr/local/bin:/usr/bin:/bin" && lb init -t 3 5
+USER livebuilder
+RUN make config | tee config.log
 USER root
 RUN lb clean
 CMD make build
