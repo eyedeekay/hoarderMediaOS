@@ -33,7 +33,7 @@ list:
 	@grep '^[^#[:space:]].*:' Makefile includes/*.mk
 
 clean:
-	lb clean
+	sudo lb clean
 
 clobber: clean
 	rm -f *.hybrid.iso
@@ -82,7 +82,7 @@ custom:
 build:
 	make docker-init
 	make config
-	lb clean
+	make clean
 	lb build
 
 throw:
