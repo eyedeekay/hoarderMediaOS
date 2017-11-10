@@ -81,7 +81,7 @@ lb config noauto \
         --force \
     --apt aptitude \
     --apt-recommends true \
-    --apt-options "'--assume-yes --fix-missing'" \
+    --apt-options "--assume-yes" \
     $useproxy \
     --binary-images iso-hybrid \
     --cache true \
