@@ -106,7 +106,7 @@ export SERVER_PACKAGE_LIST
 packlist:
 	@echo "$$PACKAGE_LIST"
 
-packages:
+packages-list:
 	cd config/package-lists/ && \
 	echo "$$PACKAGE_LIST" | tee -a build.list.chroot && \
 	ln -sf build.list.chroot build.list.binary
