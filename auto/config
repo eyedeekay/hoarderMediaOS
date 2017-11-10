@@ -78,8 +78,6 @@ fi
 sleep 5
 
 lb config noauto \
-        --verbose \
-        --debug \
         --force \
     --apt aptitude \
     --apt-recommends true \
