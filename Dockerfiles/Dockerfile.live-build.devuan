@@ -33,6 +33,8 @@ RUN apt-get update && apt-get install -yq --fix-missing --reinstall \
                 live-boot \
                 live-tools \
                 live-wrapper \
+                live-config \
+                live-config-sysvinit \
                 syslinux-common \
                 less
 RUN chown -R livebuilder:livebuilder /home/livebuilder/

@@ -32,6 +32,8 @@ RUN apt-get update && apt-get install -yq --fix-missing --reinstall \
                 live-boot \
                 live-tools \
                 live-wrapper \
+                live-config \
+                live-config-systemd \
                 syslinux-common \
                 less
 RUN apt-get update
