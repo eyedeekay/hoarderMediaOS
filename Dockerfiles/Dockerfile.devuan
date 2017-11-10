@@ -15,6 +15,6 @@ COPY includes /home/livebuilder/hoarder-live/includes/
 COPY auto /home/livebuilder/hoarder-live/auto/
 COPY keyrings/ /home/livebuilder/hoarder-live/keyrings/
 RUN make docker-init
-RUN make config &>config.log
+RUN make config | tee config.log
 USER root
 CMD make build

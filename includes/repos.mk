@@ -1,8 +1,8 @@
 
 proxy-setup:
-	echo "Acquire::HTTP::Proxy $(proxy_addr);" | tee /etc/apt/apt.conf.d/01proxy
-	echo 'Acquire::HTTPS::Proxy-Auto-Detect "/usr/bin/auto-apt-proxy";' | tee -a /etc/apt/apt.conf.d/01proxy
-	echo 'Acquire::http::Proxy-Auto-Detect "/usr/bin/auto-apt-proxy";' | tee -a /etc/apt/apt.conf.d/auto-apt-proxy.conf
+	echo "#Acquire::HTTP::Proxy $(proxy_addr);" | tee /etc/apt/apt.conf.d/01proxy
+	echo '#Acquire::HTTPS::Proxy-Auto-Detect "/usr/bin/auto-apt-proxy";' | tee -a /etc/apt/apt.conf.d/01proxy
+	echo '#Acquire::http::Proxy-Auto-Detect "/usr/bin/auto-apt-proxy";' | tee -a /etc/apt/apt.conf.d/auto-apt-proxy.conf
 
 
 devuan-key:
