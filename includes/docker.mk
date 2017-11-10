@@ -43,6 +43,7 @@ docker-build:
 		-e "distro=$(distro) nonfree=$(nonfree) hardened=$($hardened) customize=$(customize)" \
 		--name "$(image_prename)-build-$(distro)" \
 		--privileged \
+		--init \
 		-t $(image_prename)-$(distro)
 	make docker-copy
 
