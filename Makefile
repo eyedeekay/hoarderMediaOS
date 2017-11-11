@@ -60,7 +60,6 @@ unfree-ubuntu:
 
 libre:
 	make i2pd-repo; \
-	make old-repo; \
 	make tor-repo; \
 	make syncthing-repo; \
 	#make palemoon-repo; \
@@ -82,8 +81,8 @@ custom:
 build:
 	make docker-init
 	make config
-	make clean
-	lb build
+	#make clean
+	sudo lb build
 
 throw:
 	scp -r . media@media:Docker/hoarderMediaOS

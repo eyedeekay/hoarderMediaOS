@@ -52,7 +52,6 @@ mc
 pax-utils
 paxtest
 paxctld
-gradm2
 pandoc
 syncthing
 procps
