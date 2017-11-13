@@ -1,5 +1,7 @@
 #! /usr/bin/env bash
 # settings check:
+set -e
+
 export mirror="http://us.mirror.devuan.org/merged"
 export mirror_packages="http://us.mirror.devuan.org/merged"
 export unstable="ceres"

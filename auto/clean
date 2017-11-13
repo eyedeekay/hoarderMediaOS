@@ -1,0 +1,6 @@
+#! /usr/bin/env bash
+
+lb clean noauto "$@"
+
+rm -rf config/binary config/build config/bootstrap config/cache config/source
+
