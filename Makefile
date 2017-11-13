@@ -46,7 +46,7 @@ clobber: clean
 	rm -rf config
 
 config:
-	lb config | tee config.log
+	lb config | tee -a config.log
 
 unfree:
 	make playdeb-repo; \
@@ -81,8 +81,8 @@ custom:
 build:
 	make docker-init
 	make config
-	#make clean
-	sudo lb build
+	make clean
+	sudo -E lb build
 
 throw:
 	scp -r . media@media:Docker/hoarderMediaOS

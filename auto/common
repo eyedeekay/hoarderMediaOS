@@ -1,6 +1,16 @@
-#! /usr/bin/env sh
-export non_free=$( [ ! -z "$nonfree" ] && echo "-nonfree" || echo "" )
-export tag_distro="-$distro"
-export is_harden=$( [ ! -z "$hardened" ] && echo "-hardened" || echo "" )
-export customized=$( [ ! -z "$customize" ] && echo "-custom" || echo "" )
-export serverdist=$( [ ! -z "$server" ] && echo "-server" || echo "" )
+#! /usr/bin/env bash
+# settings check:
+export mirror="http://us.mirror.devuan.org/merged"
+export mirror_packages="http://us.mirror.devuan.org/merged"
+export unstable="ceres"
+export stable="ceres"
+export bootstrapopts="--merged-usr --keyring=/home/livebuilder/.gnupg/repokeys.gpg --variant=minbase --include=busybox-syslogd,gnupg2,dpkg,apt-transport-https,apt-utils,gnutls-bin,ca-certificates,devuan-keyring --exclude=systemd,systemd-sysv "
+export usekeyring="--keyring-packages devuan-keyring"
+export distromode=""
+export dsusekeyring="--keyring=/home/livebuilder/.gnupg/repokeys.gpg"
+export nonfree=""
+export hardened=""
+export proxy_addr="http://172.17.0.2:3142/"
+export useproxy="--apt-http-proxy http://172.17.0.2:3142/"
+export customize=""
+export server=""

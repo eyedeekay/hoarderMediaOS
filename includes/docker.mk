@@ -31,7 +31,7 @@ docker-copy:
 
 docker-init:
 	rm -fr .build; \
-	sudo lb init -t 3 5; \
+	sudo -E lb init -t 3 5; \
 	mkdir -p .build && touch .build/config
 
 docker-rebuild:
@@ -45,6 +45,7 @@ docker-build:
 		-e "distro=$(distro) nonfree=$(nonfree) hardened=$($hardened) customize=$(customize)" \
 		--name "$(image_prename)-build-$(distro)" \
 		--privileged \
+		--tty \
 		-t $(image_prename)-$(distro)
 	make docker-copy
 
@@ -61,7 +62,7 @@ docker-base:
 docker:
 	docker build --force-rm -t $(image_prename)-$(distro) \
 		--build-arg "nonfree=$(nonfree)" \
-		--build-arg "customize=$(customize)" \
+		--build-arg "customize=$(custom)" \
 		--build-arg "hardened=$(hardened)" \
 		-f Dockerfiles/Dockerfile.$(distro) .
 
