@@ -1,6 +1,6 @@
 FROM debitux/devuan:unstable
 ARG DEBIAN_FRONTEND="noninteractive"
-ARG CACHING_PROXY="192.168.1.98:3142"
+ARG CACHING_PROXY="http://192.168.1.98:3142"
 ENV DEBIAN_FRONTEND="noninteractive" LANG="C.UTF-8" LC_ALL="C.UTF-8"
 RUN adduser --disabled-password --home /home/livebuilder --shell /bin/bash --disabled-password --gecos "livebuilder" livebuilder
 RUN adduser livebuilder sudo
