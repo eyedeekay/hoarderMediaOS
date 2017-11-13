@@ -2,7 +2,7 @@
 
 set -e
 
-sudo lb clean noauto "$@"
+sudo -E lb clean noauto "$@"
 
 #rm -rf config/binary \
 #        config/build \
