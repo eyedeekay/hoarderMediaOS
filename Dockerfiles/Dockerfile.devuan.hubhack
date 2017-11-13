@@ -15,5 +15,5 @@ COPY keyrings/ /home/livebuilder/hoarder-live/keyrings/
 RUN chown -R livebuilder:livebuilder /home/livebuilder/hoarder-live
 WORKDIR /home/livebuilder/hoarder-live/
 USER livebuilder
-RUN make build
+RUN make build-nochroot
 CMD bash

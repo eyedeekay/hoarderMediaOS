@@ -48,6 +48,9 @@ clobber: clean
 config:
 	lb config | tee -a config.log
 
+config-nochroot:
+	lb config --build-with-chroot false | tee -a config.log
+
 unfree:
 	make playdeb-repo; \
 	make plex-repo; \
@@ -81,6 +84,12 @@ custom:
 build:
 	make docker-init
 	make config
+	make clean
+	sudo -E lb build
+
+build-nochroot:
+	make docker-init
+	make config-nochroot
 	make clean
 	sudo -E lb build
 
