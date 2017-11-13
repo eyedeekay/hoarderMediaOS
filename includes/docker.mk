@@ -55,7 +55,7 @@ docker-release:
 
 docker-base:
 	docker build --force-rm \
-		--build-arg "CACHING_PROXY=$(proxy_addr)/" \
+		--build-arg "CACHING_PROXY=$(proxy_addr)" \
 		-t $(image_prename)-build-$(distro) \
 		-f Dockerfiles/Dockerfile.live-build.$(distro) .
 
