@@ -1,15 +1,13 @@
 #! /usr/bin/env bash
 # settings check:
-set -e
-
 export mirror="http://us.mirror.devuan.org/merged"
 export mirror_packages="http://us.mirror.devuan.org/merged"
 export unstable="ceres"
 export stable="ceres"
-export bootstrapopts="--merged-usr --keyring=/home/livebuilder/.gnupg/repokeys.gpg --variant=minbase --include=busybox-syslogd,gnupg2,dpkg,apt-transport-https,apt-utils,gnutls-bin,ca-certificates,devuan-keyring --exclude=systemd,systemd-sysv "
+export bootstrapopts="--merged-usr --keyring=/home/idk/.gnupg/repokeys.gpg --variant=minbase --include=busybox-syslogd,gnupg2,dpkg,apt-transport-https,apt-utils,gnutls-bin,ca-certificates,devuan-keyring --exclude=systemd,systemd-sysv "
 export usekeyring="--keyring-packages devuan-keyring"
 export distromode=""
-export dsusekeyring="--keyring=/home/livebuilder/.gnupg/repokeys.gpg"
+export dsusekeyring="--keyring=/home/idk/.gnupg/repokeys.gpg"
 export nonfree=""
 export hardened=""
 export proxy_addr="http://172.17.0.2:3142/"

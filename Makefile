@@ -36,14 +36,15 @@ clean:
 	sudo lb clean --all
 
 clobber: clean
-	rm -f *.hybrid.iso
-	rm -f *.hybrid.iso.sha256sum
-	rm -f *.hybrid.iso.sha256sum.asc
-	rm -f *.files
-	rm -f *.contents
-	rm -f *.hybrid.iso.zsync
-	rm -f *.packages
-	rm -rf config
+	rm -rf *.hybrid.iso \
+	*.hybrid.iso.sha256sum \
+	*.hybrid.iso.sha256sum.asc \
+	*.files \
+	*.contents \
+	*.hybrid.iso.zsync \
+	*.packages \
+	*log *err \
+	config
 
 config:
 	lb config | tee -a config.log
