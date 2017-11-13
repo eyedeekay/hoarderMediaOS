@@ -1,5 +1,7 @@
 #! /usr/bin/env bash
 
+set -e
+
 lb clean noauto "$@"
 
 rm -rf config/binary config/build config/bootstrap config/chroot config/common config/source
