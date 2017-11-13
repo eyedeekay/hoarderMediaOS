@@ -41,7 +41,7 @@ docker-rebuild:
 docker-build:
 	docker rm -f $(image_prename)-build-$(distro); \
 	docker run -i \
-		--device /run/initctl \
+		--cap-add=SYS_ADMIN \
 		-e "distro=$(distro) nonfree=$(nonfree) hardened=$($hardened) customize=$(customize)" \
 		--name "$(image_prename)-build-$(distro)" \
 		--privileged \
@@ -71,8 +71,8 @@ docker-conf:
 	make docker
 
 docker-setup:
-	make docker-base
-	make docker
+	make docker-base | tee setup.log
+	make docker | tee -a setup.log
 
 errs:
 	docker exec -t $(image_prename)-build-$(distro) cat err

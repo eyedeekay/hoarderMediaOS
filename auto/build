@@ -19,5 +19,5 @@ echo "customize=\"$customize\""
 echo "server=\"$server\""
 
 lb build noauto "$@" > >(tee -a log) 2> >(tee -a err >&2)
+lb build noauto "$@" > >(tee -a log) 2> >(tee -a err >&2)
 
-bash

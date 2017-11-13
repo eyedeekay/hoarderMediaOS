@@ -5,12 +5,11 @@ ENV DEBIAN_FRONTEND="noninteractive" LANG="C.UTF-8" LC_ALL="C.UTF-8"
 RUN adduser --disabled-password --home /home/livebuilder --shell /bin/bash --disabled-password --gecos "livebuilder" livebuilder
 RUN adduser livebuilder sudo
 RUN apt-get update
-RUN apt-get dist-upgrade -yq
-RUN apt-get install -yq auto-apt-proxy apt-transport-https apt-utils iproute
+RUN apt-get install -yq auto-apt-proxy apt-transport-https apt-utils iproute debconf
 RUN echo "Acquire::http::Proxy \"$CACHING_PROXY\";" | tee -a /etc/apt/apt.conf.d/00proxy
 RUN echo "Acquire::https::Proxy-Auto-Detect \"/usr/bin/auto-apt-proxy\";" | tee -a /etc/apt/apt.conf.d/00proxy
 RUN echo "Acquire::http::Proxy-Auto-Detect \"/usr/bin/auto-apt-proxy\";" | tee /etc/apt/apt.conf.d/auto-apt-proxy.conf
-RUN apt-get update && apt-get install -yq --fix-missing --reinstall \
+RUN apt-get install -yq --fix-missing --reinstall \
                 gnupg2 \
                 bash \
                 apt-utils \
@@ -25,15 +24,11 @@ RUN apt-get update && apt-get install -yq --fix-missing --reinstall \
                 debian-keyring \
                 debian-archive-keyring \
                 dirmngr \
-                fakeroot-ng \
                 e2fsprogs \
                 squashfs-tools \
-                live-boot \
                 live-tools \
-                live-wrapper \
                 live-config \
                 live-config-sysvinit \
-                sysv-rc-conf sysv-rc init-system-helpers sysvinit* \
                 syslinux-common \
                 less
 RUN echo 'livebuilder ALL=(ALL) NOPASSWD: ALL' | tee -a /etc/sudoers
