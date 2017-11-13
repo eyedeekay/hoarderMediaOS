@@ -1,4 +1,4 @@
-FROM eyedeekay/lb-parent
+FROM eyedeekay/hoardermediaos:lb-parent
 ARG distro="devuan"
 ARG nonfree=""
 ARG hardened=""
