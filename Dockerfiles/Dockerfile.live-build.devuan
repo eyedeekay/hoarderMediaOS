@@ -10,8 +10,8 @@ RUN sed -i 's|packages|us.mirror|' /etc/apt/sources.list && mkdir -p /etc/apt/pr
 RUN apt-get update
 RUN apt-get install -yq auto-apt-proxy apt-transport-https apt-utils iproute debconf
 RUN echo "Acquire::http::Proxy \"$CACHING_PROXY\";" | tee -a /etc/apt/apt.conf.d/00proxy
-RUN echo "Acquire::https::Proxy-Auto-Detect \"/usr/bin/auto-apt-proxy\";" | tee -a /etc/apt/apt.conf.d/00proxy
-RUN echo "Acquire::http::Proxy-Auto-Detect \"/usr/bin/auto-apt-proxy\";" | tee /etc/apt/apt.conf.d/auto-apt-proxy.conf
+RUN echo "Acquire::http::Proxy-Auto-Detect \"/usr/bin/auto-apt-proxy\";" | tee -a /etc/apt/apt.conf.d/01proxy
+#RUN echo "Acquire::http::Proxy-Auto-Detect \"/usr/bin/auto-apt-proxy\";" | tee /etc/apt/apt.conf.d/auto-apt-proxy.conf
 RUN apt-get update && apt-get install -yq --fix-missing --reinstall \
                 gnupg2 \
                 bash \
