@@ -7,7 +7,7 @@ RUN adduser livebuilder sudo
 RUN sed -i 's|packages|us.mirror|' /etc/apt/sources.list && mkdir -p /etc/apt/preferences.d
 #RUN echo "deb http://us.mirror.devuan.org/devuan ascii main" | tee -a /etc/apt/sources.list
 RUN apt-get update
-RUN apt-get install -yq auto-apt-proxy apt-transport-https apt-utils iproute
+RUN apt-get install -yq apt-transport-https apt-utils iproute
 RUN yes n | apt-get dist-upgrade -y -f
 RUN apt-get update && apt-get install -yq --fix-missing --reinstall \
                 gnupg2 \
