@@ -86,7 +86,7 @@ build:
 	make docker-init
 	make config
 	make clean
-	sudo -E lb build
+	sudo -E lb build && bash
 
 build-nochroot:
 	make docker-init
