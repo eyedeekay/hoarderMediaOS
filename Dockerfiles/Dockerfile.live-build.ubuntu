@@ -28,8 +28,6 @@ RUN apt-get install -yq --fix-missing --reinstall \
                 cpio \
                 squashfs-tools \
                 live-tools \
-                live-config \
-                live-config-systemd \
                 syslinux-common \
                 less
 RUN echo 'livebuilder ALL=(ALL) NOPASSWD: ALL' | tee -a /etc/sudoers

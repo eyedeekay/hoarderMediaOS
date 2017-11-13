@@ -117,7 +117,18 @@ lb config noauto \
     --image-name "$image_prename$customized$hardened$serverdist$nonfree-$distro" \
     $distromode \
     --parent-mirror-bootstrap "$mirror" \
-    --system live
+    --parent-mirror-chroot "$mirror" \
+    --parent-mirror-chroot-security "$mirror" \
+    --parent-mirror-binary "$mirror" \
+    --parent-mirror-binary-security "$mirror" \
+    --parent-mirror-debian-installer "$mirror" \
+    --mirror-bootstrap "$mirror" \
+    --mirror-chroot "$mirror" \
+    --mirror-chroot-security "$mirror" \
+    --mirror-binary "$mirror" \
+    --mirror-binary-security "$mirror" \
+    --parent-mirror-debian-installer "$mirror" \
+    --system live > >(tee -a config.log) 2> >(tee -a config.err >&2)
 
 
 make libre 1> /dev/null

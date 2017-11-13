@@ -27,8 +27,6 @@ RUN apt-get install -yq --fix-missing --reinstall \
                 e2fsprogs \
                 squashfs-tools \
                 live-tools \
-                live-config \
-                live-config-sysvinit \
                 syslinux-common \
                 less
 RUN echo 'livebuilder ALL=(ALL) NOPASSWD: ALL' | tee -a /etc/sudoers
