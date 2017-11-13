@@ -7,8 +7,8 @@ RUN adduser --disabled-password --home /home/livebuilder --shell /bin/bash --dis
 RUN adduser livebuilder sudo
 RUN sed -i 's|packages|us.mirror|' /etc/apt/sources.list && mkdir -p /etc/apt/preferences.d
 #RUN echo "deb http://us.mirror.devuan.org/devuan ascii main" | tee -a /etc/apt/sources.list
-RUN apt-get update
-RUN apt-get install -yq apt-transport-https apt-utils iproute debconf
+RUN apt-get update && apt-get install -yq --fix-missing --reinstall \
+        apt-transport-https apt-utils iproute debconf
 RUN echo "Acquire::HTTP::Proxy \"$CACHING_PROXY\";" | tee -a /etc/apt/apt.conf.d/01proxy
 RUN apt-get update && apt-get install -yq --fix-missing --reinstall \
                 gnupg2 \
