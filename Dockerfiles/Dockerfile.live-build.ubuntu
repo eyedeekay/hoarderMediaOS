@@ -1,7 +1,8 @@
 FROM ubuntu:devel
-ARG DEBIAN_FRONTEND="noninteractive"
+ARG DEBIAN_FRONTEND="noninteractive" LANG="C.UTF-8" LC_ALL="C.UTF-8"
 ARG CACHING_PROXY=""
 ENV DEBIAN_FRONTEND="noninteractive" LANG="C.UTF-8" LC_ALL="C.UTF-8"
+ENV CACHING_PROXY=""
 RUN adduser --disabled-password --home /home/livebuilder --shell /bin/bash --disabled-password --gecos "livebuilder" livebuilder
 RUN adduser livebuilder sudo
 RUN apt-get update && apt-get install -yq --fix-missing --reinstall \

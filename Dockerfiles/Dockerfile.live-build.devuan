@@ -1,12 +1,12 @@
 FROM debitux/devuan:unstable
-ARG DEBIAN_FRONTEND="noninteractive"
-ARG CACHING_PROXY="http://192.168.1.98:3142/"
+ARG DEBIAN_FRONTEND="noninteractive" LANG="C.UTF-8" LC_ALL="C.UTF-8"
+ARG CACHING_PROXY=""
 ENV DEBIAN_FRONTEND="noninteractive" LANG="C.UTF-8" LC_ALL="C.UTF-8"
-ENV CACHING_PROXY="http://192.168.1.98:3142/"
+ENV CACHING_PROXY=""
 RUN adduser --disabled-password --home /home/livebuilder --shell /bin/bash --disabled-password --gecos "livebuilder" livebuilder
 RUN adduser livebuilder sudo
 RUN sed -i 's|packages|us.mirror|' /etc/apt/sources.list && mkdir -p /etc/apt/preferences.d
-#RUN echo "deb http://us.mirror.devuan.org/devuan ascii main" | tee -a /etc/apt/sources.list
+RUN echo "deb http://us.mirror.devuan.org/devuan ascii main" | tee -a /etc/apt/sources.list
 RUN apt-get update && apt-get install -yq --fix-missing --reinstall \
         apt-transport-https apt-utils iproute debconf
 RUN echo "Acquire::HTTP::Proxy \"$CACHING_PROXY\";" | tee -a /etc/apt/apt.conf.d/01proxy
