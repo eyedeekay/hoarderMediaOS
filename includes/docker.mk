@@ -75,19 +75,19 @@ docker-setup:
 	make docker | tee -a setup.log
 
 errs:
-	docker exec -t $(image_prename)-build-$(distro) cat err
+	docker exec -t $(image_prename)-build-$(distro) cat err | less
 
 logs:
-	docker exec -t $(image_prename)-build-$(distro) cat log
+	docker exec -t $(image_prename)-build-$(distro) cat log | less
 
 conflog:
-	docker exec -t $(image_prename)-build-$(distro) cat config.log
+	docker exec -t $(image_prename)-build-$(distro) cat config.log | less
 
 ls:
-	docker exec -t $(image_prename)-build-$(distro) ls
+	docker exec -t $(image_prename)-build-$(distro) ls -laR | less
 
 ps:
 	docker exec -t $(image_prename)-build-$(distro) ps aux
 
 enter:
-	docker exec -t $(image_prename)-build-$(distro) bash
+	docker exec -t $(image_prename)-build-$(distro) bash | less
