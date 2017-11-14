@@ -98,7 +98,7 @@ lb config noauto \
     --apt-options "--assume-yes" \
     --bootloader syslinux \
     $useproxy \
-    --binary-images iso-hybrid \
+    --binary-images hdd \
     --cache true \
     --updates false \
     --security false \
