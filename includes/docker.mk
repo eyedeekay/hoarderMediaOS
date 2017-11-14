@@ -31,7 +31,7 @@ docker-copy:
 
 docker-init:
 	rm -fr .build; \
-	sudo -E lb init -t 3 5; \
+	sudo -E lb init -t 3 5 &> init.log; \
 	mkdir -p .build && touch .build/config
 
 docker-rebuild:
