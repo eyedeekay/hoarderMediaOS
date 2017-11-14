@@ -101,6 +101,7 @@ lb config noauto \
     --bootloader syslinux \
     $useproxy \
     --binary-images hdd \
+    --quiet \
     --cache true \
     --updates false \
     --security false \
@@ -136,6 +137,7 @@ lb config noauto \
 make libre 1> /dev/null
 
 if [ "$distro" = "devuan" ]; then
+        echo "creating devuan keyring"
         make devuan-key 1> /dev/null
 elif [ "$distro" = "ubuntu" ]; then
         make libre-ubuntu 1> /dev/null

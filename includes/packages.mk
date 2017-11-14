@@ -98,6 +98,7 @@ live-config-sysvinit
 sysvinit-core
 openrc
 initscripts
+
 endef
 
 export INIT_SYSTEM
@@ -112,21 +113,21 @@ endef
 export SERVER_PACKAGE_LIST
 
 packlist:
-	@echo "$(PACKAGE_LIST)"
+	@echo "$$$PACKAGE_LIST"
 
 init-system:
 	cd config/package-lists/ && \
-	echo "$(INIT_SYSTEM)" | tee live.list.chroot && \
+	echo "$$INIT_SYSTEM" | tee live.list.chroot && \
 	ln -sf live.list.chroot live.list.binary
 
 packages-list: init-system
 	cd config/package-lists/ && \
-	echo "$(PACKAGE_LIST)" | tee build.list.chroot && \
+	echo "$$$PACKAGE_LIST" | tee build.list.chroot && \
 	ln -sf build.list.chroot build.list.binary
 
 server-packages:
 	cd config/package-lists/ && \
-	echo "$(SERVER_PACKAGE_LIST)" | tee server.list.chroot && \
+	echo "$$SERVER_PACKAGE_LIST" | tee server.list.chroot && \
 	ln -sf server.list.chroot server.list.binary
 
 nonfree-firmware:
