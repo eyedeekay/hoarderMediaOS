@@ -166,4 +166,4 @@ fi
 
 echo "$distro"
 
-find ./config -empty -delete
+find ./config ./local -empty -delete

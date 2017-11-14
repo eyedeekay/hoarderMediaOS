@@ -35,6 +35,7 @@ docker-init:
 	mkdir -p .build && touch .build/config
 
 docker-rebuild:
+	git pull; \
 	make docker-setup
 	make docker-build
 
