@@ -16,9 +16,6 @@ ca-certificates
 coreutils
 moreutils
 dpkg
-sysvinit-core
-openrc
-initscripts
 adduser
 apparmor
 apparmor-easyprof
@@ -94,6 +91,17 @@ endef
 
 export PACKAGE_LIST
 
+define INIT_SYSTEM
+live-boot
+live-config
+live-config-sysvinit
+sysvinit-core
+openrc
+initscripts
+endef
+
+export INIT_SYSTEM
+
 define SERVER_PACKAGE_LIST
 openssh-server
 mosh
@@ -104,21 +112,26 @@ endef
 export SERVER_PACKAGE_LIST
 
 packlist:
-	@echo "$$PACKAGE_LIST"
+	@echo "$(PACKAGE_LIST)"
 
-packages-list:
+init-system:
 	cd config/package-lists/ && \
-	echo "$$PACKAGE_LIST" | tee -a build.list.chroot && \
+	echo "$(INIT_SYSTEM)" | tee live.list.chroot && \
+	ln -sf live.list.chroot live.list.binary
+
+packages-list: init-system
+	cd config/package-lists/ && \
+	echo "$(PACKAGE_LIST)" | tee build.list.chroot && \
 	ln -sf build.list.chroot build.list.binary
 
 server-packages:
 	cd config/package-lists/ && \
-	echo "$$SERVER_PACKAGE_LIST" | tee -a server.list.chroot && \
+	echo "$(SERVER_PACKAGE_LIST)" | tee server.list.chroot && \
 	ln -sf server.list.chroot server.list.binary
 
 nonfree-firmware:
 	cd config/package-lists/ && \
-	echo "b43-fwcutter" | tee -a nonfree.list.chroot && \
+	echo "b43-fwcutter" | tee nonfree.list.chroot && \
 	echo "firmware-b43-installer" | tee -a nonfree.list.chroot && \
 	echo "firmware-b43legacy-installer" | tee -a nonfree.list.chroot && \
 	ln -sf nonfree.list.chroot nonfree.list.binary
