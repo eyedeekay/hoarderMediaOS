@@ -28,7 +28,6 @@ RUN apt-get update && apt-get install -yq --fix-missing --reinstall \
                 xorriso \
                 cpio \
                 squashfs-tools \
-                live-tools \
                 syslinux-common \
                 less
 RUN echo 'livebuilder ALL=(ALL) NOPASSWD: ALL' | tee -a /etc/sudoers
