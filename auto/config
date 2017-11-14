@@ -110,7 +110,7 @@ lb config noauto \
     --firmware-binary false \
     $usekeyring \
     --debootstrap-options "$bootstrapopts" \
-    --initsystem sysvinit \
+    --initsystem none \
     $archiveareas \
     $nosource \
     $harden \

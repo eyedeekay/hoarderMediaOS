@@ -16,6 +16,7 @@ ca-certificates
 coreutils
 moreutils
 dpkg
+sysvinit-core
 openrc
 initscripts
 adduser
