@@ -3,10 +3,12 @@ ARG distro="devuan"
 ARG nonfree=""
 ARG hardened=""
 ARG custom=""
+ARG server=""
 ENV distro="devuan"
 ENV nonfree=""
 ENV hardened=""
 ENV custom=""
+ENV server=""
 COPY Makefile /home/livebuilder/hoarder-live/Makefile
 COPY config.mk /home/livebuilder/hoarder-live/config.mk
 COPY includes /home/livebuilder/hoarder-live/includes/

@@ -3,10 +3,12 @@ ARG distro="ubuntu"
 ARG nonfree=""
 ARG hardened=""
 ARG custom=""
+ARG server=""
 ENV distro="ubuntu"
 ENV nonfree=""
 ENV hardened=""
 ENV custom=""
+ENV server=""
 COPY Makefile /home/livebuilder/hoarder-live/Makefile
 COPY config.mk /home/livebuilder/hoarder-live/config.mk
 COPY includes /home/livebuilder/hoarder-live/includes/
@@ -14,5 +16,7 @@ COPY auto /home/livebuilder/hoarder-live/auto/
 COPY keyrings/ /home/livebuilder/hoarder-live/keyrings/
 RUN chown -R livebuilder:livebuilder /home/livebuilder/hoarder-live
 WORKDIR /home/livebuilder/hoarder-live/
+RUN make docker-init
+RUN make config
 USER livebuilder
 CMD make build
