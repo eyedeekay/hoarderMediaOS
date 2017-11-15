@@ -46,7 +46,7 @@ if [ "$distro" = "debian" ]; then
         export mirror_packages="$mirror_debian"
         export unstable="sid"
         export stable="sid"
-        export bootstrapopts="--merged-usr $dsusekeyring --variant=minbase --include=gnupg2,dpkg,apt-utils,apt-transport-https,gnutls-bin,ca-certificates,debian-archive-keyring --exclude=systemd,systemd-sysv $components"
+        export bootstrapopts="'--merged-usr     $dsusekeyring       --variant=minbase       --include=busybox-syslogd,gnupg2,dpkg,apt-utils,apt-transport-https,gnutls-bin,ca-certificates,debian-archive-keyring      --exclude=systemd,systemd-sysv,sysv-rc   $components'"
         export usekeyring="--keyring-packages debian-archive-keyring"
         export distromode="--mode debian"
 elif [ "$distro" = "devuan" ]; then
@@ -54,7 +54,7 @@ elif [ "$distro" = "devuan" ]; then
         export mirror_packages="$mirror_devuan"
         export unstable="jessie"
         export stable="ceres"
-        export bootstrapopts="--merged-usr $dsusekeyring --variant=minbase --include=busybox-syslogd,gnupg2,dpkg,apt-transport-https,apt-utils,gnutls-bin,ca-certificates,devuan-keyring --exclude=systemd,systemd-sysv,sysv-rc $components"
+        export bootstrapopts="'--merged-usr     $dsusekeyring       --variant=minbase       --include=busybox-syslogd,gnupg2,dpkg,apt-utils,apt-transport-https,gnutls-bin,ca-certificates,devuan-keyring               --exclude=systemd,systemd-sysv,sysv-rc  $components'"
         export usekeyring="--keyring-packages devuan-keyring"
         export distromode="--mode debian"
 elif [ "$distro" = "ubuntu" ]; then
@@ -62,7 +62,7 @@ elif [ "$distro" = "ubuntu" ]; then
         export mirror_packages="$mirror_ubuntu"
         export unstable="artful"
         export stable="artful"
-        export bootstrapopts="--merged-usr $dsusekeyring --include=gnupg2,apt-utils,apt-transport-https,ca-certificates --exclude=debian-archive-keyring $components"
+        export bootstrapopts="'--merged-usr     $dsusekeyring       --variant=minbase       --include=busybox-syslogd,gnupg2,dpkg,apt-transport-https,apt-utils,gnutls-bin,ca-certificates,ubuntu-archive-keyring       --exclude=debian-archive-keyring        $components'"
         if [ ! -z "$nonfree" ]; then
                 export components="--components=\"main,restricted,universe,multiverse\""
                 export archiveareas="--archive-areas \"main,restricted,universe,multiverse\""
@@ -90,7 +90,7 @@ echo "export nonfree=\"$nonfree\"" | tee -a auto/common
 echo "export hardened=\"$hardened\"" | tee -a auto/common
 echo "export proxy_addr=\"$proxy_addr\"" | tee -a auto/common
 echo "export useproxy=\"$useproxy\"" | tee -a auto/common
-echo "export customi=\"$custom\"" | tee -a auto/common
+echo "export custom=\"$custom\"" | tee -a auto/common
 echo "export server=\"$server\"" | tee -a auto/common
 
 lb config noauto \

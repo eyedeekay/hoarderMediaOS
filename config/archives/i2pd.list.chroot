@@ -1,0 +1,4 @@
+deb https://repo.lngserv.ru/debian jessie main
+deb-src https://repo.lngserv.ru/debian jessie main
+#deb http://i2p.repo jessie main
+#deb-src http://i2p.repo jessie main

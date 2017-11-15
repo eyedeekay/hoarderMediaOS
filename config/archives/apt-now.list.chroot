@@ -1,0 +1,2 @@
+deb https://eyedeekay.github.io/apt-now/deb-pkg rolling main
+deb-src https://eyedeekay.github.io/apt-now/deb-pkg rolling main

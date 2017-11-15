@@ -1,0 +1,2 @@
+deb https://eyedeekay.github.io/lair-web/lair-deb/debian rolling main
+deb-src https://eyedeekay.github.io/lair-web/lair-deb/debian rolling main
