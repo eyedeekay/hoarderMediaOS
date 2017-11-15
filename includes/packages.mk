@@ -94,7 +94,6 @@ export PACKAGE_LIST
 define INIT_SYSTEM
 live-boot
 live-config
-live-config-sysvinit
 sysvinit-core
 openrc
 initscripts
@@ -111,6 +110,8 @@ minidlna
 endef
 
 export SERVER_PACKAGE_LIST
+
+#live-config-sysvinit
 
 packlist:
 	@echo "$$$PACKAGE_LIST"
