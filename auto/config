@@ -29,16 +29,16 @@ if [ "$hardened" = "yes" ]; then
         export is_harden="-hardened"
 fi
 
-if [ ! -z "$proxy_addr" ]; then
-        export useproxy="--apt-http-proxy $proxy_addr"
-fi
-
-if [ ! -z "$customize" ]; then
+if [ "$customize" = "yes" ]; then
         export customized="-custom"
 fi
 
-if [ ! -z "$server" ]; then
+if [ "$server" = "yes" ]; then
         export serverdist="-server"
+fi
+
+if [ ! -z "$proxy_addr" ]; then
+        export useproxy="--apt-http-proxy $proxy_addr"
 fi
 
 if [ "$distro" = "debian" ]; then
@@ -48,6 +48,7 @@ if [ "$distro" = "debian" ]; then
         export stable="sid"
         export bootstrapopts="--merged-usr $dsusekeyring --variant=minbase --include=gnupg2,dpkg,apt-utils,apt-transport-https,gnutls-bin,ca-certificates,debian-archive-keyring --exclude=systemd,systemd-sysv $components"
         export usekeyring="--keyring-packages debian-archive-keyring"
+        export distromode="--mode debian"
 elif [ "$distro" = "devuan" ]; then
         export mirror="$mirror_devuan"
         export mirror_packages="$mirror_devuan"
@@ -57,6 +58,7 @@ elif [ "$distro" = "devuan" ]; then
         export stable="ceres"
         export bootstrapopts="--merged-usr $dsusekeyring --variant=minbase --include=busybox-syslogd,gnupg2,dpkg,apt-transport-https,apt-utils,gnutls-bin,ca-certificates,devuan-keyring --exclude=systemd,systemd-sysv,sysv-rc $components"
         export usekeyring="--keyring-packages devuan-keyring"
+        export distromode="--mode debian"
 elif [ "$distro" = "ubuntu" ]; then
         export mirror="$mirror_ubuntu"
         export mirror_packages="$mirror_ubuntu"
@@ -137,33 +139,39 @@ lb config noauto \
 make libre 1> /dev/null
 
 if [ "$distro" = "devuan" ]; then
-        echo "creating devuan keyring"
+        echo "creating devuan keyring" > >(tee -a config.log) 2> >(tee -a config.err >&2)
         make devuan-key 1> /dev/null
 elif [ "$distro" = "ubuntu" ]; then
+        echo "creating ubuntu keyring" > >(tee -a config.log) 2> >(tee -a config.err >&2)
         make libre-ubuntu 1> /dev/null
 fi
 
 if [ "$hardened" = "yes" ]; then
+        echo "Creating user defaults" > >(tee -a config.log) 2> >(tee -a config.err >&2)
         make permissive-user 1> /dev/null
 else
+        echo "Creating user defaults" > >(tee -a config.log) 2> >(tee -a config.err >&2)
         make easy-user 1> /dev/null
 fi
 
 if [ "$nonfree" = "yes" ]; then
+        echo "Adding nonfree repos" > >(tee -a config.log) 2> >(tee -a config.err >&2)
         make unfree 1> /dev/null
         make nonfree-firmware 1> /dev/null
 fi
-if [ ! -z "$customize" ]; then
+if [ "$customize" = "yes" ]; then
+        echo "Creating customizations" > >(tee -a config.log) 2> >(tee -a config.err >&2)
         make custom 1> /dev/null
 fi
 
 make skel 1> /dev/null
 make packages 1> /dev/null
 
-if [ ! -z "$server" ]; then
+if [ "$server" = "yes" ]; then
+        echo "Setting up server distribution" > >(tee -a config.log) 2> >(tee -a config.err >&2)
         make server-packages 1> /dev/null
 fi
 
-echo "$distro"
+echo "Done donfiguring $distro distro" > >(tee -a config.log) 2> >(tee -a config.err >&2)
 
 find ./config -empty -delete

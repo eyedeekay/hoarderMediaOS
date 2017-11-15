@@ -83,14 +83,10 @@ custom:
 	make lair-game-repo
 
 build:
-	make docker-init
-	make config
 	make clean
 	sudo -E lb build
 
 build-nochroot:
-	make docker-init
-	make config-nochroot
 	make clean
 	sudo -E lb build
 

@@ -1,8 +1,8 @@
 export image_prename = tv
 export KEY = "70D2060738BEF80523ACAFF7D75C03B39B5E14E1"
 
-export proxy_host = 192.168.1.98
-#export proxy_host ?= 172.17.0.2
+#export proxy_host = 192.168.1.98
+export proxy_host ?= 172.17.0.2
 export proxy_port = 3142/
 
 export proxy_addr = http://$(proxy_host):$(proxy_port)
@@ -23,10 +23,10 @@ export keyserver = hkp://p80.pool.sks-keyservers.net:80
 #export keyserver = http://pool.sks-keyservers.net:11371/
 
 #These must equal "yes" all lower case to be selected
-#export hardened = yes
+#export hardened = no
 export custom = yes
-#export nonfree = yes
-#export server = yes
+#export nonfree = no
+#export server = no
 
 export mirror_debian = http://ftp.us.debian.org/debian
 export mirror_devuan = http://us.mirror.devuan.org/merged

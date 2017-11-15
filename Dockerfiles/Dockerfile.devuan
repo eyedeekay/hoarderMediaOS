@@ -14,5 +14,7 @@ COPY auto /home/livebuilder/hoarder-live/auto/
 COPY keyrings/ /home/livebuilder/hoarder-live/keyrings/
 RUN chown -R livebuilder:livebuilder /home/livebuilder/hoarder-live
 WORKDIR /home/livebuilder/hoarder-live/
+RUN make docker-init
+RUN make config
 USER livebuilder
 CMD make build

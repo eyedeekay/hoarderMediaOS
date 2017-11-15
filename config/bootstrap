@@ -1,0 +1,73 @@
+# config/bootstrap - options for live-build(7), bootstrap stage
+
+# $LB_DISTRIBUTION: select distribution to use
+# (Default: jessie)
+LB_DISTRIBUTION="jessie"
+
+# $LB_PARENT_DISTRIBUTION: select parent distribution to use
+# (Default: ceres)
+LB_PARENT_DISTRIBUTION="ceres"
+
+# $LB_PARENT_DEBIAN_INSTALLER_DISTRIBUTION: select parent distribution for debian-installer to use
+# (Default: ceres)
+LB_PARENT_DEBIAN_INSTALLER_DISTRIBUTION="ceres"
+
+# $LB_PARENT_MIRROR_BOOTSTRAP: set parent mirror to bootstrap from
+# (Default: http://us.mirror.devuan.org/merged)
+LB_PARENT_MIRROR_BOOTSTRAP="http://us.mirror.devuan.org/merged"
+
+# $LB_PARENT_MIRROR_CHROOT: set parent mirror to fetch packages from
+# (Default: http://us.mirror.devuan.org/merged)
+LB_PARENT_MIRROR_CHROOT="http://us.mirror.devuan.org/merged"
+
+# $LB_PARENT_MIRROR_CHROOT_SECURITY: set security parent mirror to fetch packages from
+# (Default: http://us.mirror.devuan.org/merged)
+LB_PARENT_MIRROR_CHROOT_SECURITY="http://us.mirror.devuan.org/merged"
+
+# $LB_PARENT_MIRROR_BINARY: set parent mirror which ends up in the image
+# (Default: http://us.mirror.devuan.org/merged)
+LB_PARENT_MIRROR_BINARY="http://us.mirror.devuan.org/merged"
+
+# $LB_PARENT_MIRROR_BINARY_SECURITY: set security parent mirror which ends up in the image
+# (Default: http://us.mirror.devuan.org/merged)
+LB_PARENT_MIRROR_BINARY_SECURITY="http://us.mirror.devuan.org/merged"
+
+# $LB_PARENT_MIRROR_DEBIAN_INSTALLER: set debian-installer parent mirror
+# (Default: http://us.mirror.devuan.org/merged)
+LB_PARENT_MIRROR_DEBIAN_INSTALLER="http://us.mirror.devuan.org/merged"
+
+# $LB_MIRROR_BOOTSTRAP: set mirror to bootstrap from
+# (Default: http://us.mirror.devuan.org/merged)
+LB_MIRROR_BOOTSTRAP="http://us.mirror.devuan.org/merged"
+
+# $LB_MIRROR_CHROOT: set mirror to fetch packages from
+# (Default: http://us.mirror.devuan.org/merged)
+LB_MIRROR_CHROOT="http://us.mirror.devuan.org/merged"
+
+# $LB_MIRROR_CHROOT_SECURITY: set security mirror to fetch packages from
+# (Default: http://us.mirror.devuan.org/merged)
+LB_MIRROR_CHROOT_SECURITY="http://us.mirror.devuan.org/merged"
+
+# $LB_MIRROR_BINARY: set mirror which ends up in the image
+# (Default: http://us.mirror.devuan.org/merged)
+LB_MIRROR_BINARY="http://us.mirror.devuan.org/merged"
+
+# $LB_MIRROR_BINARY_SECURITY: set security mirror which ends up in the image
+# (Default: http://us.mirror.devuan.org/merged)
+LB_MIRROR_BINARY_SECURITY="http://us.mirror.devuan.org/merged"
+
+# $LB_MIRROR_DEBIAN_INSTALLER: set debian-installer mirror
+# (Default: http://us.mirror.devuan.org/merged)
+LB_MIRROR_DEBIAN_INSTALLER="http://us.mirror.devuan.org/merged"
+
+# $LB_BOOTSTRAP_QEMU_ARCHITECTURES: architectures to use foreign bootstrap
+# (Default: )
+LB_BOOTSTRAP_QEMU_ARCHITECTURES=""
+
+# $LB_BOOTSTRAP_QEMU_EXCLUDE: packages to exclude during foreign bootstrap
+# (Default: )
+LB_BOOTSTRAP_QEMU_EXCLUDE=""
+
+# $LB_BOOTSTRAP_QEMU_STATIC: static qemu binary for foreign bootstrap
+# (Default: )
+LB_BOOTSTRAP_QEMU_STATIC=""
