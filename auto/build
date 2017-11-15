@@ -20,8 +20,6 @@ echo "useproxy=\"$useproxy\""
 echo "customize=\"$customize\""
 echo "server=\"$server\""
 
-lb clean
-
 lb build noauto "$@" > >(tee -a log) 2> >(tee -a err >&2) || bash
 #lb build noauto "$@" > >(tee -a log) 2> >(tee -a err >&2)
 
