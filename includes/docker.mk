@@ -39,7 +39,7 @@ docker-rebuild:
 	make docker-setup
 	make docker-build
 
-docker-rebuild:
+docker-rebuild-nochroot:
 	git pull; \
 	make docker-setup
 	make docker-build-nochroot
