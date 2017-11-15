@@ -39,6 +39,11 @@ docker-rebuild:
 	make docker-setup
 	make docker-build
 
+docker-rebuild:
+	git pull; \
+	make docker-setup
+	make docker-build-nochroot
+
 docker-build:
 	docker rm -f $(image_prename)-build-$(distro); \
 	docker run -i \
@@ -50,7 +55,7 @@ docker-build:
 		-t $(image_prename)-$(distro)
 	make docker-copy
 
-docker-build:
+docker-build-nochroot:
 	docker rm -f $(image_prename)-build-$(distro); \
 	docker run -i \
 		--cap-add=SYS_ADMIN \
