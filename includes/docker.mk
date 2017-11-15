@@ -31,8 +31,7 @@ docker-copy:
 
 docker-init:
 	rm -fr .build; \
-	sudo -E lb init -t 3 5 &> init.log; \
-	#mkdir -p .build && touch .build/config
+	sudo -E lb init -t 3 5 &> init.log
 
 docker-rebuild:
 	git pull; \
@@ -48,7 +47,7 @@ docker-build:
 	docker rm -f $(image_prename)-build-$(distro); \
 	docker run -i \
 		--cap-add=SYS_ADMIN \
-		-e "distro=$(distro) nonfree=$(nonfree) hardened=$($hardened) customize=$(customize)" \
+		-e "distro=$(distro) nonfree=$(nonfree) hardened=$($hardened) custom=$(custom) server=$(server)" \
 		--name "$(image_prename)-build-$(distro)" \
 		--privileged \
 		--tty \
@@ -59,7 +58,7 @@ docker-build-nochroot:
 	docker rm -f $(image_prename)-build-$(distro); \
 	docker run -i \
 		--cap-add=SYS_ADMIN \
-		-e "distro=$(distro) nonfree=$(nonfree) hardened=$($hardened) customize=$(customize)" \
+		-e "distro=$(distro) nonfree=$(nonfree) hardened=$($hardened) custom=$(custom) server=$(server)" \
 		--name "$(image_prename)-build-$(distro)" \
 		--privileged \
 		--tty \
@@ -79,7 +78,7 @@ docker-base:
 docker:
 	docker build --force-rm -t $(image_prename)-$(distro) \
 		--build-arg "nonfree=$(nonfree)" \
-		--build-arg "customize=$(custom)" \
+		--build-arg "custom=$(custom)" \
 		--build-arg "hardened=$(hardened)" \
 		-f Dockerfiles/Dockerfile.$(distro) .
 
@@ -100,6 +99,9 @@ logs:
 conflog:
 	docker exec -t $(image_prename)-build-$(distro) cat config.log | less
 
+conferr:
+	docker exec -t $(image_prename)-build-$(distro) cat config.err | less
+
 ls:
 	docker exec -t $(image_prename)-build-$(distro) ls -laR | less
 
@@ -108,3 +110,9 @@ ps:
 
 enter:
 	docker exec -t $(image_prename)-build-$(distro) bash | less
+
+initlog:
+	docker exec -t $(image_prename)-build-$(distro) cat init.log | less
+
+initlog:
+	docker exec -t $(image_prename)-build-$(distro) cat init.err | less

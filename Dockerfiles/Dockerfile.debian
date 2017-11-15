@@ -2,11 +2,11 @@ FROM tv-build-debian
 ARG distro="debian"
 ARG nonfree=""
 ARG hardened=""
-ARG customize=""
+ARG custom=""
 ENV distro="debian"
 ENV nonfree=""
 ENV hardened=""
-ENV customize=""
+ENV custom=""
 COPY Makefile /home/livebuilder/hoarder-live/Makefile
 COPY config.mk /home/livebuilder/hoarder-live/config.mk
 COPY includes /home/livebuilder/hoarder-live/includes/

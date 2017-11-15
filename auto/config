@@ -29,7 +29,7 @@ if [ "$hardened" = "yes" ]; then
         export is_harden="-hardened"
 fi
 
-if [ "$customize" = "yes" ]; then
+if [ "$custom" = "yes" ]; then
         export customized="-custom"
 fi
 
@@ -92,7 +92,7 @@ echo "export nonfree=\"$nonfree\"" | tee -a auto/common
 echo "export hardened=\"$hardened\"" | tee -a auto/common
 echo "export proxy_addr=\"$proxy_addr\"" | tee -a auto/common
 echo "export useproxy=\"$useproxy\"" | tee -a auto/common
-echo "export customize=\"$customize\"" | tee -a auto/common
+echo "export customize=\"$customi\"" | tee -a auto/common
 echo "export server=\"$server\"" | tee -a auto/common
 
 lb config noauto \
@@ -159,7 +159,7 @@ if [ "$nonfree" = "yes" ]; then
         make unfree 1> /dev/null
         make nonfree-firmware 1> /dev/null
 fi
-if [ "$customize" = "yes" ]; then
+if [ "$custom" = "yes" ]; then
         echo "Creating customizations" > >(tee -a config.log) 2> >(tee -a config.err >&2)
         make custom 1> /dev/null
 fi

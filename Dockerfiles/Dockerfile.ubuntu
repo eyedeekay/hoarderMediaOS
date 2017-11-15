@@ -2,11 +2,11 @@ FROM tv-build-ubuntu
 ARG distro="ubuntu"
 ARG nonfree=""
 ARG hardened=""
-ARG customize=""
+ARG custom=""
 ENV distro="ubuntu"
 ENV nonfree=""
 ENV hardened=""
-ENV customize=""
+ENV custom=""
 COPY Makefile /home/livebuilder/hoarder-live/Makefile
 COPY config.mk /home/livebuilder/hoarder-live/config.mk
 COPY includes /home/livebuilder/hoarder-live/includes/

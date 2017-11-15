@@ -47,10 +47,10 @@ clobber: clean
 	config
 
 config:
-	lb config | tee -a config.log
+	lb config
 
 config-nochroot:
-	lb config --build-with-chroot false | tee -a config.log
+	lb config --build-with-chroot false
 
 unfree:
 	make playdeb-repo; \

@@ -23,10 +23,10 @@ export keyserver = hkp://p80.pool.sks-keyservers.net:80
 #export keyserver = http://pool.sks-keyservers.net:11371/
 
 #These must equal "yes" all lower case to be selected
-#export hardened = no
+export hardened = no
 export custom = yes
-#export nonfree = no
-#export server = no
+export nonfree = no
+export server = no
 
 export mirror_debian = http://ftp.us.debian.org/debian
 export mirror_devuan = http://us.mirror.devuan.org/merged
