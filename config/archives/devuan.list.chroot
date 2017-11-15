@@ -1,4 +1,0 @@
-deb http://packages.devuan.org/merged ceres main
-deb-src http://packages.devuan.org/merged ceres main
-deb http://us.mirror.devuan.org/devuan ascii main
-deb-src http://us.mirror.devuan.org/devuan ascii main
