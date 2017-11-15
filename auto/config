@@ -92,7 +92,7 @@ echo "export nonfree=\"$nonfree\"" | tee -a auto/common
 echo "export hardened=\"$hardened\"" | tee -a auto/common
 echo "export proxy_addr=\"$proxy_addr\"" | tee -a auto/common
 echo "export useproxy=\"$useproxy\"" | tee -a auto/common
-echo "export customize=\"$customi\"" | tee -a auto/common
+echo "export customi=\"$custom\"" | tee -a auto/common
 echo "export server=\"$server\"" | tee -a auto/common
 
 lb config noauto \
