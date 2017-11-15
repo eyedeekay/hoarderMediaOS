@@ -50,6 +50,17 @@ docker-build:
 		-t $(image_prename)-$(distro)
 	make docker-copy
 
+docker-build:
+	docker rm -f $(image_prename)-build-$(distro); \
+	docker run -i \
+		--cap-add=SYS_ADMIN \
+		-e "distro=$(distro) nonfree=$(nonfree) hardened=$($hardened) customize=$(customize)" \
+		--name "$(image_prename)-build-$(distro)" \
+		--privileged \
+		--tty \
+		-t $(image_prename)-$(distro) make build-nochroot
+	make docker-copy
+
 docker-release:
 	make docker-build
 	make release
