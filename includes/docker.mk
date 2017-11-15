@@ -114,5 +114,5 @@ enter:
 initlog:
 	docker exec -t $(image_prename)-build-$(distro) cat init.log | less
 
-initlog:
+initerr:
 	docker exec -t $(image_prename)-build-$(distro) cat init.err | less
