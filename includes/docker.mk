@@ -47,7 +47,11 @@ docker-build:
 	docker rm -f $(image_prename)-build-$(distro); \
 	docker run -i \
 		--cap-add=SYS_ADMIN \
-		-e "distro=$(distro) nonfree=$(nonfree) hardened=$($hardened) custom=$(custom) server=$(server)" \
+		-e "distro=$(distro)" \
+		-e "nonfree=$(nonfree)" \
+		-e "hardened=$($hardened)" \
+		-e "custom=$(custom)" \
+		-e "server=$(server)" \
 		--name "$(image_prename)-build-$(distro)" \
 		--privileged \
 		--tty \
@@ -58,7 +62,11 @@ docker-build-nochroot:
 	docker rm -f $(image_prename)-build-$(distro); \
 	docker run -i \
 		--cap-add=SYS_ADMIN \
-		-e "distro=$(distro) nonfree=$(nonfree) hardened=$($hardened) custom=$(custom) server=$(server)" \
+		-e "distro=$(distro)" \
+		-e "nonfree=$(nonfree)" \
+		-e "hardened=$($hardened)" \
+		-e "custom=$(custom)" \
+		-e "server=$(server)" \
 		--name "$(image_prename)-build-$(distro)" \
 		--privileged \
 		--tty \
