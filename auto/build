@@ -14,11 +14,15 @@ echo "usekeyring=\"$usekeyring\"" > >(tee -a config.log) 2> >(tee -a config.err 
 echo "distromode=\"$distromode\"" > >(tee -a config.log) 2> >(tee -a config.err >&2)
 echo "dsusekeyring=\"$dsusekeyring\"" > >(tee -a config.log) 2> >(tee -a config.err >&2)
 echo "nonfree=\"$nonfree\"" > >(tee -a config.log) 2> >(tee -a config.err >&2)
+echo "non_free=\"$non_free\"" > >(tee -a config.log) 2> >(tee -a config.err >&2)
 echo "hardened=\"$hardened\"" > >(tee -a config.log) 2> >(tee -a config.err >&2)
+echo "is_harden=\"$is_harden\"" > >(tee -a config.log) 2> >(tee -a config.err >&2)
 echo "proxy_addr=\"$proxy_addr\"" > >(tee -a config.log) 2> >(tee -a config.err >&2)
 echo "useproxy=\"$useproxy\"" > >(tee -a config.log) 2> >(tee -a config.err >&2)
 echo "custom=\"$custom\"" > >(tee -a config.log) 2> >(tee -a config.err >&2)
+echo "customized=\"$customized\"" > >(tee -a config.log) 2> >(tee -a config.err >&2)
 echo "server=\"$server\"" > >(tee -a config.log) 2> >(tee -a config.err >&2)
+echo "serverdist=\"$serverdist\"" > >(tee -a config.log) 2> >(tee -a config.err >&2)
 
 lb build noauto "$@" > >(tee -a log) 2> >(tee -a err >&2) || bash
 #lb build noauto "$@" > >(tee -a log) 2> >(tee -a err >&2)
