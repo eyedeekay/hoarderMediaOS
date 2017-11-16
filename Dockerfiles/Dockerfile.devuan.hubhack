@@ -35,7 +35,6 @@ RUN apt-get update && apt-get install -yq --fix-missing --reinstall \
                 less
 RUN echo 'livebuilder ALL=(ALL) NOPASSWD: ALL' | tee -a /etc/sudoers
 RUN chown -R livebuilder:livebuilder /home/livebuilder/
-WORKDIR /home/livebuilder/hoarder-live
 ARG distro="devuan"
 ARG nonfree=""
 ARG hardened=""
