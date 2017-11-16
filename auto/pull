@@ -2,13 +2,17 @@
 
 set -e
 
+if [ -f paths.sh ]; then
+        . paths.sh
+fi
+
+scp dev@dev:$dev_path/auto/common
+
 if [ -f auto/common ]; then
         . auto/common
 fi
 
-if [ -f paths.sh ]; then
-        . paths.sh
-fi
+
 
 rm -rf ./iso
 
