@@ -1,12 +1,14 @@
-FROM eyedeekay/hoardermediaos:lb-parent
+FROM tv-build-devuan
 ARG distro="devuan"
 ARG nonfree=""
 ARG hardened=""
-ARG customize=""
+ARG custom=""
+ARG server=""
 ENV distro="devuan"
 ENV nonfree=""
 ENV hardened=""
-ENV customize=""
+ENV custom=""
+ENV server=""
 COPY Makefile /home/livebuilder/hoarder-live/Makefile
 COPY config.mk /home/livebuilder/hoarder-live/config.mk
 COPY includes /home/livebuilder/hoarder-live/includes/
@@ -14,6 +16,8 @@ COPY auto /home/livebuilder/hoarder-live/auto/
 COPY keyrings/ /home/livebuilder/hoarder-live/keyrings/
 RUN chown -R livebuilder:livebuilder /home/livebuilder/hoarder-live
 WORKDIR /home/livebuilder/hoarder-live/
+RUN make docker-init
 USER livebuilder
-RUN make build-nochroot
+RUN make config
+RUN make build
 CMD bash
