@@ -17,5 +17,6 @@ local/
 .build/
 .git/
 Dockerfiles/
+auto/common
 err
 log

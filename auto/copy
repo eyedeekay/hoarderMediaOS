@@ -1,0 +1,13 @@
+#! /usr/bin/env bash
+
+set -e
+
+if [ -f auto/common ]; then
+        . auto/common
+fi
+
+docker cp $(image_prename)-build-$(distro):/home/livebuilder/hoarder-live/$image_prename$customized$is_harden$serverdist$non_free-$distro-amd64.hybrid.iso .
+docker cp $(image_prename)-build-$(distro):/home/livebuilder/hoarder-live/$image_prename$customized$is_harden$serverdist$non_free-$distro-amd64.files .
+docker cp $(image_prename)-build-$(distro):/home/livebuilder/hoarder-live/$image_prename$customized$is_harden$serverdist$non_free-$distro-amd64.contents .
+docker cp $(image_prename)-build-$(distro):/home/livebuilder/hoarder-live/$image_prename$customized$is_harden$serverdist$non_free-$distro-amd64.hybrid.iso.zsync .
+docker cp $(image_prename)-build-$(distro):/home/livebuilder/hoarder-live/$image_prename$customized$is_harden$serverdist$non_free-$distro-amd64.packages .
