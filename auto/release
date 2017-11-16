@@ -9,6 +9,7 @@ fi
 export GITHUB_RELEASE_PATH="$HOME/.go/bin/github-release"
 export version=$(date +%Y%W)
 
+cd iso || exit
 
 sha256sum "$image_prename$customized$is_harden$serverdist$non_free-$distro-amd64.hybrid.iso" > \
 		"$image_prename$customized$is_harden$serverdist$non_free-$distro-amd64.hybrid.iso.sha256sum" || \
