@@ -10,7 +10,7 @@ fi
 
 rm -rf ./iso; mkdir ./iso
 
-docker cp $image_prename-build-$distro:/home/livebuilder/hoarder-live/$image_prename$customized$is_harden$serverdist$non_free-$distro-amd64.hybrid.iso ./iso/
+docker cp $image_prename-build-$distro:/home/livebuilder/hoarder-live/$image_prename$customized$is_harden$serverdist$non_free-$distro-amd64.hybrid.iso ./iso/ || exit
 docker cp $image_prename-build-$distro:/home/livebuilder/hoarder-live/$image_prename$customized$is_harden$serverdist$non_free-$distro-amd64.files ./iso/
 docker cp $image_prename-build-$distro:/home/livebuilder/hoarder-live/$image_prename$customized$is_harden$serverdist$non_free-$distro-amd64.contents ./iso/
 docker cp $image_prename-build-$distro:/home/livebuilder/hoarder-live/$image_prename$customized$is_harden$serverdist$non_free-$distro-amd64.hybrid.iso.zsync ./iso/
