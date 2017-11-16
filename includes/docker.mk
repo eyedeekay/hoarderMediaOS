@@ -47,7 +47,7 @@ docker-build:
 	docker rm -f $(image_prename)-build-$(distro); \
 	docker run -i \
 		--cap-add=SYS_ADMIN \
-		-d /dev/loop0 \
+		--device /dev/loop0 \
 		-e "distro=$(distro)" \
 		-e "nonfree=$(nonfree)" \
 		-e "hardened=$($hardened)" \
@@ -63,7 +63,7 @@ docker-build-nochroot:
 	docker rm -f $(image_prename)-build-$(distro); \
 	docker run -i \
 		--cap-add=SYS_ADMIN \
-		-d /dev/loop0 \
+		--device /dev/loop0 \
 		-e "distro=$(distro)" \
 		-e "nonfree=$(nonfree)" \
 		-e "hardened=$($hardened)" \
