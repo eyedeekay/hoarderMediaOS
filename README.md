@@ -97,4 +97,5 @@ related to my home networking project:
   * Xen Dom0 [kloster](https://github.com/eyedeekay/kloster)
   * Desktop/P2P OS [hoardermediaos](https://github.com/eyedeekay/hoardermediaos)
   * Containerized apt-cacher-ng [hoardercache-docker](https://github.com/eyedeekay/hoardercache-docker)
+  * Repository frontend creator for static web hosts [apt-now](https://github.com/eyedeekay/apt-now)
   * Tablet OS image Configuration [imgmaker](https://github.com/eyedeekay/imgmaker)
