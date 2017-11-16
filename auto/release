@@ -1,0 +1,52 @@
+#! /usr/bin/env bash
+
+set -e
+
+if [ -f auto/common ]; then
+        . auto/common
+fi
+
+export GITHUB_RELEASE_PATH="$HOME/.go/bin/github-release"
+export version=$(date +%Y%W)
+
+
+sha256sum "$image_prename$customized$is_harden$serverdist$non_free-$distro-amd64.hybrid.iso" > \
+		"$image_prename$customized$is_harden$serverdist$non_free-$distro-amd64.hybrid.iso.sha256sum" || \
+		rm $image_prename$customized$is_harden$serverdist$non_free-$distro-amd64.hybrid.iso.sha256sum; exit
+
+gpg --batch --yes --clear-sign -u "$SIGNING_KEY" \
+		"$image_prename$customized$is_harden$serverdist$non_free-$distro-amd64.hybrid.iso.sha256sum" || exit
+
+mktorrent -a "udp://tracker.openbittorrent.com:80" \
+		-a "udp://tracker.publicbt.com:80" \
+		-a "udp://tracker.istole.it:80" \
+		-a "udp://tracker.btzoo.eu:80/announce" \
+		-a "http://opensharing.org:2710/announce" \
+		-a "udp://open.demonii.com:1337/announce" \
+		-a "http://announce.torrentsmd.com:8080/announce.php" \
+		-a "http://announce.torrentsmd.com:6969/announce" \
+		-a "http://bt.careland.com.cn:6969/announce" \
+		-a "http://i.bandito.org/announce" \
+		-a "http://bttrack.9you.com/announce" \
+		-w "https://github.com/cmotc/hoarderMediaOS/releases/download/$version/$image_prename$customized$is_harden$serverdist$non_free-$distro-amd64.hybrid.iso" \
+		"$image_prename$customized$is_harden$serverdist$non_free-$distro-amd64.hybrid.iso" || exit
+
+"$GITHUB_RELEASE_PATH" release \
+		--user cmotc \
+		--repo hoarderMediaOS \
+		--tag "$version" \
+		--name "hoarderMediaOS" \
+		--description "A re-buildable OS for self-hosting. Please use the torrent if possible" || exit
+
+"$GITHUB_RELEASE_PATH" upload --user cmotc --repo hoarderMediaOS --tag "$version" \
+	--name "$image_prename$customized$is_harden$serverdist$non_free-$distro-amd64.hybrid.iso.sha256sum" \
+	--file "$image_prename$customized$is_harden$serverdist$non_free-$distro-amd64.hybrid.iso.sha256sum"; \
+"$GITHUB_RELEASE_PATH" upload --user cmotc --repo hoarderMediaOS --tag "$version" \
+	--name "$image_prename$customized$is_harden$serverdist$non_free-$distro-amd64.hybrid.iso.sha256sum.asc" \
+	--file "$image_prename$customized$is_harden$serverdist$non_free-$distro-amd64.hybrid.iso.sha256sum.asc";\
+"$GITHUB_RELEASE_PATH" upload --user cmotc --repo hoarderMediaOS --tag "$version" \
+	--name "$image_prename$customized$is_harden$serverdist$non_free-$distro-amd64.hybrid.iso.torrent" \
+	--file "$image_prename$customized$is_harden$serverdist$non_free-$distro-amd64.hybrid.iso.torrent";\
+"$GITHUB_RELEASE_PATH" upload --user cmotc --repo hoarderMediaOS --tag "$version" \
+	--name "$image_prename$customized$is_harden$serverdist$non_free-$distro-amd64.hybrid.iso" \
+	--file "$image_prename$customized$is_harden$serverdist$non_free-$distro-amd64.hybrid.iso"
