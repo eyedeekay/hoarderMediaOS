@@ -31,7 +31,7 @@ docker-copy:
 
 docker-init:
 	rm -fr .build; \
-	sudo -E lb init -t 3 5 &> init.log
+	sudo -E lb init -t 3 5 1> init.log 2> init.err
 
 docker-rebuild:
 	git pull; \
