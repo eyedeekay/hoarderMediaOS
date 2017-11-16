@@ -20,5 +20,6 @@ the costs in basically every scenario. In some cases, like auto repair, this
 is widely accepted. But in other cases very consequential cases, it's not even
 acknowledged.
 
-I am a very slow essay writer.
-
+I am a very slow essay writer. But this doesn't really require a readme per se
+yet, and I'm not above moving it entirely if it turns out it does. Mostly, this
+is how I turn out my LiveCD's. I don't care if you use it at all.
