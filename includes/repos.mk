@@ -91,19 +91,12 @@ tor-ubuntu-repo:
 		&& ln -sf tor.list.key.chroot tor.list.key.binary
 
 tox-repo:
-	echo "deb http://pkg.tox.chat/debian stable sid" | tee config/archives/tox.list.chroot
-	echo "#deb http://tox.repo stable sid" | tee config/archives/tox.list.chroot
+	echo "deb http://pkg.tox.chat/debian nightly sid" | tee config/archives/tox.list.chroot
+	echo "#deb http://tox.repo nightly sid" | tee config/archives/tox.list.chroot
 	curl -s https://pkg.tox.chat/debian/pkg.gpg.key | tee config/archives/tox.list.key.chroot
 	cd config/archives/ \
 		&& ln -sf tox.list.chroot tox.list.binary \
 		&& ln -sf tox.list.key.chroot tox.list.key.binary
-
-palemoon-repo:
-	echo 'deb https://download.opensuse.org/repositories/home:/stevenpusser/Debian_9.0/ /' | tee config/archives/palemoon.list.chroot
-	curl -s https://download.opensuse.org/repositories/home:/stevenpusser/Debian_9.0/Release.key | tee config/archives/palemoon.list.key.chroot
-	cd config/archives/ \
-		&& ln -sf palemoon.list.chroot palemoon.list.binary \
-		&& ln -sf palemoon.list.key.chroot palemoon.list.key.binary
 
 ##Nonfree or Uncertain-status repos
 

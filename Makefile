@@ -55,7 +55,7 @@ config-nochroot:
 unfree:
 	make playdeb-repo; \
 	make plex-repo; \
-	#make nonfree-repo; \
+	make nonfree-repo
 
 unfree-ubuntu:
 	make playdeb-repo; \
@@ -66,17 +66,15 @@ libre:
 	make i2pd-repo; \
 	make tor-repo; \
 	make syncthing-repo; \
-	#make palemoon-repo; \
+	make tox-repo; \
 	#make emby-repo; \
-	#make tox-repo; \
 
 libre-ubuntu:
 	make i2pd-repo; \
 	make tor-ubuntu-repo; \
 	make syncthing-repo; \
-	#make palemoon-repo; \
+	make tox-repo; \
 	#make emby-repo; \
-	#make tox-repo; \
 
 custom:
 	make apt-now-repo; \

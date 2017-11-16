@@ -1,3 +1,37 @@
+define DESKTOP_PACKAGE_LIST
+awesome
+awesome-extra
+coreutils
+lftp
+mc
+medit
+moreutils
+nano
+newsbeuter
+pandoc
+pcmanfm
+sddm
+secure-delete
+suckless-tools
+surf
+surfraw
+surfraw-extra
+stterm
+tig
+tmux
+vlc
+endef
+
+export DESKTOP_PACKAGE_LIST
+
+define MESSAGING_PACKAGE_LIST
+mutt
+profanity
+toxic
+endef
+
+export MESSAGING_PACKAGE_LIST
+
 define PACKAGE_LIST
 awesome
 awesome-extra
@@ -63,6 +97,7 @@ tor-arm
 keychain
 sen
 rclone
+toxic
 sshfs
 plowshare
 plowshare-modules
@@ -123,7 +158,7 @@ init-system:
 
 packages-list: init-system
 	cd config/package-lists/ && \
-	echo "$$$PACKAGE_LIST" | tee build.list.chroot && \
+	echo "$$PACKAGE_LIST" | tee build.list.chroot && \
 	ln -sf build.list.chroot build.list.binary
 
 server-packages:
