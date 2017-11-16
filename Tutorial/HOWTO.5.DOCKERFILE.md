@@ -148,7 +148,10 @@ Run the Priveleged Part of the Build and Extract the Artifacts
 Finally, in order to mount /proc in our container, we must run a command as a
 priveleged user in the container. That command is lb build:
 
-        docker run -i --name "tv-build" --privileged -t tv-build lb build
+   Edit: 11/16/2017: The container also requires access to a loopback device, as
+   newly reflected below.
+
+        docker run -i --device /dev/loop0 --name "tv-build" --privileged -t tv-build lb build
 
 Specifying the --name of the container you want to run the command in will keep
 you from losing track of the build artifacts when you copy them to the host
@@ -170,7 +173,7 @@ and you now have, what I think, is a pretty great way to remaster your own live
 install media.
 
 Unfortunately, because this depends on using chroots as they function in a
-regular GNU/Linux distributio, this means that we won't be able to run our
+regular GNU/Linux distribution, this means that we won't be able to run our
 build in Docker on our hardened-kernel system. We can work around this, however
 imperfectly, by allowing mounts in chroots
 
@@ -179,7 +182,7 @@ imperfectly, by allowing mounts in chroots
         sudo sysctl -w kernel.grsecurity.chroot_deny_mknod=0
         sudo sysctl -w kernel.grsecurity.chroot_deny_mount=0
         sudo sysctl -p
-        docker run -i --privileged -t hoarder-build make build
+        docker run -i --device /dev/loop0 --privileged -t hoarder-build make build
         sudo sysctl -w kernel.grsecurity.chroot_caps=0
         sudo sysctl -w kernel.grsecurity.chroot_deny_chmod=1
         sudo sysctl -w kernel.grsecurity.chroot_deny_mknod=1
