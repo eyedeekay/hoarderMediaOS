@@ -1,0 +1,19 @@
+#! /usr/bin/env bash
+
+set -e
+
+if [ -f auto/common ]; then
+        . auto/common
+fi
+
+if [ -f paths.sh ]; then
+        . paths.sh
+fi
+
+rm -rf ./iso
+
+scp dev@dev:$dev_path/$image_prename$customized$is_harden$serverdist$non_free-$distro-amd64.hybrid.iso ./iso
+scp dev@dev:$dev_path/$image_prename$customized$is_harden$serverdist$non_free-$distro-amd64.files ./iso
+scp dev@dev:$dev_path/$image_prename$customized$is_harden$serverdist$non_free-$distro-amd64.contents ./iso
+scp dev@dev:$dev_path/$image_prename$customized$is_harden$serverdist$non_free-$distro-amd64.hybrid.iso.zsync ./iso
+scp dev@dev:$dev_path/$image_prename$customized$is_harden$serverdist$non_free-$distro-amd64.packages ./iso

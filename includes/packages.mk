@@ -97,7 +97,6 @@ tor-arm
 keychain
 sen
 rclone
-toxic
 sshfs
 plowshare
 plowshare-modules

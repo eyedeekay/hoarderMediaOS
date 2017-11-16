@@ -92,3 +92,6 @@ throw:
 	scp -r . media@media:Docker/hoarderMediaOS
 
 packages: packages-list
+
+pull:
+	./auto/pull
