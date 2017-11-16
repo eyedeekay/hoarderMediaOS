@@ -93,7 +93,8 @@ effort.
 To help paint a picture, here are the most significant of the repositories
 related to my home networking project:
 
-  * [lede-docker](https://github.com/eyedeekay/lede-docker)
-  * [kloster](https://github.com/eyedeekay/kloster)
-  * [hoardermediaos](https://github.com/eyedeekay/hoardermediaos)
-  * [hoardercache-docker](https://github.com/eyedeekay/hoardercache-docker)
+  * Router OS [lede-docker](https://github.com/eyedeekay/lede-docker)
+  * Xen Dom0 [kloster](https://github.com/eyedeekay/kloster)
+  * Desktop/P2P OS [hoardermediaos](https://github.com/eyedeekay/hoardermediaos)
+  * Containerized apt-cacher-ng [hoardercache-docker](https://github.com/eyedeekay/hoardercache-docker)
+  * Tablet OS image Configuration [imgmaker](https://github.com/eyedeekay/imgmaker)
