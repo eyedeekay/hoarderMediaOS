@@ -1,7 +1,7 @@
 
 export GITHUB_RELEASE_PATH = "$(HOME)/.go/bin/github-release"
 
-sum:
+release:
 	./auto/release
 
 backup:

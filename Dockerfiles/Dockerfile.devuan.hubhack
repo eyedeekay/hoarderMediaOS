@@ -1,4 +1,4 @@
-FROM tv-build-devuan
+FROM eyedeekay/hoardermediaos:lb-parent
 ARG distro="devuan"
 ARG nonfree=""
 ARG hardened=""
