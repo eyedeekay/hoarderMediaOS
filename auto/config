@@ -76,9 +76,9 @@ if [ ! -z "$components" ]; then
         echo "$archiveareas"
 fi
 
-echo "#! /usr/bin/env bash" | tee auto/common
-echo "# settings check:" | tee -a auto/common
-echo "export mirror=\"$mirror\"" | tee -a auto/common
+echo "#! /usr/bin/env bash"
+echo "# settings check:"
+echo "export mirror=\"$mirror\"" | tee auto/common
 echo "export mirror_packages=\"$mirror_packages\"" | tee -a auto/common
 echo "export unstable=\"$unstable\"" | tee -a auto/common
 echo "export stable=\"$stable\"" | tee -a auto/common
