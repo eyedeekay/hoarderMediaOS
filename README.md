@@ -54,18 +54,27 @@ far:
    host machine for further processing. It copies the newly-generated
    auto/common file, from the build container reads in it's contents, and copies
    the images.
-  * auto/pull allows you to pre-configure the system to retrieve build artifacts
-   from a build server located elsewhere. If you're building locally, you will
-   not need this. It's configured using a paths.sh file in the project folder's
-   root, which it loads before anything else. Then it loads auto/common by
-   retrieving it from the build server, overriding local defaults, and finally
-   copies the build artifacts.
-  * auto/release generates the necessary files to make a release of the images
-   available for download via github releases. In order to feel less like a jerk
-   about uploading a bunch of 1.3gb images to a website I use for free, it also
-   generates a torrent file. **USE THE TORRENT TO DOWNLOAD THE IMAGE**. It is
-   a web-seeded torrent, if no torrent peers are available it will be able to
-   use the web source to download instead.
+  * auto/pull: triggered by running make pull. allows you to pre-configure the
+   system to retrieve build artifacts from a build server located elsewhere.
+   If you're building locally, you will not need this. It's configured using a
+   paths.sh file in the project folder's root, which it loads before anything
+   else. Then it loads auto/common by retrieving it from the build server,
+   overriding local defaults, and finally copies the build artifacts.
+  * auto/release: triggered by running make release. generates the necessary
+   files to make a release of the images available for download via github
+   releases. In order to feel less like a jerk about uploading a bunch of 1.3gb
+   images to a website I use for free, it also generates a torrent file.
+   **USE THE TORRENT TO DOWNLOAD THE IMAGE**. It is a web-seeded torrent, if no
+    torrent peers are available it will be able to use the web source to
+    download instead.
+
+Planned:
+
+  * auto/persistence: triggered by running make persistence. This will configure
+   a persistence partition on your LiveUSB with appropriate encryption.
+  * auto/download: triggered by running make download. This will start a torrent
+   client to download the image in the background, wait for the image to be
+   downloaded, verify it's signature and sum, and display readable results.
 
 Part of this is about getting computers on and off my network to communicate efficiently.
 -----------------------------------------------------------------------------------------
@@ -80,3 +89,11 @@ Eventually, I shall start tying together all the little, apparently disparate
 hobby projects I've been working on, when enough of them are in the CI to make
 the point. Anybody can start customizing their OS install media with a little
 effort.
+
+To help paint a picture, here are the most significant of the repositories
+related to my home networking project:
+
+  * [lede-docker](https://github.com/eyedeekay/lede-docker)
+  * [kloster](https://github.com/eyedeekay/kloster)
+  * [hoardermediaos](https://github.com/eyedeekay/hoardermediaos)
+  * [hoardercache-docker](https://github.com/eyedeekay/hoardercache-docker)
