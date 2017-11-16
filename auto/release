@@ -13,7 +13,7 @@ cd iso || exit
 
 sha256sum "$image_prename$customized$is_harden$serverdist$non_free-$distro-amd64.hybrid.iso" > \
 		"$image_prename$customized$is_harden$serverdist$non_free-$distro-amd64.hybrid.iso.sha256sum" || \
-		rm $image_prename$customized$is_harden$serverdist$non_free-$distro-amd64.hybrid.iso.sha256sum; exit
+		rm "$image_prename$customized$is_harden$serverdist$non_free-$distro-amd64.hybrid.iso.sha256sum"; exit
 
 gpg --batch --yes --clear-sign -u "$SIGNING_KEY" \
 		"$image_prename$customized$is_harden$serverdist$non_free-$distro-amd64.hybrid.iso.sha256sum" || exit
