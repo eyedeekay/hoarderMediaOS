@@ -54,7 +54,6 @@ docker-build:
 		--privileged \
 		--tty \
 		-t $(image_prename)-$(distro)
-	make docker-copy
 
 docker-build-nochroot:
 	docker rm -f $(image_prename)-build-$(distro); \
@@ -70,10 +69,10 @@ docker-build-nochroot:
 		--privileged \
 		--tty \
 		-t $(image_prename)-$(distro) make build-nochroot
-	make docker-copy
+
 
 docker-release:
-	make docker-build
+	make docker-copy
 	make release
 
 docker-base:
