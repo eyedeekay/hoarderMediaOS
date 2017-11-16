@@ -23,7 +23,8 @@ There is a couple of configuration files you need to pay attention to.
 ----------------------------------------------------------------------
 
 The first of which is paths.sh. This is just a place to store information that
-helps retrieve copies of the built iso from a remote build server.
+helps retrieve copies of the built iso from a remote build server, specifically
+the ssh username/hostname to use, and the
 
 In this repository, auto/ doesn't just house auto scripts anymore.
 ------------------------------------------------------------------

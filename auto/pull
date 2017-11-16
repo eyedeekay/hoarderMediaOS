@@ -6,7 +6,7 @@ if [ -f paths.sh ]; then
         . paths.sh
 fi
 
-scp dev@dev:"$dev_path/auto/common" auto/common
+scp "$user_name"@"$host_name":"$dev_path/auto/common" auto/common
 
 if [ -f auto/common ]; then
         . auto/common
@@ -16,8 +16,8 @@ fi
 
 rm -rf ./iso && mkdir ./iso/
 
-scp dev@dev:"$dev_path/iso/$image_prename$customized$is_harden$serverdist$non_free-$distro-amd64.hybrid.iso" ./iso/
-scp dev@dev:"$dev_path/iso/$image_prename$customized$is_harden$serverdist$non_free-$distro-amd64.files" ./iso/
-scp dev@dev:"$dev_path/iso/$image_prename$customized$is_harden$serverdist$non_free-$distro-amd64.contents" ./iso/
-scp dev@dev:"$dev_path/iso/$image_prename$customized$is_harden$serverdist$non_free-$distro-amd64.hybrid.iso.zsync" ./iso/
-scp dev@dev:"$dev_path/iso/$image_prename$customized$is_harden$serverdist$non_free-$distro-amd64.packages" ./iso/
+scp "$user_name"@"$host_name":"$dev_path/iso/$image_prename$customized$is_harden$serverdist$non_free-$distro-amd64.hybrid.iso" ./iso/
+scp "$user_name"@"$host_name":"$dev_path/iso/$image_prename$customized$is_harden$serverdist$non_free-$distro-amd64.files" ./iso/
+scp "$user_name"@"$host_name":"$dev_path/iso/$image_prename$customized$is_harden$serverdist$non_free-$distro-amd64.contents" ./iso/
+scp "$user_name"@"$host_name":"$dev_path/iso/$image_prename$customized$is_harden$serverdist$non_free-$distro-amd64.hybrid.iso.zsync" ./iso/
+scp "$user_name"@"$host_name":"$dev_path/iso/$image_prename$customized$is_harden$serverdist$non_free-$distro-amd64.packages" ./iso/
