@@ -24,7 +24,7 @@ docker-full-build:
 
 docker-copy:
 	docker cp $(image_prename)-build-$(distro):/home/livebuilder/hoarder-live/auto/common  ./auto/common
-	shell ./auto/copy
+	./auto/copy
 
 docker-init:
 	rm -fr .build; \
