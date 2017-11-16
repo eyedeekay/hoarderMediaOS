@@ -24,7 +24,19 @@ There is a couple of configuration files you need to pay attention to.
 
 The first of which is paths.sh. This is just a place to store information that
 helps retrieve copies of the built iso from a remote build server, specifically
-the ssh username/hostname to use, and the
+the ssh username/hostname to use, and the folder from which to retrieve the
+completed images. An example paths.sh might be
+
+        export user_name="dev"
+        export host_name="dev"
+        export dev_path="/home/$user_name/Projects/hoardermediaos"
+
+The next new configuration file is auto/common. As it's name suggests, it's a
+set of global variables used by the other scripts in auto/. It is generated
+inside the container, so changing it outside the container will have no effect,
+instead it exists to ensure that some static settings generated inside the
+container can be used by the parts that happen outside the container,
+specifically auto/copy, auto/pull, and auto/release. Speaking of which...
 
 In this repository, auto/ doesn't just house auto scripts anymore.
 ------------------------------------------------------------------
@@ -32,10 +44,39 @@ In this repository, auto/ doesn't just house auto scripts anymore.
 In addition to the actual auto scripts, several new scripts have been added.
 They are only related insofar as the exist to bridge gaps between the Docker
 parts of the build and the machine hosting it, and to automate retrieval from
-the remote build server.
+the remote build server. I guess I'm also planning on one that may be used to
+set up an encrypted persistence volume as well, resulting in a LiveUSB-only
+edition which would be pretty cool too. But focusing on the ones that exist so
+far:
+
+  * auto/copy: triggered by running make docker-copy. This is used to copy the
+   finished images and accompanying metadata from the build container to the
+   host machine for further processing. It copies the newly-generated
+   auto/common file, from the build container reads in it's contents, and copies
+   the images.
+  * auto/pull allows you to pre-configure the system to retrieve build artifacts
+   from a build server located elsewhere. If you're building locally, you will
+   not need this. It's configured using a paths.sh file in the project folder's
+   root, which it loads before anything else. Then it loads auto/common by
+   retrieving it from the build server, overriding local defaults, and finally
+   copies the build artifacts.
+  * auto/release generates the necessary files to make a release of the images
+   available for download via github releases. In order to feel less like a jerk
+   about uploading a bunch of 1.3gb images to a website I use for free, it also
+   generates a torrent file. **USE THE TORRENT TO DOWNLOAD THE IMAGE**. It is
+   a web-seeded torrent, if no torrent peers are available it will be able to
+   use the web source to download instead.
 
 Part of this is about getting computers on and off my network to communicate efficiently.
 -----------------------------------------------------------------------------------------
 
 Continuing in the spirit of "Anyone can do it, if they want to," my laptop is
-not new or fast. It's actually pretty old and slow.
+not new or fast. It's actually pretty old and slow, hence the wierd mix of
+software I prefer. But my desktop can build this LiveCD in about 35 minutes.
+So when I push something from my laptop, the desktop picks up the change and
+builds it, I retrieve it, and sign it on my laptop. This process still has room
+for improvement but it's getting to the point where it's downright sensible.
+Eventually, I shall start tying together all the little, apparently disparate
+hobby projects I've been working on, when enough of them are in the CI to make
+the point. Anybody can start customizing their OS install media with a little
+effort.

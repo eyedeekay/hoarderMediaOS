@@ -11,13 +11,22 @@ export version=$(date +%Y%W)"$customized$is_harden$serverdist$non_free-$distro"
 
 cd iso || exit
 
+pwd
+ls
+
+echo "computing sha256sum"
 sha256sum "$image_prename$customized$is_harden$serverdist$non_free-$distro-amd64.hybrid.iso" > \
 		"$image_prename$customized$is_harden$serverdist$non_free-$distro-amd64.hybrid.iso.sha256sum" || \
-		rm "$image_prename$customized$is_harden$serverdist$non_free-$distro-amd64.hybrid.iso.sha256sum"; exit
+		rm "$image_prename$customized$is_harden$serverdist$non_free-$distro-amd64.hybrid.iso.sha256sum"
 
+ls
+
+echo "signing with $SIGNING_KEY"
 gpg --batch --yes --clear-sign -u "$SIGNING_KEY" \
 		"$image_prename$customized$is_harden$serverdist$non_free-$distro-amd64.hybrid.iso.sha256sum" || exit
 
+ls
+echo "creating torrent"
 mktorrent -a "udp://tracker.openbittorrent.com:80" \
 		-a "udp://tracker.publicbt.com:80" \
 		-a "udp://tracker.istole.it:80" \
@@ -32,10 +41,12 @@ mktorrent -a "udp://tracker.openbittorrent.com:80" \
 		-w "https://github.com/eyedeekay/hoarderMediaOS/releases/download/$version/$image_prename$customized$is_harden$serverdist$non_free-$distro-amd64.hybrid.iso" \
 		"$image_prename$customized$is_harden$serverdist$non_free-$distro-amd64.hybrid.iso" || exit
 
-"$GITHUB_RELEASE_PATH" delete \
-		--user eyedeekay \
-		--repo kloster \
-		--tag "$version"; true
+
+
+#"$GITHUB_RELEASE_PATH" delete \
+#		--user eyedeekay \
+#		--repo kloster \
+#		--tag "$version" || true
 
 "$GITHUB_RELEASE_PATH" release \
 		--user eyedeekay \
