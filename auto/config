@@ -117,7 +117,7 @@ lb config noauto \
     $archiveareas \
     $nosource \
     $harden \
-    --image-name "$image_prename$customized$hardened$serverdist$nonfree-$distro" \
+    --image-name "$image_prename$customized$is_harden$serverdist$non_free-$distro" \
     $distromode \
     --parent-mirror-bootstrap "$mirror" \
     --parent-mirror-chroot "$mirror" \
