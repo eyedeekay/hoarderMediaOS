@@ -1,25 +1,51 @@
 define DESKTOP_PACKAGE_LIST
 awesome
 awesome-extra
-coreutils
+ca-certificates
+default-dbus-session-bus
+firmware-ath9k-htc
+firmware-linux-free
+gnutls-bin
+gocryptfs
+ifupdown
+iproute2
+jackd2
 lftp
+libgnutls30
+markdown
 mc
 medit
+menu-xdg
 moreutils
+mosh
 nano
 newsbeuter
+openssh-client
 pandoc
 pcmanfm
+pulseaudio-module-jack
+rclone
 sddm
 secure-delete
+sshfs
+stterm
 suckless-tools
 surf
 surfraw
 surfraw-extra
-stterm
 tig
 tmux
 vlc
+wicd-curses
+xdg-utils
+xdg-user-dirs
+xserver-xorg
+xserver-common
+xserver-xorg-core
+xserver-xorg-input-all
+xserver-xorg-legacy
+xserver-xorg-video-all
+xwayland
 endef
 
 export DESKTOP_PACKAGE_LIST
@@ -31,6 +57,54 @@ toxic
 endef
 
 export MESSAGING_PACKAGE_LIST
+
+define SHARING_PACKAGE_LIST
+megatools
+owncloud-client-cmd
+plowshare
+plowshare-modules
+syncthing
+wget
+endef
+
+export SHARING_PACKAGE_LIST
+
+define UTILS_PACKAGE_LIST
+apparmor
+apparmor-easyprof
+apparmor-notify
+apparmor-profiles
+apparmor-profiles-extra
+apt-file
+apt-transport-tor
+apt-transport-https
+apt-utils
+adduser
+bubblewrap
+coreutils
+curl
+dpkg
+firejail
+moreutils
+pax-utils
+paxctld
+paxtest
+rtl-sdr
+tshark
+udev
+util-linux
+youtube-dl
+endef
+
+export UTILS_PACKAGE_LIST
+
+define DOCKER_PACKAGE_LIST
+docker.io
+sen
+endef
+
+export DOCKER_PACKAGE_LIST
+
 
 define PACKAGE_LIST
 awesome
@@ -89,6 +163,7 @@ syncthing
 procps
 mosh
 mutt
+toxic
 lftp
 rtl-sdr
 vlc
