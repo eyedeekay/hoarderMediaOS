@@ -124,6 +124,7 @@ ca-certificates
 coreutils
 moreutils
 dpkg
+i2pd
 adduser
 apparmor
 apparmor-easyprof

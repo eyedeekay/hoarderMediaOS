@@ -1,4 +1,4 @@
-FROM ubuntu:devel
+FROM debian:sid
 ARG DEBIAN_FRONTEND="noninteractive"
 ARG LANG="C.UTF-8"
 ARG LC_ALL="C.UTF-8"
@@ -21,7 +21,7 @@ RUN apt-get update && apt-get install -yq --fix-missing --reinstall \
                 ca-certificates \
                 debian-keyring \
                 debian-archive-keyring \
-                ubuntu-keyring \
+                ubuntu-archive-keyring \
                 dirmngr \
                 live-build \
                 e2fsprogs \
