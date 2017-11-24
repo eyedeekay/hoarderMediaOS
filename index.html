@@ -5,6 +5,7 @@
     <title>
     hoarderMediaOS
     </title>
+    <link rel="stylesheet" href="./style.css">
 </head>
 <h1>hoarderMediaOS</h1>
 
@@ -110,6 +111,232 @@ related to my home networking project:</p>
 <li>Repository frontend creator for static web hosts <a href="https://github.com/eyedeekay/apt-now">apt-now</a></li>
 <li>Tablet OS image Configuration <a href="https://github.com/eyedeekay/imgmaker">imgmaker</a></li>
 </ul>
+<h1>How I decided to continuously remaster my own Debian Variant without, like, totally meaning to.</h1>
+
+<p><a href="https://github.com/cmotc/hoarderMediaOS/blob/master/Tutorial/HOWTO.0.INTRODUCTION.md">Standalone Chapter</a></p>
+
+<p>OK, this thing is a work in progress, so bear with me while I do it, but here's
+what I'm attempting. I have spent alot of time refining my home PC's
+configuration based on defaults in the Debian installer, and the packages
+themselves, and I've been pretty successful at it. But it's an ongoing process,
+and sometimes, you bork something and you've got to reinstall. Which means that
+you've got to reproduce all that configuration and start over, which kind of
+sucks. There are many ways to approach this, and what this readme is going to
+amount to is simply an example of but one way of doing things(With some
+variations, because some of the things that Docker can allow you to do are
+awesome). I wanted a lightweight media-center OS for retro gaming that could
+double as a Media Server, I totally uncreatively called it hoarderMediaOS, and
+now it's a reasonably easy to reproduce procedure and I hope it's helpful. It's
+based on Unstable, though, so it's might become outdated at any moment. I'm
+going to keep doing it though, so I'll probably notice if it stops working.</p>
+
+<h2>Who this tutorial is targeted at</h2>
+
+<p>Enthusiastic Amateurs! People who like Debian/Ubuntu based distributions for
+their excellent stability and diligent community, but who don't necessarily
+want to use one of the regular desktop environments in the default
+configuration. Ricers, datahoarders, and hobbyists who would rather use Debian
+than Arch or Gentoo. Anyone who uses their home computer for experimentation.
+The point of this tutorial is that <strong>anyone</strong> can learn to continuously
+customize their Linux configuration if they wish to, <strong>anyone</strong>, even a solitary
+hobbyist with no significant organizational resources.</p>
+
+<p><strong>Is it a distro?</strong></p>
+
+<p><strong>God I hope not.</strong> I'm not a person who really likes to deal in opinion. I
+deleted my whole blog because I felt obligated to be personal. Unfortunately,
+I have an opinion. I'm opinionated. And it's my opinion that it's too easy for
+people to consider any installable media that gets redistributed equal to a
+recognizable distro. It's just not. Tiny distros can be <strong>amazing</strong>, I loved
+CrunchBang and felt genuine sadness when corenominal gave it up, and genuine
+excitement for BunsenLabs and Crunchbang++. I love Linux Mint and think
+Cinnamon will ease many people's Dad's transition into using GNU/Linux from
+Windows when they start to get pissed off about Windows 10 serving them ads
+all the damn time. But there are caveats to using these tiny niche distros. You
+have to take matters into your own hands at times, even things that are second
+nature to you or me, might not be obvious to a first-time Mint user, even things
+as simple as being able to use AskUbuntu to get help. It takes a while to learn
+to translate the Arch wiki.</p>
+
+<p>Depending on their complexity, they may also configure 3rd-party repositorys.
+<strong>Please consider that in the most serious of terms</strong>. If they configured a
+third-party repository, they have probably used it to install something. That
+application was installed from that third-party repository because it's probably
+experimental and <strong>not ready to be held to the standards of an official Debian</strong>
+<strong>package</strong>. That doesn't mean it's bad. Lots of software from third-party
+repositories is <strong>awesome</strong> but using third party software is kind of a big
+decision.</p>
+
+<p>It is my opinion that there ought to be a clearer way to consider these two
+types of distros specifically. Maybe something like "Upstream Distro" and
+"Enthusiast Distro" as a place to instigate a lexical split, and make clear the
+advantages, disadvantages, and implications of each. Using an "Enthusiast
+Distro" is fun, and creating one is fun. Sharing them ought to be fun, too.
+I would be more comfortable sharing my own "Enthusiast Distro" if I were sure
+people understood, I'm just one guy, depending on the work of thousands, I think
+building riced install media is fun, and that's <strong>it</strong>.</p>
+
+<h2>What am I actually going to talk about?</h2>
+
+<p>live-build, docker, sid, make. Specifically, I'm going to teach you how to use
+these tools to continuously package your own personal configuration of Debian
+as an iso that can be used to create install media, just like the regular Debian
+LiveCD's.</p>
+
+<h2>What are you going to need?</h2>
+
+<p>Either Debian unstable(sid), Devuan unstable(ceres) or any distribution
+supporting Docker and coming configured with the Docker Hub.</p>
+
+<p><strong>On that note, Dependencies</strong></p>
+
+<pre><code>    Debian Sid/Devuan Ceres
+    =======================
+    sudo apt-get install live-build debootstrap make
+    optionally,
+    sudo apt-get install git docker.io
+</code></pre>
+
+<p>or install docker per your distribution's instructions or from source. Docker
+will use the debian:sid container as a base. A git repository or a git hosting
+service will also be helpful if you want to backup and share your configuration.</p>
+<h1>Step Zero: A crash course in live-build</h1>
+
+<p><a href="https://github.com/cmotc/hoarderMediaOS/blob/master/Tutorial/HOWTO.1.LIVEBUILD.md">Standalone Chapter</a></p>
+
+<h2>See also:</h2>
+
+<ul>
+<li><a href="https://debian-live.alioth.debian.org/live-manual/stable/manual/html/live-manual.en.html#178">Debian live systems manual, First Steps</a></li>
+</ul>
+
+<p>All in all, live-build is a pretty simple, straightforward, regular tool to use.
+For most purposes, it will come down to the use of three commands. These
+commands are:</p>
+
+<ol>
+<li>lb config</li>
+<li>lb build</li>
+<li>lb clean</li>
+</ol>
+
+<p>If you wanted to create the absolute bare-minimum default liveCD that live-build
+will generate, you could simply run</p>
+
+<pre><code>    lb config &amp;&amp; sudo lb build
+</code></pre>
+
+<p>in an empty directory and in a few minutes, you'd have a basic liveCD. However,
+it wouldn't be very useful. This CD won't have an X server, or many of the
+applications desktop Linux users may have come to take for granted. Fortunately,
+it's pretty easy to turn this into a base system. Just add a desktop metapackage
+to the configuration, in between the two commands.</p>
+
+<pre><code>    lb config
+    echo 'budgie-desktop' &gt;&gt; config/packages/live.list.chroot
+    sudo lb build
+</code></pre>
+
+<p>This will get you a live system with the excellent budgie desktop. In doing so,
+it will many packages on the liveCD that budgie-desktop depends on.</p>
+<h1>Step One: Set up your own caching proxy for apt(You'll be much better off)</h1>
+
+<p><a href="https://github.com/cmotc/hoarderMediaOS/blob/master/Tutorial/HOWTO.2.APTCACHERNG.md">Standalone Chapter</a></p>
+
+<h2>See-also:</h2>
+
+<ul>
+<li><a href="https://www.unix-ag.uni-kl.de/~bloch/acng/">apt-cacher-ng Homepage and Configuration Instructions</a></li>
+<li><a href="https://docs.docker.com/engine/examples/apt-cacher-ng/">apt-cacher-ng dockerized</a></li>
+</ul>
+
+<p>After running debootstrap fourty or fifty times, you might be thinking "This
+wasn't so bad the first time, but this is definitely not an instantaneous thing.
+Sure would be nice to mirror these somewhere immediately nearby." And you might
+try and search for how to set up a mirror and get discouraged by how large it
+is. That's what apt-cacher-ng is for. apt-cacher-ng is a caching proxy that
+is used to cache packages downloaded by package managers in your Linux
+distributions. It will only cache the packages you request from it, so it's only
+as big as it needs to be, and it can be used to bootstrap your live disk and
+your installation, which will save you much bandwidth. And it's super easy to
+configure, too. If you're using only the main Debian repositories especially,
+it should just work, right out of the box, and if all your third-party
+repositories are using plain http, they can be used through apt-cacher-ng
+transparently, although it will not cache those packages unless it is configured
+to. It seems like there are three main situations where you might want to make a
+change to how apt-cacher-ng works by default.</p>
+
+<p><strong>Allow https repositories to CONNECT through apt-cacher-ng</strong></p>
+
+<p>Increasingly, some software sources are making their repositories available only
+by way of https. This is probably not like, super necessary, as it will do
+little to obscure the nature of the traffic, but I think it's nice in general.
+But it presents a problem if you use apt-cacher-ng. It will not connect to https
+repositories by default. In order to allow it to, you can simply uncomment this
+line:</p>
+
+<pre><code>    # PassThroughPattern: .* # this would allow CONNECT to everything
+</code></pre>
+
+<p>so it looks like this.</p>
+
+<pre><code>    PassThroughPattern: .* # this would allow CONNECT to everything
+</code></pre>
+
+<p>and voila! You can now use https repositories through your apt-cacher-ng
+instance, however it will not cache those packages yet.</p>
+
+<p><strong>Third-party Repository using plain http</strong></p>
+
+<p>If you want to cache packages from a thrid-party repository using apt-cacher-ng,
+such as the Devuan repository, then you will need to create a backend for that
+package and then make apt-cacher-ng aware of that backend. A backend is simply
+a file containing the url of the repository you want to use. So to create a
+backend for Devuan or any other repository available over plain http, one need
+only:</p>
+
+<pre><code>    echo "http://packages.devuan.org/merged" | sudo tee /etc/apt-cacher-ng/backends_devuan
+</code></pre>
+
+<p>Then, in order to make apt-cacher-ng aware of it's existence, you need to
+configure is in /etc/apt-cacher-ng/acng.conf. In this configuration line, you'll
+remap the Devuan mirror to a new name and tell it to use the backends_devuan
+file.</p>
+
+<pre><code>    Remap-devrep: file:devuan_mirror /merged ; file:backends_devuan # Devuan Archives
+</code></pre>
+
+<p>Next time you start your apt-cacher-ng instance, it will know to cache Devuan
+packages.</p>
+
+<p><strong>Third-party Repository caching using https</strong></p>
+
+<p>It would also be nice to cache https repositories, and you can do just that with
+apt-cacher-ng. It's pretty similar to using it with plain http, a backend is
+still just as mu</p>
+
+<pre><code>    echo "https://repo.lngserv.ru/debian" | tee /etc/apt-cacher-ng/backends_i2pd
+</code></pre>
+
+<p>and make apt-cacher-ng aware of it in /etc/apt-cacher-ng/acng.conf</p>
+
+<pre><code>    Remap-i2pd: http://i2p.repo ; file:backends_i2pd
+</code></pre>
+
+<p><strong>Configuring apt to use your caching proxy</strong></p>
+
+<p>Finally, you'll need to make your applications aware of apt-cacher-ng. To make
+your host machine's apt aware of your proxy, you need to create a file
+in /etc/apt/apt.conf.d/ that tells apt to look for it.</p>
+
+<pre><code>    echo "Acquire::http { Proxy \"http://127.0.0.1:3142\"; };" | tee /etc/apt/apt.conf.d/02proxy
+</code></pre>
+
+<p>But to make live-build use it, add the proxy's address to your options in your
+auto/config file.</p>
+
+<pre><code>    lb config noauto --apt-http-proxy http://127.0.0.1:3142
+</code></pre>
 <h1>Step Two: Auto Scripts</h1>
 
 <p><a href="https://github.com/cmotc/hoarderMediaOS/blob/master/Tutorial/HOWTO.2.AUTOSCRIPTS.md">Standalone Chapter</a></p>
@@ -271,387 +498,6 @@ the environment like this:</p>
         --debootstrap-options "--merged-usr --variant=minbase --include=busybox-syslogd,gnupg2,gpgv-static,gnutls-bin $components" \
         --initsystem sysvinit \
         "$@"
-</code></pre>
-<h1>Step Zero: A crash course in live-build</h1>
-
-<p><a href="https://github.com/cmotc/hoarderMediaOS/blob/master/Tutorial/HOWTO.1.LIVEBUILD.md">Standalone Chapter</a></p>
-
-<h2>See also:</h2>
-
-<ul>
-<li><a href="https://debian-live.alioth.debian.org/live-manual/stable/manual/html/live-manual.en.html#178">Debian live systems manual, First Steps</a></li>
-</ul>
-
-<p>All in all, live-build is a pretty simple, straightforward, regular tool to use.
-For most purposes, it will come down to the use of three commands. These
-commands are:</p>
-
-<ol>
-<li>lb config</li>
-<li>lb build</li>
-<li>lb clean</li>
-</ol>
-
-<p>If you wanted to create the absolute bare-minimum default liveCD that live-build
-will generate, you could simply run</p>
-
-<pre><code>    lb config &amp;&amp; sudo lb build
-</code></pre>
-
-<p>in an empty directory and in a few minutes, you'd have a basic liveCD. However,
-it wouldn't be very useful. This CD won't have an X server, or many of the
-applications desktop Linux users may have come to take for granted. Fortunately,
-it's pretty easy to turn this into a base system. Just add a desktop metapackage
-to the configuration, in between the two commands.</p>
-
-<pre><code>    lb config
-    echo 'budgie-desktop' &gt;&gt; config/packages/live.list.chroot
-    sudo lb build
-</code></pre>
-
-<p>This will get you a live system with the excellent budgie desktop. In doing so,
-it will many packages on the liveCD that budgie-desktop depends on.</p>
-<h1>Step Six: Create torrents and Release</h1>
-
-<p><a href="https://github.com/cmotc/hoarderMediaOS/blob/master/Tutorial/HOWTO.6.RELEASE.md">Standalone Chapter</a></p>
-
-<p>Now we've got everything we need to responsibly share our configuration except
-a means of sharing it. Fortunately, with a little trickery you can actually
-reliably bootstrap some really good ways of distributing your iso file. I like
-a combination of Github Releases and a cool feature of the Bittorrent protocol
-known as "Web Seeds" that allow you to supplement a Peer-to-Peer swarm with an
-HTTP or HTTPS source. Unfortunately, in order to make this automatic we have to
-install an additional couple of dependencies. Fortunately for us, one of those
-dependencies is in Go! Go is an awesome language that anyone can use.
-Unfortunately for us, it's because the excellent Go software involved here isn't
-quite available in Debian just yet.</p>
-
-<h2>Install Extra Dependencies</h2>
-
-<p>OK so first, we need to install the extra dependencies here. We'll be using the
-terminal tool "mktorrent" to generate our torrent files, and we'll be using
-golang to get the github-release package.</p>
-
-<pre><code>    sudo apt-get install mktorrent golang
-</code></pre>
-
-<p>Now, set the GOPATH and run 'go get' to retrieve the package</p>
-
-<pre><code>    export GOPATH="$HOME/.go"
-    mkdir -p "$GOPATH"
-    go get github.com/aktau/github-release
-</code></pre>
-
-<p>And include the GOPATH in your PATH</p>
-
-<pre><code>    export PATH="$GOPATH:$PATH"
-</code></pre>
-
-<p>Now, generate a torrent from the file. I just added a bunch of public annouce
-URLS to it, these are open trackers anyone can use. Note that we also use a
-Web Seed to supplement our torrent. This is very, very important, it'll provide
-a consistent source for downloads until a large enough swarm exists that it is
-no longer neccessary.</p>
-
-<pre><code>    mktorrent -a "udp://tracker.openbittorrent.com:80" \
-    -a "udp://tracker.publicbt.com:80" \
-    -a "udp://tracker.istole.it:80" \
-    -a "udp://tracker.btzoo.eu:80/announce" \
-    -a "http://opensharing.org:2710/announce" \
-    -a "udp://open.demonii.com:1337/announce" \
-    -a "http://announce.torrentsmd.com:8080/announce.php" \
-    -a "http://announce.torrentsmd.com:6969/announce" \
-    -a "http://bt.careland.com.cn:6969/announce" \
-    -a "http://i.bandito.org/announce" \
-    -a "http://bttrack.9you.com/announce" \
-    -w https://github.com/"$(MY_ACCOUNT)"/"$(MY_ISO)"/releases/download/$(shell date +'%y.%m.%d')/tv.iso \
-    tv-amd64.hybrid.iso; \
-</code></pre>
-
-<p>Awesome, now that the torrent is generated, generate a tag for the release on
-github. I just use the date to tag the releases, as the point of this procedure
-is to run builds frequently.</p>
-
-<pre><code>    git tag $(date +'%y.%m.%d'); git push --tags github
-</code></pre>
-
-<p>in a Makefile, the same command will need to look like this:</p>
-
-<pre><code>    git tag $(shell date +'%y.%m.%d'); git push --tags github
-</code></pre>
-
-<p>In order to create a Github release for that tag, you'll need to use the
-program we downloaded with go get, github-release:</p>
-
-<pre><code>    github-release release \
-    --user "$(MY_ACCOUNT)" \
-    --repo "$(MY_ISO)" \
-    --tag $(shell date +'%y.%m.%d') \
-    --name "$(MY_ISO)" \
-    --description "A re-buildable OS for self-hosting. Please use the torrent if possible" \
-    --pre-release ; \
-</code></pre>
-
-<p>Now we're ready to upload our built images and verification materials to the
-release page. I generally upload them from smallest to largest files so to
-upload the sha256 hash:</p>
-
-<pre><code>    github-release upload --user "$(MY_ACCOUNT)" --repo "$(MY_ISO)" --tag $(shell date +'%y.%m.%d') \
-            --name "$(MY_ISO)" \
-            --file tv-amd64.hybrid.iso.sha256sum; \
-</code></pre>
-
-<p>And the signed sha256 hash:</p>
-
-<pre><code>    github-release upload --user "$(MY_ACCOUNT)" --repo "$(MY_ISO)" --tag $(shell date +'%y.%m.%d') \
-            --name "$(MY_ISO)" \
-            --file tv-amd64.hybrid.iso.sha256sum.asc;\
-</code></pre>
-
-<p>And the torrent file:</p>
-
-<pre><code>    github-release upload --user "$(MY_ACCOUNT)" --repo "$(MY_ISO)" --tag $(shell date +'%y.%m.%d') \
-            --name "$(MY_ISO)" \
-            --file tv-amd64.hybrid.iso.torrent;\
-</code></pre>
-
-<p>and finally, the bootable, Live ISO image.</p>
-
-<pre><code>    github-release upload --user "$(MY_ACCOUNT)" --repo "$(MY_ISO)" --tag $(shell date +'%y.%m.%d') \
-            --name "$(MY_ISO)" \
-            --file tv-amd64.hybrid.iso;\
-</code></pre>
-<h1>Step One: Set up your own caching proxy for apt(You'll be much better off)</h1>
-
-<p><a href="https://github.com/cmotc/hoarderMediaOS/blob/master/Tutorial/HOWTO.2.APTCACHERNG.md">Standalone Chapter</a></p>
-
-<h2>See-also:</h2>
-
-<ul>
-<li><a href="https://www.unix-ag.uni-kl.de/~bloch/acng/">apt-cacher-ng Homepage and Configuration Instructions</a></li>
-<li><a href="https://docs.docker.com/engine/examples/apt-cacher-ng/">apt-cacher-ng dockerized</a></li>
-</ul>
-
-<p>After running debootstrap fourty or fifty times, you might be thinking "This
-wasn't so bad the first time, but this is definitely not an instantaneous thing.
-Sure would be nice to mirror these somewhere immediately nearby." And you might
-try and search for how to set up a mirror and get discouraged by how large it
-is. That's what apt-cacher-ng is for. apt-cacher-ng is a caching proxy that
-is used to cache packages downloaded by package managers in your Linux
-distributions. It will only cache the packages you request from it, so it's only
-as big as it needs to be, and it can be used to bootstrap your live disk and
-your installation, which will save you much bandwidth. And it's super easy to
-configure, too. If you're using only the main Debian repositories especially,
-it should just work, right out of the box, and if all your third-party
-repositories are using plain http, they can be used through apt-cacher-ng
-transparently, although it will not cache those packages unless it is configured
-to. It seems like there are three main situations where you might want to make a
-change to how apt-cacher-ng works by default.</p>
-
-<p><strong>Allow https repositories to CONNECT through apt-cacher-ng</strong></p>
-
-<p>Increasingly, some software sources are making their repositories available only
-by way of https. This is probably not like, super necessary, as it will do
-little to obscure the nature of the traffic, but I think it's nice in general.
-But it presents a problem if you use apt-cacher-ng. It will not connect to https
-repositories by default. In order to allow it to, you can simply uncomment this
-line:</p>
-
-<pre><code>    # PassThroughPattern: .* # this would allow CONNECT to everything
-</code></pre>
-
-<p>so it looks like this.</p>
-
-<pre><code>    PassThroughPattern: .* # this would allow CONNECT to everything
-</code></pre>
-
-<p>and voila! You can now use https repositories through your apt-cacher-ng
-instance, however it will not cache those packages yet.</p>
-
-<p><strong>Third-party Repository using plain http</strong></p>
-
-<p>If you want to cache packages from a thrid-party repository using apt-cacher-ng,
-such as the Devuan repository, then you will need to create a backend for that
-package and then make apt-cacher-ng aware of that backend. A backend is simply
-a file containing the url of the repository you want to use. So to create a
-backend for Devuan or any other repository available over plain http, one need
-only:</p>
-
-<pre><code>    echo "http://packages.devuan.org/merged" | sudo tee /etc/apt-cacher-ng/backends_devuan
-</code></pre>
-
-<p>Then, in order to make apt-cacher-ng aware of it's existence, you need to
-configure is in /etc/apt-cacher-ng/acng.conf. In this configuration line, you'll
-remap the Devuan mirror to a new name and tell it to use the backends_devuan
-file.</p>
-
-<pre><code>    Remap-devrep: file:devuan_mirror /merged ; file:backends_devuan # Devuan Archives
-</code></pre>
-
-<p>Next time you start your apt-cacher-ng instance, it will know to cache Devuan
-packages.</p>
-
-<p><strong>Third-party Repository caching using https</strong></p>
-
-<p>It would also be nice to cache https repositories, and you can do just that with
-apt-cacher-ng. It's pretty similar to using it with plain http, a backend is
-still just as mu</p>
-
-<pre><code>    echo "https://repo.lngserv.ru/debian" | tee /etc/apt-cacher-ng/backends_i2pd
-</code></pre>
-
-<p>and make apt-cacher-ng aware of it in /etc/apt-cacher-ng/acng.conf</p>
-
-<pre><code>    Remap-i2pd: http://i2p.repo ; file:backends_i2pd
-</code></pre>
-
-<p><strong>Configuring apt to use your caching proxy</strong></p>
-
-<p>Finally, you'll need to make your applications aware of apt-cacher-ng. To make
-your host machine's apt aware of your proxy, you need to create a file
-in /etc/apt/apt.conf.d/ that tells apt to look for it.</p>
-
-<pre><code>    echo "Acquire::http { Proxy \"http://127.0.0.1:3142\"; };" | tee /etc/apt/apt.conf.d/02proxy
-</code></pre>
-
-<p>But to make live-build use it, add the proxy's address to your options in your
-auto/config file.</p>
-
-<pre><code>    lb config noauto --apt-http-proxy http://127.0.0.1:3142
-</code></pre>
-<h1>Step Five: Provide a path to verify Authentic copies</h1>
-
-<p><a href="https://github.com/cmotc/hoarderMediaOS/blob/master/Tutorial/HOWTO.5.AUTHENTICATE.md">Standalone Chapter</a></p>
-
-<p>Like I said, we should all be careful about who we trust to assemble all our
-software. Likewise, when you distribute it in binary form, it probably makes
-sense to provide many ways to verify that the recipient of that copy has
-obtained it authentically. To do this, you have many options, and you should
-choose to use them all if possible.</p>
-
-<h2>Compute Hashes</h2>
-
-<p>The first step to helping your fellow enthusiast to verify the authenticity of
-an image, you need to compute hashes of those images. A <em>hash function</em> takes
-an arbitrary piece of data, any data will do, and creates a string of a fixed
-size which is totally unique to the piece of data that was <em>hashed</em>. So when we
-sha256sum our iso file, we will get a string that is unique to our iso file and
-cannot be reproduced, without an exact copy of the original iso file. The tool
-we should use for this is sha256sum, which computes hashes based on the Secure
-Hashing Algorithm, the 256 bit version, which is used by many GNU/Linux
-distributions to verify the authenticity of their distributed iso files.</p>
-
-<p>In order to produce the sha256sum of the iso file, run the following command. It
-make take a moment, especially if the file is large in size.</p>
-
-<pre><code>    sha256sum tv-amd64.hybrid.iso
-</code></pre>
-
-<p>Once the hash is computed, it will be emitted to stdout in the form</p>
-
-<pre><code>    86b70a74e30eec40bf129c44a8dd823c1320200825bc4222556ce1241d4863dd  tv-amd64.hybrid.iso
-</code></pre>
-
-<p>This can now be used to ensure that the file corresponds to the hash, which is
-one half ot the authenticity puzzle. If you want to compute the hashes in your
-Makefile, you could use something like the following snippet.</p>
-
-<pre><code>    **Example Makefile Fragment: hash, delete empty on failure**
-    hash:
-            sha256sum tv-amd64.hybrid.iso &gt; \
-                    tv-amd64.hybrid.iso.sha256sum || \
-                    rm tv-amd64.hybrid.iso.sha256sum; \
-</code></pre>
-
-<p>Because piping the output of sha256sum will always produce a file, but if the
-file to be hashed doesn't exist, the created file will be empty, we make sure
-that sha256sum signals that it has completed <em>successfully</em> and if it fails, we
-delete the created file.</p>
-
-<h2>Sign Hashes</h2>
-
-<p>Now we've got hashes to verify the iso's correspond to the hashes, but now we
-need a way for the user to verify the provenance of the hashes themselves. In
-order to do this, we need to sign them with a key that corresponds to some real
-set of contact information. Traditionally, this has been an e-mail but maybe
-something out there is better for you.</p>
-
-<p>To get started, we need to generate a signing key. If you already have a signing
-key you want to use, then you can skip this step.</p>
-
-<p><a href="https://wiki.debian.org/Keysigning#Step_1:_Create_a_RSA_keypair">See Also: Key Generation/Distribution</a></p>
-
-<p><a href="https://keyring.debian.org/creating-key.html">Also See Also: Key Generation</a></p>
-
-<p>Before you do anything else, you should edit your $HOME/.gnupg/gpg.conf to not
-use SHA1 as it's hashing algorithm.</p>
-
-<pre><code>    personal-digest-preferences SHA256
-    cert-digest-algo SHA256
-    default-preference-list SHA512 SHA384 SHA256 SHA224 AES256 AES192 AES CAST5 ZLIB BZIP2 ZIP Uncompressed
-</code></pre>
-
-<p>Now, you'll need to start the gpg key generation procedure:</p>
-
-<pre><code>    gpg --gen-key
-</code></pre>
-
-<p>You'll be prompted for whick key type you want to generate. RSA and RSA, the
-default key type, is the one that we want. On the next prompt, you'll be
-prompted to select a key size, and you should select 4096 for your signing key.
-Then select a time frame for the key to be valid. For the sake of brevity, I
-direct you to the second
-<a href="https://keyring.debian.org/creating-key.html">link at the top of this section</a>.</p>
-
-<p>Now that you're done with that, you've just got to get ready to share your key.
-First, generate a key revocation certificate. Back it up someplace safe. You
-will use it in case your private key is ever compromised to inform people that
-they must disregard the compromised key and update to an uncompromised key.</p>
-
-<pre><code>    gpg --gen-revoke ${KEY_ID} &gt; ~/.gnupg/revocation-${KEY_ID}.crt
-</code></pre>
-
-<p>Finally, share the <strong>public</strong> key with the world.</p>
-
-<pre><code>    gpg --send-key ${KEY_ID}
-</code></pre>
-
-<p>Now that we've got our signing key, let's use it to sign the files:</p>
-
-<pre><code>    gpg --batch --yes --clear-sign -u "$(SIGNING_KEY)" tv-amd64.hybrid.iso.sha256sum
-</code></pre>
-
-<p>After you're done, you'll have a signed copy of the hash file that looks like
-this:</p>
-
-<pre><code>    -----BEGIN PGP SIGNED MESSAGE-----
-    Hash: SHA256
-
-    86b70a74e30eec40bf129c44a8dd823c1320200825bc4222556ce1241d4863dd  tv-amd64.hybrid.iso
-    -----BEGIN PGP SIGNATURE-----
-
-    iQEzBAEBCAAdFiEEwM7uKXtf5F/2EKrG8F+F+kRsBCsFAllIqBoACgkQ8F+F+kRs
-    BCubMwgAuf81nTIcmM8COY7T7RGp51ApiAMETU1tuHQbOKBKDRemgml2UZ0DNVLZ
-    wCtnfErsQD8getUSpqSk07e448sCbEUYeifH8xS/6uC3JbCkITt4bDl6UdU2BXm0
-    I9IkweK3d0hp5TIjs4m9fA3qVTto1v9EaUxQhREB3/do2FhqP+60ehqR3dgqLzOr
-    5ueXxXCeFAHJhyvQk0EvKwvWciabqj8gY2ra5aEXE+kAJWz8mrLyK/4Q0IBwXMYm
-    xPiXNctlaldqDCjsF42ronHQlHK7pg0l58Pht/kSh8ERKPyhtLGeOOrNyjcbg8/t
-    HE65ErJ7ArZZJQ7KBdxFr8lzkrPsEg==
-    =PrNx
-    -----END PGP SIGNATURE-----
-</code></pre>
-
-<p>and can be used by anyone with your public key to assure that the hash they
-are using, and thus the iso it corresponds to, came from the owner of the
-corresponding private key and them alone. In order to make the signatures with
-the Makefile, a fragment like the following will work. Note that we don't have
-to delete failed signatures, a nonexistent file will just not produce a
-signature.</p>
-
-<pre><code>    **Example Makefile Fragment: sign the hash**
-    sign:
-            gpg --batch --yes --clear-sign -u "$(SIGNING_KEY)" \
-                    tv-amd64.hybrid.iso.sha256sum ; \
 </code></pre>
 <h1>Step Three: Makefile</h1>
 
@@ -1094,95 +940,250 @@ imperfectly, by allowing mounts in chroots</p>
     sudo sysctl -w kernel.grsecurity.chroot_deny_mount=1
     sudo sysctl -p
 </code></pre>
-<h1>How I decided to continuously remaster my own Debian Variant without, like, totally meaning to.</h1>
+<h1>Step Five: Provide a path to verify Authentic copies</h1>
 
-<p><a href="https://github.com/cmotc/hoarderMediaOS/blob/master/Tutorial/HOWTO.0.INTRODUCTION.md">Standalone Chapter</a></p>
+<p><a href="https://github.com/cmotc/hoarderMediaOS/blob/master/Tutorial/HOWTO.5.AUTHENTICATE.md">Standalone Chapter</a></p>
 
-<p>OK, this thing is a work in progress, so bear with me while I do it, but here's
-what I'm attempting. I have spent alot of time refining my home PC's
-configuration based on defaults in the Debian installer, and the packages
-themselves, and I've been pretty successful at it. But it's an ongoing process,
-and sometimes, you bork something and you've got to reinstall. Which means that
-you've got to reproduce all that configuration and start over, which kind of
-sucks. There are many ways to approach this, and what this readme is going to
-amount to is simply an example of but one way of doing things(With some
-variations, because some of the things that Docker can allow you to do are
-awesome). I wanted a lightweight media-center OS for retro gaming that could
-double as a Media Server, I totally uncreatively called it hoarderMediaOS, and
-now it's a reasonably easy to reproduce procedure and I hope it's helpful. It's
-based on Unstable, though, so it's might become outdated at any moment. I'm
-going to keep doing it though, so I'll probably notice if it stops working.</p>
+<p>Like I said, we should all be careful about who we trust to assemble all our
+software. Likewise, when you distribute it in binary form, it probably makes
+sense to provide many ways to verify that the recipient of that copy has
+obtained it authentically. To do this, you have many options, and you should
+choose to use them all if possible.</p>
 
-<h2>Who this tutorial is targeted at</h2>
+<h2>Compute Hashes</h2>
 
-<p>Enthusiastic Amateurs! People who like Debian/Ubuntu based distributions for
-their excellent stability and diligent community, but who don't necessarily
-want to use one of the regular desktop environments in the default
-configuration. Ricers, datahoarders, and hobbyists who would rather use Debian
-than Arch or Gentoo. Anyone who uses their home computer for experimentation.
-The point of this tutorial is that <strong>anyone</strong> can learn to continuously
-customize their Linux configuration if they wish to, <strong>anyone</strong>, even a solitary
-hobbyist with no significant organizational resources.</p>
+<p>The first step to helping your fellow enthusiast to verify the authenticity of
+an image, you need to compute hashes of those images. A <em>hash function</em> takes
+an arbitrary piece of data, any data will do, and creates a string of a fixed
+size which is totally unique to the piece of data that was <em>hashed</em>. So when we
+sha256sum our iso file, we will get a string that is unique to our iso file and
+cannot be reproduced, without an exact copy of the original iso file. The tool
+we should use for this is sha256sum, which computes hashes based on the Secure
+Hashing Algorithm, the 256 bit version, which is used by many GNU/Linux
+distributions to verify the authenticity of their distributed iso files.</p>
 
-<p><strong>Is it a distro?</strong></p>
+<p>In order to produce the sha256sum of the iso file, run the following command. It
+make take a moment, especially if the file is large in size.</p>
 
-<p><strong>God I hope not.</strong> I'm not a person who really likes to deal in opinion. I
-deleted my whole blog because I felt obligated to be personal. Unfortunately,
-I have an opinion. I'm opinionated. And it's my opinion that it's too easy for
-people to consider any installable media that gets redistributed equal to a
-recognizable distro. It's just not. Tiny distros can be <strong>amazing</strong>, I loved
-CrunchBang and felt genuine sadness when corenominal gave it up, and genuine
-excitement for BunsenLabs and Crunchbang++. I love Linux Mint and think
-Cinnamon will ease many people's Dad's transition into using GNU/Linux from
-Windows when they start to get pissed off about Windows 10 serving them ads
-all the damn time. But there are caveats to using these tiny niche distros. You
-have to take matters into your own hands at times, even things that are second
-nature to you or me, might not be obvious to a first-time Mint user, even things
-as simple as being able to use AskUbuntu to get help. It takes a while to learn
-to translate the Arch wiki.</p>
-
-<p>Depending on their complexity, they may also configure 3rd-party repositorys.
-<strong>Please consider that in the most serious of terms</strong>. If they configured a
-third-party repository, they have probably used it to install something. That
-application was installed from that third-party repository because it's probably
-experimental and <strong>not ready to be held to the standards of an official Debian</strong>
-<strong>package</strong>. That doesn't mean it's bad. Lots of software from third-party
-repositories is <strong>awesome</strong> but using third party software is kind of a big
-decision.</p>
-
-<p>It is my opinion that there ought to be a clearer way to consider these two
-types of distros specifically. Maybe something like "Upstream Distro" and
-"Enthusiast Distro" as a place to instigate a lexical split, and make clear the
-advantages, disadvantages, and implications of each. Using an "Enthusiast
-Distro" is fun, and creating one is fun. Sharing them ought to be fun, too.
-I would be more comfortable sharing my own "Enthusiast Distro" if I were sure
-people understood, I'm just one guy, depending on the work of thousands, I think
-building riced install media is fun, and that's <strong>it</strong>.</p>
-
-<h2>What am I actually going to talk about?</h2>
-
-<p>live-build, docker, sid, make. Specifically, I'm going to teach you how to use
-these tools to continuously package your own personal configuration of Debian
-as an iso that can be used to create install media, just like the regular Debian
-LiveCD's.</p>
-
-<h2>What are you going to need?</h2>
-
-<p>Either Debian unstable(sid), Devuan unstable(ceres) or any distribution
-supporting Docker and coming configured with the Docker Hub.</p>
-
-<p><strong>On that note, Dependencies</strong></p>
-
-<pre><code>    Debian Sid/Devuan Ceres
-    =======================
-    sudo apt-get install live-build debootstrap make
-    optionally,
-    sudo apt-get install git docker.io
+<pre><code>    sha256sum tv-amd64.hybrid.iso
 </code></pre>
 
-<p>or install docker per your distribution's instructions or from source. Docker
-will use the debian:sid container as a base. A git repository or a git hosting
-service will also be helpful if you want to backup and share your configuration.</p>
+<p>Once the hash is computed, it will be emitted to stdout in the form</p>
+
+<pre><code>    86b70a74e30eec40bf129c44a8dd823c1320200825bc4222556ce1241d4863dd  tv-amd64.hybrid.iso
+</code></pre>
+
+<p>This can now be used to ensure that the file corresponds to the hash, which is
+one half ot the authenticity puzzle. If you want to compute the hashes in your
+Makefile, you could use something like the following snippet.</p>
+
+<pre><code>    **Example Makefile Fragment: hash, delete empty on failure**
+    hash:
+            sha256sum tv-amd64.hybrid.iso &gt; \
+                    tv-amd64.hybrid.iso.sha256sum || \
+                    rm tv-amd64.hybrid.iso.sha256sum; \
+</code></pre>
+
+<p>Because piping the output of sha256sum will always produce a file, but if the
+file to be hashed doesn't exist, the created file will be empty, we make sure
+that sha256sum signals that it has completed <em>successfully</em> and if it fails, we
+delete the created file.</p>
+
+<h2>Sign Hashes</h2>
+
+<p>Now we've got hashes to verify the iso's correspond to the hashes, but now we
+need a way for the user to verify the provenance of the hashes themselves. In
+order to do this, we need to sign them with a key that corresponds to some real
+set of contact information. Traditionally, this has been an e-mail but maybe
+something out there is better for you.</p>
+
+<p>To get started, we need to generate a signing key. If you already have a signing
+key you want to use, then you can skip this step.</p>
+
+<p><a href="https://wiki.debian.org/Keysigning#Step_1:_Create_a_RSA_keypair">See Also: Key Generation/Distribution</a></p>
+
+<p><a href="https://keyring.debian.org/creating-key.html">Also See Also: Key Generation</a></p>
+
+<p>Before you do anything else, you should edit your $HOME/.gnupg/gpg.conf to not
+use SHA1 as it's hashing algorithm.</p>
+
+<pre><code>    personal-digest-preferences SHA256
+    cert-digest-algo SHA256
+    default-preference-list SHA512 SHA384 SHA256 SHA224 AES256 AES192 AES CAST5 ZLIB BZIP2 ZIP Uncompressed
+</code></pre>
+
+<p>Now, you'll need to start the gpg key generation procedure:</p>
+
+<pre><code>    gpg --gen-key
+</code></pre>
+
+<p>You'll be prompted for whick key type you want to generate. RSA and RSA, the
+default key type, is the one that we want. On the next prompt, you'll be
+prompted to select a key size, and you should select 4096 for your signing key.
+Then select a time frame for the key to be valid. For the sake of brevity, I
+direct you to the second
+<a href="https://keyring.debian.org/creating-key.html">link at the top of this section</a>.</p>
+
+<p>Now that you're done with that, you've just got to get ready to share your key.
+First, generate a key revocation certificate. Back it up someplace safe. You
+will use it in case your private key is ever compromised to inform people that
+they must disregard the compromised key and update to an uncompromised key.</p>
+
+<pre><code>    gpg --gen-revoke ${KEY_ID} &gt; ~/.gnupg/revocation-${KEY_ID}.crt
+</code></pre>
+
+<p>Finally, share the <strong>public</strong> key with the world.</p>
+
+<pre><code>    gpg --send-key ${KEY_ID}
+</code></pre>
+
+<p>Now that we've got our signing key, let's use it to sign the files:</p>
+
+<pre><code>    gpg --batch --yes --clear-sign -u "$(SIGNING_KEY)" tv-amd64.hybrid.iso.sha256sum
+</code></pre>
+
+<p>After you're done, you'll have a signed copy of the hash file that looks like
+this:</p>
+
+<pre><code>    -----BEGIN PGP SIGNED MESSAGE-----
+    Hash: SHA256
+
+    86b70a74e30eec40bf129c44a8dd823c1320200825bc4222556ce1241d4863dd  tv-amd64.hybrid.iso
+    -----BEGIN PGP SIGNATURE-----
+
+    iQEzBAEBCAAdFiEEwM7uKXtf5F/2EKrG8F+F+kRsBCsFAllIqBoACgkQ8F+F+kRs
+    BCubMwgAuf81nTIcmM8COY7T7RGp51ApiAMETU1tuHQbOKBKDRemgml2UZ0DNVLZ
+    wCtnfErsQD8getUSpqSk07e448sCbEUYeifH8xS/6uC3JbCkITt4bDl6UdU2BXm0
+    I9IkweK3d0hp5TIjs4m9fA3qVTto1v9EaUxQhREB3/do2FhqP+60ehqR3dgqLzOr
+    5ueXxXCeFAHJhyvQk0EvKwvWciabqj8gY2ra5aEXE+kAJWz8mrLyK/4Q0IBwXMYm
+    xPiXNctlaldqDCjsF42ronHQlHK7pg0l58Pht/kSh8ERKPyhtLGeOOrNyjcbg8/t
+    HE65ErJ7ArZZJQ7KBdxFr8lzkrPsEg==
+    =PrNx
+    -----END PGP SIGNATURE-----
+</code></pre>
+
+<p>and can be used by anyone with your public key to assure that the hash they
+are using, and thus the iso it corresponds to, came from the owner of the
+corresponding private key and them alone. In order to make the signatures with
+the Makefile, a fragment like the following will work. Note that we don't have
+to delete failed signatures, a nonexistent file will just not produce a
+signature.</p>
+
+<pre><code>    **Example Makefile Fragment: sign the hash**
+    sign:
+            gpg --batch --yes --clear-sign -u "$(SIGNING_KEY)" \
+                    tv-amd64.hybrid.iso.sha256sum ; \
+</code></pre>
+<h1>Step Six: Create torrents and Release</h1>
+
+<p><a href="https://github.com/cmotc/hoarderMediaOS/blob/master/Tutorial/HOWTO.6.RELEASE.md">Standalone Chapter</a></p>
+
+<p>Now we've got everything we need to responsibly share our configuration except
+a means of sharing it. Fortunately, with a little trickery you can actually
+reliably bootstrap some really good ways of distributing your iso file. I like
+a combination of Github Releases and a cool feature of the Bittorrent protocol
+known as "Web Seeds" that allow you to supplement a Peer-to-Peer swarm with an
+HTTP or HTTPS source. Unfortunately, in order to make this automatic we have to
+install an additional couple of dependencies. Fortunately for us, one of those
+dependencies is in Go! Go is an awesome language that anyone can use.
+Unfortunately for us, it's because the excellent Go software involved here isn't
+quite available in Debian just yet.</p>
+
+<h2>Install Extra Dependencies</h2>
+
+<p>OK so first, we need to install the extra dependencies here. We'll be using the
+terminal tool "mktorrent" to generate our torrent files, and we'll be using
+golang to get the github-release package.</p>
+
+<pre><code>    sudo apt-get install mktorrent golang
+</code></pre>
+
+<p>Now, set the GOPATH and run 'go get' to retrieve the package</p>
+
+<pre><code>    export GOPATH="$HOME/.go"
+    mkdir -p "$GOPATH"
+    go get github.com/aktau/github-release
+</code></pre>
+
+<p>And include the GOPATH in your PATH</p>
+
+<pre><code>    export PATH="$GOPATH:$PATH"
+</code></pre>
+
+<p>Now, generate a torrent from the file. I just added a bunch of public annouce
+URLS to it, these are open trackers anyone can use. Note that we also use a
+Web Seed to supplement our torrent. This is very, very important, it'll provide
+a consistent source for downloads until a large enough swarm exists that it is
+no longer neccessary.</p>
+
+<pre><code>    mktorrent -a "udp://tracker.openbittorrent.com:80" \
+    -a "udp://tracker.publicbt.com:80" \
+    -a "udp://tracker.istole.it:80" \
+    -a "udp://tracker.btzoo.eu:80/announce" \
+    -a "http://opensharing.org:2710/announce" \
+    -a "udp://open.demonii.com:1337/announce" \
+    -a "http://announce.torrentsmd.com:8080/announce.php" \
+    -a "http://announce.torrentsmd.com:6969/announce" \
+    -a "http://bt.careland.com.cn:6969/announce" \
+    -a "http://i.bandito.org/announce" \
+    -a "http://bttrack.9you.com/announce" \
+    -w https://github.com/"$(MY_ACCOUNT)"/"$(MY_ISO)"/releases/download/$(shell date +'%y.%m.%d')/tv.iso \
+    tv-amd64.hybrid.iso; \
+</code></pre>
+
+<p>Awesome, now that the torrent is generated, generate a tag for the release on
+github. I just use the date to tag the releases, as the point of this procedure
+is to run builds frequently.</p>
+
+<pre><code>    git tag $(date +'%y.%m.%d'); git push --tags github
+</code></pre>
+
+<p>in a Makefile, the same command will need to look like this:</p>
+
+<pre><code>    git tag $(shell date +'%y.%m.%d'); git push --tags github
+</code></pre>
+
+<p>In order to create a Github release for that tag, you'll need to use the
+program we downloaded with go get, github-release:</p>
+
+<pre><code>    github-release release \
+    --user "$(MY_ACCOUNT)" \
+    --repo "$(MY_ISO)" \
+    --tag $(shell date +'%y.%m.%d') \
+    --name "$(MY_ISO)" \
+    --description "A re-buildable OS for self-hosting. Please use the torrent if possible" \
+    --pre-release ; \
+</code></pre>
+
+<p>Now we're ready to upload our built images and verification materials to the
+release page. I generally upload them from smallest to largest files so to
+upload the sha256 hash:</p>
+
+<pre><code>    github-release upload --user "$(MY_ACCOUNT)" --repo "$(MY_ISO)" --tag $(shell date +'%y.%m.%d') \
+            --name "$(MY_ISO)" \
+            --file tv-amd64.hybrid.iso.sha256sum; \
+</code></pre>
+
+<p>And the signed sha256 hash:</p>
+
+<pre><code>    github-release upload --user "$(MY_ACCOUNT)" --repo "$(MY_ISO)" --tag $(shell date +'%y.%m.%d') \
+            --name "$(MY_ISO)" \
+            --file tv-amd64.hybrid.iso.sha256sum.asc;\
+</code></pre>
+
+<p>And the torrent file:</p>
+
+<pre><code>    github-release upload --user "$(MY_ACCOUNT)" --repo "$(MY_ISO)" --tag $(shell date +'%y.%m.%d') \
+            --name "$(MY_ISO)" \
+            --file tv-amd64.hybrid.iso.torrent;\
+</code></pre>
+
+<p>and finally, the bootable, Live ISO image.</p>
+
+<pre><code>    github-release upload --user "$(MY_ACCOUNT)" --repo "$(MY_ISO)" --tag $(shell date +'%y.%m.%d') \
+            --name "$(MY_ISO)" \
+            --file tv-amd64.hybrid.iso;\
+</code></pre>
 <h1>How I decided to continuously remaster my own Debian Variant without, like, totally meaning to.</h1>
 
 <p><a href="https://github.com/cmotc/hoarderMediaOS/blob/master/Tutorial/HOWTO.0.INTRODUCTION.md">Standalone Chapter</a></p>
