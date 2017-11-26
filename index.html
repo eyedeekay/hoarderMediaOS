@@ -7,6 +7,8 @@
     </title>
     <link rel="stylesheet" href="./style.css">
 </head>
+<body>
+<div id="content">
 <h1>hoarderMediaOS</h1>
 
 <p>This readme previously contained a tutorial. It is now found
@@ -111,6 +113,8 @@ related to my home networking project:</p>
 <li>Repository frontend creator for static web hosts <a href="https://github.com/eyedeekay/apt-now">apt-now</a></li>
 <li>Tablet OS image Configuration <a href="https://github.com/eyedeekay/imgmaker">imgmaker</a></li>
 </ul>
+</div>
+<div id="content">
 <h1>How I decided to continuously remaster my own Debian Variant without, like, totally meaning to.</h1>
 
 <p><a href="https://github.com/cmotc/hoarderMediaOS/blob/master/Tutorial/HOWTO.0.INTRODUCTION.md">Standalone Chapter</a></p>
@@ -200,6 +204,8 @@ supporting Docker and coming configured with the Docker Hub.</p>
 <p>or install docker per your distribution's instructions or from source. Docker
 will use the debian:sid container as a base. A git repository or a git hosting
 service will also be helpful if you want to backup and share your configuration.</p>
+</div>
+<div id="content">
 <h1>Step Zero: A crash course in live-build</h1>
 
 <p><a href="https://github.com/cmotc/hoarderMediaOS/blob/master/Tutorial/HOWTO.1.LIVEBUILD.md">Standalone Chapter</a></p>
@@ -239,6 +245,8 @@ to the configuration, in between the two commands.</p>
 
 <p>This will get you a live system with the excellent budgie desktop. In doing so,
 it will many packages on the liveCD that budgie-desktop depends on.</p>
+</div>
+<div id="content">
 <h1>Step One: Set up your own caching proxy for apt(You'll be much better off)</h1>
 
 <p><a href="https://github.com/cmotc/hoarderMediaOS/blob/master/Tutorial/HOWTO.2.APTCACHERNG.md">Standalone Chapter</a></p>
@@ -337,6 +345,8 @@ auto/config file.</p>
 
 <pre><code>    lb config noauto --apt-http-proxy http://127.0.0.1:3142
 </code></pre>
+</div>
+<div id="content">
 <h1>Step Two: Auto Scripts</h1>
 
 <p><a href="https://github.com/cmotc/hoarderMediaOS/blob/master/Tutorial/HOWTO.2.AUTOSCRIPTS.md">Standalone Chapter</a></p>
@@ -499,6 +509,8 @@ the environment like this:</p>
         --initsystem sysvinit \
         "$@"
 </code></pre>
+</div>
+<div id="content">
 <h1>Step Three: Makefile</h1>
 
 <p><a href="https://github.com/cmotc/hoarderMediaOS/blob/master/Tutorial/HOWTO.3.MAKEFILE.md">Standalone Chapter</a></p>
@@ -739,6 +751,8 @@ together it should look like:</p>
             echo "nohup bash -c 'sleep 2 &amp;&amp; conky 2&gt;1 /dev/null &amp;'" | tee config/includes.binary/etc/skel/conky.sh
             chmod +x config/includes.binary/etc/skel/conky.sh
 </code></pre>
+</div>
+<div id="content">
 <h1>Step Four: Dockerfile</h1>
 
 <p><a href="https://github.com/cmotc/hoarderMediaOS/blob/master/Tutorial/HOWTO.4.DOCKERFILE.md">Standalone Chapter</a></p>
@@ -940,6 +954,8 @@ imperfectly, by allowing mounts in chroots</p>
     sudo sysctl -w kernel.grsecurity.chroot_deny_mount=1
     sudo sysctl -p
 </code></pre>
+</div>
+<div id="content">
 <h1>Step Five: Provide a path to verify Authentic copies</h1>
 
 <p><a href="https://github.com/cmotc/hoarderMediaOS/blob/master/Tutorial/HOWTO.5.AUTHENTICATE.md">Standalone Chapter</a></p>
@@ -1074,6 +1090,8 @@ signature.</p>
             gpg --batch --yes --clear-sign -u "$(SIGNING_KEY)" \
                     tv-amd64.hybrid.iso.sha256sum ; \
 </code></pre>
+</div>
+<div id="content">
 <h1>Step Six: Create torrents and Release</h1>
 
 <p><a href="https://github.com/cmotc/hoarderMediaOS/blob/master/Tutorial/HOWTO.6.RELEASE.md">Standalone Chapter</a></p>
@@ -1184,6 +1202,8 @@ upload the sha256 hash:</p>
             --name "$(MY_ISO)" \
             --file tv-amd64.hybrid.iso;\
 </code></pre>
+</div>
+<div id="content">
 <h1>How I decided to continuously remaster my own Debian Variant without, like, totally meaning to.</h1>
 
 <p><a href="https://github.com/cmotc/hoarderMediaOS/blob/master/Tutorial/HOWTO.0.INTRODUCTION.md">Standalone Chapter</a></p>
@@ -2264,3 +2284,5 @@ upload the sha256 hash:</p>
             --name "$(MY_ISO)" \
             --file tv-amd64.hybrid.iso;\
 </code></pre>
+</div>
+</body>
