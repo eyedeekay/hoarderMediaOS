@@ -66,9 +66,13 @@ elif [ "$distro" = "ubuntu" ]; then
         if [ ! -z "$nonfree" ]; then
                 export components="--components=\"main,restricted,universe,multiverse\""
                 export archiveareas="--archive-areas \"main,restricted,universe,multiverse\""
+        else
+                export components="--components=\"main\""
+                export archiveareas="--archive-areas \"main\""
         fi
         export usekeyring="--keyring-packages ubuntu-archive-keyring"
-        export distromode="--mode ubuntu"
+        #export distromode="--mode ubuntu"
+        export distromode="--mode debian"
 fi
 
 if [ ! -z "$components" ]; then
