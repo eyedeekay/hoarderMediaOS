@@ -164,7 +164,6 @@ syncthing
 procps
 mosh
 mutt
-toxic
 lftp
 rtl-sdr
 vlc
