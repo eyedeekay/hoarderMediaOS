@@ -62,8 +62,8 @@ emby-repo:
 		&& ln -sf emby.list.key.chroot emby.list.key.binary
 
 i2pd-repo:
-	echo "deb https://repo.lngserv.ru/debian jessie main" | tee config/archives/i2pd.list.chroot
-	echo "deb-src https://repo.lngserv.ru/debian jessie main" | tee -a config/archives/i2pd.list.chroot
+	echo "deb https://repo.lngserv.ru/debian stretch main" | tee config/archives/i2pd.list.chroot
+	echo "deb-src https://repo.lngserv.ru/debian stretch main" | tee -a config/archives/i2pd.list.chroot
 	echo "#deb http://i2p.repo jessie main" | tee -a config/archives/i2pd.list.chroot
 	echo "#deb-src http://i2p.repo jessie main" | tee -a config/archives/i2pd.list.chroot
 	gpg --keyserver $(keyserver) --recv-keys 66F6C87B98EBCFE2; \
