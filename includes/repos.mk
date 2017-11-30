@@ -11,7 +11,7 @@ devuan-key:
 	echo "deb http://us.mirror.devuan.org/devuan ascii main" | tee -a config/archives/devuan.list.chroot
 	echo "deb-src http://us.mirror.devuan.org/devuan ascii main" | tee -a config/archives/devuan.list.chroot
 	cd config/archives/ \
-		&& ln -sf nonfree.list.chroot nonfree.list.binary
+		&& ln -sf devuan.list.chroot devuan.list.binary
 	gpg --keyserver $(keyserver) --recv-keys 94532124541922FB; \
 	gpg -a --export 94532124541922FB | tee config/archives/devuan.list.key.chroot
 	cd config/archives/ \
@@ -30,6 +30,11 @@ devuan-key:
 	cd config/archives/ \
 		&& ln -sf debdev.pref.chroot debdev.pref.binary
 
+debian-repro:
+	echo "deb http://reproducible.alioth.debian.org/debian/ ./" | tee -a config/archives/repro.list.chroot
+	echo "deb-src http://reproducible.alioth.debian.org/debian/ ./" | tee -a config/archives/repro.list.chroot
+	cd config/archives/ \
+		&& ln -sf repro.list.chroot repro.list.binary
 
 apt-now-repo:
 	echo "deb https://eyedeekay.github.io/apt-now/deb-pkg rolling main" | tee config/archives/apt-now.list.chroot
