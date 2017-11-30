@@ -35,6 +35,10 @@ debian-repro:
 	echo "deb-src http://reproducible.alioth.debian.org/debian/ ./" | tee -a config/archives/repro.list.chroot
 	cd config/archives/ \
 		&& ln -sf repro.list.chroot repro.list.binary
+	gpg --keyserver $(keyserver) --recv-keys 49B6574736D0B637CC3701EA5DB7CA67EA59A31F; \
+	gpg -a --export 49B6574736D0B637CC3701EA5DB7CA67EA59A31F | tee config/repro.list.key.chroot
+	cd config/archives/ \
+		&& ln -sf repro.list.key.chroot repro.list.key.binary
 
 apt-now-repo:
 	echo "deb https://eyedeekay.github.io/apt-now/deb-pkg rolling main" | tee config/archives/apt-now.list.chroot
