@@ -121,7 +121,6 @@ apt-transport-tor
 apt-transport-https
 apt-utils
 ca-certificates
-cjdns
 coreutils
 moreutils
 dpkg
