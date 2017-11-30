@@ -121,6 +121,7 @@ apt-transport-tor
 apt-transport-https
 apt-utils
 ca-certificates
+cjdns
 coreutils
 moreutils
 dpkg
@@ -223,7 +224,7 @@ export SERVER_PACKAGE_LIST
 #live-config-sysvinit
 
 packlist:
-	@echo "$$$PACKAGE_LIST"
+	@echo "$$PACKAGE_LIST"
 
 init-system:
 	cd config/package-lists/ && \
