@@ -19,8 +19,8 @@ of building an iso with Debian's live-build inside of a container. The overall
 rationale for this choice is mostly covered in the tutorial. There has, however
 emerged some errata as this configuration has come to do more things.
 
-There is a couple of configuration files you need to pay attention to.
-----------------------------------------------------------------------
+There are a couple of configuration files you need to pay attention to.
+-----------------------------------------------------------------------
 
 The first of which is paths.sh. This is just a place to store information that
 helps retrieve copies of the built iso from a remote build server, specifically
