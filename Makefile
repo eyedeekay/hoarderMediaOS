@@ -78,6 +78,7 @@ libre-ubuntu:
 
 custom:
 	make apt-now-repo; \
+	make postinstall-repo; \
 	make lair-game-repo
 
 build:

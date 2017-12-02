@@ -48,6 +48,14 @@ apt-now-repo:
 		&& ln -sf apt-now.list.chroot apt-now.list.binary \
 		&& ln -sf apt-now.list.key.chroot apt-now.list.key.binary
 
+postinstall-repo:
+	echo "deb https://eyedeekay.github.io/postinstall/deb-pkg rolling main" | tee config/archives/postinstall.list.chroot
+	echo "deb-src https://eyedeekay.github.io/postinstall/deb-pkg rolling main" | tee -a config/archives/postinstall.list.chroot
+	curl -s https://eyedeekay.github.io/postinstall/eyedeekay.github.io.postinstall.gpg.key | tee config/archives/postinstall.list.key.chroot
+	cd config/archives/ \
+		&& ln -sf postinstall.list.chroot postinstall.list.binary \
+		&& ln -sf postinstall.list.key.chroot postinstall.list.key.binary
+
 lair-game-repo:
 	echo "deb https://eyedeekay.github.io/lair-web/lair-deb/debian rolling main" | tee config/archives/lair.list.chroot
 	echo "deb-src https://eyedeekay.github.io/lair-web/lair-deb/debian rolling main" | tee -a config/archives/lair.list.chroot

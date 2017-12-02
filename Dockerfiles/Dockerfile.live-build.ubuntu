@@ -1,4 +1,4 @@
-FROM debian:sid
+FROM ubuntu:latest
 ARG DEBIAN_FRONTEND="noninteractive"
 ARG LANG="C.UTF-8"
 ARG LC_ALL="C.UTF-8"

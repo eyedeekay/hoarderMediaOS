@@ -10,6 +10,7 @@ skel:
 		config/includes.chroot/etc/skel/Audio/Books/ \
 		config/includes.chroot/etc/skel/Audio/Theatre/ \
 		config/includes.chroot/etc/skel/Audio/Comedy/ \
+		config/includes.chroot/etc/skel/Audio/Podcasts/ \
 		config/includes.chroot/etc/skel/Audio/Music/ \
 		config/includes.chroot/etc/skel/Audio/Music/Rock/ \
 		config/includes.chroot/etc/skel/Audio/Music/Rap/ \
@@ -31,6 +32,7 @@ skel:
 		config/includes.binary/etc/skel/Audio/Books/ \
 		config/includes.binary/etc/skel/Audio/Theatre/ \
 		config/includes.binary/etc/skel/Audio/Comedy/ \
+		config/includes.binary/etc/skel/Audio/Podcasts/ \
 		config/includes.binary/etc/skel/Audio/Music/ \
 		config/includes.binary/etc/skel/Audio/Music/Rock/ \
 		config/includes.binary/etc/skel/Audio/Music/Rap/ \

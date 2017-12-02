@@ -116,6 +116,7 @@ surf
 surfraw
 surfraw-extra
 dpkg
+pi-cryptenv
 apt-file
 apt-transport-tor
 apt-transport-https
