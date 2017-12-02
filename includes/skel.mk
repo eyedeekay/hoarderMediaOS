@@ -1,17 +1,3 @@
-define TEA_CONFIG
-[General]
-additional_hl=0
-editor_font_name=Monospace
-editor_font_size=8
-pos=@Point(0 15)
-show_linenums=0
-size=@Size(1366 738)
-splitterSizes=@ByteArray(\0\0\0\xff\0\0\0\x1\0\0\0\x2\0\0\x1\xf6\0\0\0\xc0\x1\xff\xff\xff\xff\x1\0\0\0\x2\0)
-word_wrap=2
-
-endef
-
-export TEA_CONFIG
 
 skel:
 	mkdir -p config/includes.chroot/etc/apt/preferences.d/ \
@@ -64,41 +50,41 @@ skel:
 easy-user:
 	mkdir -p config/includes.chroot/etc/apt/preferences.d/ \
 		config/includes.binary/etc/apt/preferences.d/
-	echo "#!/bin/sh -e" > config/includes.chroot/etc/rc.local
-	echo "exit 0" >> config/includes.chroot/etc/rc.local
-	echo "#!/bin/sh -e" > config/includes.binary/etc/rc.local
-	echo "exit 0" >> config/includes.binary/etc/rc.local
+	echo "#!/bin/sh -e" | tee config/includes.chroot/etc/rc.local
+	echo "exit 0" | tee -a config/includes.chroot/etc/rc.local
+	echo "#!/bin/sh -e" | tee config/includes.binary/etc/rc.local
+	echo "exit 0" | tee -a config/includes.binary/etc/rc.local
 	mkdir -p config/includes.chroot/etc/live/config/
-	echo 'LIVE_USER_DEFAULT_GROUPS="audio cdrom dip floppy video plugdev netdev powerdev scanner bluetooth fuse docker"' > config/includes.chroot/etc/live/config/user-setup.conf
+	echo 'LIVE_USER_DEFAULT_GROUPS="audio cdrom dip floppy video plugdev netdev powerdev scanner bluetooth fuse docker"' | tee config/includes.chroot/etc/live/config/user-setup.conf
 	make preseed-install
 
 permissive-user:
 	mkdir -p config/includes.chroot/etc/apt/preferences.d/ \
-	config/includes.binary/etc/apt/preferences.d/
-	echo "#!/bin/sh -e" > config/includes.chroot/etc/rc.local
-	echo "exit 0" >> config/includes.chroot/etc/rc.local
-	echo "#!/bin/sh -e" > config/includes.binary/etc/rc.local
-	echo "exit 0" >> config/includes.binary/etc/rc.local
+		config/includes.binary/etc/apt/preferences.d/
+	echo "#!/bin/sh -e" | tee config/includes.chroot/etc/rc.local
+	echo "exit 0" | tee -a config/includes.chroot/etc/rc.local
+	echo "#!/bin/sh -e" | tee config/includes.binary/etc/rc.local
+	echo "exit 0" | tee -a config/includes.binary/etc/rc.local
 	mkdir -p config/includes.chroot/etc/live/config/
-	echo 'LIVE_USER_DEFAULT_GROUPS="audio cdrom dip floppy video plugdev netdev powerdev scanner bluetooth fuse docker grsec-tpe"' > config/includes.chroot/etc/live/config/user-setup.conf
+	echo 'LIVE_USER_DEFAULT_GROUPS="audio cdrom dip floppy video plugdev netdev powerdev scanner bluetooth fuse docker grsec-tpe"' | tee config/includes.chroot/etc/live/config/user-setup.conf
 	make preseed-install
 
 preseed-install:
-	echo "d-i passwd/user-default-groups cdrom floppy audio dip video plugdev netdev scanner bluetooth wireshark docker lpadmin" > config/preseed/preseed.cfg.chroot
-	echo "d-i partman-auto/choose_recipe select atomic" >> config/preseed/preseed.cfg.chroot
-	echo "d-i partman-basicfilesystems/no_swap boolean false">> config/preseed/preseed.cfg.chroot
-	echo 'd-i partman-auto/expert_recipe string boot-root : \'>> config/preseed/preseed.cfg.chroot
-	echo '5120 1 -1 btrfs \'>> config/preseed/preseed.cfg.chroot
-	echo '$$primary{ } $$bootable{ } \'>> config/preseed/preseed.cfg.chroot
-	echo 'method{ format } format{ } \'>> config/preseed/preseed.cfg.chroot
-	echo 'use_filesystem{ } filesystem{ btrfs } \'>> config/preseed/preseed.cfg.chroot
-	echo "label { root } mountpoint{ / } .">> config/preseed/preseed.cfg.chroot
-	echo "d-i passwd/user-default-groups cdrom floppy audio dip video plugdev netdev scanner bluetooth wireshark docker lpadmin" > config/preseed/preseed.cfg.binary
-	echo "d-i partman-auto/choose_recipe select atomic" >> config/preseed/preseed.cfg.binary
-	echo "d-i partman-basicfilesystems/no_swap boolean false">> config/preseed/preseed.cfg.binary
-	echo 'd-i partman-auto/expert_recipe string boot-root : \'>> config/preseed/preseed.cfg.binary
-	echo '5120 1 -1 btrfs \'>> config/preseed/preseed.cfg.binary
-	echo '$$primary{ } $$bootable{ } \'>> config/preseed/preseed.cfg.binary
-	echo 'method{ format } format{ } \'>> config/preseed/preseed.cfg.binary
-	echo 'use_filesystem{ } filesystem{ btrfs } \'>> config/preseed/preseed.cfg.binary
-	echo "label { root } mountpoint{ / } .">> config/preseed/preseed.cfg.binary
+	echo "d-i passwd/user-default-groups cdrom floppy audio dip video plugdev netdev scanner bluetooth wireshark docker lpadmin" | tee config/preseed/preseed.cfg.chroot
+	echo "d-i partman-auto/choose_recipe select atomic" | tee -a config/preseed/preseed.cfg.chroot
+	echo "d-i partman-basicfilesystems/no_swap boolean false" | tee -a config/preseed/preseed.cfg.chroot
+	echo 'd-i partman-auto/expert_recipe string boot-root : \' | tee -a config/preseed/preseed.cfg.chroot
+	echo '5120 1 -1 btrfs \' | tee -a config/preseed/preseed.cfg.chroot
+	echo '$$primary{ } $$bootable{ } \' | tee -a config/preseed/preseed.cfg.chroot
+	echo 'method{ format } format{ } \' | tee -a config/preseed/preseed.cfg.chroot
+	echo 'use_filesystem{ } filesystem{ btrfs } \' | tee -a config/preseed/preseed.cfg.chroot
+	echo "label { root } mountpoint{ / } ." | tee -a config/preseed/preseed.cfg.chroot
+	echo "d-i passwd/user-default-groups cdrom floppy audio dip video plugdev netdev scanner bluetooth wireshark docker lpadmin" | tee config/preseed/preseed.cfg.binary
+	echo "d-i partman-auto/choose_recipe select atomic" | tee -a config/preseed/preseed.cfg.binary
+	echo "d-i partman-basicfilesystems/no_swap boolean false" | tee -a config/preseed/preseed.cfg.binary
+	echo 'd-i partman-auto/expert_recipe string boot-root : \' | tee -a config/preseed/preseed.cfg.binary
+	echo '5120 1 -1 btrfs \' | tee -a config/preseed/preseed.cfg.binary
+	echo '$$primary{ } $$bootable{ } \' | tee -a config/preseed/preseed.cfg.binary
+	echo 'method{ format } format{ } \' | tee -a config/preseed/preseed.cfg.binary
+	echo 'use_filesystem{ } filesystem{ btrfs } \' | tee -a config/preseed/preseed.cfg.binary
+	echo "label { root } mountpoint{ / } ." | tee -a config/preseed/preseed.cfg.binary
