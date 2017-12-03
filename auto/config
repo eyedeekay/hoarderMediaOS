@@ -77,7 +77,7 @@ elif [ "$distro" = "ubuntu" ]; then
                 export components="--components=\"main\""
                 export archiveareas="--archive-areas \"main\""
         fi
-        export usekeyring="--keyring-packages ubuntu-archive-keyring"
+        export usekeyring="--keyring-packages ubuntu-keyring"
         export distromode="--mode ubuntu"
         #export distromode="--mode debian"
         export useupdates=""
