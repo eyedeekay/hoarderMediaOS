@@ -23,7 +23,7 @@ docker-full-build:
 	make docker-build
 
 docker-copy:
-	docker cp $(image_prename)-build-$(distro):/home/livebuilder/hoarder-live/auto/common  ./auto/common
+	docker cp $(image_prename)-build-$(distro)$(non_free):/home/livebuilder/hoarder-live/auto/common  ./auto/common
 	./auto/copy
 
 docker-init:
@@ -41,7 +41,7 @@ docker-rebuild-nochroot:
 	make docker-build-nochroot
 
 docker-build:
-	docker rm -f $(image_prename)-build-$(distro); \
+	docker rm -f $(image_prename)-build-$(distro)$(non_free); \
 	docker run -i \
 		--cap-add=SYS_ADMIN \
 		--device /dev/loop0 \

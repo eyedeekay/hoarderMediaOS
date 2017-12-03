@@ -2,7 +2,7 @@
 
 set -e
 
-docker cp $image_prename-build-$distro:/home/livebuilder/hoarder-live/auto/common ./auto/common
+docker cp $image_prename-build-$distro$non_free:/home/livebuilder/hoarder-live/auto/common ./auto/common
 
 if [ -f auto/common ]; then
         . auto/common
