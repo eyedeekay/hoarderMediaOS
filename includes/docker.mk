@@ -53,7 +53,7 @@ docker-build:
 		-e "proxy_addr"="$(proxy_addr)" \
 		-e "proxy_host"="$(proxy_host)" \
 		-e "proxy_port"="$(proxy_port)" \
-		--name "$(image_prename)-build-$(distro)" \
+		--name "$(image_prename)-build-$(distro)-$(non_free)" \
 		--privileged \
 		--tty \
 		-t $(image_prename)-$(distro)
