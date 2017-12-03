@@ -2,7 +2,7 @@
 
 set -e
 
-lb clean noauto "$@"
+lb clean noauto #"$@"
 
 #rm -rf config/binary \
 #        config/build \
