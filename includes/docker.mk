@@ -50,32 +50,14 @@ docker-build:
 		-e "hardened"="$($hardened)" \
 		-e "custom"="$(custom)" \
 		-e "server"="$(server)" \
-		-e "proxy_addr"="$(proxy_addr)" \
-		-e "proxy_host"="$(proxy_host)" \
-		-e "proxy_port"="$(proxy_port)" \
 		--name "$(image_prename)-build-$(distro)" \
 		--privileged \
 		--tty \
 		-t $(image_prename)-$(distro)
 
-docker-build-nochroot:
-	docker rm -f $(image_prename)-build-$(distro); \
-	docker run -i \
-		--cap-add=SYS_ADMIN \
-		--device /dev/loop0 \
-		-e "distro"="$(distro)" \
-		-e "nonfree"="$(nonfree)" \
-		-e "hardened"="$($hardened)" \
-		-e "custom"="$(custom)" \
-		-e "server"="$(server)" \
-		-e "proxy_addr"="$(proxy_addr)" \
-		-e "proxy_host"="$(proxy_host)" \
-		-e "proxy_port"="$(proxy_port)" \
-		--name "$(image_prename)-build-$(distro)" \
-		--privileged \
-		--tty \
-		-t $(image_prename)-$(distro) make build-nochroot
-
+		#-e "proxy_addr"="$(proxy_addr)" \
+		#-e "proxy_host"="$(proxy_host)" \
+		#-e "proxy_port"="$(proxy_port)" \
 
 docker-release:
 	make docker-copy
@@ -92,10 +74,11 @@ docker:
 		--build-arg "nonfree"="$(nonfree)" \
 		--build-arg "custom"="$(custom)" \
 		--build-arg "hardened"="$(hardened)" \
-		--build-arg "proxy_addr"="$(proxy_addr)" \
-		--build-arg "proxy_host"="$(proxy_host)" \
-		--build-arg "proxy_port"="$(proxy_port)" \
 		-f Dockerfiles/Dockerfile.$(distro) .
+
+		#--build-arg "proxy_addr"="$(proxy_addr)" \
+		#--build-arg "proxy_host"="$(proxy_host)" \
+		#--build-arg "proxy_port"="$(proxy_port)" \
 
 docker-conf:
 	make docker-base
