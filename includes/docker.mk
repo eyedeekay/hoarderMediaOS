@@ -50,6 +50,9 @@ docker-build:
 		-e "hardened=$($hardened)" \
 		-e "custom=$(custom)" \
 		-e "server=$(server)" \
+		-e "proxy_addr=$(proxy_addr)" \
+		-e "proxy_host=$(proxy_host)" \
+		-e "proxy_port=$(proxy_port)" \
 		--name "$(image_prename)-build-$(distro)" \
 		--privileged \
 		--tty \
@@ -65,6 +68,9 @@ docker-build-nochroot:
 		-e "hardened=$($hardened)" \
 		-e "custom=$(custom)" \
 		-e "server=$(server)" \
+		-e "proxy_addr=$(proxy_addr)" \
+		-e "proxy_host=$(proxy_host)" \
+		-e "proxy_port=$(proxy_port)" \
 		--name "$(image_prename)-build-$(distro)" \
 		--privileged \
 		--tty \
@@ -86,6 +92,9 @@ docker:
 		--build-arg "nonfree=$(nonfree)" \
 		--build-arg "custom=$(custom)" \
 		--build-arg "hardened=$(hardened)" \
+		--build-arg "proxy_addr=$(proxy_addr)" \
+		--build-arg "proxy_host=$(proxy_host)" \
+		--build-arg "proxy_port=$(proxy_port)" \
 		-f Dockerfiles/Dockerfile.$(distro) .
 
 docker-conf:
