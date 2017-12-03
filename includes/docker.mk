@@ -50,14 +50,13 @@ docker-build:
 		-e "hardened"="$($hardened)" \
 		-e "custom"="$(custom)" \
 		-e "server"="$(server)" \
+		-e "proxy_addr"="$(proxy_addr)" \
+		-e "proxy_host"="$(proxy_host)" \
+		-e "proxy_port"="$(proxy_port)" \
 		--name "$(image_prename)-build-$(distro)" \
 		--privileged \
 		--tty \
 		-t $(image_prename)-$(distro)
-
-		#-e "proxy_addr"="$(proxy_addr)" \
-		#-e "proxy_host"="$(proxy_host)" \
-		#-e "proxy_port"="$(proxy_port)" \
 
 docker-release:
 	make docker-copy
