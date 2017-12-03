@@ -45,14 +45,14 @@ docker-build:
 	docker run -i \
 		--cap-add=SYS_ADMIN \
 		--device /dev/loop0 \
-		-e "distro=$(distro)" \
-		-e "nonfree=$(nonfree)" \
-		-e "hardened=$($hardened)" \
-		-e "custom=$(custom)" \
-		-e "server=$(server)" \
-		-e "proxy_addr=$(proxy_addr)" \
-		-e "proxy_host=$(proxy_host)" \
-		-e "proxy_port=$(proxy_port)" \
+		-e "distro"="$(distro)" \
+		-e "nonfree"="$(nonfree)" \
+		-e "hardened"="$($hardened)" \
+		-e "custom"="$(custom)" \
+		-e "server"="$(server)" \
+		-e "proxy_addr"="$(proxy_addr)" \
+		-e "proxy_host"="$(proxy_host)" \
+		-e "proxy_port"="$(proxy_port)" \
 		--name "$(image_prename)-build-$(distro)" \
 		--privileged \
 		--tty \
@@ -63,14 +63,14 @@ docker-build-nochroot:
 	docker run -i \
 		--cap-add=SYS_ADMIN \
 		--device /dev/loop0 \
-		-e "distro=$(distro)" \
-		-e "nonfree=$(nonfree)" \
-		-e "hardened=$($hardened)" \
-		-e "custom=$(custom)" \
-		-e "server=$(server)" \
-		-e "proxy_addr=$(proxy_addr)" \
-		-e "proxy_host=$(proxy_host)" \
-		-e "proxy_port=$(proxy_port)" \
+		-e "distro"="$(distro)" \
+		-e "nonfree"="$(nonfree)" \
+		-e "hardened"="$($hardened)" \
+		-e "custom"="$(custom)" \
+		-e "server"="$(server)" \
+		-e "proxy_addr"="$(proxy_addr)" \
+		-e "proxy_host"="$(proxy_host)" \
+		-e "proxy_port"="$(proxy_port)" \
 		--name "$(image_prename)-build-$(distro)" \
 		--privileged \
 		--tty \
@@ -83,18 +83,18 @@ docker-release:
 
 docker-base:
 	docker build --force-rm \
-		--build-arg "CACHING_PROXY=$(proxy_addr)" \
+		--build-arg "CACHING_PROXY"="$(proxy_addr)" \
 		-t $(image_prename)-build-$(distro) \
 		-f Dockerfiles/Dockerfile.live-build.$(distro) .
 
 docker:
 	docker build --force-rm -t $(image_prename)-$(distro) \
-		--build-arg "nonfree=$(nonfree)" \
-		--build-arg "custom=$(custom)" \
-		--build-arg "hardened=$(hardened)" \
-		--build-arg "proxy_addr=$(proxy_addr)" \
-		--build-arg "proxy_host=$(proxy_host)" \
-		--build-arg "proxy_port=$(proxy_port)" \
+		--build-arg "nonfree"="$(nonfree)" \
+		--build-arg "custom"="$(custom)" \
+		--build-arg "hardened"="$(hardened)" \
+		--build-arg "proxy_addr"="$(proxy_addr)" \
+		--build-arg "proxy_host"="$(proxy_host)" \
+		--build-arg "proxy_port"="$(proxy_port)" \
 		-f Dockerfiles/Dockerfile.$(distro) .
 
 docker-conf:
