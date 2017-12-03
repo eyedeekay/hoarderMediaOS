@@ -24,6 +24,8 @@ echo "customized=\"$customized\"" > >(tee -a config.log) 2> >(tee -a config.err 
 echo "server=\"$server\"" > >(tee -a config.log) 2> >(tee -a config.err >&2)
 echo "serverdist=\"$serverdist\"" > >(tee -a config.log) 2> >(tee -a config.err >&2)
 
+sleep 10
+
 lb build noauto "$@" > >(tee -a log) 2> >(tee -a err >&2) || bash
 #lb build noauto "$@" > >(tee -a log) 2> >(tee -a err >&2)
 
