@@ -14,10 +14,10 @@ fi
 
 
 
-rm -rf ./iso && mkdir ./iso/
+rm -rf ."./iso-$distro" && mkdir "./iso-$distro"
 
-scp "$user_name"@"$host_name":"$dev_path/iso/$image_prename$customized$is_harden$serverdist$non_free-$distro-amd64.hybrid.iso" ./iso/
-scp "$user_name"@"$host_name":"$dev_path/iso/$image_prename$customized$is_harden$serverdist$non_free-$distro-amd64.files" ./iso/
-scp "$user_name"@"$host_name":"$dev_path/iso/$image_prename$customized$is_harden$serverdist$non_free-$distro-amd64.contents" ./iso/
-scp "$user_name"@"$host_name":"$dev_path/iso/$image_prename$customized$is_harden$serverdist$non_free-$distro-amd64.hybrid.iso.zsync" ./iso/
-scp "$user_name"@"$host_name":"$dev_path/iso/$image_prename$customized$is_harden$serverdist$non_free-$distro-amd64.packages" ./iso/
+scp "$user_name"@"$host_name":"$dev_path/iso-$distro/$image_prename$customized$is_harden$serverdist$non_free-$distro-amd64.hybrid.iso" "./iso-$distro"
+scp "$user_name"@"$host_name":"$dev_path/iso-$distro/$image_prename$customized$is_harden$serverdist$non_free-$distro-amd64.files" "./iso-$distro"
+scp "$user_name"@"$host_name":"$dev_path/iso-$distro/$image_prename$customized$is_harden$serverdist$non_free-$distro-amd64.contents" "./iso-$distro"
+scp "$user_name"@"$host_name":"$dev_path/iso-$distro/$image_prename$customized$is_harden$serverdist$non_free-$distro-amd64.hybrid.iso.zsync" "./iso-$distro"
+scp "$user_name"@"$host_name":"$dev_path/iso-$distro/$image_prename$customized$is_harden$serverdist$non_free-$distro-amd64.packages" "./iso-$distro"

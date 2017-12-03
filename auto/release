@@ -9,7 +9,7 @@ fi
 export GITHUB_RELEASE_PATH="$HOME/.go/bin/github-release"
 export version=$(date +%Y%W)"$customized$is_harden$serverdist$non_free-$distro"
 
-cd iso || exit
+cd "./iso-$distro" || exit
 
 pwd
 ls
