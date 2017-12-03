@@ -23,4 +23,5 @@ err
 *log*
 *err*
 paths.sh
-iso/
+iso*/
+iso-*/
