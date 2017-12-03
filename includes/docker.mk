@@ -109,7 +109,7 @@ conferr:
 	docker exec -t $(image_prename)-build-$(distro) cat config.err | less
 
 ls:
-	docker exec -t $(image_prename)-build-$(distro) ls -laR | less
+	docker exec -t $(image_prename)-build-$(distro) ls -laR ../ | less
 
 ps:
 	docker exec -t $(image_prename)-build-$(distro) ps aux

@@ -20,7 +20,6 @@ RUN apt-get update && apt-get install -yq --fix-missing --reinstall \
                 ca-certificates \
                 debian-keyring \
                 debian-archive-keyring \
-                ubuntu-archive-keyring \
                 dirmngr \
                 live-build \
                 e2fsprogs \
@@ -30,5 +29,8 @@ RUN apt-get update && apt-get install -yq --fix-missing --reinstall \
                 syslinux-common \
                 less
 RUN echo 'livebuilder ALL=(ALL) NOPASSWD: ALL' | tee -a /etc/sudoers
+#RUN wget http://ftp.us.debian.org/debian/pool/main/l/live-build/live-build_20170920_all.deb && \
+        #dpkg -i live-build_20170920_all.deb && \
+        #rm live-build_20170920_all.deb
 WORKDIR /home/livebuilder/hoarder-live
-#USER livebuilder
+

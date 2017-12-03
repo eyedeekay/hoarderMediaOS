@@ -78,6 +78,14 @@ emby-repo:
 		&& ln -sf emby.list.chroot emby.list.binary \
 		&& ln -sf emby.list.key.chroot emby.list.key.binary
 
+emby-ubuntu-repo:
+	echo "deb http://download.opensuse.org/repositories/home:/emby/xUbuntu_Next/ /" | tee config/archives/emby.list.chroot
+	curl -s https://download.opensuse.org/repositories/home:/emby/xUbuntu_Next/Release.key | tee config/archives/emby.list.key.chroot
+	cd config/archives/ \
+		&& ln -sf emby.list.chroot emby.list.binary \
+		&& ln -sf emby.list.key.chroot emby.list.key.binary
+
+
 i2pd-repo:
 	echo "deb https://repo.lngserv.ru/debian stretch main" | tee config/archives/i2pd.list.chroot
 	echo "deb-src https://repo.lngserv.ru/debian stretch main" | tee -a config/archives/i2pd.list.chroot
@@ -85,6 +93,17 @@ i2pd-repo:
 	echo "#deb-src http://i2p.repo jessie main" | tee -a config/archives/i2pd.list.chroot
 	gpg --keyserver $(keyserver) --recv-keys 66F6C87B98EBCFE2; \
 	gpg -a --export 66F6C87B98EBCFE2 | tee config/archives/i2pd.list.key.chroot
+	cd config/archives/ \
+		&& ln -sf i2pd.list.chroot i2pd.list.binary \
+		&& ln -sf i2pd.list.key.chroot i2pd.list.key.binary
+
+i2pd-ubuntu-repo:
+	echo "deb http://ppa.launchpad.net/purplei2p/i2pd/ubuntu artful main" | tee config/archives/i2pd.list.chroot
+	echo "deb-src http://ppa.launchpad.net/purplei2p/i2pd/ubuntu artful main" | tee -a config/archives/i2pd.list.chroot
+	echo "#deb http://i2p.repo artful main" | tee -a config/archives/i2pd.list.chroot
+	echo "#deb-src http://i2p.repo artful main" | tee -a config/archives/i2pd.list.chroot
+	gpg --keyserver $(keyserver) --recv-keys A0592679C89831BBC7E5D822625964081B0340BA; \
+	gpg -a --export A0592679C89831BBC7E5D822625964081B0340BA | tee config/archives/i2pd.list.key.chroot
 	cd config/archives/ \
 		&& ln -sf i2pd.list.chroot i2pd.list.binary \
 		&& ln -sf i2pd.list.key.chroot i2pd.list.key.binary

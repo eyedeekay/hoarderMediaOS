@@ -49,6 +49,9 @@ if [ "$distro" = "debian" ]; then
         export bootstrapopts="--merged-usr     $dsusekeyring       --variant=minbase       --include=busybox-syslogd,gnupg2,apt-utils,apt-transport-https,gnutls-bin,ca-certificates,debian-archive-keyring      --exclude=systemd,systemd-sysv,sysv-rc   $components"
         export usekeyring="--keyring-packages debian-archive-keyring"
         export distromode="--mode debian"
+        export useupdates="--updates false"
+        export debootstrap_opts_supported="--debootstrap-options"
+        export image_name="--image-name '$image_prename$customized$is_harden$serverdist$non_free-$distro'"
 elif [ "$distro" = "devuan" ]; then
         export mirror="$mirror_devuan"
         export mirror_packages="$mirror_devuan"
@@ -57,12 +60,16 @@ elif [ "$distro" = "devuan" ]; then
         export bootstrapopts="--merged-usr     $dsusekeyring       --variant=minbase       --include=busybox-syslogd,gnupg2,apt-utils,apt-transport-https,gnutls-bin,ca-certificates,devuan-keyring               --exclude=systemd,systemd-sysv,sysv-rc  $components"
         export usekeyring="--keyring-packages devuan-keyring"
         export distromode="--mode debian"
+        export useupdates="--updates false"
+        export debootstrap_opts_supported="--debootstrap-options"
+        export image_name="$image_prename$customized$is_harden$serverdist$non_free-$distro"
+        export image_name_supported="--image-name"
 elif [ "$distro" = "ubuntu" ]; then
         export mirror="$mirror_ubuntu"
         export mirror_packages="$mirror_ubuntu"
         export unstable="artful"
         export stable="artful"
-        export bootstrapopts="--merged-usr     $dsusekeyring       --variant=minbase       --include=busybox-syslogd,gnupg2,apt-transport-https,apt-utils,gnutls-bin,ca-certificates,ubuntu-archive-keyring       --exclude=debian-archive-keyring        $components"
+        export bootstrapopts="$dsusekeyring       --variant=minbase       --include=busybox-syslogd,gnupg2,apt-transport-https,apt-utils,gnutls-bin,ca-certificates,ubuntu-archive-keyring       --exclude=debian-archive-keyring        $components"
         if [ ! -z "$nonfree" ]; then
                 export components="--components=\"main,restricted,universe,multiverse\""
                 export archiveareas="--archive-areas \"main,restricted,universe,multiverse\""
@@ -71,8 +78,12 @@ elif [ "$distro" = "ubuntu" ]; then
                 export archiveareas="--archive-areas \"main\""
         fi
         export usekeyring="--keyring-packages ubuntu-archive-keyring"
-        #export distromode="--mode ubuntu"
-        export distromode="--mode debian"
+        export distromode="--mode ubuntu"
+        #export distromode="--mode debian"
+        export useupdates=""
+        export debootstrap_opts_supported=""
+        export image_name=""
+        export image_name_supported=""
 fi
 
 if [ ! -z "$components" ]; then
@@ -111,22 +122,22 @@ lb config noauto \
     --binary-images iso-hybrid \
     --quiet \
     --cache true \
-    --updates false \
+    $useupdates \
     --security false \
     --cache-indices true \
     --cache-packages true \
     --distribution "$unstable" \
     --parent-distribution "$stable" \
+    $debootstrap_opts_supported "$bootstrapopts" \
     --firmware-chroot false \
     --firmware-binary false \
     $usekeyring \
-    --debootstrap-options "$bootstrapopts" \
     --initsystem none \
     $archiveareas \
     $nosource \
     $harden \
-    --image-name "$image_prename$customized$is_harden$serverdist$non_free-$distro" \
     $distromode \
+    $image_name_supported "$image_name" \
     --parent-mirror-bootstrap "$mirror" \
     --parent-mirror-chroot "$mirror" \
     --parent-mirror-chroot-security "$mirror" \
@@ -140,6 +151,9 @@ lb config noauto \
     --mirror-binary-security "$mirror" \
     --parent-mirror-debian-installer "$mirror" \
     --system live > >(tee -a config.log) 2> >(tee -a config.err >&2)
+    #--updates false \
+    #--debootstrap-options "$bootstrapopts" \
+    #--image-name "$image_prename$customized$is_harden$serverdist$non_free-$distro" \
 
 
 make libre 1> /dev/null

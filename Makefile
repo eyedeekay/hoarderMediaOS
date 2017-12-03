@@ -70,7 +70,7 @@ libre:
 	#make emby-repo; \
 
 libre-ubuntu:
-	make i2pd-repo; \
+	make i2pd-ubuntu-repo; \
 	make tor-ubuntu-repo; \
 	make syncthing-repo; \
 	make tox-repo; \
