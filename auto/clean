@@ -4,19 +4,12 @@ set -e
 
 lb clean noauto #"$@"
 
-#rm -rf config/binary \
-#        config/build \
-#        config/bootstrap \
-#        config/chroot \
-#        config/common \
-#        config/source
-
-#rm -rf *.hybrid.iso \
-#	*.hybrid.iso.sha256sum \
-#	*.hybrid.iso.sha256sum.asc \
-#	*.files \
-#	*.contents \
-#	*.hybrid.iso.zsync \
-#	*.packages \
-#	*log \
- #       *err
+rm -rf *.hybrid.iso \
+	*.hybrid.iso.sha256sum \
+	*.hybrid.iso.sha256sum.asc \
+	*.files \
+	*.contents \
+	*.hybrid.iso.zsync \
+	*.packages \
+        *log \
+        *err
