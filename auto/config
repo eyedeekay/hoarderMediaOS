@@ -116,7 +116,7 @@ lb config noauto \
     --force \
     --apt aptitude \
     --apt-recommends true \
-    --apt-options "-f -y" \
+    --apt-options "-y" \
     --bootloader syslinux \
     $useproxy \
     --binary-images iso-hybrid \
