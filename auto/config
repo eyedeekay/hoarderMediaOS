@@ -113,9 +113,10 @@ echo "export server=\"$server\"" | tee -a auto/common
 echo "export serverdist=\"$serverdist\"" | tee -a auto/common
 
 lb config noauto \
+    --force \
     --apt aptitude \
     --apt-recommends true \
-    --apt-options "--assume-yes" \
+    --apt-options "-y" \
     --bootloader syslinux \
     $useproxy \
     --binary-images iso-hybrid \
