@@ -8,7 +8,7 @@ if [ -f auto/common ]; then
         . auto/common
 fi
 
-rm -rf "./iso-$distro"; mkdir -p "./iso-$distro"
+mkdir -p "./iso-$distro"
 
 docker cp $image_prename-build-$distro:/home/livebuilder/hoarder-live/$image_prename$customized$is_harden$serverdist$non_free-$distro-amd64.hybrid.iso "./iso-$distro/" || exit
 docker cp $image_prename-build-$distro:/home/livebuilder/hoarder-live/$image_prename$customized$is_harden$serverdist$non_free-$distro-amd64.files "./iso-$distro/"
