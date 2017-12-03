@@ -12,9 +12,9 @@ ENV nonfree=""
 ENV hardened=""
 ENV custom=""
 ENV server=""
-ENV proxy_addr=""
-ENV proxy_host=""
-ENV proxy_port=""
+ENV proxy_addr
+ENV proxy_host
+ENV proxy_port
 COPY Makefile /home/livebuilder/hoarder-live/Makefile
 COPY config.mk /home/livebuilder/hoarder-live/config.mk
 COPY includes /home/livebuilder/hoarder-live/includes/
