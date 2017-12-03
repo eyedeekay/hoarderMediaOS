@@ -4,9 +4,9 @@ ARG nonfree=""
 ARG hardened=""
 ARG custom=""
 ARG server=""
-ARG proxy_addr=""
-ARG proxy_host=""
-ARG proxy_port=""
+ARG proxy_addr
+ARG proxy_host
+ARG proxy_port
 ENV distro="devuan"
 ENV nonfree=""
 ENV hardened=""
