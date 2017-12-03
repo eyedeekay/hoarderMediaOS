@@ -73,11 +73,10 @@ docker:
 		--build-arg "nonfree"="$(nonfree)" \
 		--build-arg "custom"="$(custom)" \
 		--build-arg "hardened"="$(hardened)" \
+		--build-arg "proxy_addr"="$(proxy_addr)" \
+		--build-arg "proxy_host"="$(proxy_host)" \
+		--build-arg "proxy_port"="$(proxy_port)" \
 		-f Dockerfiles/Dockerfile.$(distro) .
-
-		#--build-arg "proxy_addr"="$(proxy_addr)" \
-		#--build-arg "proxy_host"="$(proxy_host)" \
-		#--build-arg "proxy_port"="$(proxy_port)" \
 
 docker-conf:
 	make docker-base
