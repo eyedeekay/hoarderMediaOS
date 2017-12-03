@@ -70,8 +70,8 @@ elif [ "$distro" = "ubuntu" ]; then
         export unstable="artful"
         export stable="artful"
         export bootstrapopts="$dsusekeyring       --variant=minbase       --include=busybox-syslogd,gnupg2,apt-transport-https,apt-utils,gnutls-bin,ca-certificates,ubuntu-archive-keyring       --exclude=debian-archive-keyring        $components"
-        if [ ! -z "$nonfree" ]; then
-                export components="--components=\"main,restricted,universe,multiverse\""
+        if [ "$nonfree" = "yes" ]; then
+                export components="--components=\"main restricted universe multiverse\""
                 export archiveareas="--archive-areas \"main,restricted,universe,multiverse\""
         else
                 export components="--components=\"main\""
