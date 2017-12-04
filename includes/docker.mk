@@ -56,7 +56,7 @@ docker-build:
 		--name "$(image_prename)-build-$(distro)$(non_free)" \
 		--privileged \
 		--tty \
-		-t $(image_prename)-$(distro)
+		-t $(image_prename)-$(distro)-$(non_free)
 
 docker-release:
 	make docker-copy
@@ -65,7 +65,7 @@ docker-release:
 docker-base:
 	docker build --force-rm \
 		--build-arg "CACHING_PROXY"="$(proxy_addr)" \
-		-t $(image_prename)-build-$(distro) \
+		-t $(image_prename)-build-$(distro)$(non_free) \
 		-f Dockerfiles/Dockerfile.live-build.$(distro) .
 
 docker:

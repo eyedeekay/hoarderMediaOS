@@ -1,7 +1,5 @@
 #! /usr/bin/env bash
 
-set -e
-
 make get-keys 1> /dev/null
 make import-keys 1> /dev/null
 make export-keys 1> /dev/null
