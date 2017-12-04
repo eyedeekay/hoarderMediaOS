@@ -33,7 +33,7 @@ list:
 	@grep '^[^#[:space:]].*:' Makefile includes/*.mk
 
 clean:
-	sudo -E lb clean --all
+	sudo -E lb clean --all; true
 
 clobber: clean
 	rm -rf *.hybrid.iso \
