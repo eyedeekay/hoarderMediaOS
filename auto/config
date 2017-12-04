@@ -19,7 +19,7 @@ if [ "$nonfree" = "yes" ]; then
         export non_free='-nonfree'
         export nosource='--apt-source-archives false'
         export components='--components="main,contrib,non-free"'
-        export archiveareas='--archive-areas "main,contrib,non-free"'
+        export archiveareas='--archive-areas "main contrib non-free"'
 fi
 
 if [ "$hardened" = "yes" ]; then
