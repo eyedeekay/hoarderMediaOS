@@ -56,7 +56,7 @@ docker-build:
 		--name "$(image_prename)-build-$(distro)$(non_free)" \
 		--privileged \
 		--tty \
-		-t $(image_prename)-$(distro)-$(non_free)
+		-t $(image_prename)-$(distro)$(non_free)
 
 docker-release:
 	make docker-copy
