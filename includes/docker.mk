@@ -112,3 +112,6 @@ initlog:
 
 initerr:
 	docker exec -t $(image_prename)-build-$(distro) cat init.err | less
+
+common:
+	docker exec -t $(image_prename)-build-$(distro) cat auto/common | less
