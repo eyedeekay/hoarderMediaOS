@@ -47,7 +47,7 @@ docker-build:
 		--device /dev/loop0 \
 		-e "distro"="$(distro)" \
 		-e "nonfree"="$(nonfree)" \
-		-e "hardened"="$($hardened)" \
+		-e "hardened"="$(hardened)" \
 		-e "custom"="$(custom)" \
 		-e "server"="$(server)" \
 		-e "proxy_addr"="$(proxy_addr)" \
