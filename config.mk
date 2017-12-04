@@ -16,7 +16,7 @@ export distro ?= devuan
 
 #export keyserver = http://keyserver.ubuntu.com
 
-export keyserver = hkp://p80.pool.sks-keyservers.net:80
+export keyserver ?= hkp://p80.pool.sks-keyservers.net:80
 #export keyserver = hkp://69.195.152.204:80
 #export keyserver = http://keys.gnupg.net/
 #export keyserver = http://subkeys.pgp.net:11371/

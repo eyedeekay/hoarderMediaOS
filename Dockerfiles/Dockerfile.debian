@@ -1,5 +1,11 @@
 FROM tv-build-debian
 ARG distro="debian"
+ARG nonfree
+ARG custom
+ARG hardened
+ARG proxy_addr
+ARG proxy_host
+ARG proxy_port
 ENV distro="debian"
 COPY Makefile /home/livebuilder/hoarder-live/Makefile
 COPY config.mk /home/livebuilder/hoarder-live/config.mk

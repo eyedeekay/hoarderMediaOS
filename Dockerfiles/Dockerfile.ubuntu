@@ -1,5 +1,11 @@
 FROM tv-build-ubuntu
 ARG distro="ubuntu"
+ARG nonfree
+ARG custom
+ARG hardened
+ARG proxy_addr
+ARG proxy_host
+ARG proxy_port
 ENV distro="ubuntu"
 COPY Makefile /home/livebuilder/hoarder-live/Makefile
 COPY config.mk /home/livebuilder/hoarder-live/config.mk
