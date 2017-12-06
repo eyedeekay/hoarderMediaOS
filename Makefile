@@ -9,6 +9,7 @@ include includes/packages.mk
 include includes/release.mk
 include includes/repos.mk
 include includes/skel.mk
+include includes/hooks.mk
 
 list:
 	@echo "Available commands"
@@ -92,7 +93,7 @@ build-nochroot:
 throw:
 	scp -r . media@media:Docker/hoarderMediaOS
 
-packages: packages-list
+packages: packages-list docker-hooks
 
 pull:
 	./auto/pull

@@ -1,0 +1,20 @@
+FROM eyedeekay/hoardermediaos:lb-devuan-parent
+ARG distro="devuan"
+ARG nonfree
+ARG custom
+ARG hardened
+ARG proxy_addr
+ARG proxy_host
+ARG proxy_port
+ENV distro="devuan"
+COPY Makefile /home/livebuilder/hoarder-live/Makefile
+COPY config.mk /home/livebuilder/hoarder-live/config.mk
+COPY includes /home/livebuilder/hoarder-live/includes/
+COPY auto /home/livebuilder/hoarder-live/auto/
+COPY keyrings/ /home/livebuilder/hoarder-live/keyrings/
+RUN chown -R livebuilder:livebuilder /home/livebuilder/hoarder-live
+WORKDIR /home/livebuilder/hoarder-live/
+RUN make docker-init
+USER livebuilder
+RUN make config
+CMD make build
