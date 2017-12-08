@@ -234,7 +234,7 @@ init-system:
 	echo "$$INIT_SYSTEM" | tee live.list.chroot && \
 	ln -sf live.list.chroot live.list.binary
 
-packages-list: init-system
+packages-list: init-system package-pins
 	cd config/package-lists/ && \
 	echo "$$PACKAGE_LIST" | tee build.list.chroot && \
 	ln -sf build.list.chroot build.list.binary
