@@ -30,7 +30,7 @@ secure-delete
 sshfs
 stterm
 suckless-tools
-uzbl
+surf
 surfraw
 surfraw-extra
 tig
@@ -112,7 +112,7 @@ awesome-extra
 sddm
 stterm
 tmux
-uzbl
+surf
 surfraw
 surfraw-extra
 dpkg
