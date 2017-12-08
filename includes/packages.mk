@@ -168,6 +168,7 @@ mutt
 lftp
 rtl-sdr
 vlc
+libwebkit2gtk-4.0-37
 runit-sysv
 bcron
 bcron-run
