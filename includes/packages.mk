@@ -168,6 +168,9 @@ mutt
 lftp
 rtl-sdr
 vlc
+runit-sysv
+bcron
+bcron-runit
 tor
 tor-arm
 keychain
@@ -204,7 +207,7 @@ export PACKAGE_LIST
 define INIT_SYSTEM
 live-boot
 live-config
-runit
+runit-sysv
 openrc
 initscripts
 
@@ -247,3 +250,9 @@ nonfree-firmware:
 	echo "firmware-b43-installer" | tee -a nonfree.list.chroot && \
 	echo "firmware-b43legacy-installer" | tee -a nonfree.list.chroot && \
 	ln -sf nonfree.list.chroot nonfree.list.binary
+
+package-pins:
+	@echo "Package: cron systemd" | tee -a config/archives/services.pref.chroot
+	@echo "Pin: release n=sid" | tee -a config/archives/services.pref.chroot
+	@echo "Pin-Priority: -1" | tee -a config/archives/services.pref.chroot
+	cd config/archives && ln -s services.pref.chroot services.pref.binary
