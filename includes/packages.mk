@@ -204,7 +204,7 @@ export PACKAGE_LIST
 define INIT_SYSTEM
 live-boot
 live-config
-sysvinit-core
+runit
 openrc
 initscripts
 
