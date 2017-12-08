@@ -170,7 +170,7 @@ rtl-sdr
 vlc
 runit-sysv
 bcron
-bcron-runit
+bcron-run
 tor
 tor-arm
 keychain
