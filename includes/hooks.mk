@@ -3,7 +3,7 @@ define DOCKER_HOOKS
 	docker pull debitux/devuan:unstable
 	docker pull alpine:3.6
 	#docker pull hoardermediaos/lb-build-$(distro)
-	docker pull nagev/tor
+	#docker pull nagev/tor
 endef
 
 export DOCKER_HOOKS
