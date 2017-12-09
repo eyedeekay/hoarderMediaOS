@@ -109,6 +109,7 @@ export DOCKER_PACKAGE_LIST
 define PACKAGE_LIST
 awesome
 awesome-extra
+choosewm
 sddm
 stterm
 tmux
