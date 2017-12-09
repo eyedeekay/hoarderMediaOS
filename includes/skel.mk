@@ -1,5 +1,5 @@
 
-skel:
+skel: easy-user
 	mkdir -p config/includes.chroot/etc/apt/preferences.d/ \
 		config/includes.binary/etc/apt/preferences.d/ \
 		config/includes.chroot/etc/skel/Documents/Books/ \
@@ -52,24 +52,8 @@ skel:
 easy-user:
 	mkdir -p config/includes.chroot/etc/apt/preferences.d/ \
 		config/includes.binary/etc/apt/preferences.d/
-	echo "#!/bin/sh -e" | tee config/includes.chroot/etc/rc.local
-	echo "exit 0" | tee -a config/includes.chroot/etc/rc.local
-	echo "#!/bin/sh -e" | tee config/includes.binary/etc/rc.local
-	echo "exit 0" | tee -a config/includes.binary/etc/rc.local
 	mkdir -p config/includes.chroot/etc/live/config/
 	echo 'LIVE_USER_DEFAULT_GROUPS="audio cdrom dip floppy video plugdev netdev powerdev scanner bluetooth fuse docker"' | tee config/includes.chroot/etc/live/config/user-setup.conf
-	make preseed-install
-
-permissive-user:
-	mkdir -p config/includes.chroot/etc/apt/preferences.d/ \
-		config/includes.binary/etc/apt/preferences.d/
-	echo "#!/bin/sh -e" | tee config/includes.chroot/etc/rc.local
-	echo "exit 0" | tee -a config/includes.chroot/etc/rc.local
-	echo "#!/bin/sh -e" | tee config/includes.binary/etc/rc.local
-	echo "exit 0" | tee -a config/includes.binary/etc/rc.local
-	mkdir -p config/includes.chroot/etc/live/config/
-	echo 'LIVE_USER_DEFAULT_GROUPS="audio cdrom dip floppy video plugdev netdev powerdev scanner bluetooth fuse docker grsec-tpe"' | tee config/includes.chroot/etc/live/config/user-setup.conf
-	make preseed-install
 
 preseed-install:
 	echo "d-i passwd/user-default-groups cdrom floppy audio dip video plugdev netdev scanner bluetooth wireshark docker lpadmin" | tee config/preseed/preseed.cfg.chroot
