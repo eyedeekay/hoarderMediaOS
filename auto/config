@@ -55,7 +55,7 @@ if [ "$distro" = "debian" ]; then
 elif [ "$distro" = "devuan" ]; then
         export mirror="$mirror_devuan"
         export mirror_packages="$mirror_devuan"
-        export unstable="ceres"
+        export unstable="jessie"
         export stable="jessie"
         export aptpkg="--apt aptitude"
         export bootstrapopts="--merged-usr     $dsusekeyring       --variant=minbase       --include=busybox-syslogd,gnupg2,apt-utils,apt-transport-https,gnutls-bin,ca-certificates,devuan-keyring               --exclude=systemd,systemd-sysv,sysv-rc  $components"
@@ -135,7 +135,7 @@ lb config noauto \
     --cache-indices true \
     --cache-packages true \
     --debconf-frontend noninteractive \
-    --distribution "$stable" \
+    --distribution "$unstable" \
     --parent-distribution "$stable" \
     $debootstrap_opts_supported "$bootstrapopts" \
     --firmware-chroot true \
