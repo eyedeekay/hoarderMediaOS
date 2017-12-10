@@ -1,4 +1,6 @@
 define DESKTOP_PACKAGE_LIST
+choosewm
+obsession
 awesome
 awesome-extra
 ca-certificates
@@ -110,6 +112,7 @@ define PACKAGE_LIST
 awesome
 awesome-extra
 choosewm
+obsession
 sddm
 stterm
 tmux
