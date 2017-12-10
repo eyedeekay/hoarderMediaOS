@@ -125,7 +125,7 @@ echo "export serverdist=\"$serverdist\"" | tee -a auto/common
 lb config noauto \
     $aptpkg \
     --apt-recommends true \
-    --apt-options "--safe-resolver" \
+    --apt-options "--assume-yes" \
     $useproxy \
     --binary-images iso-hybrid \
     --quiet \
