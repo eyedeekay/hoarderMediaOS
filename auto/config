@@ -135,7 +135,7 @@ lb config noauto \
     --cache-indices true \
     --cache-packages true \
     --debconf-frontend noninteractive \
-    --distribution "$unstable" \
+    --distribution "$stable" \
     --parent-distribution "$stable" \
     $debootstrap_opts_supported "$bootstrapopts" \
     --firmware-chroot true \
