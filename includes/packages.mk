@@ -120,6 +120,8 @@ surf
 surfraw
 surfraw-extra
 dpkg
+djmount
+ncmpcpp
 pi-cryptenv
 apt-file
 apt-transport-tor
