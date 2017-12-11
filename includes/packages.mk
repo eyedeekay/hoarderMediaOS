@@ -123,7 +123,7 @@ dpkg
 djmount
 mpd
 ncmpcpp
-gssdp-tools
+gupnp-tools
 pi-cryptenv
 apt-file
 apt-transport-tor
