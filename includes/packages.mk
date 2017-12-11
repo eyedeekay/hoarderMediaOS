@@ -121,6 +121,7 @@ surfraw
 surfraw-extra
 dpkg
 djmount
+mpd
 ncmpcpp
 pi-cryptenv
 apt-file
