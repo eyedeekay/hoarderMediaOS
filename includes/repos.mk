@@ -8,8 +8,8 @@ proxy-setup:
 devuan-key:
 	echo "deb http://packages.devuan.org/merged ceres main" | tee config/archives/devuan.list.chroot
 	echo "deb-src http://packages.devuan.org/merged ceres main" | tee -a config/archives/devuan.list.chroot
-	echo "deb http://us.mirror.devuan.org/devuan ascii main" | tee -a config/archives/devuan.list.chroot
-	echo "deb-src http://us.mirror.devuan.org/devuan ascii main" | tee -a config/archives/devuan.list.chroot
+	echo "deb http://us.mirror.devuan.org/devuan ceres main" | tee -a config/archives/devuan.list.chroot
+	echo "deb-src http://us.mirror.devuan.org/devuan ceres main" | tee -a config/archives/devuan.list.chroot
 	cd config/archives/ \
 		&& ln -sf devuan.list.chroot devuan.list.binary
 	gpg --keyserver $(keyserver) --recv-keys 94532124541922FB; \
