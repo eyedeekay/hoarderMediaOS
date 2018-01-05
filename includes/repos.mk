@@ -26,7 +26,7 @@ devuan-key:
 	@echo "Pin-Priority: 999" | tee -a config/archives/debdev.pref.chroot
 	@echo "Package: *" | tee -a config/archives/debdev.pref.chroot
 	@echo "Pin: release n=sid" | tee -a config/archives/debdev.pref.chroot
-	@echo "Pin-Priority: 901" | tee -a config/archives/debdev.pref.chroot
+	@echo "Pin-Priority: 1" | tee -a config/archives/debdev.pref.chroot
 	cd config/archives/ \
 		&& ln -sf debdev.pref.chroot debdev.pref.binary
 
