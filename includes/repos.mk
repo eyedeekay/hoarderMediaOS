@@ -16,7 +16,7 @@ devuan-key:
 	gpg -a --export 94532124541922FB | tee config/archives/devuan.list.key.chroot
 	cd config/archives/ \
 		&& ln -sf devuan.list.key.chroot devuan.list.key.binary
-	echo "#deb http://ftp.us.debian.org/debian/ sid main" | tee config/archives/sid.list.chroot
+	echo "deb http://ftp.us.debian.org/debian/ sid main" | tee config/archives/sid.list.chroot
 	gpg --keyserver $(keyserver) --recv-keys EF0F382A1A7B6500; \
 	gpg -a --export EF0F382A1A7B6500 | tee config/archives/sid.list.key.chroot
 	cd config/archives/ \
