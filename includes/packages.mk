@@ -4,7 +4,6 @@ obsession
 awesome
 awesome-extra
 ca-certificates
-default-dbus-session-bus
 firmware-ath9k-htc
 firmware-linux-free
 gnutls-bin
@@ -198,9 +197,7 @@ gnutls-bin
 firmware-ath9k-htc
 firmware-linux-free
 udev
-dbus
 util-linux
-default-dbus-session-bus
 xwayland
 xserver-xorg
 xserver-common
