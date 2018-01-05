@@ -217,6 +217,7 @@ define INIT_SYSTEM
 live-boot
 live-config
 runit-sysv
+systemd-sysv
 openrc
 initscripts
 
@@ -261,7 +262,7 @@ nonfree-firmware:
 	ln -sf nonfree.list.chroot nonfree.list.binary
 
 package-pins:
-	@echo "Package: cron " | tee -a config/archives/services.pref.chroot
+	@echo "Package: cron" | tee -a config/archives/services.pref.chroot
 	@echo "Pin: release n=sid" | tee -a config/archives/services.pref.chroot
 	@echo "Pin-Priority: -1" | tee -a config/archives/services.pref.chroot
 	cd config/archives && ln -s services.pref.chroot services.pref.binary
