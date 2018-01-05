@@ -217,6 +217,7 @@ define INIT_SYSTEM
 live-boot
 live-config
 runit-sysv
+runit
 openrc
 initscripts
 
