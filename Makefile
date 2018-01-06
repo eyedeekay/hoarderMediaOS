@@ -68,14 +68,14 @@ libre:
 	make tor-repo; \
 	make syncthing-repo; \
 	make tox-repo; \
-	#make emby-repo; \
+	make emby-repo; \
 
 libre-ubuntu:
 	make i2pd-ubuntu-repo; \
 	make tor-ubuntu-repo; \
 	make syncthing-repo; \
 	make tox-repo; \
-	#make emby-repo; \
+	make emby-repo; \
 
 custom:
 	make apt-now-repo; \

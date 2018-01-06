@@ -1,8 +1,14 @@
 
+proxycheck:
+	@echo "$(proxy_host)"
+	@echo "$(proxy_port)"
+	@echo "$(proxy_addr)"
+
 proxy-setup:
 	echo "#Acquire::HTTP::Proxy $(proxy_addr);" | tee /etc/apt/apt.conf.d/01proxy
 	echo '#Acquire::HTTPS::Proxy-Auto-Detect "/usr/bin/auto-apt-proxy";' | tee -a /etc/apt/apt.conf.d/01proxy
 	echo '#Acquire::http::Proxy-Auto-Detect "/usr/bin/auto-apt-proxy";' | tee -a /etc/apt/apt.conf.d/auto-apt-proxy.conf
+
 
 
 devuan-key:
@@ -16,17 +22,20 @@ devuan-key:
 	gpg -a --export 94532124541922FB | tee config/archives/devuan.list.key.chroot
 	cd config/archives/ \
 		&& ln -sf devuan.list.key.chroot devuan.list.key.binary
-	echo "deb http://ftp.us.debian.org/debian/ sid main" | tee config/archives/sid.list.chroot
+	echo "#deb http://ftp.us.debian.org/debian/ sid main" | tee config/archives/sid.list.chroot
 	gpg --keyserver $(keyserver) --recv-keys EF0F382A1A7B6500; \
 	gpg -a --export EF0F382A1A7B6500 | tee config/archives/sid.list.key.chroot
 	cd config/archives/ \
 		&& ln -sf sid.list.key.chroot sid.list.key.binary
 	@echo "Package: *" | tee config/archives/debdev.pref.chroot
-	@echo "Pin: release n=ceres" | tee -a config/archives/debdev.pref.chroot
+	@echo "Pin: origin packages.devuan.org" | tee -a config/archives/debdev.pref.chroot
+	@echo "Pin-Priority: 998" | tee -a config/archives/debdev.pref.chroot
+	@echo "Package: *" | tee -a config/archives/debdev.pref.chroot
+	@echo "Pin: origin us.mirror.devuan.org" | tee -a config/archives/debdev.pref.chroot
 	@echo "Pin-Priority: 999" | tee -a config/archives/debdev.pref.chroot
 	@echo "Package: *" | tee -a config/archives/debdev.pref.chroot
-	@echo "Pin: release n=sid" | tee -a config/archives/debdev.pref.chroot
-	@echo "Pin-Priority: 1" | tee -a config/archives/debdev.pref.chroot
+	@echo "Pin: origin ftp.us.debian.org" | tee -a config/archives/debdev.pref.chroot
+	@echo "Pin-Priority: 900" | tee -a config/archives/debdev.pref.chroot
 	cd config/archives/ \
 		&& ln -sf debdev.pref.chroot debdev.pref.binary
 

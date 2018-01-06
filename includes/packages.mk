@@ -88,7 +88,7 @@ dpkg
 firejail
 moreutils
 pax-utils
-paxctld
+paxctl
 paxtest
 rtl-sdr
 tshark
@@ -166,7 +166,7 @@ tshark
 mc
 pax-utils
 paxtest
-paxctld
+paxctl
 pandoc
 syncthing
 procps
@@ -203,6 +203,7 @@ xserver-xorg
 xserver-common
 xserver-xorg-core
 xserver-xorg-input-all
+xserver-xorg-input-evdev
 xserver-xorg-legacy
 xserver-xorg-video-all
 
