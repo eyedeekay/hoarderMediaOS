@@ -2,6 +2,9 @@ define DOCKER_HOOKS
 	docker pull debian:sid
 	docker pull debitux/devuan:unstable
 	docker pull alpine:3.6
+	#docker pull eyedeekay/osint_complex:nmap
+	#docker pull eyedeekay/osint_complex:OSRFramework
+	#docker pull eyedeekay/osint_complex:theHarvester
 	#docker pull hoardermediaos/lb-build-$(distro)
 	#docker pull nagev/tor
 endef
