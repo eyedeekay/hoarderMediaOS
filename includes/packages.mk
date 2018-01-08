@@ -212,7 +212,7 @@ xserver-xorg-input-all
 xserver-xorg-input-evdev
 xserver-xorg-legacy
 xserver-xorg-video-all
-dbus-x11
+dbus-session-bus
 endef
 
 export PACKAGE_LIST
