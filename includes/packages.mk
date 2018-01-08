@@ -198,7 +198,13 @@ firmware-ath9k-htc
 firmware-linux-free
 udev
 util-linux
+libwayland-bin
+libwayland-client0
+libwayland-cursor0
+libwayland-dev
+libwayland-server0
 xwayland
+wayland-protocols
 xserver-xorg
 xserver-common
 xserver-xorg-core
@@ -206,7 +212,7 @@ xserver-xorg-input-all
 xserver-xorg-input-evdev
 xserver-xorg-legacy
 xserver-xorg-video-all
-
+dbus-session-bus
 endef
 
 export PACKAGE_LIST
