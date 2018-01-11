@@ -121,6 +121,7 @@ surfraw
 surfraw-extra
 dpkg
 djmount
+bindfs
 mpd
 ncmpcpp
 gupnp-tools
@@ -183,6 +184,7 @@ bcron
 bcron-run
 tor
 tor-arm
+i2pd
 keychain
 sen
 rclone
