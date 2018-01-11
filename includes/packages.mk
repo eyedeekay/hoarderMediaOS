@@ -36,7 +36,8 @@ surfraw
 surfraw-extra
 tig
 tmux
-vlc
+ffmpeg
+mplayer
 wicd-curses
 xdg-utils
 xdg-user-dirs
@@ -174,7 +175,8 @@ mosh
 mutt
 lftp
 rtl-sdr
-vlc
+ffmpeg
+mplayer
 libwebkit2gtk-4.0-37
 runit-sysv
 bcron
