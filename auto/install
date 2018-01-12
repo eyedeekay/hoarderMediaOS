@@ -1,0 +1,7 @@
+#! /usr/bin/env bash
+
+sudo dd \
+    if="iso-$distro/$image_prename$customized$is_harden$serverdist$non_free-$distro-amd64.hybrid.iso" \
+    of=/dev/sdb
+
+sudo parted -s mkpart /dev/sdb mkpart primary

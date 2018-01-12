@@ -8,6 +8,7 @@ firmware-ath9k-htc
 firmware-linux-free
 gnutls-bin
 gocryptfs
+cryptsetup
 ifupdown
 iproute2
 jackd2
@@ -161,6 +162,7 @@ docker.io
 medit
 nano
 gocryptfs
+cryptsetup
 jackd2
 alsaplayer-jack
 pulseaudio-module-jack

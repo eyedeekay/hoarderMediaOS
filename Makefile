@@ -97,3 +97,6 @@ packages: packages-list docker-hooks
 
 pull:
 	./auto/pull
+
+install:
+	./auto/install
