@@ -163,6 +163,7 @@ medit
 nano
 gocryptfs
 cryptsetup
+cryptsetup-bin
 jackd2
 alsaplayer-jack
 pulseaudio-module-jack
