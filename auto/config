@@ -22,6 +22,10 @@ if [ "$nonfree" = "yes" ]; then
         export archiveareas="--archive-areas 'main contrib non-free'"
 fi
 
+if [ "$persistence" == "yes" ]; then
+    export bootappend="--bootappend-live \"boot=live components persistence persistence-encryption=luks\""
+fi
+
 if [ "$hardened" = "yes" ]; then
         export harden='-k grsec-amd64'
         export is_harden="-hardened"
@@ -105,6 +109,7 @@ echo "export nosource=\"$nosource\"" | tee -a auto/common
 echo "export archiveareas=\"$archiveareas\"" | tee -a auto/common
 echo "export useupdates=\"$useupdates\"" | tee -a auto/common
 echo "export debootstrap_opts_supported=\"$debootstrap_opts_supported\"" | tee -a auto/common
+echo "export bootappend=\"$bootappend\"" | tee -a auto/common
 echo "export image_name=\"$image_name\"" | tee -a auto/common
 echo "export image_name_supported=\"$image_name_supported\"" | tee -a auto/common
 echo "export bootstrapopts=\"$bootstrapopts\"" | tee -a auto/common
@@ -138,6 +143,7 @@ lb config noauto \
     --distribution "$unstable" \
     --parent-distribution "$stable" \
     $debootstrap_opts_supported "$bootstrapopts" \
+    $bootappend \
     --firmware-chroot true \
     --firmware-binary true \
     $usekeyring \

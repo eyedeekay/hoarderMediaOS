@@ -4,7 +4,7 @@ sudo dd \
     if="iso-$distro/$image_prename$customized$is_harden$serverdist$non_free-$distro-amd64.hybrid.iso" \
     of=/dev/sdb
 
-if [ "$PERSISTENCE" == yes ]; then
+if [ "$persistence" == yes ]; then
     end=6gb
     read start _ < <(du -bcm "iso-$distro/$image_prename$customized$is_harden$serverdist$non_free-$distro-amd64.hybrid.iso" | tail -1); echo $start
     sudo parted -s /dev/sdb mkpart primary $start $end
