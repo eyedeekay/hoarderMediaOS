@@ -4,4 +4,17 @@ sudo dd \
     if="iso-$distro/$image_prename$customized$is_harden$serverdist$non_free-$distro-amd64.hybrid.iso" \
     of=/dev/sdb
 
-sudo parted -s mkpart /dev/sdb mkpart primary
+if [ "$PERSISTENCE" == yes ]; then
+    end=6gb
+    read start _ < <(du -bcm "iso-$distro/$image_prename$customized$is_harden$serverdist$non_free-$distro-amd64.hybrid.iso" | tail -1); echo $start
+    sudo parted -s /dev/sdb mkpart primary $start $end
+    sudo cryptsetup --verbose --verify-passphrase luksFormat /dev/sdb3
+    sudo cryptsetup luksOpen /dev/sdb3 my_usb
+    sudo mkfs.ext4 -L persistence /dev/mapper/my_usb
+    sudo e2label /dev/mapper/my_usb persistence
+    sudo mkdir -p /mnt/my_usb
+    sudo mount /dev/mapper/my_usb /mnt/my_usb
+    echo "/ union" | sudo tee /mnt/my_usb/persistence.conf
+    sudo umount /dev/mapper/my_usb
+    sudo cryptsetup luksClose /dev/mapper/my_usb
+fi
