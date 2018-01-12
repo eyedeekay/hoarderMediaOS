@@ -7,7 +7,7 @@ if [ -f auto/common ]; then
 fi
 
 export GITHUB_RELEASE_PATH="$HOME/.go/bin/github-release"
-export version=$(date +%Y%W)"$customized$is_harden$serverdist$non_free-$distro"
+export version=$(date +%Y%W)"$image_prename$customized$is_harden$serverdist$non_free$persist-$distro"
 
 cd "./iso-$distro" || exit
 
@@ -15,15 +15,15 @@ pwd
 ls
 
 echo "computing sha256sum"
-sha256sum "$image_prename$customized$is_harden$serverdist$non_free-$distro-amd64.hybrid.iso" > \
-		"$image_prename$customized$is_harden$serverdist$non_free-$distro-amd64.hybrid.iso.sha256sum" || \
-		rm "$image_prename$customized$is_harden$serverdist$non_free-$distro-amd64.hybrid.iso.sha256sum"
+sha256sum "$image_prename$image_prename$customized$is_harden$serverdist$non_free$persist-$distro-amd64.hybrid.iso" > \
+		"$image_prename$image_prename$customized$is_harden$serverdist$non_free$persist-$distro-amd64.hybrid.iso.sha256sum" || \
+		rm "$image_prename$image_prename$customized$is_harden$serverdist$non_free$persist-$distro-amd64.hybrid.iso.sha256sum"
 
 ls
 
 echo "signing with $SIGNING_KEY"
 gpg --batch --yes --clear-sign -u "$SIGNING_KEY" \
-		"$image_prename$customized$is_harden$serverdist$non_free-$distro-amd64.hybrid.iso.sha256sum" || exit
+		"$image_prename$image_prename$customized$is_harden$serverdist$non_free$persist-$distro-amd64.hybrid.iso.sha256sum" || exit
 
 ls
 echo "creating torrent"
@@ -38,8 +38,8 @@ mktorrent -a "udp://tracker.openbittorrent.com:80" \
 		-a "http://bt.careland.com.cn:6969/announce" \
 		-a "http://i.bandito.org/announce" \
 		-a "http://bttrack.9you.com/announce" \
-		-w "https://github.com/eyedeekay/hoarderMediaOS/releases/download/$version/$image_prename$customized$is_harden$serverdist$non_free-$distro-amd64.hybrid.iso" \
-		"$image_prename$customized$is_harden$serverdist$non_free-$distro-amd64.hybrid.iso" || exit
+		-w "https://github.com/eyedeekay/hoarderMediaOS/releases/download/$version/$image_prename$image_prename$customized$is_harden$serverdist$non_free$persist-$distro-amd64.hybrid.iso" \
+		"$image_prename$image_prename$customized$is_harden$serverdist$non_free$persist-$distro-amd64.hybrid.iso" || exit
 
 
 
@@ -56,26 +56,26 @@ mktorrent -a "udp://tracker.openbittorrent.com:80" \
 		--description "A re-buildable OS for self-hosting. Please use the torrent if possible" || exit
 
 "$GITHUB_RELEASE_PATH" upload --user eyedeekay --repo hoarderMediaOS --tag "$version" \
-	--name "$image_prename$customized$is_harden$serverdist$non_free-$distro-amd64.hybrid.iso.sha256sum" \
-	--file "$image_prename$customized$is_harden$serverdist$non_free-$distro-amd64.hybrid.iso.sha256sum"; \
+	--name "$image_prename$image_prename$customized$is_harden$serverdist$non_free$persist-$distro-amd64.hybrid.iso.sha256sum" \
+	--file "$image_prename$image_prename$customized$is_harden$serverdist$non_free$persist-$distro-amd64.hybrid.iso.sha256sum"; \
 "$GITHUB_RELEASE_PATH" upload --user eyedeekay --repo hoarderMediaOS --tag "$version" \
-	--name "$image_prename$customized$is_harden$serverdist$non_free-$distro-amd64.hybrid.iso.sha256sum.asc" \
-	--file "$image_prename$customized$is_harden$serverdist$non_free-$distro-amd64.hybrid.iso.sha256sum.asc";\
+	--name "$image_prename$image_prename$customized$is_harden$serverdist$non_free$persist-$distro-amd64.hybrid.iso.sha256sum.asc" \
+	--file "$image_prename$image_prename$customized$is_harden$serverdist$non_free$persist-$distro-amd64.hybrid.iso.sha256sum.asc";\
 "$GITHUB_RELEASE_PATH" upload --user eyedeekay --repo hoarderMediaOS --tag "$version" \
-	--name "$image_prename$customized$is_harden$serverdist$non_free-$distro-amd64.hybrid.iso.torrent" \
-	--file "$image_prename$customized$is_harden$serverdist$non_free-$distro-amd64.hybrid.iso.torrent";\
+	--name "$image_prename$image_prename$customized$is_harden$serverdist$non_free$persist-$distro-amd64.hybrid.iso.torrent" \
+	--file "$image_prename$image_prename$customized$is_harden$serverdist$non_free$persist-$distro-amd64.hybrid.iso.torrent";\
 "$GITHUB_RELEASE_PATH" upload --user eyedeekay --repo hoarderMediaOS --tag "$version" \
-	--name "$image_prename$customized$is_harden$serverdist$non_free-$distro-amd64.hybrid.iso" \
-	--file "$image_prename$customized$is_harden$serverdist$non_free-$distro-amd64.hybrid.iso"; \
+	--name "$image_prename$image_prename$customized$is_harden$serverdist$non_free$persist-$distro-amd64.hybrid.iso" \
+	--file "$image_prename$image_prename$customized$is_harden$serverdist$non_free$persist-$distro-amd64.hybrid.iso"; \
 "$GITHUB_RELEASE_PATH" upload --user eyedeekay --repo hoarderMediaOS --tag "$version" \
-        --name "$image_prename$customized$is_harden$serverdist$non_free-$distro-amd64.files" \
-        --file "$image_prename$customized$is_harden$serverdist$non_free-$distro-amd64.files"; \
+        --name "$image_prename$image_prename$customized$is_harden$serverdist$non_free$persist-$distro-amd64.files" \
+        --file "$image_prename$image_prename$customized$is_harden$serverdist$non_free$persist-$distro-amd64.files"; \
 "$GITHUB_RELEASE_PATH" upload --user eyedeekay --repo hoarderMediaOS --tag "$version" \
-        --name "$image_prename$customized$is_harden$serverdist$non_free-$distro-amd64.contents" \
-        --file "$image_prename$customized$is_harden$serverdist$non_free-$distro-amd64.contents"; \
+        --name "$image_prename$image_prename$customized$is_harden$serverdist$non_free$persist-$distro-amd64.contents" \
+        --file "$image_prename$image_prename$customized$is_harden$serverdist$non_free$persist-$distro-amd64.contents"; \
 "$GITHUB_RELEASE_PATH" upload --user eyedeekay --repo hoarderMediaOS --tag "$version" \
-        --name "$image_prename$customized$is_harden$serverdist$non_free-$distro-amd64.hybrid.iso.zsync" \
-        --file "$image_prename$customized$is_harden$serverdist$non_free-$distro-amd64.hybrid.iso.zsync"; \
+        --name "$image_prename$image_prename$customized$is_harden$serverdist$non_free$persist-$distro-amd64.hybrid.iso.zsync" \
+        --file "$image_prename$image_prename$customized$is_harden$serverdist$non_free$persist-$distro-amd64.hybrid.iso.zsync"; \
 "$GITHUB_RELEASE_PATH" upload --user eyedeekay --repo hoarderMediaOS --tag "$version" \
-        --name "$image_prename$customized$is_harden$serverdist$non_free-$distro-amd64.packages" \
-        --file "$image_prename$customized$is_harden$serverdist$non_free-$distro-amd64.packages"
+        --name "$image_prename$image_prename$customized$is_harden$serverdist$non_free$persist-$distro-amd64.packages" \
+        --file "$image_prename$image_prename$customized$is_harden$serverdist$non_free$persist-$distro-amd64.packages"

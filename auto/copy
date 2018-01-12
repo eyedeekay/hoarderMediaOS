@@ -8,8 +8,8 @@ fi
 
 mkdir -p "./iso-$distro"
 
-docker cp $image_prename-build-$distro$non_free:/home/livebuilder/hoarder-live/$image_prename$customized$is_harden$serverdist$non_free-$distro-amd64.hybrid.iso "./iso-$distro/" || exit
-docker cp $image_prename-build-$distro$non_free:/home/livebuilder/hoarder-live/$image_prename$customized$is_harden$serverdist$non_free-$distro-amd64.files "./iso-$distro/"
-docker cp $image_prename-build-$distro$non_free:/home/livebuilder/hoarder-live/$image_prename$customized$is_harden$serverdist$non_free-$distro-amd64.contents "./iso-$distro/"
-docker cp $image_prename-build-$distro$non_free:/home/livebuilder/hoarder-live/$image_prename$customized$is_harden$serverdist$non_free-$distro-amd64.hybrid.iso.zsync "./iso-$distro/"
-docker cp $image_prename-build-$distro$non_free:/home/livebuilder/hoarder-live/$image_prename$customized$is_harden$serverdist$non_free-$distro-amd64.packages "./iso-$distro/"
+docker cp $image_prename-build-$distro$non_free:/home/livebuilder/hoarder-live/$image_prename$customized$is_harden$serverdist$non_free$persist-$distro-amd64.hybrid.iso "./iso-$distro/" || exit
+docker cp $image_prename-build-$distro$non_free:/home/livebuilder/hoarder-live/$image_prename$customized$is_harden$serverdist$non_free$persist-$distro-amd64.files "./iso-$distro/"
+docker cp $image_prename-build-$distro$non_free:/home/livebuilder/hoarder-live/$image_prename$customized$is_harden$serverdist$non_free$persist-$distro-amd64.contents "./iso-$distro/"
+docker cp $image_prename-build-$distro$non_free:/home/livebuilder/hoarder-live/$image_prename$customized$is_harden$serverdist$non_free$persist-$distro-amd64.hybrid.iso.zsync "./iso-$distro/"
+docker cp $image_prename-build-$distro$non_free:/home/livebuilder/hoarder-live/$image_prename$customized$is_harden$serverdist$non_free$persist-$distro-amd64.packages "./iso-$distro/"
