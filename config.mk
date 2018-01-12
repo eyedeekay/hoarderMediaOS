@@ -28,6 +28,7 @@ export hardened ?= no
 export custom ?= yes
 export nonfree ?= no
 export server ?= no
+export persistence ?= yes
 
 export mirror_debian ?= http://ftp.us.debian.org/debian
 export mirror_devuan ?= http://us.mirror.devuan.org/merged

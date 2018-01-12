@@ -6,7 +6,7 @@ sudo dd \
 
 if [ "$persistence" == yes ]; then
     end=6gb
-    read start _ < <(du -bcm "iso-$distro/$image_prename$customized$is_harden$serverdist$non_free-$distro-amd64.hybrid.iso" | tail -1); echo $start
+    read start _ < <(du -bcm "iso-$distro/$image_prename$customized$is_harden$serverdist$non_free$persist-$distro-amd64.hybrid.iso" | tail -1); echo $start
     sudo parted -s /dev/sdb mkpart primary $start $end
     sudo cryptsetup --verbose --verify-passphrase luksFormat /dev/sdb3
     sudo cryptsetup luksOpen /dev/sdb3 my_usb
