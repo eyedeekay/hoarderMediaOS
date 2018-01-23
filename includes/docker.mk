@@ -45,7 +45,6 @@ docker-build:
 	docker run -i \
 		--cap-add=SYS_ADMIN \
 		--device /dev/loop0 \
-		--device /proc/cgroups \
 		-e "distro"="$(distro)" \
 		-e "nonfree"="$(nonfree)" \
 		-e "hardened"="$(hardened)" \
