@@ -7,7 +7,11 @@ define DOCKER_HOOKS
 	chmod +x /usr/local/bin/dockerd-entrypoint
 	wget -O /usr/local/bin/modprobe.sh "https://github.com/docker-library/docker/raw/master/18.01/dind/modprobe.sh"
 	chmod +x /usr/local/bin/modprobe.sh
-	#mount -t tmpfs -o uid=0,gid=0,mode=0755 cgroup /sys/fs/cgroup
+	mount -t tmpfs cgroup_root /sys/fs/cgroup
+	mkdir -p /sys/fs/cgroup/cpuset
+	mount -t devicess cpuset /sys/fs/cgroup/devices
+	#mkdir -p /sys/fs/cgroup/cpu
+	#mount -t cgroup cpu /sys/fs/cgroup/cpu
 	dockerd-entrypoint &
 	sleep 20
 	docker pull debian:sid
