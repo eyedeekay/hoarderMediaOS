@@ -44,7 +44,6 @@ docker-build:
 	docker rm -f $(image_prename)-build-$(distro)$(non_free); \
 	docker run -i \
 		--cap-add=SYS_ADMIN \
-		--device-cgroup-rule memory \
 		--device /dev/loop0 \
 		-e "distro"="$(distro)" \
 		-e "nonfree"="$(nonfree)" \
