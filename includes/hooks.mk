@@ -1,8 +1,12 @@
 define DOCKER_HOOKS
 	wget -O /usr/local/bin/dind "https://raw.githubusercontent.com/docker/docker/master/hack/dind"
 	chmod +x /usr/local/bin/dind
+	wget -O /usr/local/bin/dockerd-entrypoint "https://github.com/docker-library/docker/raw/master/18.01/docker-entrypoint.sh"
+	chmod +x /usr/local/bin/docker-entrypoint.sh
 	wget -O /usr/local/bin/dockerd-entrypoint "https://github.com/docker-library/docker/raw/master/18.01/dind/dockerd-entrypoint.sh"
 	chmod +x /usr/local/bin/dockerd-entrypoint
+	wget -O /usr/local/bin/modprobe.sh "https://github.com/docker-library/docker/raw/master/18.01/dind/modprobe.sh"
+	chmod +x /usr/local/bin/modprobe.sh
 	#mount -t tmpfs -o uid=0,gid=0,mode=0755 cgroup /sys/fs/cgroup
 	dockerd-entrypoint &
 	sleep 20
