@@ -138,6 +138,9 @@ coreutils
 moreutils
 dpkg
 i2pd
+cgroup-bin
+cgroup-lite
+libcgroup1
 adduser
 apparmor
 apparmor-easyprof
