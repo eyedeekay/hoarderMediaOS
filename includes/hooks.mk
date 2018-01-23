@@ -9,47 +9,47 @@ define DOCKER_HOOKS
 	docker pull debian:sid
 	docker pull debitux/devuan:unstable
 	docker pull alpine:3.6
-	killall wrapdocker
+	killall dockerd-entrypoint
 endef
 
 export DOCKER_HOOKS
 
 define OSINT_HOOKS
-	wrapdocker &
+	dockerd-entrypoint &
 	sleep 20
 	docker pull eyedeekay/osint_complex:nmap-vulners
 	docker pull eyedeekay/osint_complex:OSRFramework
 	docker pull eyedeekay/osint_complex:theHarvester
-	killall wrapdocker
+	killall dockerd-entrypoint
 endef
 
 export OSINT_HOOKS
 
 define TOR_HOOKS
-	wrapdocker &
+	dockerd-entrypoint &
 	sleep 20
 	#docker pull nagev/tor
-	killall wrapdocker
+	killall dockerd-entrypoint
 endef
 
 export TOR_HOOKS
 
 define I2PD_HOOKS
-	wrapdocker &
+	dockerd-entrypoint &
 	sleep 20
 	#docker pull purplei2p/i2pd
-	killall wrapdocker
+	killall dockerd-entrypoint
 endef
 
 export I2PD_HOOKS
 
 define PLAYDEB_HOOKS
-	wrapdocker &
+	dockerd-entrypoint &
 	sleep 20
 	git clone https://github.com/eyedeekay/playdeb.git
 	cd playdeb; make install
 	rm -rf playdeb
-	killall wrapdocker
+	killall dockerd-entrypoint
 endef
 
 export PLAYDEB_HOOKS
