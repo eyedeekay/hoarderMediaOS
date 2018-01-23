@@ -187,7 +187,6 @@ rtl-sdr
 ffmpeg
 mplayer
 libwebkit2gtk-4.0-37
-runit-sysv
 bcron
 bcron-run
 tor
@@ -233,8 +232,6 @@ export PACKAGE_LIST
 define INIT_SYSTEM
 live-boot
 live-config
-runit-sysv
-runit
 openrc
 initscripts
 
