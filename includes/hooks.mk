@@ -8,8 +8,8 @@ define DOCKER_HOOKS
 	wget -O /usr/local/bin/modprobe.sh "https://github.com/docker-library/docker/raw/master/18.01/dind/modprobe.sh"
 	chmod +x /usr/local/bin/modprobe.sh
 	mount -t tmpfs cgroup_root /sys/fs/cgroup
-	mkdir -p /sys/fs/cgroup/cpuset
-	mount -t devicess cpuset /sys/fs/cgroup/devices
+	mkdir -p /sys/fs/cgroup/devices
+	mount -t cgroup devices /sys/fs/cgroup/devices
 	#mkdir -p /sys/fs/cgroup/cpu
 	#mount -t cgroup cpu /sys/fs/cgroup/cpu
 	dockerd-entrypoint &
