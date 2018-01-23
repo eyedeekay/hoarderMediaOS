@@ -1,4 +1,5 @@
 define DOCKER_HOOKS
+	service docker start
 	docker pull debian:sid
 	docker pull debitux/devuan:unstable
 	docker pull alpine:3.6
@@ -8,6 +9,7 @@ endef
 export DOCKER_HOOKS
 
 define OSINT_HOOKS
+	service docker start
 	docker pull eyedeekay/osint_complex:nmap-vulners
 	docker pull eyedeekay/osint_complex:OSRFramework
 	docker pull eyedeekay/osint_complex:theHarvester
@@ -16,18 +18,21 @@ endef
 export OSINT_HOOKS
 
 define TOR_HOOKS
+	service docker start
 	#docker pull nagev/tor
 endef
 
 export TOR_HOOKS
 
 define I2PD_HOOKS
+	service docker start
 	#docker pull purplei2p/i2pd
 endef
 
 export I2PD_HOOKS
 
 define PLAYDEB_HOOKS
+	service docker start
 	git clone https://github.com/eyedeekay/playdeb.git
 	cd playdeb; make install
 	rm -rf playdeb
