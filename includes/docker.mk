@@ -56,6 +56,7 @@ docker-build:
 		--name "$(image_prename)-build-$(distro)$(non_free)" \
 		--privileged \
 		--security-opt=apparmor:unconfined \
+		-v /proc/cgroups:/proc/cgroups \
 		--tty \
 		-t $(image_prename)-$(distro)
 
