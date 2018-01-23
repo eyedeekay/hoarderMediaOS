@@ -1,7 +1,9 @@
 define DOCKER_HOOKS
-	wget https://github.com/jpetazzo/dind/raw/master/wrapdocker
-	install -m755 wrapdocker /usr/local/bin/wrapdocker
-	wrapdocker &
+	wget -O /usr/local/bin/dind "https://raw.githubusercontent.com/docker/docker/master/hack/dind"
+	chmod +x /usr/local/bin/dind
+	wget -O /usr/local/bin/dockerd-entrypoint "https://github.com/docker-library/docker/raw/master/18.01/dind/dockerd-entrypoint.sh"
+	chmod +x /usr/local/bin/dockerd-entrypoint
+	dockerd-entrypoint &
 	sleep 20
 	docker pull debian:sid
 	docker pull debitux/devuan:unstable
