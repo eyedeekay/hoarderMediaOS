@@ -1,46 +1,47 @@
 define DOCKER_HOOKS
-	service docker start
+	wget https://github.com/jpetazzo/dind/raw/master/wrapdocker
+	install -m755 wrapdocker /usr/local/bin/wrapdocker
+	wrapdocker
 	docker pull debian:sid
 	docker pull debitux/devuan:unstable
 	docker pull alpine:3.6
-	#docker pull hoardermediaos/lb-build-$(distro)
-	service docker stop
+	killall wrapdocker
 endef
 
 export DOCKER_HOOKS
 
 define OSINT_HOOKS
-	service docker start
+	wrapdocker
 	docker pull eyedeekay/osint_complex:nmap-vulners
 	docker pull eyedeekay/osint_complex:OSRFramework
 	docker pull eyedeekay/osint_complex:theHarvester
-	service docker stop
+	killall wrapdocker
 endef
 
 export OSINT_HOOKS
 
 define TOR_HOOKS
-	service docker start
+	wrapdocker
 	#docker pull nagev/tor
-	service docker stop
+	killall wrapdocker
 endef
 
 export TOR_HOOKS
 
 define I2PD_HOOKS
-	service docker start
+	wrapdocker
 	#docker pull purplei2p/i2pd
-	service docker stop
+	killall wrapdocker
 endef
 
 export I2PD_HOOKS
 
 define PLAYDEB_HOOKS
-	service docker start
+	wrapdocker
 	git clone https://github.com/eyedeekay/playdeb.git
 	cd playdeb; make install
 	rm -rf playdeb
-	service docker stop
+	killall wrapdocker
 endef
 
 export PLAYDEB_HOOKS

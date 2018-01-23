@@ -56,7 +56,7 @@ docker-build:
 		--name "$(image_prename)-build-$(distro)$(non_free)" \
 		--privileged \
 		-lxc-conf="aa_profile=unconfined" \
-		-v /var/lib/docker:/var/lib/docker \
+		-v ./varlibdocker:/var/lib/docker \
 		--tty \
 		-t $(image_prename)-$(distro)
 
