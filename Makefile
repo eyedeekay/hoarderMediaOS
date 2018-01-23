@@ -37,12 +37,12 @@ clean:
 	sudo -E lb clean --all; true
 
 clobber: clean
-	rm -rf *.hybrid.iso \
-	*.hybrid.iso.sha256sum \
-	*.hybrid.iso.sha256sum.asc \
-	*.files \
-	*.contents \
-	*.hybrid.iso.zsync \
+	rm -rf */*.hybrid.iso \
+	*/*.hybrid.iso.sha256sum \
+	*/*.hybrid.iso.sha256sum.asc \
+	*/*.files \
+	*/*.contents \
+	*/*.hybrid.iso.zsync \
 	*.packages \
 	*log *err \
 	config
@@ -54,12 +54,10 @@ config-nochroot:
 	lb config --build-with-chroot false
 
 unfree:
-	make playdeb-repo; \
 	make plex-repo; \
 	make nonfree-repo
 
 unfree-ubuntu:
-	make playdeb-repo; \
 	make plex-repo; \
 	make nonfree-ubuntu-repo; \
 
@@ -93,7 +91,7 @@ build-nochroot:
 throw:
 	scp -r . media@media:Docker/hoarderMediaOS
 
-packages: packages-list docker-hooks
+packages: packages-list all-hooks
 
 pull:
 	./auto/pull

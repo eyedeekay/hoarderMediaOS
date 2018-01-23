@@ -1,15 +1,20 @@
 #! /usr/bin/env bash
 
+. auto/common
+
 sudo dd \
     if="iso-$distro/$image_prename$customized$is_harden$serverdist$non_free$persist-$distro-amd64.hybrid.iso" \
     of=/dev/sdb
 
+echo "Doing persistence? $persistence"
+
 if [ "$persistence" == yes ]; then
-    end=6gb
+    end=24gb
     read start _ < <(du -bcm "iso-$distro/$image_prename$customized$is_harden$serverdist$non_free$persist-$distro-amd64.hybrid.iso" | tail -1); echo $start
+    start=$((start+100))
     sudo parted -s /dev/sdb mkpart primary $start $end
-    sudo cryptsetup --verbose --verify-passphrase luksFormat /dev/sdb3
-    sudo cryptsetup luksOpen /dev/sdb3 my_usb
+    sudo cryptsetup --verbose --verify-passphrase luksFormat /dev/sdb2
+    sudo cryptsetup luksOpen /dev/sdb2 my_usb
     sudo mkfs.ext4 -L persistence /dev/mapper/my_usb
     sudo e2label /dev/mapper/my_usb persistence
     sudo mkdir -p /mnt/my_usb

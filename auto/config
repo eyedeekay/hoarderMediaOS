@@ -15,6 +15,8 @@ fi
 
 export dsusekeyring="--keyring=$HOME/.gnupg/repokeys.gpg"
 
+export initsystem="sysvinit"
+
 if [ "$nonfree" = "yes" ]; then
         export non_free='-nonfree'
         export nosource='--apt-source-archives false'
@@ -23,7 +25,7 @@ if [ "$nonfree" = "yes" ]; then
 fi
 
 if [ "$persistence" == "yes" ]; then
-    export bootappend="--bootappend-live \"boot=live components persistence persistence-encryption=luks\""
+    export bootappend="--bootappend-live 'boot=live components persistence persistence-encryption=luks'"
     export persist="-persistence"
 fi
 
@@ -110,7 +112,7 @@ echo "export nosource=\"$nosource\"" | tee -a auto/common
 echo "export archiveareas=\"$archiveareas\"" | tee -a auto/common
 echo "export useupdates=\"$useupdates\"" | tee -a auto/common
 echo "export debootstrap_opts_supported=\"$debootstrap_opts_supported\"" | tee -a auto/common
-echo "export bootappend=\"$bootappend\"" | tee -a auto/common
+echo "#export bootappend='$bootappend'" | tee -a auto/common
 echo "export persistence=\"$persistence\"" | tee -a auto/common
 echo "export persist=\"$persist\"" | tee -a auto/common
 echo "export image_name=\"$image_name\"" | tee -a auto/common
@@ -147,10 +149,11 @@ lb config noauto \
     --parent-distribution "$stable" \
     $debootstrap_opts_supported "$bootstrapopts" \
     $bootappend \
+    --bootloader syslinux \
     --firmware-chroot true \
     --firmware-binary true \
     $usekeyring \
-    --initsystem runit \
+    --initsystem "$initsystem" \
     $archiveareas \
     $nosource \
     $harden \

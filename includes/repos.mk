@@ -94,7 +94,6 @@ emby-ubuntu-repo:
 		&& ln -sf emby.list.chroot emby.list.binary \
 		&& ln -sf emby.list.key.chroot emby.list.key.binary
 
-
 i2pd-repo:
 	echo "deb https://repo.lngserv.ru/debian stretch main" | tee config/archives/i2pd.list.chroot
 	echo "deb-src https://repo.lngserv.ru/debian stretch main" | tee -a config/archives/i2pd.list.chroot
@@ -166,14 +165,6 @@ nonfree-ubuntu-repo:
 	echo "deb http://archive.ubuntu.com/ubuntu/ artful-updates restricted universe multiverse partner" | tee config/archives/nonfree-updates.list.chroot
 	cd config/archives/ \
 		&& ln -sf nonfree.list.chroot nonfree.list.binary
-
-playdeb-repo:
-	echo "deb http://archive.getdeb.net/ubuntu xenial-getdeb games" | tee config/archives/playdeb.list.chroot
-	echo "deb-src http://archive.getdeb.net/ubuntu xenial-getdeb games" | tee -a config/archives/playdeb.list.chroot
-	curl -s http://archive.getdeb.net/getdeb-archive.key > config/archives/playdeb.list.key.chroot
-	cd config/archives/ \
-		&& ln -sf playdeb.list.chroot playdeb.list.binary \
-		&& ln -sf playdeb.list.key.chroot playdeb.list.key.binary
 
 plex-repo:
 	echo "deb http://downloads.plex.tv/repo/deb/ public main" | tee config/archives/plex.list.chroot
