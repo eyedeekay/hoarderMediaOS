@@ -203,6 +203,7 @@ owncloud-client-cmd
 gnutls-bin
 firmware-ath9k-htc
 firmware-linux-free
+sudo
 udev
 util-linux
 libwayland-bin
