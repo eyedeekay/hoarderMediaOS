@@ -142,6 +142,8 @@ cgroup-bin
 cgroup-lite
 libcgroup1
 adduser
+lxc
+iptables
 apparmor
 apparmor-easyprof
 apparmor-notify
