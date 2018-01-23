@@ -3,7 +3,7 @@ define DOCKER_HOOKS
 	chmod +x /usr/local/bin/dind
 	wget -O /usr/local/bin/dockerd-entrypoint "https://github.com/docker-library/docker/raw/master/18.01/dind/dockerd-entrypoint.sh"
 	chmod +x /usr/local/bin/dockerd-entrypoint
-	mount -t tmpfs -o uid=0,gid=0,mode=0755 cgroup /sys/fs/cgroup
+	#mount -t tmpfs -o uid=0,gid=0,mode=0755 cgroup /sys/fs/cgroup
 	dockerd-entrypoint &
 	sleep 20
 	docker pull debian:sid
