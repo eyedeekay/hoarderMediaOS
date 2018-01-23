@@ -56,7 +56,8 @@ docker-build:
 		--name "$(image_prename)-build-$(distro)$(non_free)" \
 		--privileged \
 		-lxc-conf="aa_profile=unconfined" \
-		--mount /sys/fs/cgroup:/sys/fs/cgroup \
+		--mount type=bind,src=/sys/fs/cgroup,dst=/sys/fs/cgroup
+		--mount  \
 		--tty \
 		-t $(image_prename)-$(distro)
 
