@@ -12,3 +12,16 @@ accomodated by the package manager. "Hooks," which are really just scripts, are
 a convenient way to gain this type of granularity during various phases of the
 build process.
 
+A basic hook
+------------
+
+
+
+A more complicated hook
+-----------------------
+
+Using a hook to install from a language's package manager as the Live user
+--------------------------------------------------------------------------
+
+Using a hook to set up a post-install script for an installer user
+------------------------------------------------------------------
