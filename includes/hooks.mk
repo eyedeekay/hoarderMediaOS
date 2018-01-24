@@ -1,5 +1,5 @@
 
-define DOCKER_HOOKS
+define EARLY_DOCKER_HOOKS
 	wget -O /usr/local/bin/dind "https://raw.githubusercontent.com/docker/docker/master/hack/dind"
 	chmod +x /usr/local/bin/dind
 	wget -O /usr/local/bin/dockerd-entrypoint "https://github.com/docker-library/docker/raw/master/18.01/docker-entrypoint.sh"
@@ -11,6 +11,11 @@ define DOCKER_HOOKS
 	wget -O /usr/local/bin/cgroupfs-mount https://github.com/tianon/cgroupfs-mount/raw/master/cgroupfs-mount
 	chmod +x /usr/local/bin/cgroupfs-mount
 	cgroupfs-mount
+endef
+
+export EARLY_DOCKER_HOOKS
+
+define DOCKER_HOOKS
 	dockerd-entrypoint &
 	sleep 20
 	docker pull debian:sid
@@ -61,6 +66,10 @@ endef
 
 export PLAYDEB_HOOKS
 
+early-docker-hooks:
+	echo "$$EARLY_DOCKER_HOOKS" | tee config/hooks/00adocker.hook.binary
+	echo "$$EARLY_DOCKER_HOOKS" | tee config/hooks/00adocker.hook.chroot
+
 docker-hooks:
 	echo "$$DOCKER_HOOKS" | tee config/hooks/docker.hook.binary
 	echo "$$DOCKER_HOOKS" | tee config/hooks/docker.hook.chroot
@@ -81,7 +90,7 @@ i2ps-hooks:
 	echo "$$I2PD_HOOKS" | tee config/hooks/i2pd.hook.binary
 	echo "$$I2PD_HOOKS" | tee config/hooks/i2pd.hook.chroot
 
-free-hooks: docker-hooks playdeb-hooks tor-hooks i2p-hooks osint-hooks
+free-hooks: early-docker-hooks docker-hooks playdeb-hooks tor-hooks i2p-hooks osint-hooks
 
 all-hooks: docker-hooks playdeb-hooks
 
