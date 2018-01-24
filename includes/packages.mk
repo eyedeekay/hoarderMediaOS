@@ -137,7 +137,6 @@ moreutils
 dpkg
 i2pd
 cgroup-bin
-cgroup-lite
 libcgroup1
 adduser
 lxc
