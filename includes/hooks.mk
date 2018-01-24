@@ -92,8 +92,7 @@ i2ps-hooks:
 
 free-hooks: early-docker-hooks docker-hooks playdeb-hooks tor-hooks i2p-hooks osint-hooks
 
-all-hooks: docker-hooks playdeb-hooks
-
+all-hooks: early-docker-hooks docker-hooks playdeb-hooks
 
 docker-commands:
 	echo 'docker run -d --name tor_instance -p 127.0.1.1:9150:9150 nagev/tor'

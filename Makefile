@@ -91,7 +91,8 @@ build-nochroot:
 throw:
 	scp -r . media@media:Docker/hoarderMediaOS
 
-packages: packages-list all-hooks
+packages: packages-list
+	#all-hooks
 
 pull:
 	./auto/pull
