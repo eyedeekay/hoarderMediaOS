@@ -65,7 +65,7 @@ elif [ "$distro" = "devuan" ]; then
         export unstable="jessie"
         export stable="jessie"
         export aptpkg="aptitude"
-        export bootstrapopts="--merged-usr     $dsusekeyring       --variant=minbase       --include=busybox-syslogd,gnupg2,apt-utils,apt-transport-https,ca-certificates,devuan-keyring               --exclude=systemd,dash  $components"
+        export bootstrapopts="--merged-usr     $dsusekeyring       --variant=minbase       --include=busybox-syslogd,gnupg2,apt-utils,apt-transport-https,ca-certificates,devuan-keyring               --exclude=systemd  $components"
         export usekeyring="--keyring-packages devuan-keyring"
         export distromode="--mode debian"
         export useupdates="--updates false"
