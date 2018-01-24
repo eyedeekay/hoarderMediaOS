@@ -1,3 +1,4 @@
+
 define DOCKER_HOOKS
 	wget -O /usr/local/bin/dind "https://raw.githubusercontent.com/docker/docker/master/hack/dind"
 	chmod +x /usr/local/bin/dind
@@ -10,11 +11,6 @@ define DOCKER_HOOKS
 	wget -O /usr/local/bin/cgroupfs-mount https://github.com/tianon/cgroupfs-mount/raw/master/cgroupfs-mount
 	chmod +x /usr/local/bin/cgroupfs-mount
 	cgroupfs-mount
-	#mount -t tmpfs cgroup_root /sys/fs/cgroup
-	#mkdir -p /sys/fs/cgroup/devices
-	#mount -t cgroup devices /sys/fs/cgroup/devices
-	#mkdir -p /sys/fs/cgroup/cpu
-	#mount -t cgroup cpu /sys/fs/cgroup/cpu
 	dockerd-entrypoint &
 	sleep 20
 	docker pull debian:sid
