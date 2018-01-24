@@ -33,6 +33,6 @@ echo "serverdist=\"$serverdist\"" > >(tee -a config.log) 2> >(tee -a config.err 
 
 sleep 10
 
-lb build noauto "$@" > >(tee -a log) 2> >(tee -a err >&2)
+lb build noauto "$@" > >(tee -a log) 2> >(tee -a err >&2) || bash
 #lb build noauto "$@" > >(tee -a log) 2> >(tee -a err >&2)
 
