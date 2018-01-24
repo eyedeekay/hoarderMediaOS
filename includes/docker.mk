@@ -54,6 +54,7 @@ docker-build:
 		-e "proxy_host"="$(proxy_host)" \
 		-e "proxy_port"="$(proxy_port)" \
 		--name "$(image_prename)-build-$(distro)$(non_free)" \
+		-lxc-conf="lxc.aa_profile=unconfined" \
 		--privileged \
 		--tty \
 		-t $(image_prename)-$(distro)
