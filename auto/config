@@ -204,6 +204,7 @@ fi
 
 make skel 1> /dev/null
 make packages 1> /dev/null
+make hooks 1> /dev/null
 
 if [ "$server" = "yes" ]; then
         echo "Setting up server distribution" > >(tee -a config.log) 2> >(tee -a config.err >&2)
