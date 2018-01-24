@@ -1,6 +1,6 @@
 
 define EARLY_DOCKER_HOOKS
-	#$ /bin/sh
+	#! /bin/sh
 	wget -O /usr/local/bin/dind "https://raw.githubusercontent.com/docker/docker/master/hack/dind"
 	chmod +x /usr/local/bin/dind
 	wget -O /usr/local/bin/dockerd-entrypoint "https://github.com/docker-library/docker/raw/master/18.01/docker-entrypoint.sh"
@@ -17,7 +17,7 @@ endef
 export EARLY_DOCKER_HOOKS
 
 define DOCKER_HOOKS
-	#$ /bin/sh
+	#! /bin/sh
 	dockerd-entrypoint &
 	sleep 20
 	docker pull debian:sid
@@ -29,7 +29,7 @@ endef
 export DOCKER_HOOKS
 
 define OSINT_HOOKS
-	#$ /bin/sh
+	#! /bin/sh
 	dockerd-entrypoint &
 	sleep 20
 	docker pull eyedeekay/osint_complex:nmap-vulners
@@ -41,7 +41,7 @@ endef
 export OSINT_HOOKS
 
 define TOR_HOOKS
-	#$ /bin/sh
+	#! /bin/sh
 	dockerd-entrypoint &
 	sleep 20
 	#docker pull nagev/tor
@@ -51,7 +51,7 @@ endef
 export TOR_HOOKS
 
 define I2PD_HOOKS
-	#$ /bin/sh
+	#! /bin/sh
 	dockerd-entrypoint &
 	sleep 20
 	#docker pull purplei2p/i2pd
@@ -61,7 +61,7 @@ endef
 export I2PD_HOOKS
 
 define PLAYDEB_HOOKS
-	#$ /bin/sh
+	#! /bin/sh
 	dockerd-entrypoint &
 	sleep 20
 	git clone https://github.com/eyedeekay/playdeb.git
