@@ -49,6 +49,14 @@ debian-repro:
 	cd config/archives/ \
 		&& ln -sf repro.list.key.chroot repro.list.key.binary
 
+docker-repo:
+	echo "deb https://download.docker.com/linux/debian buster main" | tee -a config/archives/docker.list.chroot
+	cd config/archives/ \
+		&& ln -sf repro.list.chroot repro.list.binary
+	curl -fsSL https://download.docker.com/linux/debian/gpg | tee config/docker.list.key.chroot
+	cd config/archives/ \
+		&& ln -sf docker.list.key.chroot docker.list.key.binary
+
 apt-now-repo:
 	echo "deb https://eyedeekay.github.io/apt-now/deb-pkg rolling main" | tee config/archives/apt-now.list.chroot
 	echo "deb-src https://eyedeekay.github.io/apt-now/deb-pkg rolling main" | tee -a config/archives/apt-now.list.chroot
