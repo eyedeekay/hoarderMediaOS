@@ -6,4 +6,4 @@ language: c
 services: docker
 
 script:
-    make docker-full-build
+    make docker-full-build docker-clean
