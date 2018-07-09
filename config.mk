@@ -8,11 +8,11 @@ export KEY ?= "70D2060738BEF80523ACAFF7D75C03B39B5E14E1"
 
 #export proxy_addr ?= http://$(proxy_host):$(proxy_port)
 
-#export distro ?= debian
+export distro ?= debian
 # Only Ever
 #export distro ?= ubuntu
 # export one
-export distro ?= devuan
+#export distro ?= devuan
 # of these.
 
 #export keyserver = http://keyserver.ubuntu.com
