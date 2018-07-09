@@ -1,4 +1,4 @@
-FROM tv-build-devuan
+FROM eyedeekay/tv-build-devuan
 ARG distro="devuan"
 ARG nonfree
 ARG custom

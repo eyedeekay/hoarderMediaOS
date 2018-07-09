@@ -66,11 +66,11 @@ docker-release:
 docker-base:
 	docker build --force-rm \
 		--build-arg "CACHING_PROXY"="$(proxy_addr)" \
-		-t $(image_prename)-build-$(distro) \
+		-t eyedeekay/$(image_prename)-build-$(distro) \
 		-f Dockerfiles/Dockerfile.live-build.$(distro) .
 
 docker:
-	docker build --force-rm -t $(image_prename)-$(distro) \
+	docker build --force-rm -t eyedeekay/$(image_prename)-$(distro) \
 		--build-arg "nonfree"="$(nonfree)" \
 		--build-arg "custom"="$(custom)" \
 		--build-arg "hardened"="$(hardened)" \

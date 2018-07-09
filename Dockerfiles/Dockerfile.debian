@@ -1,4 +1,4 @@
-FROM tv-build-debian
+FROM eyedeekay/tv-build-debian
 ARG distro="debian"
 ARG nonfree
 ARG custom
