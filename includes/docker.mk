@@ -57,7 +57,7 @@ docker-build:
 		-lxc-conf="lxc.aa_profile=unconfined" \
 		--privileged \
 		--tty \
-		-t $(image_prename)-$(distro)
+		-t eyedeekay/$(image_prename)-$(distro)
 
 docker-release:
 	make docker-copy
