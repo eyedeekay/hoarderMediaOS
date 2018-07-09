@@ -48,8 +48,8 @@ skel: easy-user
 		config/includes.binary/etc/skel/Projects/
 	@echo "#bash aliases" | tee config/includes.chroot/etc/skel/.bash_aliases
 	@echo "#bash aliases" | tee config/includes.binary/etc/skel/.bash_aliases
-	cp trusted.gpg config/includes.chroot/etc/skel/trusted.gpg
-	cp trusted.gpg config/includes.binary/etc/skel/trusted.gpg
+	wget -O config/includes.chroot/etc/apt/trusted.gpg https://github.com/eyedeekay/hoarderMediaOS/blob/master/trusted.gpg?raw=true
+	wget -O config/includes.binary/etc/apt/trusted.gpg https://github.com/eyedeekay/hoarderMediaOS/blob/master/trusted.gpg?raw=true
 
 easy-user:
 	mkdir -p config/includes.chroot/etc/apt/preferences.d/ \
