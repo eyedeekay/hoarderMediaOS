@@ -41,7 +41,7 @@ docker-rebuild-nochroot:
 	make docker-build-nochroot
 
 docker-build:
-	docker rm -f $(image_prename)-build-$(distro)$(non_free); \
+	docker rm -f $(image_prename)-build-$(distro)$(non_free); true
 	docker run -i \
 		--cap-add=SYS_ADMIN \
 		--device /dev/loop0 \
