@@ -16,7 +16,7 @@ RUN apt-get update && apt-get install -yq --fix-missing --reinstall \
                 bash \
                 make \
                 apt-utils \
-                live-build \
+                system-build \
                 debootstrap \
                 make \
                 curl \
